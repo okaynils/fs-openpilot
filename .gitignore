@@ -1,11 +1,11 @@
 __pycache__/
 *.pyc
 .venv/
-data/
-artifacts/
-runs/
+/data/
+/artifacts/
+/runs/
 *.rrd
 .pytest_cache/
 .ruff_cache/
 .DS_Store
-playground/
+/playground/
