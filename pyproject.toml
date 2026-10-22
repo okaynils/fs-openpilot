@@ -71,6 +71,9 @@ target-version = "py312"
 select = ["E", "F", "W", "I", "B", "UP"]
 ignore = ["E741"]
 
+[tool.ruff.lint.isort]
+known-first-party = ["fsop"]
+
 [tool.ruff.lint.per-file-ignores]
 "src/fsop/cli.py" = ["B008"]  # typer.Option defaults are idiomatic
 
