@@ -1,0 +1,67 @@
+[project]
+name = "fsop"
+version = "0.1.0"
+description = "Fine-tuning openpilot's driving model for Formula Student Driverless"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+dependencies = [
+  "numpy>=2.0",
+  "scipy>=1.13",
+  "shapely>=2.0",
+  "opencv-python-headless>=4.10",
+  "omegaconf>=2.3",
+  "typer>=0.12",
+  "pyarrow>=17",
+  "polars>=1.0",
+  "zarr>=3.0",
+  "matplotlib>=3.9",
+  "rerun-sdk>=0.24",
+  "tqdm>=4.66",
+  "pyyaml>=6.0",
+  "torch>=2.5",
+  "onnx>=1.17",
+  "onnxruntime>=1.20",
+  "onnx2torch>=1.5.15",
+  "tensorboard>=2.17",
+  "pycocotools>=2.0.8",
+]
+
+[project.optional-dependencies]
+sim = [
+  "panda3d==1.10.14",
+  "metadrive-simulator @ git+https://github.com/commaai/metadrive.git@2716f55a9c7b928ce957a497a15c2c19840c08bc",
+]
+yolo = ["ultralytics>=8.3"]
+mpc = ["casadi>=3.6"]
+wandb = ["wandb>=0.18"]
+
+[project.scripts]
+fsop = "fsop.cli:app"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fsop"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E741"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/fsop/cli.py" = ["B008"]  # typer.Option defaults are idiomatic
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.metadata]
+allow-direct-references = true

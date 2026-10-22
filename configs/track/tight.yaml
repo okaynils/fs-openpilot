@@ -1,0 +1,7 @@
+# Harder tracks for curriculum / stress tests: narrow, hairpin-heavy.
+discipline: trackdrive
+method: curvature
+width_min: 3.0
+width_max: 3.4
+min_center_radius: 4.6
+slalom_prob: 0.6

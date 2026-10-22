@@ -1,0 +1,18 @@
+# Stage 2 on Apple Silicon: images in, last trunk stage + summarizer unfrozen (L2-SP), image cone head,
+# FSOCO mixed in for the image head (set fsoco_root once data/fsoco is imported).
+name: mac_stage2
+sim_root: data/sim/v1
+init_ckpt: runs/mac_stage1/ckpt/best.pt
+fsoco_root: ""
+stage: 2
+trunk: last
+batch_size: 12
+num_workers: 4
+steps: 3000
+lr: 2.0e-4
+lr_policy: 0.3
+lr_trunk: 0.3
+l2sp: 1.0e-3
+warmup: 100
+val_every: 500
+val_batches: 25

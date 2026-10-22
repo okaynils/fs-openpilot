@@ -1,0 +1,7 @@
+# DV autocross is built to the trackdrive guidelines (D 6.1.3) but driven for a single lap;
+# slaloms use the autocross spacing (D 6.1.1).
+discipline: autocross
+method: mixed
+length_min: 220.0
+length_max: 500.0
+slalom_spacing: [7.5, 12.0]

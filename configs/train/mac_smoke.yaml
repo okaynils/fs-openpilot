@@ -1,0 +1,13 @@
+# CI-sized smoke test: a few episodes, a few steps, both stages exercised by overriding `stage`.
+name: mac_smoke
+sim_root: data/sim/v1
+stage: 1
+batch_size: 8
+num_workers: 0
+steps: 30
+warmup: 5
+val_every: 30
+val_batches: 3
+log_every: 10
+max_episodes: 4
+viz_samples: 2

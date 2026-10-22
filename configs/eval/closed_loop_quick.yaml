@@ -1,0 +1,9 @@
+tracks: data/tracks/td_v1
+split: test
+n_trackdrive: 3
+laps: 1
+skidpad: true
+acceleration: true
+dr_levels: [light]
+seeds: [0]
+max_seconds: 90

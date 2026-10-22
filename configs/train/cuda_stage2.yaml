@@ -1,0 +1,11 @@
+# Cloud GPU: same recipe, larger batch and full trunk fine-tuning (bf16 autocast is automatic on CUDA).
+defaults: [mac_stage2.yaml]
+name: cuda_stage2
+trunk: all
+batch_size: 64
+num_workers: 12
+steps: 20000
+lr: 3.0e-4
+lr_trunk: 0.05
+val_every: 1000
+val_batches: 50

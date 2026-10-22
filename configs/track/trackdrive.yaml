@@ -1,0 +1,11 @@
+# TrackGenCfg for FSG trackdrive (D 8.1): closed loop 200-500 m, straights <= 80 m, width >= 3 m,
+# 9 m minimum turning diameter (centreline radius >= 4.5 m; 4.75 used for margin).
+discipline: trackdrive
+method: mixed
+length_min: 220.0
+length_max: 480.0
+width_min: 3.0
+width_max: 4.5
+min_center_radius: 4.75
+slalom_prob: 0.35
+slalom_spacing: [9.0, 15.0]

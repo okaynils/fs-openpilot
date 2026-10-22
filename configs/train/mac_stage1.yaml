@@ -1,0 +1,14 @@
+# Stage 1 on Apple Silicon: trunk frozen, cached features -> policy (plan head) + BEV cone head.
+name: mac_stage1
+sim_root: data/sim/v1
+cache_tag: op_b361e952
+stage: 1
+trunk: frozen
+batch_size: 64
+num_workers: 4
+steps: 6000
+lr: 3.0e-4
+lr_policy: 0.3
+warmup: 200
+val_every: 1000
+val_batches: 40

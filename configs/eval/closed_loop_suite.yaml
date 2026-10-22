@@ -1,0 +1,10 @@
+# Closed-loop suite: held-out (test split) trackdrive tracks + fixed skidpad / acceleration layouts.
+tracks: data/tracks/td_v1
+split: test
+n_trackdrive: 8
+laps: 2            # competition is 10; 2 laps keep the suite fast while still testing lap transitions
+skidpad: true
+acceleration: true
+dr_levels: [off, light, heavy]
+seeds: [0]
+max_seconds: 150
