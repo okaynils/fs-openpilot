@@ -178,7 +178,8 @@ def _suite_tracks(cfg: SuiteCfg):
 
 
 def run_suite(suite_path: str | Path, ckpt: str | Path | None, out_dir: str | Path, controller: str = "pp",
-              save_rrd: bool = True, baseline: str = "model") -> dict:
+              save_rrd: bool = True, baseline: str = "model", profile: str | None = None) -> dict:
+  from fsop.profile import load_profile
   from fsop.sim.drive import expert_policy, run_episode
   from fsop.sim.env import CAMERAS
   from fsop.sim.render.panda3d_backend import Panda3DRenderer
@@ -190,6 +191,7 @@ def run_suite(suite_path: str | Path, ckpt: str | Path | None, out_dir: str | Pa
   out_dir = Path(out_dir)
   out_dir.mkdir(parents=True, exist_ok=True)
   renderer = Panda3DRenderer(CAMERAS)
+  team = load_profile(profile)
   if baseline == "expert":
     policy = expert_policy
   elif baseline == "geometric_gt":
@@ -204,7 +206,7 @@ def run_suite(suite_path: str | Path, ckpt: str | Path | None, out_dir: str | Pa
       for seed in cfg.seeds:
         sim = SimCfg(dr=dr, max_time=cfg.max_seconds)
         sim.noise.enabled = False
-        env = FSEnv(track, sim, seed=seed, renderer=renderer)
+        env = FSEnv(track, sim, seed=seed, renderer=renderer, profile=team)
         if hasattr(policy, "reset"):
           policy.reset()
         name = f"{track.id}_{dr}_s{seed}"
@@ -221,7 +223,8 @@ def run_suite(suite_path: str | Path, ckpt: str | Path | None, out_dir: str | Pa
         print(f"{name}: {summ['result']} laps {summ['n_laps']} doo {summ['doo']} oc {summ['oc']} "
               f"progress {summ['progress']:.2f} time {summ['time']}")
   agg = aggregate(results)
-  report = {"ckpt": str(ckpt), "baseline": baseline, "controller": controller, "suite": raw, "runs": results,
+  report = {"ckpt": str(ckpt), "baseline": baseline, "controller": controller, "suite": raw,
+            "profile": team.name, "runs": results,
             "aggregate": agg}
   (out_dir / "report.json").write_text(json.dumps(report, indent=1, default=float))
   (out_dir / "report.md").write_text(markdown_report(report))

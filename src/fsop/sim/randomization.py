@@ -14,8 +14,8 @@ class DRCfg:
   cone_jitter: float = 0.05  # [m] position noise applied at sim time
   cone_missing: float = 0.02  # probability a boundary cone is removed
   cone_extra: float = 0.0  # extra orange/unknown cones per 100 m
-  cam_height: tuple[float, float] = (1.0, 1.2)
-  cam_pitch_deg: float = 1.0  # +/- range
+  cam_height_jitter: float = 0.1  # +/- m around the profile's nominal mount height
+  cam_pitch_deg: float = 1.0  # +/- range around the nominal mount angles
   cam_roll_deg: float = 0.5
   cam_yaw_deg: float = 0.5
   image_noise: float = 2.0  # max gaussian sigma (in 0..255)
@@ -26,9 +26,9 @@ class DRCfg:
 
 def dr_preset(level: str) -> DRCfg:
   if level == "off":
-    return DRCfg("off", 0.0, 0.0, 0.0, (1.1, 1.1), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, (1.0, 1.0))
+    return DRCfg("off", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, (1.0, 1.0))
   if level == "heavy":
-    return DRCfg("heavy", 0.12, 0.08, 2.0, (0.8, 1.3), 3.0, 1.5, 1.5, 6.0, 0.3, 0.5, (0.6, 1.4))
+    return DRCfg("heavy", 0.12, 0.08, 2.0, 0.25, 3.0, 1.5, 1.5, 6.0, 0.3, 0.5, (0.6, 1.4))
   return DRCfg()
 
 
@@ -47,7 +47,7 @@ class SceneDR:
   ground_tint: tuple[float, float, float] = (1.0, 1.0, 1.0)
   grass_ring: bool = True
   cone_brightness_sigma: float = 0.05
-  cam_height: float = 1.1
+  cam_dz: float = 0.0  # mount perturbations relative to the team profile's nominal camera mount
   cam_pitch: float = 0.0
   cam_roll: float = 0.0
   cam_yaw: float = 0.0
@@ -64,7 +64,7 @@ class SceneDR:
 
 def sample_scene(rng: np.random.Generator, cfg: DRCfg) -> SceneDR:
   if cfg.level == "off":
-    return SceneDR(seed=int(rng.integers(1 << 30)), cam_height=float(cfg.cam_height[0]), noise_sigma=0.0)
+    return SceneDR(seed=int(rng.integers(1 << 30)), noise_sigma=0.0)
   heavy = cfg.level == "heavy"
   warm = rng.uniform(0.0, 0.15 if not heavy else 0.3)
   return SceneDR(
@@ -81,7 +81,7 @@ def sample_scene(rng: np.random.Generator, cfg: DRCfg) -> SceneDR:
     ground_tint=tuple(float(v) for v in 1 + rng.normal(0, 0.04, 3)),
     grass_ring=bool(rng.random() < 0.7),
     cone_brightness_sigma=0.1 if heavy else 0.05,
-    cam_height=float(rng.uniform(*cfg.cam_height)),
+    cam_dz=float(rng.uniform(-cfg.cam_height_jitter, cfg.cam_height_jitter)),
     cam_pitch=float(np.deg2rad(rng.uniform(-cfg.cam_pitch_deg, cfg.cam_pitch_deg))),
     cam_roll=float(np.deg2rad(rng.uniform(-cfg.cam_roll_deg, cfg.cam_roll_deg))),
     cam_yaw=float(np.deg2rad(rng.uniform(-cfg.cam_yaw_deg, cfg.cam_yaw_deg))),

@@ -19,9 +19,11 @@ from fsop.sim.recorder import EpisodeWriter
 
 
 def dagger_round(ckpt: str | Path, tracks: list, out_dir: str | Path, seconds: float = 40.0, beta: float = 0.2,
-                 dr: str = "light", seed: int = 0, record_every: int = 4) -> list[dict]:
+                 dr: str = "light", seed: int = 0, record_every: int = 4, profile: str | None = None) -> list[dict]:
+  from fsop.profile import load_profile
   from fsop.sim.render.panda3d_backend import Panda3DRenderer
 
+  team = load_profile(profile)
   out_dir = Path(out_dir)
   renderer = Panda3DRenderer(CAMERAS)
   policy = ModelPolicy.from_checkpoint(ckpt)
@@ -30,7 +32,7 @@ def dagger_round(ckpt: str | Path, tracks: list, out_dir: str | Path, seconds: f
   for i, track in enumerate(tracks):
     cfg = SimCfg(dr=dr, random_start=track.closed, max_time=seconds)
     cfg.noise.enabled = False
-    env = FSEnv(track, cfg, seed=seed + i, renderer=renderer)
+    env = FSEnv(track, cfg, seed=seed + i, renderer=renderer, profile=team)
     policy.reset()
     eid = f"dagger_{Path(str(ckpt)).parent.parent.name}_{i:04d}_{track.id}"
     w = EpisodeWriter(out_dir, env, eid, max_frames=int(seconds * env.cfg.fps / record_every) + 2,

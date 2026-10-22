@@ -14,12 +14,15 @@ model_app = typer.Typer(no_args_is_help=True, help="Fetch / convert / verify the
 data_app = typer.Typer(no_args_is_help=True, help="Datasets: FSOCO import, feature caches")
 eval_app = typer.Typer(no_args_is_help=True, help="Open- and closed-loop evaluation")
 viz_app = typer.Typer(no_args_is_help=True, help="Visualization helpers")
+bench_app = typer.Typer(no_args_is_help=True, help="Benchmarks: run, record, regenerate tables")
+camera_app = typer.Typer(no_args_is_help=True, help="Team profiles and real-camera -> model-frame warping")
 for name, sub in (("track", track_app), ("sim", sim_app), ("model", model_app), ("data", data_app),
-                  ("eval", eval_app), ("viz", viz_app)):
+                  ("eval", eval_app), ("viz", viz_app), ("bench", bench_app), ("camera", camera_app)):
   app.add_typer(sub, name=name)
 
 DEFAULT_ONNX = "artifacts/models/driving_supercombo_b361e952.onnx"
 PREP_DIR = "artifacts/models/prep"
+PROFILE_HELP = "team profile yaml (configs/profiles/*.yaml); default: built-in reference car"
 
 
 # ---------------------------------------------------------------------------------------------- track
@@ -97,7 +100,8 @@ def track_preview(path: Path, png: Path | None = None, rerun: bool = False, limi
 def sim_drive(track: str = typer.Option("skidpad", help="track json | skidpad | acceleration"),
               dr: str = "light", seed: int = 0, noise: bool = False, ckpt: Path | None = None,
               save: Path | None = typer.Option(None, help="write .rrd instead of spawning the viewer"),
-              max_seconds: float = 0.0, controller: str = "pp"):
+              max_seconds: float = 0.0, controller: str = "pp",
+              profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
   """Drive one episode (expert, or a checkpoint with --ckpt) with Rerun visualization."""
   from fsop.sim.drive import expert_policy, run_episode
   from fsop.sim.env import FSEnv, SimCfg
@@ -106,7 +110,9 @@ def sim_drive(track: str = typer.Option("skidpad", help="track json | skidpad | 
   t = _load_track(track)
   cfg = SimCfg(dr=dr, max_time=max_seconds)
   cfg.noise.enabled = noise
-  env = FSEnv(t, cfg, seed=seed)
+  from fsop.profile import load_profile
+
+  env = FSEnv(t, cfg, seed=seed, profile=load_profile(profile))
   policy = expert_policy
   if ckpt is not None:
     from fsop.eval.closed_loop import ModelPolicy
@@ -121,12 +127,13 @@ def sim_drive(track: str = typer.Option("skidpad", help="track json | skidpad | 
 @sim_app.command("record")
 def sim_record(tracks: Path = typer.Option(..., help="track set directory (fsop track gen)"),
                out: Path = typer.Option(...), workers: int = 4, seconds: float = 40.0, seed: int = 0,
-               skidpad: int = 10, accel: int = 10, standing: float = 0.15):
+               skidpad: int = 10, accel: int = 10, standing: float = 0.15,
+               profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
   """Record an expert dataset (noise injection, DR mix, counterfactual plan labels)."""
   from fsop.sim.batch_record import plan_dataset, record_dataset
 
   specs = plan_dataset(str(tracks), n_standing=standing, n_skidpad=skidpad, n_accel=accel, max_seconds=seconds,
-                       seed=seed)
+                       seed=seed, profile=str(profile or ""))
   idx = record_dataset(specs, str(out), workers=workers)
   typer.echo(f"{len(idx)} episodes, {sum(e['frames'] for e in idx)} frames in {out}")
 
@@ -218,18 +225,19 @@ def eval_open_loop(dataset: Path = typer.Option(...), ckpt: Path | None = None, 
 def eval_closed_loop(ckpt: Path | None = None, suite: Path = Path("configs/eval/closed_loop_suite.yaml"),
                      out: Path = Path("runs/closed_loop"), controller: str = "pp", rrd: bool = True,
                      baseline: str = typer.Option(
-                       "model", help="model | openpilot | geometric_gt | geometric_model | expert")):
+                       "model", help="model | openpilot | geometric_gt | geometric_model | expert"),
+                     profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
   """Closed-loop suite in the simulator with the FSG referee."""
   from fsop.eval.closed_loop import run_suite
 
-  r = run_suite(suite, ckpt, out, controller=controller, save_rrd=rrd, baseline=baseline)
+  r = run_suite(suite, ckpt, out, controller=controller, save_rrd=rrd, baseline=baseline, profile=profile)
   typer.echo(json.dumps(r["aggregate"], indent=1, default=float))
 
 
 @eval_app.command("dagger")
 def eval_dagger(ckpt: Path = typer.Option(...), tracks: Path = Path("data/tracks/td_v1"),
                 dataset: Path = Path("data/sim/v1"), n: int = 20, seconds: float = 40.0, beta: float = 0.2,
-                dr: str = "light", seed: int = 0):
+                dr: str = "light", seed: int = 0, profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
   """DAgger round: the checkpoint drives train-split tracks, the expert labels; appends to the dataset."""
   from fsop.eval.dagger import append_to_index, dagger_round
   from fsop.track.batch import split_ids
@@ -238,7 +246,7 @@ def eval_dagger(ckpt: Path = typer.Option(...), tracks: Path = Path("data/tracks
   idx = json.loads((tracks / "index.json").read_text())["tracks"]
   train = set(split_ids(idx)["train"])
   sel = [load_json(tracks / r["path"]) for r in idx if r["id"] in train][:n]
-  rows = dagger_round(ckpt, sel, dataset, seconds=seconds, beta=beta, dr=dr, seed=seed)
+  rows = dagger_round(ckpt, sel, dataset, seconds=seconds, beta=beta, dr=dr, seed=seed, profile=profile)
   append_to_index(dataset, rows)
   typer.echo(f"added {len(rows)} DAgger episodes ({sum(r['frames'] for r in rows)} frames) to {dataset}; "
              "re-run `fsop data cache-features` before stage-1 training")
@@ -264,15 +272,116 @@ def viz_dataset(episode: Path, save: Path | None = None, ckpt: Path | None = Non
 def viz_video(ckpt: Path = typer.Option(...),
               track: str = typer.Option("gen:7", help="track json | skidpad | acceleration | gen:<seed>"),
               out: Path = Path("artifacts/videos/run.mp4"), laps: int = 1, seconds: float = 90.0, dr: str = "light",
-              seed: int = 0):
+              seed: int = 0, profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
   """Closed-loop MP4: cameras with projected plan + detected cones, track map, ego map, HUD."""
   from fsop.viz.video import render_run
 
   t = _load_track(track)
   if t.discipline == "trackdrive":
     t.laps = laps
-  r = render_run(ckpt, t, out, seconds=seconds, dr=dr, seed=seed)
+  r = render_run(ckpt, t, out, seconds=seconds, dr=dr, seed=seed, profile=profile)
   typer.echo(json.dumps({k: r[k] for k in ("path", "frames", "result", "doo", "oc", "laps")}, default=float))
+
+
+@viz_app.command("gif")
+def viz_gif(video: Path, out: Path = Path("docs/media/demo.gif"), start: float = 5.0, duration: float = 13.0,
+            fps: float = 10.0, width: int = 720):
+  """Convert an MP4 (e.g. from `fsop viz video`) into a README-sized GIF."""
+  from fsop.viz.video import mp4_to_gif
+
+  p = mp4_to_gif(video, out, start_s=start, duration_s=duration, fps=fps, width=width, colors=192)
+  typer.echo(f"{p} ({p.stat().st_size / 1e6:.1f} MB)")
+
+
+# ---------------------------------------------------------------------------------------------- bench
+@bench_app.command("run")
+def bench_run(name: str = typer.Option(..., help="short id, e.g. m1_stage2"), ckpt: Path | None = None,
+              model: str = typer.Option("", help="human-readable model description"),
+              dataset: Path = Path("data/sim/v1"), suite: Path = Path("configs/eval/closed_loop_quick.yaml"),
+              baseline: str = "model", train_hardware: str = "", notes: str = "",
+              profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
+  """Run the standard benchmark (open loop on test tracks + closed-loop quick suite) and record it."""
+  from fsop.bench import make_record, save_record, write_tables
+  from fsop.eval.closed_loop import run_suite
+  from fsop.eval.open_loop import evaluate
+
+  use = None if baseline == "openpilot" else ckpt
+  ol = evaluate(dataset, use, split="test") if baseline in ("model", "openpilot") else None
+  cl = run_suite(suite, ckpt, Path("runs/bench") / name, save_rrd=False, baseline=baseline, profile=profile)
+  rec = make_record(name, model or baseline, ol, cl, ckpt=str(use) if use else None, dataset=str(dataset),
+                    notes=notes, train_hardware=train_hardware)
+  typer.echo(f"wrote {save_record(rec)}")
+  write_tables()
+
+
+@bench_app.command("add")
+def bench_add(name: str = typer.Option(...), model: str = typer.Option(...), open_loop: Path | None = None,
+              closed_loop: Path | None = None, ckpt: Path | None = None, dataset: Path = Path("data/sim/v1"),
+              train_hardware: str = "", notes: str = "", date: str | None = None):
+  """Record a benchmark from existing `eval open-loop --out` / `eval closed-loop` report files."""
+  from fsop.bench import make_record, save_record, write_tables
+
+  ol = json.loads(open_loop.read_text()) if open_loop else None
+  cl = json.loads(closed_loop.read_text()) if closed_loop else None
+  rec = make_record(name, model, ol, cl, ckpt=str(ckpt) if ckpt else None, dataset=str(dataset), notes=notes,
+                    train_hardware=train_hardware, date=date)
+  typer.echo(f"wrote {save_record(rec)}")
+  write_tables()
+
+
+@bench_app.command("table")
+def bench_table():
+  """Regenerate benchmarks/README.md and the README summary table from benchmarks/results/."""
+  from fsop.bench import write_tables
+
+  write_tables()
+  typer.echo("updated benchmarks/README.md and README.md")
+
+
+# ---------------------------------------------------------------------------------------------- camera
+@camera_app.command("show")
+def camera_show(profile: Path):
+  """Print a parsed team profile (catches typos: unknown keys are errors)."""
+  import yaml
+
+  from fsop.profile import load_profile
+
+  typer.echo(yaml.safe_dump(load_profile(profile).to_dict(), sort_keys=False))
+
+
+@camera_app.command("warp")
+def camera_warp(profile: Path = typer.Option(..., help=PROFILE_HELP),
+                image: list[str] = typer.Option(..., help="camera_name=path/to/image (repeat per camera)"),
+                out: Path = Path("artifacts/camera_warp.png")):
+  """Preview how your camera images map into the model's road/wide input slots (horizon + 10/20 m lines)."""
+  import cv2
+  import numpy as np
+
+  from fsop.geometry.camera import CAMERA_MODELS
+  from fsop.geometry.warp import ModelFrameWarper
+  from fsop.profile import load_profile
+
+  prof = load_profile(profile)
+  imgs = {}
+  for spec in image:
+    name, path = spec.split("=", 1)
+    imgs[name] = cv2.cvtColor(cv2.imread(path), cv2.COLOR_BGR2RGB)
+  slots = ModelFrameWarper(prof)(imgs)
+  T = prof.mount.T_ego_cam()
+  tiles = []
+  for slot, im in slots.items():
+    im = im.copy()
+    for d, col in ((10.0, (255, 220, 0)), (20.0, (255, 120, 0)), (1e4, (255, 0, 255))):
+      pts = np.array([[d, y, 0.0] for y in np.linspace(-6, 6, 50)])
+      Ti = np.linalg.inv(T)
+      uv, z = CAMERA_MODELS[slot].project_cam(pts @ Ti[:3, :3].T + Ti[:3, 3])
+      ok = z > 0
+      cv2.polylines(im, [uv[ok].astype(np.int32)], False, col, 1, cv2.LINE_AA)
+    cv2.putText(im, f"{slot} slot", (8, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+    tiles.append(im)
+  out.parent.mkdir(parents=True, exist_ok=True)
+  cv2.imwrite(str(out), cv2.cvtColor(np.vstack(tiles), cv2.COLOR_RGB2BGR))
+  typer.echo(f"wrote {out} (magenta = horizon, yellow/orange = ground at 10/20 m)")
 
 
 if __name__ == "__main__":

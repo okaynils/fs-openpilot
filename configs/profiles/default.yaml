@@ -1,0 +1,49 @@
+# Default profile: a generic electric FS car with openpilot-like dual cameras at ~1.1 m.
+# This is what the reference benchmarks were trained and evaluated with.
+name: default
+team: fs-openpilot reference
+vehicle:
+  mass: 230.0
+  iz: 110.0
+  lf: 0.80
+  lr: 0.75
+  track: 1.20
+  length: 2.90
+  width: 1.40
+  front_overhang: 0.80
+  rear_overhang: 0.55
+  cf: 32000.0
+  cr: 36000.0
+  mu: 1.4
+  max_steer_deg: 24.0
+  max_steer_rate_deg: 150.0
+  max_accel: 7.0
+  max_brake: 13.0
+  tau_steer: 0.06
+  tau_accel: 0.12
+mount:            # nominal camera position on the car (ego frame: x fwd, y left, z up; CoG on the ground)
+  x: 0.0
+  y: 0.0
+  z: 1.1
+  roll_deg: 0.0
+  pitch_deg: 0.0  # positive = looking down
+  yaw_deg: 0.0
+cameras:          # physical cameras on the real car (only needed for real images / deployment)
+  - name: road    # openpilot comma 3X road camera (AR0231): 1928x1208, fl 2648
+    width: 1928
+    height: 1208
+    fx: 2648.0
+    fy: 2648.0
+    cx: 964.0
+    cy: 604.0
+    slots: [road]
+  - name: wide    # comma 3X wide camera (fisheye, fl 567)
+    width: 1928
+    height: 1208
+    fx: 567.0
+    fy: 567.0
+    cx: 964.0
+    cy: 604.0
+    fisheye: true
+    dist: [0.0, 0.0, 0.0, 0.0]
+    slots: [wide]

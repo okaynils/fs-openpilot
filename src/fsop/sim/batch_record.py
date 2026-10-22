@@ -20,6 +20,7 @@ class EpisodeSpec:
   random_start: bool
   max_seconds: float
   noise: bool = True
+  profile: str = ""
 
 
 _RENDERER = None
@@ -28,6 +29,7 @@ _RENDERER = None
 def _worker(args):
   global _RENDERER
   specs, out_dir = args
+  from fsop.profile import load_profile
   from fsop.sim.env import CAMERAS, FSEnv, SimCfg
   from fsop.sim.recorder import record_episode
   from fsop.sim.render.panda3d_backend import Panda3DRenderer
@@ -47,7 +49,7 @@ def _worker(args):
       tr = load_json(sp.track_path)
     cfg = SimCfg(dr=sp.dr, random_start=sp.random_start)
     cfg.noise.enabled = sp.noise
-    env = FSEnv(tr, cfg, seed=sp.seed, renderer=renderer)
+    env = FSEnv(tr, cfg, seed=sp.seed, renderer=renderer, profile=load_profile(sp.profile or None))
     meta = record_episode(env, out_dir, sp.episode_id, max_seconds=sp.max_seconds)
     rows.append({"id": sp.episode_id, "track_id": tr.id, "discipline": tr.discipline, "frames": meta["frames"],
                  "dr": sp.dr, "result": meta["summary"]["result"], "doo": meta["summary"]["doo"]})
@@ -56,7 +58,7 @@ def _worker(args):
 
 def plan_dataset(track_dir: str, n_random: int = 1, n_standing: float = 0.15, n_skidpad: int = 10,
                  n_accel: int = 10, max_seconds: float = 40.0, dr_mix=(("light", 0.6), ("heavy", 0.3), ("off", 0.1)),
-                 seed: int = 0) -> list[EpisodeSpec]:
+                 seed: int = 0, profile: str = "") -> list[EpisodeSpec]:
   rng = np.random.default_rng(seed)
   idx = json.loads((Path(track_dir) / "index.json").read_text())["tracks"]
   levels, probs = zip(*dr_mix, strict=True)
@@ -82,6 +84,8 @@ def plan_dataset(track_dir: str, n_random: int = 1, n_standing: float = 0.15, n_
     specs.append(EpisodeSpec(f"ep{k:05d}_accel", f"acceleration:{w:.2f}", seed + k, dr(), False, 30.0,
                              noise=i % 2 == 0))
     k += 1
+  for sp in specs:
+    sp.profile = profile
   return specs
 
 

@@ -110,7 +110,7 @@ def ego_map(gt_xy, gt_cls, det_xy, det_cls, plan, gt_plan, size=(512, 384), rng=
 
 
 def render_run(ckpt, track, out: str | Path, seconds: float = 60.0, dr: str = "light", seed: int = 0,
-               fps: int = 20, every: int = 1) -> dict:
+               fps: int = 20, every: int = 1, profile: str | None = None) -> dict:
   from fsop.data.targets import visible_cones, world_to_ego
   from fsop.eval.closed_loop import ModelPolicy
   from fsop.sim.env import FSEnv, SimCfg
@@ -118,7 +118,9 @@ def render_run(ckpt, track, out: str | Path, seconds: float = 60.0, dr: str = "l
 
   cfg = SimCfg(dr=dr, max_time=seconds)
   cfg.noise.enabled = False
-  env = FSEnv(track, cfg, seed=seed)
+  from fsop.profile import load_profile
+
+  env = FSEnv(track, cfg, seed=seed, profile=load_profile(profile))
   policy = ModelPolicy.from_checkpoint(ckpt)
   out = Path(out)
   out.parent.mkdir(parents=True, exist_ok=True)
@@ -167,3 +169,39 @@ def render_run(ckpt, track, out: str | Path, seconds: float = 60.0, dr: str = "l
     obs = env.step(steer, accel, add_noise=False)
   vw.release()
   return {"frames": n, "path": str(out), **env.referee.summary()}
+
+
+def mp4_to_gif(src: str | Path, out: str | Path, start_s: float = 0.0, duration_s: float = 12.0, fps: float = 10.0,
+               width: int = 640, colors: int = 128) -> Path:
+  """Convert a clip of an MP4 to an optimized GIF (shared palette, no dithering) for READMEs."""
+  from PIL import Image
+
+  cap = cv2.VideoCapture(str(src))
+  src_fps = cap.get(cv2.CAP_PROP_FPS) or 20.0
+  step = max(int(round(src_fps / fps)), 1)
+  first, last = int(start_s * src_fps), int((start_s + duration_s) * src_fps)
+  frames = []
+  cap.set(cv2.CAP_PROP_POS_FRAMES, first)
+  for i in range(first, last):
+    ok, fr = cap.read()
+    if not ok:
+      break
+    if (i - first) % step:
+      continue
+    h = int(round(fr.shape[0] * width / fr.shape[1]))
+    fr = cv2.resize(fr, (width, h), interpolation=cv2.INTER_AREA)
+    frames.append(Image.fromarray(fr[..., ::-1]))
+  cap.release()
+  if not frames:
+    raise ValueError(f"no frames read from {src}")
+  # shared palette from a mosaic of frames across the clip (keeps small-but-important colours like cones)
+  picks = frames[:: max(len(frames) // 6, 1)][:6]
+  mosaic = Image.new("RGB", (picks[0].width, picks[0].height * len(picks)))
+  for i, f in enumerate(picks):
+    mosaic.paste(f, (0, i * f.height))
+  palette = mosaic.quantize(colors=colors, method=Image.Quantize.MEDIANCUT)
+  q = [f.quantize(palette=palette, dither=Image.Dither.NONE) for f in frames]
+  out = Path(out)
+  out.parent.mkdir(parents=True, exist_ok=True)
+  q[0].save(out, save_all=True, append_images=q[1:], duration=int(round(1000 * step / src_fps)), loop=0, optimize=True)
+  return out

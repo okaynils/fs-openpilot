@@ -68,16 +68,20 @@ class Obs:
 class FSEnv:
   def __init__(self, track: Track, cfg: SimCfg | None = None, seed: int = 0, renderer=None,
                vp: VehicleParams | None = None, expert_params: ExpertParams | None = None,
-               dr_cfg: DRCfg | None = None):
+               dr_cfg: DRCfg | None = None, profile=None):
+    from fsop.profile import TeamProfile
+
+    self.profile = profile or TeamProfile()
     self.track = track
     self.cfg = cfg or SimCfg()
     self.seed = seed
     self.rng = np.random.default_rng(seed)
-    self.vp = vp or VehicleParams()
+    self.vp = vp or self.profile.vehicle
     self.dr_cfg = dr_cfg or dr_preset(self.cfg.dr)
     self.scene: SceneDR = sample_scene(self.rng, self.dr_cfg)
-    self.mount = CameraMount(z=self.scene.cam_height, pitch=self.scene.cam_pitch, roll=self.scene.cam_roll,
-                             yaw=self.scene.cam_yaw)
+    m = self.profile.mount  # nominal team mount + per-episode DR perturbation
+    self.mount = CameraMount(x=m.x, y=m.y, z=m.z + self.scene.cam_dz, roll=m.roll + self.scene.cam_roll,
+                             pitch=m.pitch + self.scene.cam_pitch, yaw=m.yaw + self.scene.cam_yaw)
     if expert_params is None:
       expert_params = sample_expert(self.rng, track.discipline) if self.cfg.randomize_expert else ExpertParams()
     self.expert_params = expert_params

@@ -1,0 +1,29 @@
+# Template for your team. Copy to configs/profiles/<team>.yaml and fill in your car.
+# Only keys you set override the defaults (see fsop/profile.py and fsop/sim/vehicle.py).
+name: example_team
+team: Example Racing
+notes: >
+  Single front camera on the main hoop. It feeds both openpilot input slots: the wide slot sees the
+  full FOV, the road slot a 2x zoomed centre crop (the same relation as openpilot's two cameras).
+vehicle:
+  mass: 245.0          # kg, incl. driverless kit, no driver
+  lf: 0.82             # CoG -> front axle [m]
+  lr: 0.71             # CoG -> rear axle [m]
+  track: 1.22
+  width: 1.45
+  max_steer_deg: 22.0
+  mu: 1.5
+mount:
+  x: 0.25              # camera ahead of the CoG [m]
+  z: 1.15              # camera height above ground [m]
+  pitch_deg: 2.0       # tilted slightly down
+cameras:
+  - name: front
+    width: 1920
+    height: 1200
+    fx: 1050.0         # from your calibration (e.g. OpenCV calibrateCamera)
+    fy: 1050.0
+    cx: 960.0
+    cy: 600.0
+    dist: [-0.12, 0.05, 0.0, 0.0, 0.0]   # OpenCV radtan k1, k2, p1, p2, k3
+    slots: [road, wide]
