@@ -15,7 +15,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from fsop.geometry.camera import CAMERA_MODELS, VIEW_FROM_EGO
+from fsop.geometry.camera import CAMERA_MODELS
 from fsop.track.rules import RULES
 
 N_CLS = 4
@@ -178,5 +178,3 @@ def image_targets(key: np.ndarray, box: np.ndarray, cls: np.ndarray, valid: np.n
     pos[ri, ci] = 1.0
   return heat, wh, off, pos
 
-
-_ = VIEW_FROM_EGO

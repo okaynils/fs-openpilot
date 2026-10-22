@@ -22,8 +22,15 @@ import torch
 import zarr
 from torch.utils.data import Dataset
 
-from fsop.data.targets import GRID, bev_targets, cone_boxes_image, frustum_mask, image_targets, visible_cones, \
-  world_to_ego
+from fsop.data.targets import (
+  GRID,
+  bev_targets,
+  cone_boxes_image,
+  frustum_mask,
+  image_targets,
+  visible_cones,
+  world_to_ego,
+)
 from fsop.geometry.camera import CameraMount
 from fsop.geometry.op_frames import ego_to_op_plan
 from fsop.model.temporal import N_FEAT

@@ -100,7 +100,8 @@ def import_fsoco(src: str | Path, out: str | Path, fmt: str = "auto", border: in
         if len(p) < 5:
           continue
         c, cx, cy, bw, bh = int(p[0]), *map(float, p[1:5])
-        boxes.append([(cx - bw / 2) * w, (cy - bh / 2) * h, (cx + bw / 2) * w, (cy + bh / 2) * h, YOLO_CLASSES.get(c, -1)])
+        x1, y1, x2, y2 = (cx - bw / 2) * w, (cy - bh / 2) * h, (cx + bw / 2) * w, (cy + bh / 2) * h
+        boxes.append([x1, y1, x2, y2, YOLO_CLASSES.get(c, -1)])
       team = img_path.stem.split("_")[0]
       images.append({"path": str(img_path.resolve()), "team": team, "w": w, "h": h, "boxes": boxes})
       border = 0  # YOLO exports are already cropped
