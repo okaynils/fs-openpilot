@@ -1,0 +1,73 @@
+{
+ "name": "geometric_gt",
+ "model": "cone-midline planner on ground-truth cones (privileged)",
+ "date": "2026-10-22",
+ "git": "c26627f-dirty",
+ "eval_hardware": {
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "python": "3.12.5",
+  "cpu": "Apple M1",
+  "memory_gb": 16,
+  "torch": "2.14.1",
+  "gpu": "Apple MPS"
+ },
+ "train_hardware": "",
+ "training": {},
+ "data": {
+  "dataset": "data/sim/v1",
+  "episodes": 204,
+  "frames_5hz": 39354,
+  "tracks": 171
+ },
+ "open_loop": {},
+ "closed_loop": {
+  "suite": {
+   "tracks": "data/tracks/td_v1",
+   "split": "test",
+   "n_trackdrive": 3,
+   "laps": 1,
+   "skidpad": true,
+   "acceleration": true,
+   "dr_levels": [
+    "light"
+   ],
+   "seeds": [
+    0
+   ],
+   "max_seconds": 90
+  },
+  "profile": "default",
+  "aggregate": {
+   "acceleration/light": {
+    "runs": 1,
+    "pass_rate": 1.0,
+    "completion": 1.0,
+    "doo_per_run": 0.0,
+    "oc_per_run": 0.0,
+    "mean_time": 6.999999999999876,
+    "rms_lat": 0.059724383654533045
+   },
+   "skidpad/light": {
+    "runs": 1,
+    "pass_rate": 0.0,
+    "completion": 0.28159604213996126,
+    "doo_per_run": 3.0,
+    "oc_per_run": 3.0,
+    "mean_time": null,
+    "rms_lat": 194.12723484171806
+   },
+   "trackdrive/light": {
+    "runs": 3,
+    "pass_rate": 1.0,
+    "completion": 1.0,
+    "doo_per_run": 0.6666666666666666,
+    "oc_per_run": 0.0,
+    "mean_time": 41.53333333333344,
+    "rms_lat": 0.26046061512027413
+   }
+  }
+ },
+ "notes": "upper-bound reference for a modular stack with perfect perception",
+ "schema": 1
+}

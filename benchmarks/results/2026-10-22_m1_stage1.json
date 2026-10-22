@@ -1,0 +1,92 @@
+{
+ "name": "m1_stage1",
+ "model": "supercombo + FS heads, stage 1 (frozen trunk)",
+ "date": "2026-10-22",
+ "git": "c26627f-dirty",
+ "eval_hardware": {
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "python": "3.12.5",
+  "cpu": "Apple M1",
+  "memory_gb": 16,
+  "torch": "2.14.1",
+  "gpu": "Apple MPS"
+ },
+ "train_hardware": "Apple M1 16 GB (MPS)",
+ "training": {
+  "checkpoint": "runs/mac_stage1/ckpt/best.pt",
+  "step": 3000,
+  "stage": 1,
+  "trunk": "frozen",
+  "batch_size": 64,
+  "init_ckpt": "",
+  "sim_root": "data/sim/v1",
+  "fsoco": false
+ },
+ "data": {
+  "dataset": "data/sim/v1",
+  "episodes": 204,
+  "frames_5hz": 39354,
+  "tracks": 171
+ },
+ "open_loop": {
+  "lat_0.5s": 0.1941494196653366,
+  "lat_1.0s": 0.7452079057693481,
+  "lat_2.0s": 2.688225269317627,
+  "long_1.0s": 1.5182408094406128,
+  "long_2.0s": 3.2713842391967773,
+  "ade_4s": 3.7441565990448,
+  "heading_1s_deg": 7.91632604598999,
+  "bev_f1": 0.12279874213836478,
+  "n_frames": 3315
+ },
+ "closed_loop": {
+  "suite": {
+   "tracks": "data/tracks/td_v1",
+   "split": "test",
+   "n_trackdrive": 3,
+   "laps": 1,
+   "skidpad": true,
+   "acceleration": true,
+   "dr_levels": [
+    "light"
+   ],
+   "seeds": [
+    0
+   ],
+   "max_seconds": 90
+  },
+  "profile": "default",
+  "aggregate": {
+   "acceleration/light": {
+    "runs": 1,
+    "pass_rate": 1.0,
+    "completion": 1.0,
+    "doo_per_run": 0.0,
+    "oc_per_run": 0.0,
+    "mean_time": 6.049999999999885,
+    "rms_lat": 0.09116052556468436
+   },
+   "skidpad/light": {
+    "runs": 1,
+    "pass_rate": 0.0,
+    "completion": 0.45190590603612435,
+    "doo_per_run": 25.0,
+    "oc_per_run": 12.0,
+    "mean_time": null,
+    "rms_lat": 76.05002836908493
+   },
+   "trackdrive/light": {
+    "runs": 3,
+    "pass_rate": 0.0,
+    "completion": 0.2531705520032008,
+    "doo_per_run": 8.666666666666666,
+    "oc_per_run": 4.666666666666667,
+    "mean_time": 64.0,
+    "rms_lat": 205.79149153200547
+   }
+  }
+ },
+ "notes": "stopped at 3k/6k steps (plateau)",
+ "schema": 1
+}

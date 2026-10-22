@@ -1,9 +1,13 @@
 """Rendered cones must appear where the pinhole model projects them (exact model-frame geometry)."""
 
+import os
+
 import numpy as np
 import pytest
 
 panda3d = pytest.importorskip("panda3d")
+if os.environ.get("FSOP_SKIP_RENDER"):
+  pytest.skip("rendering disabled (FSOP_SKIP_RENDER)", allow_module_level=True)
 
 from fsop.geometry.camera import CAMERA_MODELS, CameraMount, project_world, se2_to_se3  # noqa: E402
 from fsop.sim.randomization import SceneDR  # noqa: E402

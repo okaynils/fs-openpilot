@@ -1,0 +1,94 @@
+{
+ "name": "m1_stage2",
+ "model": "supercombo + FS heads, stage 2 (last trunk stage fine-tuned)",
+ "date": "2026-10-22",
+ "git": "c26627f-dirty",
+ "eval_hardware": {
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "python": "3.12.5",
+  "cpu": "Apple M1",
+  "memory_gb": 16,
+  "torch": "2.14.1",
+  "gpu": "Apple MPS"
+ },
+ "train_hardware": "Apple M1 16 GB (MPS)",
+ "training": {
+  "checkpoint": "runs/mac_stage2/ckpt/best.pt",
+  "step": 3000,
+  "stage": 2,
+  "trunk": "last",
+  "batch_size": 12,
+  "init_ckpt": "runs/mac_stage1/ckpt/best.pt",
+  "sim_root": "data/sim/v1",
+  "fsoco": false
+ },
+ "data": {
+  "dataset": "data/sim/v1",
+  "episodes": 204,
+  "frames_5hz": 39354,
+  "tracks": 171
+ },
+ "open_loop": {
+  "lat_0.5s": 0.1213303804397583,
+  "lat_1.0s": 0.4275868535041809,
+  "lat_2.0s": 1.5682882070541382,
+  "long_1.0s": 1.1871556043624878,
+  "long_2.0s": 2.5488152503967285,
+  "ade_4s": 2.599844455718994,
+  "heading_1s_deg": 4.0607523918151855,
+  "bev_f1": 0.13281755342761115,
+  "bev_imgproj_f1": 0.39695609037629515,
+  "bev_imgproj_pos_err": 0.1706685910325966,
+  "n_frames": 3315
+ },
+ "closed_loop": {
+  "suite": {
+   "tracks": "data/tracks/td_v1",
+   "split": "test",
+   "n_trackdrive": 3,
+   "laps": 1,
+   "skidpad": true,
+   "acceleration": true,
+   "dr_levels": [
+    "light"
+   ],
+   "seeds": [
+    0
+   ],
+   "max_seconds": 90
+  },
+  "profile": "default",
+  "aggregate": {
+   "acceleration/light": {
+    "runs": 1,
+    "pass_rate": 1.0,
+    "completion": 1.0,
+    "doo_per_run": 0.0,
+    "oc_per_run": 0.0,
+    "mean_time": 6.249999999999881,
+    "rms_lat": 0.10134555579511936
+   },
+   "skidpad/light": {
+    "runs": 1,
+    "pass_rate": 0.0,
+    "completion": 0.3184197964958884,
+    "doo_per_run": 17.0,
+    "oc_per_run": 15.0,
+    "mean_time": null,
+    "rms_lat": 37.03728212414478
+   },
+   "trackdrive/light": {
+    "runs": 3,
+    "pass_rate": 1.0,
+    "completion": 1.0,
+    "doo_per_run": 7.666666666666667,
+    "oc_per_run": 1.3333333333333333,
+    "mean_time": 68.25000000000024,
+    "rms_lat": 0.8935929409060953
+   }
+  }
+ },
+ "notes": "dataset v1 (sim only, no FSOCO); stage 1 3k steps -> stage 2 3k steps @ bs 12",
+ "schema": 1
+}

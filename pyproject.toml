@@ -1,10 +1,19 @@
 [project]
 name = "fsop"
-version = "0.1.0"
-description = "Fine-tuning openpilot's driving model for Formula Student Driverless"
+version = "0.2.0"
+description = "Fine-tune openpilot's end-to-end driving model for Formula Student Driverless: tracks, simulator, training, evaluation, deployment"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 license = { text = "MIT" }
+authors = [{ name = "Nils Fahrni" }]
+keywords = ["formula student", "fsae", "driverless", "openpilot", "autonomous driving", "simulation", "end-to-end"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
 dependencies = [
   "numpy>=2.0",
   "scipy>=1.13",
@@ -35,6 +44,11 @@ sim = [
 yolo = ["ultralytics>=8.3"]
 mpc = ["casadi>=3.6"]
 wandb = ["wandb>=0.18"]
+
+[project.urls]
+Homepage = "https://github.com/okaynils/fs-openpilot"
+Documentation = "https://github.com/okaynils/fs-openpilot/tree/main/docs"
+Changelog = "https://github.com/okaynils/fs-openpilot/blob/main/CHANGELOG.md"
 
 [project.scripts]
 fsop = "fsop.cli:app"
