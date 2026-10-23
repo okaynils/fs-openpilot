@@ -34,6 +34,14 @@ Both are virtual pinhole cameras at your `mount`.
 - **Mount height.** Train with your real height. The simulator randomizes ±0.1 m (light DR) to
   ±0.25 m (heavy DR) around it. Higher mounts see the ground closer to the car: at 1.1 m the first
   visible ground is about 5 m ahead in the road slot.
+- **Steeply pitched cameras.** openpilot's virtual cameras look roughly level. If your camera looks
+  steeply down (common on FS cars, e.g. 30–40° to keep the nose and near field in view), a level
+  virtual camera only sees the top sliver of your image.
+  - Set `mount.pitch_deg` so the wide slot covers your visible ground band, and give the physical
+    camera the remaining pitch (`cameras[].pitch_deg`).
+  - Then retrain on simulation with that profile (`configs/train/adapt_stage2.yaml`). The sim renders
+    the same pitched virtual camera.
+  - Because both slots share one mount, the road slot then becomes a zoomed near-field view.
 - **Calibration.** Use standard OpenCV intrinsic calibration (checkerboard). For orientation, put the
   car on flat ground and adjust `pitch_deg` and `roll_deg` until
   `fsop camera warp --profile <p> --image front=frame.jpg` shows the magenta horizon line on the real
@@ -66,6 +74,11 @@ Override any key with `-o key=value`. Each run writes TensorBoard logs to `runs/
 validation snapshots to `runs/<name>/viz/*.rrd`.
 
 ## 4. Evaluation
+
+**On real video** (no ground truth): run
+`fsop viz real --video onboard.mp4 --model <onnx|pt> --profile <p> --out artifacts/videos/real.mp4`.
+It renders the plan and cones projected back into the original frames, the two model inputs and an
+ego view. It's the quickest sanity check of a profile and of sim-to-real transfer.
 
 - `fsop eval open-loop --dataset … --ckpt …` gives trajectory errors and cone P/R/F1 on held-out tracks.
 - `fsop eval closed-loop --ckpt … --profile <p>` runs the suite with the FSG referee. The suites are

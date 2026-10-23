@@ -1,0 +1,12 @@
+# Adapt the reference model to a new team profile (camera mount / lens / vehicle):
+#   1. fsop sim record --profile <p> --out data/sim/<p>     2. fsop data cache-features --dataset data/sim/<p>
+#   3. fsop train --cfg configs/train/adapt_stage2.yaml -o sim_root=data/sim/<p> -o name=adapt_<p>
+# Starts from the reference stage-2 checkpoint (plan + cone heads + tuned trunk) instead of from scratch.
+defaults: [mac_stage2.yaml]
+name: adapt_stage2
+init_ckpt: runs/mac_stage2/ckpt/best.pt
+steps: 2500
+warmup: 100
+lr: 2.0e-4
+lr_trunk: 0.3
+val_every: 500

@@ -283,6 +283,20 @@ def viz_video(ckpt: Path = typer.Option(...),
   typer.echo(json.dumps({k: r[k] for k in ("path", "frames", "result", "doo", "oc", "laps")}, default=float))
 
 
+@viz_app.command("real")
+def viz_real(video: Path = typer.Option(..., help="onboard video file"),
+             model: Path = typer.Option(..., help="exported .onnx or a .pt checkpoint"),
+             profile: Path = typer.Option(..., help="profile describing the video's camera (and mount)"),
+             out: Path = Path("artifacts/videos/real.mp4"), start: float = 0.0, duration: float | None = None,
+             label: str = "", min_score: float = 0.3):
+  """Run the model on a real onboard video: projected plan + cones, model inputs, ego view."""
+  from fsop.viz.real_video import render_real_video
+
+  r = render_real_video(video, model, profile, out, start_s=start, duration_s=duration, label=label,
+                        min_score=min_score)
+  typer.echo(json.dumps(r))
+
+
 @viz_app.command("gif")
 def viz_gif(video: Path, out: Path = Path("docs/media/demo.gif"), start: float = 5.0, duration: float = 13.0,
             fps: float = 10.0, width: int = 720):

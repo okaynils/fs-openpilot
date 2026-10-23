@@ -36,6 +36,23 @@ note below and, if it changes model quality, a benchmark record.
 
 Short, dated notes on what was tried and what was learned. Newest first.
 
+- **2026-10-23: first real onboard video** (FSG onboard clip, 52 s, 878×522 screen recording; uncalibrated
+  wide-angle camera, estimated ~1.2 m high and pitched ~36° down)
+  - **Zero-shot** (reference model, level virtual camera): about 60% of the wide input lies above the
+    real image (black). The plan is stuck in a hard left curve and only a few far cones are detected.
+  - **Adapted:** profile with the virtual camera pitched 21° (wide slot covers about 2–26 m), boundary-line
+    DR added, 192 sim episodes recorded, then `adapt_stage2` fine-tuning from the reference model (2.5k
+    steps, about 25 min on the M1).
+    - Sim validation lateral error at 1 s: 3.9 m → 1.0 m.
+    - On the real clip the plan follows some turns and is no longer biased left, but cone detection is
+      sparse (no real images in training yet).
+  - **Takeaways:**
+    - Real FS cameras are often steeply pitched, so profiles need a per-camera virtual pitch.
+    - Both slots share one mount, so the road slot loses its long-range role. Per-slot mounts are worth
+      adding.
+    - FSOCO in stage 2 is the obvious next step for the cone head.
+    - The cone colour layout in that clip didn't consistently follow blue-left/yellow-right.
+
 - **2026-10-22: first end-to-end results** (M1, dataset v1: 160 tracks, 39k frames)
   - **Frozen trunk:** stage 1 plateaus. The road-trained features carry little cone geometry.
   - **Fine-tuning the last trunk stage** (stage 2) cuts the 1 s lateral plan error from 1.28 m

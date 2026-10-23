@@ -47,6 +47,10 @@ class SceneDR:
   ground_tint: tuple[float, float, float] = (1.0, 1.0, 1.0)
   grass_ring: bool = True
   cone_brightness_sigma: float = 0.05
+  boundary_lines: bool = False  # chalk/paint lines along the track boundaries (common at FS events)
+  line_color: tuple[float, float, float] = (0.85, 0.85, 0.8)
+  line_width: float = 0.08
+  line_gap_prob: float = 0.1
   cam_dz: float = 0.0  # mount perturbations relative to the team profile's nominal camera mount
   cam_pitch: float = 0.0
   cam_roll: float = 0.0
@@ -81,6 +85,11 @@ def sample_scene(rng: np.random.Generator, cfg: DRCfg) -> SceneDR:
     ground_tint=tuple(float(v) for v in 1 + rng.normal(0, 0.04, 3)),
     grass_ring=bool(rng.random() < 0.7),
     cone_brightness_sigma=0.1 if heavy else 0.05,
+    boundary_lines=bool(rng.random() < 0.5),
+    line_color=tuple(float(v) for v in np.array((0.85, 0.85, 0.8) if rng.random() < 0.75 else (0.35, 0.8, 0.35))
+                     * rng.uniform(0.75, 1.05)),
+    line_width=float(rng.uniform(0.05, 0.12)),
+    line_gap_prob=float(rng.uniform(0.0, 0.25)),
     cam_dz=float(rng.uniform(-cfg.cam_height_jitter, cfg.cam_height_jitter)),
     cam_pitch=float(np.deg2rad(rng.uniform(-cfg.cam_pitch_deg, cfg.cam_pitch_deg))),
     cam_roll=float(np.deg2rad(rng.uniform(-cfg.cam_roll_deg, cfg.cam_roll_deg))),

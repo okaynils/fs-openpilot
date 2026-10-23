@@ -128,6 +128,10 @@ class Panda3DRenderer:
         grass.setTexScale(TextureStage.getDefault(), (far_hi[0] - far_lo[0]) / 10, (far_hi[1] - far_lo[1]) / 10)
       else:
         grass.setColor(0.3, 0.45, 0.2, 1)
+    if dr.boundary_lines:
+      left, right = track.boundaries()
+      for b in (left, right):
+        self._strip(root, b, dr.line_width, dr.line_color, track.closed, rng, dr.line_gap_prob)
     # distractors: low boxes (barriers / tents / parked cars) away from the track
     from shapely.geometry import LineString, Point
 
@@ -204,6 +208,36 @@ class Panda3DRenderer:
     node = GeomNode("ground")
     node.addGeom(geom)
     return root.attachNewNode(node)
+
+  @staticmethod
+  def _strip(root, poly: np.ndarray, width: float, color, closed: bool, rng, gap_prob: float, z: float = 0.004):
+    """Flat line (chalk/paint) along a polyline, with random gaps, as a lit horizontal triangle strip."""
+    pts = np.vstack([poly, poly[:1]]) if closed else poly
+    d = np.gradient(pts, axis=0)
+    n = np.stack([-d[:, 1], d[:, 0]], 1) / np.maximum(np.linalg.norm(d, axis=1, keepdims=True), 1e-9)
+    a, b = pts + n * width / 2, pts - n * width / 2
+    fmt = GeomVertexFormat.getV3n3c4()
+    vdata = GeomVertexData("line", fmt, Geom.UHStatic)
+    vw, nw, cw = GeomVertexWriter(vdata, "vertex"), GeomVertexWriter(vdata, "normal"), GeomVertexWriter(vdata, "color")
+    for p, q in zip(a, b, strict=True):
+      for v in (p, q):
+        vw.addData3(float(v[0]), float(v[1]), z)
+        nw.addData3(0, 0, 1)
+        cw.addData4(*color, 1.0)
+    tris = GeomTriangles(Geom.UHStatic)
+    seg = max(int(1.5 / max(np.linalg.norm(pts[1] - pts[0]), 1e-3)), 1)  # gap granularity ~1.5 m
+    for i in range(len(pts) - 1):
+      if gap_prob and (i // seg) % 7 == 0 and rng.random() < gap_prob:
+        continue
+      j = 2 * i
+      tris.addVertices(j, j + 1, j + 2)
+      tris.addVertices(j + 1, j + 3, j + 2)
+    geom = Geom(vdata)
+    geom.addPrimitive(tris)
+    node = GeomNode("line")
+    node.addGeom(geom)
+    np_ = root.attachNewNode(node)
+    np_.setTwoSided(True)
 
   @staticmethod
   def _box(root, p, size, yaw, color) -> None:

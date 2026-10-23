@@ -6,6 +6,19 @@ separately in [benchmarks/](benchmarks/README.md).
 
 ## [Unreleased]
 
+### Added
+- `fsop viz real`: run a model on a real onboard video. The output shows the plan and cones projected
+  back through the physical lens, the model-frame inputs and an ego view.
+- `fsop.geometry.warp.project_to_camera`: ego frame → physical camera pixels, distortion included.
+- Boundary-line domain randomization: white or green chalk lines along the track edges, with gaps, in
+  about 50% of light/heavy episodes.
+- `configs/train/adapt_stage2.yaml`: adapt the reference model to a new team profile.
+
+### Fixed
+- Fisheye warp produced scrambled remap tables: `cv2.fisheye.distortPoints` needs (1, N, 2) input.
+  A test now covers it.
+- `ModelFrameWarper` misread negative-stride input such as `bgr[..., ::-1]`.
+
 ## [0.2.0] - 2026-10-22
 
 ### Added

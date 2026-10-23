@@ -34,7 +34,7 @@ def slot_maps(cam, slot: str) -> tuple[np.ndarray, np.ndarray]:
   z = view[:, 2]
   behind = z <= 1e-6
   view = view / np.where(behind, 1.0, z)[:, None]
-  pts = view[:, :2].reshape(-1, 1, 2)
+  pts = np.ascontiguousarray(view[:, :2].reshape(1, -1, 2))  # fisheye API needs (1, N, 2)
   if cam.fisheye:
     d = np.zeros(4) if not cam.dist else np.asarray(cam.dist[:4], np.float64)
     src = cv2.fisheye.distortPoints(pts, cam.K, d)
@@ -59,6 +59,28 @@ class ModelFrameWarper:
     out = {}
     for slot, cam in self.cams.items():
       mx, my = self.maps[slot]
-      out[slot] = cv2.remap(images[cam.name], mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT,
-                            borderValue=(0, 0, 0))
+      src = np.ascontiguousarray(images[cam.name])  # cv2.remap misreads negative-stride views (bgr[..., ::-1])
+      out[slot] = cv2.remap(src, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=(0, 0, 0))
     return out
+
+
+def project_to_camera(pts_ego: np.ndarray, mount_T_ego_cam: np.ndarray, cam) -> tuple[np.ndarray, np.ndarray]:
+  """Project ego-frame points [N,3] into a *physical* camera (distortion included).
+
+  ``mount_T_ego_cam`` is the nominal mount (virtual model camera); ``cam`` adds its roll/pitch/yaw offsets.
+  Returns pixels [N,2] and a mask of points in front of the camera.
+  """
+  Ti = np.linalg.inv(mount_T_ego_cam)
+  body = pts_ego @ Ti[:3, :3].T + Ti[:3, 3]  # virtual camera body frame
+  R = _cam_rot(*np.deg2rad([cam.roll_deg, cam.pitch_deg, cam.yaw_deg]))
+  view = (body @ R) @ VIEW_FROM_EGO.T
+  front = view[:, 2] > 0.1
+  z = np.where(front, view[:, 2], 1.0)
+  pts = np.ascontiguousarray((view[:, :2] / z[:, None]).reshape(1, -1, 2))
+  if cam.fisheye:
+    d = np.zeros(4) if not cam.dist else np.asarray(cam.dist[:4], np.float64)
+    uv = cv2.fisheye.distortPoints(pts, cam.K, d)
+  else:
+    d = np.zeros(5) if not cam.dist else np.asarray(cam.dist, np.float64)
+    uv, _ = cv2.projectPoints(np.c_[pts.reshape(-1, 2), np.ones(len(z))], np.zeros(3), np.zeros(3), cam.K, d)
+  return uv.reshape(-1, 2), front
