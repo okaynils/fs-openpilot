@@ -4,7 +4,8 @@ data/sim/<dataset>/<episode_id>/
   meta.json         track id, discipline, seeds, scene DR, mount, vehicle + expert params, fps, cones
   track.json        copy of the track
   cones.npy         [M,3] episode cones actually rendered: x, y, class (after jitter / removal)
-  frames.zarr/      road, wide : uint8 [T,6,128,256] (openpilot packed YUV), blosc-zstd chunks per frame
+  frames.zarr/      road, wide : uint8 [T,6,128,256] (openpilot packed YUV), blosc-zstd chunks per frame,
+                    stored as one shard (file) per camera: per-frame random access, few files on network storage
   states.npy        [T,12] t,x,y,yaw,vx,vy,r,steer,accel,s,lat,noise
   plan.npy          [T,33,15] counterfactual expert plan (ego frame, x fwd / y left / z up)
   desire.npy        [T,8] desire pulses
@@ -14,6 +15,7 @@ data/sim/<dataset>/<episode_id>/
 from __future__ import annotations
 
 import json
+import shutil
 from dataclasses import asdict
 from pathlib import Path
 
@@ -29,6 +31,40 @@ from fsop.track.schema import CONE_CLASS_INDEX
 STATE_COLS = ["t", "x", "y", "yaw", "vx", "vy", "r", "steer", "accel", "s", "lat", "noise"]
 
 
+def write_frames(path: str | Path, frames: dict[str, np.ndarray]) -> None:
+  """[T,6,128,256] uint8 per camera -> zarr group with per-frame chunks inside a single shard per camera."""
+  root = zarr.group(store=zarr.storage.LocalStore(str(path)), overwrite=True)
+  comp = BloscCodec(cname="zstd", clevel=3, shuffle="bitshuffle")
+  for c, a in frames.items():
+    T = max(len(a), 1)
+    arr = root.create_array(c, shape=a.shape, chunks=(1, 6, 128, 256), shards=(T, 6, 128, 256), dtype="uint8",
+                            compressors=comp)
+    if len(a):
+      arr[:] = a
+
+
+def repack_frames(episode_dir: str | Path) -> bool:
+  """Rewrite an episode's per-frame-chunk ``frames.zarr`` (one file per frame) as sharded. Idempotent and safe to
+  re-run after an interruption (the complete new copy is only swapped in after the old one is gone)."""
+  src = Path(episode_dir) / "frames.zarr"
+  tmp = src.with_name("frames.zarr.tmp")
+  if tmp.exists():
+    if not (src / "zarr.json").exists():  # interrupted between delete and rename: tmp is complete
+      shutil.rmtree(src, ignore_errors=True)
+      tmp.rename(src)
+      return True
+    shutil.rmtree(tmp)  # interrupted while writing tmp
+  g = zarr.open_group(str(src), mode="r")
+  arrs = {c: g[c] for c in g.array_keys()}
+  if all(a.shards is not None for a in arrs.values()):
+    return False
+  data = {c: a[:] for c, a in arrs.items()}
+  write_frames(tmp, data)
+  shutil.rmtree(src)
+  tmp.rename(src)
+  return True
+
+
 class EpisodeWriter:
   def __init__(self, out_dir: str | Path, env: FSEnv, episode_id: str, max_frames: int, record_every: int = 1):
     self.record_every = record_every
@@ -37,18 +73,13 @@ class EpisodeWriter:
     self.env = env
     self.id = episode_id
     self.T = 0
-    store = zarr.storage.LocalStore(str(self.dir / "frames.zarr"))
-    root = zarr.group(store=store, overwrite=True)
-    comp = BloscCodec(cname="zstd", clevel=3, shuffle="bitshuffle")
-    self.arrays = {c: root.create_array(c, shape=(max_frames, 6, 128, 256), chunks=(1, 6, 128, 256), dtype="uint8",
-                                        compressors=comp)
-                   for c in env.cfg.cameras}
+    self.frames: dict[str, list[np.ndarray]] = {c: [] for c in env.cfg.cameras}  # written at close (one shard)
     self.states, self.plans, self.desires, self.down = [], [], [], []
     self.events = []
 
   def add(self, obs: Obs, plan: np.ndarray) -> None:
     for c, img in obs.images.items():
-      self.arrays[c][self.T] = rgb_to_model(img)
+      self.frames[c].append(rgb_to_model(img))
     st = obs.state
     self.states.append([obs.t, st.x, st.y, st.yaw, st.vx, st.vy, st.r, st.steer, st.accel, obs.s, obs.lat, obs.noise])
     self.plans.append(plan.astype(np.float32))
@@ -59,8 +90,8 @@ class EpisodeWriter:
 
   def close(self, summary: dict) -> dict:
     env = self.env
-    for a in self.arrays.values():
-      a.resize((self.T, 6, 128, 256))
+    write_frames(self.dir / "frames.zarr", {c: np.stack(v) if v else np.zeros((0, 6, 128, 256), np.uint8)
+                                            for c, v in self.frames.items()})
     np.save(self.dir / "states.npy", np.asarray(self.states, np.float64))
     np.save(self.dir / "plan.npy", np.asarray(self.plans, np.float32))
     np.save(self.dir / "desire.npy", np.asarray(self.desires, np.float32))

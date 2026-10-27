@@ -7,7 +7,7 @@ Camera in → drivable path + cones out. No map, no SLAM.
 
 <img src="docs/media/demo.gif" alt="fs-openpilot driving a held-out track in simulation" width="100%">
 
-<sub>Fine-tuned model (trained on an M1 MacBook) driving a held-out track in the simulator. Left: model-frame
+<sub>Fine-tuned model (`a100_v2_refresh`, trained on a cloud A100) driving a held-out track in the simulator: a clean lap, no cones hit. Left: model-frame
 camera inputs with the predicted path (magenta, ±1σ) vs. the expert (green) and detected cones (rings).
 Right: track map and ego view (dots = true cones, rings = detections).</sub>
 
@@ -61,8 +61,9 @@ a **living research project**: it improves over time, and every model is recorde
   - [Rerun](https://rerun.io) recordings of every validation and closed-loop run, with plans and
     cones projected into the camera views.
   - MP4/GIF rendering and track galleries.
-- **Runs on a laptop.** The full pipeline trains on an Apple Silicon Mac (MPS). CUDA configs are
-  provided for scaling up.
+- **Runs on a laptop, scales in the cloud.** The full pipeline trains on an Apple Silicon Mac (MPS).
+  `scripts/modal_app.py` runs the same pipeline on [Modal](https://modal.com): data generation on CPU
+  containers, training on a GPU. The current best model cost about $14 of Modal's free monthly credit.
 
 ## Quickstart
 
@@ -148,6 +149,8 @@ Every model gets a record in [`benchmarks/results/`](benchmarks/results). The ta
 | 2026-10-22 | m1_stage1 | supercombo + FS heads, stage 1 (frozen trunk) | Apple M1 16 GB (MPS) | 0.75 / 2.69 | 3.74 | 7.9 | 0.12 | 0/3 (8.7 DOO) | 1/1 | 0/1 |
 | 2026-10-22 | m1_stage2 | supercombo + FS heads, stage 2 (last trunk stage fine-tuned) | Apple M1 16 GB (MPS) | 0.43 / 1.57 | 2.60 | 4.1 | 0.40 | 3/3 (7.7 DOO) | 1/1 | 0/1 |
 | 2026-10-22 | openpilot_untouched | openpilot driving_supercombo b361e952 (no fine-tuning) | – | 1.28 / 4.64 | 6.28 | 13.0 | – | 0/3 (2.0 DOO) | 1/1 | 0/1 |
+| 2026-10-27 | a100_v2_refresh | supercombo + FS heads, stage 2 full-trunk fine-tune on dataset v2 (recovery excursions) + history-refresh pass | Modal A100-40GB | 0.23 / 0.78 | 1.40 | 1.6 | 0.71 | 3/3 (1.3 DOO) | 1/1 | 0/1 |
+| 2026-10-27 | a100_v2_s7k | supercombo + FS heads, stage 2 full-trunk fine-tune from m1_stage2 on dataset v2 (recovery excursions) | Modal A100-40GB | 0.25 / 0.87 | 1.60 | 1.9 | 0.70 | 3/3 (2.0 DOO) | 1/1 | 0/1 |
 <!-- BENCHMARKS:END -->
 
 `geometric_gt` is a privileged reference: a classic cone-midline planner fed the ground-truth cones,

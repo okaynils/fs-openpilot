@@ -1,0 +1,85 @@
+{
+ "name": "a100_v2_refresh",
+ "model": "supercombo + FS heads, stage 2 full-trunk fine-tune on dataset v2 (recovery excursions) + history-refresh pass",
+ "date": "2026-10-27",
+ "git": "be0793f-dirty",
+ "eval_hardware": {
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "python": "3.12.5",
+  "cpu": "Apple M1",
+  "memory_gb": 16,
+  "torch": "2.14.1",
+  "gpu": "Apple MPS"
+ },
+ "train_hardware": "Modal A100-40GB",
+ "training": {},
+ "data": {
+  "dataset": "data/sim/v1",
+  "episodes": 204,
+  "frames_5hz": 39354,
+  "tracks": 171
+ },
+ "open_loop": {
+  "lat_0.5s": 0.06413917988538742,
+  "lat_1.0s": 0.2261391133069992,
+  "lat_2.0s": 0.7779852151870728,
+  "long_1.0s": 0.6245799660682678,
+  "long_2.0s": 1.3877209424972534,
+  "ade_4s": 1.4033442735671997,
+  "heading_1s_deg": 1.6354900598526,
+  "bev_f1": 0.6295362016167827,
+  "bev_imgproj_f1": 0.7058779539335927,
+  "bev_imgproj_pos_err": 0.14337535633530168,
+  "n_frames": 3315
+ },
+ "closed_loop": {
+  "suite": {
+   "tracks": "data/tracks/td_v1",
+   "split": "test",
+   "n_trackdrive": 3,
+   "laps": 1,
+   "skidpad": true,
+   "acceleration": true,
+   "dr_levels": [
+    "light"
+   ],
+   "seeds": [
+    0
+   ],
+   "max_seconds": 90
+  },
+  "profile": "default",
+  "aggregate": {
+   "acceleration/light": {
+    "runs": 1,
+    "pass_rate": 1.0,
+    "completion": 1.0,
+    "doo_per_run": 0.0,
+    "oc_per_run": 0.0,
+    "mean_time": 8.699999999999832,
+    "rms_lat": 0.08323230097776534
+   },
+   "skidpad/light": {
+    "runs": 1,
+    "pass_rate": 0.0,
+    "completion": 0.5596153875272164,
+    "doo_per_run": 28.0,
+    "oc_per_run": 11.0,
+    "mean_time": null,
+    "rms_lat": 20.604853860048227
+   },
+   "trackdrive/light": {
+    "runs": 3,
+    "pass_rate": 1.0,
+    "completion": 1.0,
+    "doo_per_run": 1.3333333333333333,
+    "oc_per_run": 0.0,
+    "mean_time": 48.516666666665664,
+    "rms_lat": 0.23288163685700725
+   }
+  }
+ },
+ "notes": "a100_v2_s7k + 4k steps @ lr 1e-4 with the history cache recomputed from that checkpoint's trunk (cuda_stage2_v2_refresh.yaml); ~11 A100-min per 1k steps @ bs 64",
+ "schema": 1
+}

@@ -128,12 +128,15 @@ def sim_drive(track: str = typer.Option("skidpad", help="track json | skidpad | 
 def sim_record(tracks: Path = typer.Option(..., help="track set directory (fsop track gen)"),
                out: Path = typer.Option(...), workers: int = 4, seconds: float = 40.0, seed: int = 0,
                skidpad: int = 10, accel: int = 10, standing: float = 0.15,
+               per_track: int = typer.Option(1, help="random-start episodes per track"),
+               offset_max: float = typer.Option(0.0, help="recovery excursions: max lateral offset [m] the "
+                                                       "expert drives during noise bursts (0 = off)"),
                profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
   """Record an expert dataset (noise injection, DR mix, counterfactual plan labels)."""
   from fsop.sim.batch_record import plan_dataset, record_dataset
 
-  specs = plan_dataset(str(tracks), n_standing=standing, n_skidpad=skidpad, n_accel=accel, max_seconds=seconds,
-                       seed=seed, profile=str(profile or ""))
+  specs = plan_dataset(str(tracks), n_random=per_track, n_standing=standing, n_skidpad=skidpad, n_accel=accel,
+                       max_seconds=seconds, seed=seed, profile=str(profile or ""), offset_max=offset_max)
   idx = record_dataset(specs, str(out), workers=workers)
   typer.echo(f"{len(idx)} episodes, {sum(e['frames'] for e in idx)} frames in {out}")
 
@@ -191,11 +194,13 @@ def data_fsoco(src: Path = typer.Option(..., help="FSOCO root (Supervisely expor
 
 
 @data_app.command("cache-features")
-def data_cache(dataset: Path = typer.Option(...), ckpt: Path | None = None, batch: int = 32):
+def data_cache(dataset: Path = typer.Option(...), ckpt: Path | None = None, batch: int = 32,
+               tag: str | None = typer.Option(None, help="cache tag (default: derived from the checkpoint)"),
+               hidden_only: bool = typer.Option(False, help="history features only (enough for stage 2)")):
   """Run the (frozen) vision trunk once per frame and cache hidden states + spatial taps."""
   from fsop.data.feature_cache import build_cache
 
-  typer.echo(build_cache(dataset, ckpt, batch=batch))
+  typer.echo(build_cache(dataset, ckpt, tag=tag, batch=batch, hidden_only=hidden_only))
 
 
 # ---------------------------------------------------------------------------------------------- train / eval

@@ -13,6 +13,22 @@ separately in [benchmarks/](benchmarks/README.md).
 - Boundary-line domain randomization: white or green chalk lines along the track edges, with gaps, in
   about 50% of light/heavy episodes.
 - `configs/train/adapt_stage2.yaml`: adapt the reference model to a new team profile.
+- Recovery excursions (`fsop sim record --offset-max 1.0`): during noise bursts the expert drives a line
+  up to ±1 m beside the centreline, then returns; labels stay the centreline expert. Frames beyond 0.8 m
+  off-centre (where cones get hit) go from 0.5% to 5.9% of the data.
+- `fsop sim record --per-track N`: several random-start episodes per track.
+- `scripts/modal_app.py`: run the pipeline on [Modal](https://modal.com). Data generation fans out over
+  CPU containers (headless EGL rendering); caching, training and benchmarks run on a GPU.
+- `fsop data cache-features --hidden-only --tag`: history-only caches for stage 2 (about 1 KB/frame).
+- `configs/train/cuda_stage2_v2{,_refresh}.yaml`: GPU recipe for dataset v2, with a second pass on a
+  history cache recomputed from the fine-tuned trunk.
+
+### Changed
+- Recorded frames are stored as one zarr shard per camera (per-frame chunks inside), so an episode is
+  5 files instead of about 400. `fsop.sim.recorder.repack_frames` converts older datasets.
+- The renderer falls back to headless EGL on Linux machines without a display.
+- Train configs inherit recursively (`defaults:` chains).
+- Feature caching prefetches episode frames on background threads.
 
 ### Fixed
 - Fisheye warp produced scrambled remap tables: `cv2.fisheye.distortPoints` needs (1, N, 2) input.

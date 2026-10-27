@@ -12,14 +12,19 @@ def load_config[T](schema: type[T], path: str | Path | None = None, overrides: l
   assert is_dataclass(schema)
   cfg = OmegaConf.structured(schema)
   if path is not None:
-    file_cfg = OmegaConf.load(path)
-    if "defaults" in file_cfg:  # simple inheritance: defaults: [other.yaml]
-      for parent in file_cfg.pop("defaults"):
-        cfg = OmegaConf.merge(cfg, OmegaConf.load(Path(path).parent / parent))
-    cfg = OmegaConf.merge(cfg, file_cfg)
+    cfg = OmegaConf.merge(cfg, _load_with_defaults(Path(path)))
   if overrides:
     cfg = OmegaConf.merge(cfg, OmegaConf.from_dotlist(list(overrides)))
   return OmegaConf.to_object(cfg)  # type: ignore[return-value]
+
+
+def _load_with_defaults(path: Path):
+  """YAML with simple (recursive) inheritance: ``defaults: [other.yaml]`` relative to the file."""
+  file_cfg = OmegaConf.load(path)
+  if "defaults" not in file_cfg:
+    return file_cfg
+  parents = [_load_with_defaults(path.parent / p) for p in file_cfg.pop("defaults")]
+  return OmegaConf.merge(*parents, file_cfg)
 
 
 def save_config(cfg, path: str | Path) -> None:
