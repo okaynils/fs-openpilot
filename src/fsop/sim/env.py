@@ -31,6 +31,13 @@ class NoiseCfg:
   on_time: tuple[float, float] = (1.5, 5.0)
   off_time: tuple[float, float] = (2.0, 7.0)
   speed_scale: tuple[float, float] = (0.85, 1.1)
+  # recovery excursions: during a noise burst the expert drives a line offset from the centreline
+  # (|offset| in [offset_min, offset_max] m, probability offset_prob per burst) and returns to the centre
+  # when the burst ends; the labels stay the centreline expert, so these frames teach recovery.
+  offset_max: float = 0.0
+  offset_min: float = 0.3
+  offset_prob: float = 0.6
+  offset_tau: float = 0.6  # [s] first-order approach to the excursion target
 
 
 @dataclass
@@ -138,6 +145,8 @@ class FSEnv:
     self.noise_on = False
     self.noise_timer = float(self.rng.uniform(*self.cfg.noise.off_time))
     self.speed_scale = 1.0
+    self.offset_val = 0.0
+    self.offset_target = 0.0
     self.desire_sent: set[int] = set()
     self.pending_events: list[Event] = []
     if self.renderer is not None:
@@ -183,7 +192,7 @@ class FSEnv:
 
   # ------------------------------------------------------------------------------------------
   def expert_action(self) -> tuple[float, float]:
-    return self.expert.act(self.state, self.s)
+    return self.expert.act(self.state, self.s, self.offset_val)
 
   def _update_noise(self, dt: float) -> float:
     n = self.cfg.noise
@@ -194,6 +203,10 @@ class FSEnv:
       self.noise_on = not self.noise_on
       self.noise_timer = float(self.rng.uniform(*(n.on_time if self.noise_on else n.off_time)))
       self.speed_scale = float(self.rng.uniform(*n.speed_scale)) if self.noise_on else 1.0
+      self.offset_target = 0.0
+      if self.noise_on and n.offset_max > 0 and self.rng.random() < n.offset_prob:
+        self.offset_target = float(self.rng.choice((-1.0, 1.0)) * self.rng.uniform(n.offset_min, n.offset_max))
+    self.offset_val += (self.offset_target - self.offset_val) * min(dt / n.offset_tau, 1.0)
     target_sigma = n.steer_sigma if self.noise_on else 0.0
     self.noise_val += -n.steer_theta * self.noise_val * dt + target_sigma * np.sqrt(dt) * self.rng.normal()
     if not self.noise_on:

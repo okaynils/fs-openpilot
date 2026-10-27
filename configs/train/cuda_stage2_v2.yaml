@@ -1,0 +1,19 @@
+# Cloud GPU (A100), dataset v2 (recovery excursions, tight tracks): continue from the M1 stage-2 model,
+# full trunk fine-tune. History features come from a cache made with the init checkpoint's trunk
+# (`fsop data cache-features --ckpt runs/mac_stage2/ckpt/best.pt --hidden-only`); after this run, refresh
+# that cache with the new checkpoint and run cuda_stage2_v2_refresh so history matches the trained trunk.
+defaults: [cuda_stage2.yaml]
+name: cuda_stage2_v2
+sim_root: data/sim/v2
+cache_tag: mac_stage2_best
+init_ckpt: runs/mac_stage2/ckpt/best.pt
+trunk: all
+batch_size: 64
+num_workers: 14
+steps: 12000
+lr: 3.0e-4
+lr_policy: 0.3
+lr_trunk: 0.1
+warmup: 300
+val_every: 1000
+val_batches: 60

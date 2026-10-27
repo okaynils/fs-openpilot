@@ -1,0 +1,9 @@
+# Second pass after `cuda_stage2_v2`: history cache recomputed with that run's trunk, short low-LR fine-tune.
+defaults: [cuda_stage2_v2.yaml]
+name: cuda_stage2_v2_refresh
+cache_tag: cuda_stage2_v2_best
+init_ckpt: runs/cuda_stage2_v2/ckpt/best.pt
+steps: 4000
+lr: 1.0e-4
+warmup: 100
+val_every: 500

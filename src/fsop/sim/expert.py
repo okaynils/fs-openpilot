@@ -164,13 +164,15 @@ class Expert:
     self.m = mission
     self.vp = vp
 
-  def act(self, st: VehicleState, s: float) -> tuple[float, float]:
+  def act(self, st: VehicleState, s: float, offset: float = 0.0) -> tuple[float, float]:
+    """``offset`` [m, left +] tracks a line parallel to the centreline (recovery excursions while recording;
+    labels always use 0)."""
     p = self.m.p
     v = max(st.vx, 0.0)
     if p.controller == "pure_pursuit":
-      steer = self._pure_pursuit(st, s, v)
+      steer = self._pure_pursuit(st, s, v, offset)
     else:
-      steer = self._stanley_ff(st, s, v)
+      steer = self._stanley_ff(st, s, v, offset)
     v_t = self.m.target_speed(s + 0.5 * v * 0.3)
     v_ahead = self.m.target_speed(s + v * 0.6)
     a_ff = (v_ahead**2 - v**2) / max(2 * max(v * 0.6, 1.0), 1e-3)
@@ -180,17 +182,20 @@ class Expert:
     return steer, accel
 
 
-  def _pure_pursuit(self, st: VehicleState, s: float, v: float) -> float:
+  def _pure_pursuit(self, st: VehicleState, s: float, v: float, offset: float = 0.0) -> float:
     p = self.m.p
     Ld = float(np.clip(p.k_lookahead * v + p.lookahead_min, p.lookahead_min, p.lookahead_max))
     rx = st.x - self.vp.lr * np.cos(st.yaw)
     ry = st.y - self.vp.lr * np.sin(st.yaw)
     tgt = self.m.point_at(s + Ld)
+    if offset:
+      d = self.m.point_at(s + Ld + 0.5) - tgt
+      tgt = tgt + offset * np.array([-d[1], d[0]]) / max(np.hypot(d[0], d[1]), 1e-6)
     dx, dy = tgt[0] - rx, tgt[1] - ry
     alpha = np.arctan2(dy, dx) - st.yaw
     return float(np.arctan2(2 * self.vp.wheelbase * np.sin(alpha), max(np.hypot(dx, dy), 1e-3)))
 
-  def _stanley_ff(self, st: VehicleState, s: float, v: float) -> float:
+  def _stanley_ff(self, st: VehicleState, s: float, v: float, offset: float = 0.0) -> float:
     """Curvature feed-forward (previewed) + Stanley feedback at the front axle."""
     p = self.m.p
     fx = st.x + self.vp.lf * np.cos(st.yaw)
@@ -199,7 +204,7 @@ class Expert:
     a = self.m.point_at(s_f)
     b = self.m.point_at(s_f + 0.5)
     path_h = np.arctan2(b[1] - a[1], b[0] - a[0])
-    e_lat = -np.sin(path_h) * (fx - a[0]) + np.cos(path_h) * (fy - a[1])  # left of path = +
+    e_lat = -np.sin(path_h) * (fx - a[0]) + np.cos(path_h) * (fy - a[1]) - offset  # left of path = +
     course = st.yaw + np.arctan2(st.vy, max(st.vx, 0.5))  # velocity direction (sideslip-aware)
     e_head = np.angle(np.exp(1j * (course - path_h)))
     kappa = self.m.kappa_at(s + v * p.t_preview)

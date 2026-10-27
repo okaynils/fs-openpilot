@@ -9,6 +9,9 @@ bottom-up (flip rows). Panda3D camera axes are x right, y forward, z up.
 
 from __future__ import annotations
 
+import os
+import sys
+
 import numpy as np
 from panda3d.core import (
   AmbientLight,
@@ -47,6 +50,8 @@ _M_BODY_FROM_PANDA = np.array([[0.0, 1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, 0.0, 1.0
 def _showbase():
   global _BASE
   if _BASE is None:
+    if sys.platform.startswith("linux") and not os.environ.get("DISPLAY"):
+      loadPrcFileData("", "load-display p3headlessgl\n")  # EGL: GPU driver or Mesa llvmpipe on servers
     loadPrcFileData("", "window-type offscreen\naudio-library-name null\nsync-video 0\n"
                         "notify-level-display error\nnotify-level-glgsg error\nframebuffer-multisample 0\n"
                         "textures-power-2 none\n")
