@@ -38,7 +38,9 @@ from panda3d.core import (
 
 from fsop.geometry.camera import CameraModel
 from fsop.sim.randomization import SceneDR
+from fsop.sim.render import venue
 from fsop.sim.render.assets import cone_geom, metadrive_texture, procedural_asphalt
+from fsop.track.rules import RULES
 from fsop.track.schema import ConeColor, Track
 
 _BASE = None
@@ -72,8 +74,10 @@ class Panda3DRenderer:
     self.cameras = cameras
     self.buffers, self.textures, self.cam_nps = {}, {}, {}
     self.scene: NodePath | None = None
+    self.sky: NodePath | None = None
     self.cone_nodes: list[NodePath] = []
     self._cone_models = {c: NodePath(cone_geom(c)) for c in ConeColor}
+    self._cone_variants: dict[tuple, NodePath] = {}
     for name, cam in cameras.items():
       fb = FrameBufferProperties()
       fb.setRgbColor(True)
@@ -105,10 +109,15 @@ class Panda3DRenderer:
     self.scene = root
     for buf in self.buffers.values():
       buf.setClearColor((*dr.sky_color, 1.0))
+    self.sky = venue.sky_dome(root, dr.sky_pano, yaw=dr.sky_yaw) if dr.sky_pano else None
     # ground
-    lo = track.centerline.min(0) - 60
-    hi = track.centerline.max(0) + 60
-    if dr.ground_kind == "metadrive" and metadrive_texture("asphalt") is not None:
+    pad = 150 if dr.venue else 60  # venue: the horizon is visible, so the ground must reach further
+    lo = track.centerline.min(0) - pad
+    hi = track.centerline.max(0) + pad
+    if dr.ground_kind == "venue":
+      tex = venue._np_texture(venue.venue_ground(rng, dr.ground_base, dr.ground_tint), "venue_ground")
+      tile = venue.GROUND_TILE_M
+    elif dr.ground_kind == "metadrive" and metadrive_texture("asphalt") is not None:
       tex = self.base.loader.loadTexture(str(metadrive_texture("asphalt")))
       tex.setWrapU(Texture.WM_repeat)
       tex.setWrapV(Texture.WM_repeat)
@@ -120,7 +129,13 @@ class Panda3DRenderer:
     g = self._card(root, lo, hi, 0.0)
     g.setTexture(tex)
     g.setTexScale(TextureStage.getDefault(), (hi[0] - lo[0]) / tile, (hi[1] - lo[1]) / tile)
-    g.setColorScale(*dr.ground_tint, 1.0)
+    if dr.ground_kind != "venue":
+      g.setColorScale(*dr.ground_tint, 1.0)
+    else:  # fine aggregate grain modulated on top of the large texture
+      ts = TextureStage("grain")
+      ts.setMode(TextureStage.MModulate)
+      g.setTexture(ts, venue.grain_texture(rng))
+      g.setTexScale(ts, (hi[0] - lo[0]) / 1.5, (hi[1] - lo[1]) / 1.5)
     if dr.grass_ring:
       gtex_path = metadrive_texture("grass")
       far_lo, far_hi = lo - 400, hi + 400
@@ -147,11 +162,12 @@ class Panda3DRenderer:
         continue
       size = rng.uniform([0.5, 0.5, 0.4], [6.0, 3.0, 2.5])
       self._box(root, p, size, rng.uniform(0, np.pi), tuple(rng.uniform(0.2, 0.9, 3)))
+    people = venue.build_venue(root, track, rng) if dr.venue else np.zeros((0, 2))
     # cones
     self.cone_nodes = []
     for (x, y), c in zip(cones_xy, cone_colors, strict=True):
       n = root.attachNewNode("cone")
-      self._cone_models[c].instanceTo(n)
+      self._cone_model(c, dr).instanceTo(n)
       n.setPos(float(x), float(y), 0.0)
       n.setH(float(rng.uniform(0, 360)))
       b = float(np.clip(1 + rng.normal(0, dr.cone_brightness_sigma), 0.6, 1.4))
@@ -168,11 +184,24 @@ class Panda3DRenderer:
     amb.setColor((dr.ambient, dr.ambient, dr.ambient * 1.05, 1))
     root.setLight(sun_np)
     root.setLight(root.attachNewNode(amb))
+    if dr.shadow_alpha > 0:
+      polys = venue.shadow_polys(np.asarray(cones_xy).reshape(-1, 2), RULES.small_cone.radius_bottom,
+                                 RULES.small_cone.height, az, el)
+      polys += venue.shadow_polys(people, 0.25, 1.7, az, el)
+      venue.ground_shadows(root, polys, dr.shadow_alpha)
     if dr.fog_density > 0:
       fog = Fog("fog")
       fog.setColor(*dr.sky_color)
       fog.setExpDensity(dr.fog_density)
       root.setFog(fog)
+
+  def _cone_model(self, c: ConeColor, dr: SceneDR) -> NodePath:
+    if not dr.venue:
+      return self._cone_models[c]
+    key = (c, round(dr.cone_fade, 1), dr.cone_lettering)
+    if key not in self._cone_variants:
+      self._cone_variants[key] = NodePath(cone_geom(c, fade=key[1], lettering=key[2]))
+    return self._cone_variants[key]
 
   def knock_cone(self, idx: int, direction: float) -> None:
     n = self.cone_nodes[idx]
@@ -180,6 +209,9 @@ class Panda3DRenderer:
     n.setZ(0.12)
 
   def render(self, T_world_cam: dict[str, np.ndarray]) -> dict[str, np.ndarray]:
+    if self.sky is not None:  # the panorama is at infinity: keep it centred on the camera
+      t = next(iter(T_world_cam.values()))[:3, 3]
+      self.sky.setPos(float(t[0]), float(t[1]), float(t[2]))
     for name, T in T_world_cam.items():
       Tp = T.copy()
       Tp[:3, :3] = T[:3, :3] @ _M_BODY_FROM_PANDA
@@ -194,20 +226,27 @@ class Panda3DRenderer:
 
   # ------------------------------------------------------------------------------------------
   @staticmethod
-  def _card(root, lo, hi, z) -> NodePath:
-    """Horizontal quad in the world XY plane with UVs 0..1 (upward normal)."""
+  def _card(root, lo, hi, z, cell: float = 8.0) -> NodePath:
+    """Horizontal plane in the world XY plane with UVs 0..1 (upward normal), tessellated into ~``cell`` m
+    quads: fixed-function fog is evaluated per vertex, so one huge quad would be fogged as a whole."""
     fmt = GeomVertexFormat.getV3n3t2()
     vdata = GeomVertexData("ground", fmt, Geom.UHStatic)
     vw, nw = GeomVertexWriter(vdata, "vertex"), GeomVertexWriter(vdata, "normal")
     tw = GeomVertexWriter(vdata, "texcoord")
-    for (x, y), (u, v) in (((lo[0], lo[1]), (0, 0)), ((hi[0], lo[1]), (1, 0)), ((hi[0], hi[1]), (1, 1)),
-                           ((lo[0], hi[1]), (0, 1))):
-      vw.addData3(float(x), float(y), float(z))
-      nw.addData3(0, 0, 1)
-      tw.addData2(u, v)
+    nx = max(int(np.ceil((hi[0] - lo[0]) / cell)), 1)
+    ny = max(int(np.ceil((hi[1] - lo[1]) / cell)), 1)
+    for j in range(ny + 1):
+      for i in range(nx + 1):
+        u, v = i / nx, j / ny
+        vw.addData3(float(lo[0] + u * (hi[0] - lo[0])), float(lo[1] + v * (hi[1] - lo[1])), float(z))
+        nw.addData3(0, 0, 1)
+        tw.addData2(u, v)
     tris = GeomTriangles(Geom.UHStatic)
-    tris.addVertices(0, 1, 2)
-    tris.addVertices(0, 2, 3)
+    for j in range(ny):
+      for i in range(nx):
+        a = j * (nx + 1) + i
+        tris.addVertices(a, a + 1, a + nx + 2)
+        tris.addVertices(a, a + nx + 2, a + nx + 1)
     geom = Geom(vdata)
     geom.addPrimitive(tris)
     node = GeomNode("ground")

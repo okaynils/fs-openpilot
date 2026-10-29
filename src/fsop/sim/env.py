@@ -53,6 +53,7 @@ class SimCfg:
   label_dt: float = 0.025
   start_speed: float = 0.0
   random_start: bool = False  # closed tracks: start at a random point with a random fraction of v_ref
+  venue_prob: float = 0.0  # probability of a venue-realism scene (DRCfg.venue_prob)
 
 
 CAMERAS: dict[str, CameraModel] = CAMERA_MODELS
@@ -85,6 +86,8 @@ class FSEnv:
     self.rng = np.random.default_rng(seed)
     self.vp = vp or self.profile.vehicle
     self.dr_cfg = dr_cfg or dr_preset(self.cfg.dr)
+    if self.cfg.venue_prob > 0:
+      self.dr_cfg.venue_prob = self.cfg.venue_prob
     self.scene: SceneDR = sample_scene(self.rng, self.dr_cfg)
     m = self.profile.mount  # nominal team mount + per-episode DR perturbation
     self.mount = CameraMount(x=m.x, y=m.y, z=m.z + self.scene.cam_dz, roll=m.roll + self.scene.cam_roll,

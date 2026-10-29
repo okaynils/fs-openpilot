@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -22,6 +23,10 @@ class DRCfg:
   blur_prob: float = 0.1
   jpeg_prob: float = 0.2
   exposure: tuple[float, float] = (0.85, 1.15)
+  # venue realism (sky panoramas, event-ground asphalt, perimeter scenery, people, shadows, camera
+  # degradation): probability per episode; 0 keeps the classic scenes bit-for-bit
+  venue_prob: float = 0.0
+  panorama_dir: str = "artifacts/panoramas"
 
 
 def dr_preset(level: str) -> DRCfg:
@@ -60,6 +65,18 @@ class SceneDR:
   blur: bool = False
   jpeg_quality: int = 0  # 0 = off
   seed: int = 0
+  # venue realism (see fsop.sim.render.venue); neutral defaults = classic scene
+  venue: bool = False
+  sky_pano: str = ""  # equirectangular photo; "" = flat sky colour
+  sky_yaw: float = 0.0
+  shadow_alpha: float = 0.0
+  cone_fade: float = 0.0  # mix cone colours towards pale / sun-bleached
+  cone_lettering: bool = False
+  haze: float = 0.0  # veil towards a bright grey
+  saturation: float = 1.0
+  white_balance: tuple[float, float, float] = (1.0, 1.0, 1.0)
+  resample: float = 1.0  # <1: render detail lost (down- then up-sampled)
+  vignette: float = 0.0
   extra: dict = field(default_factory=dict)
 
   def to_dict(self) -> dict:
@@ -71,7 +88,7 @@ def sample_scene(rng: np.random.Generator, cfg: DRCfg) -> SceneDR:
     return SceneDR(seed=int(rng.integers(1 << 30)), noise_sigma=0.0)
   heavy = cfg.level == "heavy"
   warm = rng.uniform(0.0, 0.15 if not heavy else 0.3)
-  return SceneDR(
+  scene = SceneDR(
     sun_azimuth=float(rng.uniform(0, 2 * np.pi)),
     sun_elevation=float(rng.uniform(0.25 if heavy else 0.4, 1.3)),
     sun_intensity=float(rng.uniform(0.6, 1.3) if heavy else rng.uniform(0.8, 1.15)),
@@ -100,6 +117,38 @@ def sample_scene(rng: np.random.Generator, cfg: DRCfg) -> SceneDR:
     jpeg_quality=int(rng.integers(35, 90)) if rng.random() < cfg.jpeg_prob else 0,
     seed=int(rng.integers(1 << 30)),
   )
+  if cfg.venue_prob > 0 and rng.random() < cfg.venue_prob:  # draws only when enabled: classic sets reproduce
+    _venue(rng, cfg, scene)
+  return scene
+
+
+def _venue(rng: np.random.Generator, cfg: DRCfg, sc: SceneDR) -> None:
+  from fsop.sim.render.venue import available_panoramas
+
+  panos = available_panoramas(cfg.panorama_dir)
+  sc.venue = True
+  sc.sky_pano = str(Path(cfg.panorama_dir) / f"{panos[int(rng.integers(len(panos)))]}.jpg") \
+    if panos and rng.random() < 0.9 else ""
+  sc.sky_yaw = float(rng.uniform(0, 2 * np.pi))
+  sc.ground_kind = "venue"
+  sc.ground_base = float(rng.uniform(0.36, 0.62))  # event asphalt is often light and sun-bleached
+  warm = rng.uniform(0.0, 0.06)  # event asphalt: neutral to warm grey, sometimes slightly green
+  sc.ground_tint = tuple(float(v) for v in np.array([1 + warm, 1 + 0.8 * warm + rng.uniform(0, 0.03), 1 - 0.6 * warm])
+                         + rng.normal(0, 0.012, 3))
+  sc.grass_ring = bool(rng.random() < 0.25)
+  sc.line_color = tuple(float(v) for v in np.array([(0.85, 0.85, 0.8), (0.35, 0.8, 0.35), (0.85, 0.8, 0.3)][
+    int(rng.choice(3, p=[0.45, 0.4, 0.15]))]) * rng.uniform(0.75, 1.05))  # spray lines: green is common
+  sc.shadow_alpha = float(np.clip(rng.uniform(0.3, 0.7) * sc.sun_intensity / (sc.sun_intensity + sc.ambient) * 1.5,
+                                  0.1, 0.75))
+  sc.cone_fade = float(rng.uniform(0.0, 0.5))
+  sc.cone_lettering = bool(rng.random() < 0.6)
+  sc.haze = float(rng.uniform(0.0, 0.25))
+  sc.saturation = float(rng.uniform(0.6, 1.05))
+  sc.white_balance = tuple(float(v) for v in 1 + rng.normal(0, 0.04, 3))
+  sc.resample = float(rng.uniform(0.6, 1.0)) if rng.random() < 0.6 else 1.0
+  sc.vignette = float(rng.uniform(0.0, 0.35))
+  sc.blur = bool(rng.random() < 0.3)
+  sc.jpeg_quality = int(rng.integers(45, 90)) if rng.random() < 0.4 else 0
 
 
 def postprocess(img: np.ndarray, dr: SceneDR, rng: np.random.Generator, yaw_rate: float = 0.0) -> np.ndarray:
@@ -114,9 +163,31 @@ def postprocess(img: np.ndarray, dr: SceneDR, rng: np.random.Generator, yaw_rate
     x = cv2.filter2D(x, -1, kernel)
   if dr.noise_sigma > 0:
     x = x + rng.normal(0, dr.noise_sigma, x.shape)
+  if dr.venue:
+    x = _camera(x, dr)
   out = np.clip(x, 0, 255).astype(np.uint8)
   if dr.jpeg_quality:
     ok, enc = cv2.imencode(".jpg", out, [cv2.IMWRITE_JPEG_QUALITY, dr.jpeg_quality])
     if ok:
       out = cv2.imdecode(enc, cv2.IMREAD_UNCHANGED)
   return out
+
+
+def _camera(x: np.ndarray, dr: SceneDR) -> np.ndarray:
+  """Venue camera look: white balance, saturation, haze veil, lost detail, vignetting (float 0..255)."""
+  x = x * np.asarray(dr.white_balance, np.float32)
+  if dr.saturation != 1.0:
+    g = x.mean(-1, keepdims=True)
+    x = g + dr.saturation * (x - g)
+  if dr.haze > 0:
+    x = x * (1 - dr.haze) + 200.0 * dr.haze
+  if dr.resample < 1.0:
+    h, w = x.shape[:2]
+    small = cv2.resize(x, (max(int(w * dr.resample), 8), max(int(h * dr.resample), 8)), interpolation=cv2.INTER_AREA)
+    x = cv2.resize(small, (w, h), interpolation=cv2.INTER_LINEAR)
+  if dr.vignette > 0:
+    h, w = x.shape[:2]
+    yy, xx = np.mgrid[0:h, 0:w]
+    r2 = ((xx - w / 2) / (w / 2)) ** 2 + ((yy - h / 2) / (h / 2)) ** 2
+    x = x * (1 - dr.vignette * np.clip(r2 / 2, 0, 1))[..., None]
+  return x

@@ -36,9 +36,11 @@ STRIPES = {
 }
 
 
-def cone_geom(color: ConeColor, segments: int = 20) -> GeomNode:
+def cone_geom(color: ConeColor, segments: int = 20, fade: float = 0.0, lettering: bool = False) -> GeomNode:
+  """``fade``: mix the body colour towards a pale, sun-bleached tone; ``lettering``: white marks in the band."""
   spec = RULES.large_cone if color == ConeColor.BIG_ORANGE else RULES.small_cone
   body, stripe = CONE_COLORS[color]
+  body = tuple((1 - fade) * np.array(body) + fade * np.array((0.92, 0.9, 0.78)))
   bands = STRIPES[color]
   fmt = GeomVertexFormat.getV3n3c4()
   vdata = GeomVertexData("cone", fmt, Geom.UHStatic)
@@ -70,13 +72,14 @@ def cone_geom(color: ConeColor, segments: int = 20) -> GeomNode:
   slope = (spec.radius_bottom - spec.radius_top) / H
   for z0, z1 in zip(cuts[:-1], cuts[1:], strict=True):
     in_stripe = any(lo <= z0 < hi for lo, hi in bands)
-    c = stripe if in_stripe else body
+    c0 = stripe if in_stripe else body
     r0 = spec.radius_bottom + (spec.radius_top - spec.radius_bottom) * z0
     r1 = spec.radius_bottom + (spec.radius_top - spec.radius_bottom) * z1
     for k in range(segments):
       a0, a1 = 2 * np.pi * k / segments, 2 * np.pi * (k + 1) / segments
       am = (a0 + a1) / 2
       n = (np.cos(am), np.sin(am), slope)
+      c = (0.9, 0.9, 0.88) if lettering and in_stripe and k % 5 in (1, 2) else c0
       quad((r0 * np.cos(a0), r0 * np.sin(a0), h0 + z0 * H), (r0 * np.cos(a1), r0 * np.sin(a1), h0 + z0 * H),
            (r1 * np.cos(a1), r1 * np.sin(a1), h0 + z1 * H), (r1 * np.cos(a0), r1 * np.sin(a0), h0 + z1 * H), n, c)
   # top cap

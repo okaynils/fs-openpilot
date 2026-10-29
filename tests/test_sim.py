@@ -97,3 +97,24 @@ def test_frames_sharded_roundtrip_and_repack(tmp_path):
   assert repack_frames(tmp_path / "old") and not repack_frames(tmp_path / "old")
   g = zarr.open_group(str(tmp_path / "old" / "frames.zarr"), mode="r")
   assert g["wide"].shards is not None and np.array_equal(g["wide"][:], a)
+
+
+def test_venue_scene_sampling_and_render(tmp_path):
+  from fsop.sim.env import CAMERAS
+  from fsop.sim.randomization import dr_preset, sample_scene
+  from fsop.sim.render.panda3d_backend import Panda3DRenderer
+
+  # venue_prob = 0 draws nothing extra: classic datasets and benchmark scenes reproduce exactly
+  a, b = np.random.default_rng(3), np.random.default_rng(3)
+  sample_scene(a, dr_preset("light"))
+  cfg = dr_preset("light")
+  cfg.panorama_dir = str(tmp_path)  # no panoramas: flat sky fallback
+  cfg.venue_prob = 1.0
+  sc = sample_scene(b, cfg)
+  assert sc.venue and sc.sky_pano == "" and sc.ground_kind == "venue"
+  cfg0 = SimCfg(render=False)
+  env = FSEnv(generate_track(2), cfg0, seed=0)
+  r = Panda3DRenderer({"wide": CAMERAS["wide"]})
+  r.load_scene(env.track, env.cones_xy, env.cone_colors, sc)
+  img = r.render({"wide": env.T_world_ego() @ env.T_ego_cam()})["wide"]
+  assert img.shape == (256, 512, 3) and 40 < img.mean() < 230

@@ -110,13 +110,13 @@ def ego_map(gt_xy, gt_cls, det_xy, det_cls, plan, gt_plan, size=(512, 384), rng=
 
 
 def render_run(ckpt, track, out: str | Path, seconds: float = 60.0, dr: str = "light", seed: int = 0,
-               fps: int = 20, every: int = 1, profile: str | None = None) -> dict:
+               fps: int = 20, every: int = 1, profile: str | None = None, venue_prob: float = 0.0) -> dict:
   from fsop.data.targets import visible_cones, world_to_ego
   from fsop.eval.closed_loop import ModelPolicy
   from fsop.sim.env import FSEnv, SimCfg
   from fsop.track.schema import CONE_CLASS_INDEX
 
-  cfg = SimCfg(dr=dr, max_time=seconds)
+  cfg = SimCfg(dr=dr, max_time=seconds, venue_prob=venue_prob)
   cfg.noise.enabled = False
   from fsop.profile import load_profile
 
