@@ -123,9 +123,8 @@ def sample_scene(rng: np.random.Generator, cfg: DRCfg) -> SceneDR:
 
 
 def _venue(rng: np.random.Generator, cfg: DRCfg, sc: SceneDR) -> None:
-  from fsop.sim.render.venue import available_panoramas
-
-  panos = available_panoramas(cfg.panorama_dir)
+  root = Path(cfg.panorama_dir)  # listed here (not via the renderer module): sampling must not need panda3d
+  panos = sorted(p.stem for p in root.glob("*.jpg")) if root.exists() else []
   sc.venue = True
   sc.sky_pano = str(Path(cfg.panorama_dir) / f"{panos[int(rng.integers(len(panos)))]}.jpg") \
     if panos and rng.random() < 0.9 else ""

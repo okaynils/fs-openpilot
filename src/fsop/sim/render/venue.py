@@ -65,11 +65,6 @@ def fetch_panoramas(out: str | Path = PANORAMA_DIR, width: int = 4096) -> list[P
   return paths
 
 
-def available_panoramas(root: str | Path = PANORAMA_DIR) -> list[str]:
-  root = Path(root)
-  return sorted(p.stem for p in root.glob("*.jpg")) if root.exists() else []
-
-
 def _np_texture(rgb: np.ndarray, name: str, alpha: np.ndarray | None = None, repeat: bool = True) -> Texture:
   """float RGB [H,W,3] in 0..1 (row 0 = top) -> Panda texture."""
   h, w = rgb.shape[:2]

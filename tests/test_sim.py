@@ -100,9 +100,10 @@ def test_frames_sharded_roundtrip_and_repack(tmp_path):
 
 
 def test_venue_scene_sampling_and_render(tmp_path):
+  import pytest
+
   from fsop.sim.env import CAMERAS
   from fsop.sim.randomization import dr_preset, sample_scene
-  from fsop.sim.render.panda3d_backend import Panda3DRenderer
 
   # venue_prob = 0 draws nothing extra: classic datasets and benchmark scenes reproduce exactly
   a, b = np.random.default_rng(3), np.random.default_rng(3)
@@ -112,6 +113,9 @@ def test_venue_scene_sampling_and_render(tmp_path):
   cfg.venue_prob = 1.0
   sc = sample_scene(b, cfg)
   assert sc.venue and sc.sky_pano == "" and sc.ground_kind == "venue"
+  pytest.importorskip("panda3d")  # rendering needs the `sim` extra
+  from fsop.sim.render.panda3d_backend import Panda3DRenderer
+
   cfg0 = SimCfg(render=False)
   env = FSEnv(generate_track(2), cfg0, seed=0)
   r = Panda3DRenderer({"wide": CAMERAS["wide"]})
