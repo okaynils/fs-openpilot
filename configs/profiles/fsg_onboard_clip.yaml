@@ -1,0 +1,18 @@
+# Onboard FSG clip (screen recording, 878x522). Camera ~1.2 m high, wide-angle (~118 deg HFOV),
+# pitched ~36 deg down; estimated from cone sizes / track width / horizon (no calibration).
+# "pitched" variant: virtual model camera pitched 21 deg down so its view covers the visible ground band
+# (2.6..34 deg below horizon, ~1.8..26 m); the sim must be trained with the same mount.
+name: fsg_onboard_clip
+mount: {x: 0.0, z: 1.2, pitch_deg: 21.0}
+cameras:
+  - name: front
+    width: 878
+    height: 522
+    fx: 426.0
+    fy: 426.0
+    cx: 439.0
+    cy: 261.0
+    fisheye: true
+    dist: [0.0, 0.0, 0.0, 0.0]
+    pitch_deg: 15.0   # 36 deg total = 21 (virtual mount) + 15
+    slots: [road, wide]

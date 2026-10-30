@@ -36,6 +36,23 @@ note below and, if it changes model quality, a benchmark record.
 
 Short, dated notes on what was tried and what was learned. Newest first.
 
+- **2026-10-29: venue realism, measured on the real FSG clip**
+  - **Measure:** `fsop eval real-clip` scores the image head against colour pseudo-labels (yellow/orange
+    cone blobs below the horizon, ≥ 6 px) in the warped model inputs. It is noisy in absolute terms
+    (it misses blue and tiny cones), so only compare models on the same clip and profile.
+  - **Gap analysis (sim vs real frames):** real event asphalt is light, warm grey, with stains and tyre
+    marks; cones cast clear shadows and look pale; footage is soft and hazy; the horizon is full of
+    banners, fences and people. Most false positives of the old model sat on that horizon clutter.
+  - **A/B:** two datasets, identical (300 tracks, same seeds, the clip's pitched profile, 353 episodes)
+    except `venue_prob` 0 vs 0.85. The same 3k-step adaptation of `a100_v2_refresh` on each.
+  - **Result (wide slot, AP / F1):** old `adapt_onboard_pitched21` 0.10 / 0.15; `a100_v2_refresh` before
+    adaptation 0.11 / 0.16; classic arm 0.60 / 0.34; **venue arm 0.71 / 0.41**, with ~17% fewer
+    detections. The venue arm wins in both halves of the clip (AP 0.68 vs 0.55 and 0.74 vs 0.63).
+  - **Takeaways:**
+    - Most of the jump comes from a better base model plus full-trunk adaptation to the right camera.
+    - Venue realism adds +0.11 AP on top, mostly by cutting false positives on background clutter.
+    - Next: FSOCO for real cone appearance, more panoramas, real-clip plan plausibility.
+
 - **2026-10-27: recovery excursions + first cloud run** (Modal: CPU containers for data, A100 for training)
   - **Diagnosis:** in closed loop `m1_stage2` drifted up to 1.2–4.8 m off-centre, but 90% of v1's frames
     were within 0.31 m and only 0.5% beyond 0.8 m (where the car starts touching cones). The model had

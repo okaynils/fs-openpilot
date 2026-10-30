@@ -72,7 +72,8 @@ def record_shard(specs: list[dict], out_dir: str) -> list[dict]:
 
 @app.function(cpu=8.0, memory=8192, timeout=6 * 3600)
 def gen_dataset(name: str, track_sets: list[tuple[str, str, int, int]], per_track: int, offset_max: float,
-                skidpad: int, accel: int, seconds: float, seed: int, shard: int) -> dict:
+                skidpad: int, accel: int, seconds: float, seed: int, shard: int, profile: str = "",
+                venue_prob: float = 0.0) -> dict:
   """track_sets: (dir, preset yaml, n, seed) per set; generated on the volume if missing."""
   import json
   from dataclasses import asdict
@@ -86,7 +87,7 @@ def gen_dataset(name: str, track_sets: list[tuple[str, str, int, int]], per_trac
       _sh(f"python -m fsop.cli track gen --out {tdir} --n {n} --seed {tseed} --cfg {preset} --workers 8")
     specs += plan_dataset(tdir, n_random=per_track, n_skidpad=skidpad if i == 0 else 0,
                           n_accel=accel if i == 0 else 0, max_seconds=seconds, seed=seed + 100_000 * i,
-                          offset_max=offset_max)
+                          offset_max=offset_max, profile=profile, venue_prob=venue_prob)
   for i, sp in enumerate(specs):  # unique ids across track sets
     sp.episode_id = f"ep{i:05d}_" + sp.episode_id.split("_", 1)[1]
   out = f"data/sim/{name}"
@@ -241,11 +242,15 @@ def upload(init_ckpt: str = "runs/mac_stage2/ckpt/best.pt", v1_test: bool = True
 
 @app.local_entrypoint()
 def gen_data(name: str = "v2", per_track: int = 2, offset_max: float = 1.0, n_td: int = 480, n_tight: int = 160,
-             skidpad: int = 40, accel: int = 20, seconds: float = 40.0, seed: int = 0, shard: int = 6) -> None:
-  sets = [(f"data/tracks/td_{name}", "configs/track/trackdrive.yaml", n_td, 20_000)]
+             skidpad: int = 40, accel: int = 20, seconds: float = 40.0, seed: int = 0, shard: int = 6,
+             tracks: str = "", profile: str = "", venue_prob: float = 0.0) -> None:
+  """``tracks``: name of the track sets (default: ``name``), so several datasets can share tracks."""
+  t = tracks or name
+  sets = [(f"data/tracks/td_{t}", "configs/track/trackdrive.yaml", n_td, 20_000)]
   if n_tight:
-    sets.append((f"data/tracks/tight_{name}", "configs/track/tight.yaml", n_tight, 30_000))
-  print(gen_dataset.remote(name, sets, per_track, offset_max, skidpad, accel, seconds, seed, shard))
+    sets.append((f"data/tracks/tight_{t}", "configs/track/tight.yaml", n_tight, 30_000))
+  _spawned(gen_dataset.spawn(name, sets, per_track, offset_max, skidpad, accel, seconds, seed, shard, profile,
+                             venue_prob))
 
 
 @app.local_entrypoint()

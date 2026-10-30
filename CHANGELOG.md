@@ -23,6 +23,23 @@ separately in [benchmarks/](benchmarks/README.md).
 - `configs/train/cuda_stage2_v2{,_refresh}.yaml`: GPU recipe for dataset v2, with a second pass on a
   history cache recomputed from the fine-tuned trunk.
 
+- Venue realism (`fsop sim record --venue-prob 0.85`, `fsop.sim.render.venue`):
+  - CC0 sky panoramas (`fsop sim fetch-assets`) on a camera-centred dome;
+  - event-ground asphalt with patches, seams, stains, tyre marks, cracks and painted markings;
+  - perimeter scenery (barrier walls with banners, fences, grandstands, tents, vans, tyre stacks) and
+    people, including hi-vis marshals near the track;
+  - ground shadows for cones and people, sun-bleached cone variants with lettering, green/white/yellow
+    spray lines;
+  - camera look: white balance, saturation, haze, lost detail, vignetting.
+  Off by default: classic scenes and the benchmark suites are unchanged.
+- `fsop eval real-clip`: cone detection on an unlabelled real video against colour pseudo-labels, a
+  relative sim-to-real measure. `configs/profiles/fsg_onboard_clip.yaml` describes the FSG onboard clip.
+- `configs/train/cuda_adapt_profile.yaml`: adapt the best reference model to a team profile on a GPU.
+
+### Fixed
+- Fog fogged the whole ground in heavy-DR scenes: fixed-function fog is per vertex, and the ground was
+  one huge quad. The ground is now tessellated into 8 m cells. This affected ~4% of earlier episodes.
+
 ### Changed
 - Recorded frames are stored as one zarr shard per camera (per-frame chunks inside), so an episode is
   5 files instead of about 400. `fsop.sim.recorder.repack_frames` converts older datasets.

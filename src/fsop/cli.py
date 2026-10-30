@@ -131,14 +131,26 @@ def sim_record(tracks: Path = typer.Option(..., help="track set directory (fsop 
                per_track: int = typer.Option(1, help="random-start episodes per track"),
                offset_max: float = typer.Option(0.0, help="recovery excursions: max lateral offset [m] the "
                                                        "expert drives during noise bursts (0 = off)"),
+               venue_prob: float = typer.Option(0.0, help="share of venue-realism scenes (sky panoramas, "
+                                                       "event asphalt, scenery, people, shadows); needs "
+                                                       "`fsop sim fetch-assets` for the skies"),
                profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
   """Record an expert dataset (noise injection, DR mix, counterfactual plan labels)."""
   from fsop.sim.batch_record import plan_dataset, record_dataset
 
   specs = plan_dataset(str(tracks), n_random=per_track, n_standing=standing, n_skidpad=skidpad, n_accel=accel,
-                       max_seconds=seconds, seed=seed, profile=str(profile or ""), offset_max=offset_max)
+                       max_seconds=seconds, seed=seed, profile=str(profile or ""), offset_max=offset_max,
+                       venue_prob=venue_prob)
   idx = record_dataset(specs, str(out), workers=workers)
   typer.echo(f"{len(idx)} episodes, {sum(e['frames'] for e in idx)} frames in {out}")
+
+
+@sim_app.command("fetch-assets")
+def sim_fetch_assets(out: Path = Path("artifacts/panoramas")):
+  """Download the CC0 sky panoramas (Poly Haven) used by venue-realism scenes (~20 x 2 MB)."""
+  from fsop.sim.render.venue import fetch_panoramas
+
+  typer.echo(f"{len(fetch_panoramas(out))} panoramas in {out}")
 
 
 def _load_track(track: str):
@@ -239,6 +251,20 @@ def eval_closed_loop(ckpt: Path | None = None, suite: Path = Path("configs/eval/
   typer.echo(json.dumps(r["aggregate"], indent=1, default=float))
 
 
+@eval_app.command("real-clip")
+def eval_real_clip(video: Path = typer.Option(..., help="real onboard video"), ckpt: Path = typer.Option(...),
+                   profile: Path = typer.Option(..., help="profile describing the video's camera (and mount)"),
+                   every: float = 0.25, score: float = 0.3, out: Path | None = None,
+                   debug_dir: Path | None = typer.Option(None, help="write annotated slot images here")):
+  """Cone detection on a real unlabelled video against colour pseudo-labels (relative sim-to-real measure)."""
+  from fsop.eval.real_clip import evaluate_real_clip
+
+  r = evaluate_real_clip(video, ckpt, profile, every_s=every, score=score, debug_dir=debug_dir)
+  if out:
+    out.write_text(json.dumps(r, indent=1))
+  typer.echo(json.dumps(r, indent=1))
+
+
 @eval_app.command("dagger")
 def eval_dagger(ckpt: Path = typer.Option(...), tracks: Path = Path("data/tracks/td_v1"),
                 dataset: Path = Path("data/sim/v1"), n: int = 20, seconds: float = 40.0, beta: float = 0.2,
@@ -277,14 +303,15 @@ def viz_dataset(episode: Path, save: Path | None = None, ckpt: Path | None = Non
 def viz_video(ckpt: Path = typer.Option(...),
               track: str = typer.Option("gen:7", help="track json | skidpad | acceleration | gen:<seed>"),
               out: Path = Path("artifacts/videos/run.mp4"), laps: int = 1, seconds: float = 90.0, dr: str = "light",
-              seed: int = 0, profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
+              seed: int = 0, profile: Path | None = typer.Option(None, help=PROFILE_HELP),
+              venue_prob: float = typer.Option(0.0, help="1 = venue-realism scene (needs fetch-assets)")):
   """Closed-loop MP4: cameras with projected plan + detected cones, track map, ego map, HUD."""
   from fsop.viz.video import render_run
 
   t = _load_track(track)
   if t.discipline == "trackdrive":
     t.laps = laps
-  r = render_run(ckpt, t, out, seconds=seconds, dr=dr, seed=seed, profile=profile)
+  r = render_run(ckpt, t, out, seconds=seconds, dr=dr, seed=seed, profile=profile, venue_prob=venue_prob)
   typer.echo(json.dumps({k: r[k] for k in ("path", "frames", "result", "doo", "oc", "laps")}, default=float))
 
 

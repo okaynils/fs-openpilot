@@ -22,6 +22,7 @@ class EpisodeSpec:
   noise: bool = True
   profile: str = ""
   offset_max: float = 0.0  # recovery excursions (NoiseCfg.offset_max)
+  venue_prob: float = 0.0  # venue-realism scenes (DRCfg.venue_prob)
 
 
 _RENDERER = None
@@ -48,7 +49,7 @@ def _worker(args):
       tr = acceleration(width=float(sp.track_path.split(":")[1]) if ":" in sp.track_path else 3.0)
     else:
       tr = load_json(sp.track_path)
-    cfg = SimCfg(dr=sp.dr, random_start=sp.random_start)
+    cfg = SimCfg(dr=sp.dr, random_start=sp.random_start, venue_prob=sp.venue_prob)
     cfg.noise.enabled = sp.noise
     cfg.noise.offset_max = sp.offset_max
     env = FSEnv(tr, cfg, seed=sp.seed, renderer=renderer, profile=load_profile(sp.profile or None))
@@ -60,7 +61,8 @@ def _worker(args):
 
 def plan_dataset(track_dir: str, n_random: int = 1, n_standing: float = 0.15, n_skidpad: int = 10,
                  n_accel: int = 10, max_seconds: float = 40.0, dr_mix=(("light", 0.6), ("heavy", 0.3), ("off", 0.1)),
-                 seed: int = 0, profile: str = "", offset_max: float = 0.0) -> list[EpisodeSpec]:
+                 seed: int = 0, profile: str = "", offset_max: float = 0.0,
+                 venue_prob: float = 0.0) -> list[EpisodeSpec]:
   rng = np.random.default_rng(seed)
   idx = json.loads((Path(track_dir) / "index.json").read_text())["tracks"]
   levels, probs = zip(*dr_mix, strict=True)
@@ -89,6 +91,7 @@ def plan_dataset(track_dir: str, n_random: int = 1, n_standing: float = 0.15, n_
   for sp in specs:
     sp.profile = profile
     sp.offset_max = offset_max if sp.track_path != "skidpad" else min(offset_max, 0.6)
+    sp.venue_prob = venue_prob
   return specs
 
 

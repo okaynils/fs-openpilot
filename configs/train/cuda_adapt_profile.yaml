@@ -1,0 +1,15 @@
+# Cloud GPU: adapt the best reference model (a100_v2_refresh) to a team profile's camera, e.g.
+#   modal run --detach scripts/modal_app.py::train --cfg configs/train/cuda_adapt_profile.yaml \
+#     --o "sim_root=data/sim/<profile dataset> name=adapt_<profile>"
+# The history cache must come from the init checkpoint:
+#   fsop data cache-features --dataset <dataset> --ckpt runs/cuda_stage2_v2_refresh/ckpt/best.pt --hidden-only
+defaults: [cuda_stage2_v2.yaml]
+name: cuda_adapt_profile
+init_ckpt: runs/cuda_stage2_v2_refresh/ckpt/best.pt
+cache_tag: cuda_stage2_v2_refresh_best
+steps: 3000
+lr: 1.5e-4
+lr_trunk: 0.1
+warmup: 100
+val_every: 500
+val_batches: 40

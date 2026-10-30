@@ -49,6 +49,9 @@ a **living research project**: it improves over time, and every model is recorde
   - **Driving data:** an expert driver with noise injection, plus counterfactual "recovery" labels.
   - **Referee:** laps, DOO, OC, stop zone, DQ rules.
   - **Domain randomization:** lighting, textures, cones, camera mount, image effects, dynamics.
+  - **Venue mode** (`--venue-prob`): real sky panoramas, event asphalt, banner walls, fences, people and
+    shadows ([classic vs venue](docs/media/venue_comparison.jpg)). Measured on a real FSG clip with
+    `fsop eval real-clip`, it raises cone AP from 0.60 to 0.71 over the classic scenes.
 - **Bring your own car.**
   - A **team profile** (`configs/profiles/*.yaml`) describes vehicle parameters, camera mount and
     physical cameras.
