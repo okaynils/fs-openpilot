@@ -8,10 +8,10 @@
 *Fine-tune openpilot's end-to-end driving model for Formula Student Driverless.*
 Camera in → drivable path + cones out. No map, no SLAM.
 
-<a href="docs/media/demo_full.gif"><img src="docs/media/demo.gif" alt="fs-openpilot driving a held-out track in simulation" width="100%"></a>
+<a href="docs/media/demo_full.webp"><img src="docs/media/demo.webp" alt="fs-openpilot driving a held-out track in simulation" width="100%"></a>
 
 <sub>Fine-tuned model (`a100_v2_refresh`, trained on a cloud A100) driving a held-out track in the simulator's
-venue mode: a clean lap, no cones hit (click for the full-resolution GIF). Left: model-frame
+venue mode: a clean lap, no cones hit (click for full resolution). Left: model-frame
 camera inputs with the predicted path (magenta, ±1σ) vs. the expert (green) and detected cones (rings).
 Right: track map and ego view (dots = true cones, rings = detections).</sub>
 
@@ -67,7 +67,7 @@ a **living research project**: it improves over time, and every model is recorde
 - **Visualization everywhere.**
   - [Rerun](https://rerun.io) recordings of every validation and closed-loop run, with plans and
     cones projected into the camera views.
-  - MP4/GIF rendering and track galleries.
+  - MP4 and animated WebP/GIF rendering, track galleries.
 - **Runs on a laptop, scales in the cloud.** The full pipeline trains on an Apple Silicon Mac (MPS).
   `scripts/modal_app.py` runs the same pipeline on [Modal](https://modal.com): data generation on CPU
   containers, training on a GPU. The current best model cost about $14 of Modal's free monthly credit.

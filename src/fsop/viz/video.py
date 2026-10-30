@@ -172,8 +172,9 @@ def render_run(ckpt, track, out: str | Path, seconds: float = 60.0, dr: str = "l
 
 
 def mp4_to_gif(src: str | Path, out: str | Path, start_s: float = 0.0, duration_s: float = 12.0, fps: float = 10.0,
-               width: int = 640, colors: int = 128) -> Path:
-  """Convert a clip of an MP4 to an optimized GIF (shared palette, no dithering) for READMEs."""
+               width: int = 640, colors: int = 128, quality: int = 70) -> Path:
+  """Convert a clip of an MP4 to an animation for READMEs: an optimized GIF (shared palette, no dithering), or an
+  animated WebP when ``out`` ends in ``.webp`` (``quality``)."""
   from PIL import Image
 
   cap = cv2.VideoCapture(str(src))
@@ -194,6 +195,12 @@ def mp4_to_gif(src: str | Path, out: str | Path, start_s: float = 0.0, duration_
   cap.release()
   if not frames:
     raise ValueError(f"no frames read from {src}")
+  out = Path(out)
+  out.parent.mkdir(parents=True, exist_ok=True)
+  if out.suffix.lower() == ".webp":  # animated WebP: full colour, ~3x smaller than a GIF at the same size
+    frames[0].save(out, save_all=True, append_images=frames[1:], duration=int(round(1000 * step / src_fps)), loop=0,
+                   quality=quality, method=6)
+    return out
   # shared palette from a mosaic of frames across the clip (keeps small-but-important colours like cones)
   picks = frames[:: max(len(frames) // 6, 1)][:6]
   mosaic = Image.new("RGB", (picks[0].width, picks[0].height * len(picks)))
@@ -201,7 +208,5 @@ def mp4_to_gif(src: str | Path, out: str | Path, start_s: float = 0.0, duration_
     mosaic.paste(f, (0, i * f.height))
   palette = mosaic.quantize(colors=colors, method=Image.Quantize.MEDIANCUT)
   q = [f.quantize(palette=palette, dither=Image.Dither.NONE) for f in frames]
-  out = Path(out)
-  out.parent.mkdir(parents=True, exist_ok=True)
   q[0].save(out, save_all=True, append_images=q[1:], duration=int(round(1000 * step / src_fps)), loop=0, optimize=True)
   return out
