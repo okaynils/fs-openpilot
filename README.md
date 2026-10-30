@@ -1,13 +1,17 @@
 <div align="center">
 
-# fs-openpilot
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="/docs/logo_light.svg">
+  <img alt="fs-openpilot logo" src="/docs/logo_dark.svg" width="50%" height="50%">
+</picture>
 
-**Fine-tune openpilot's end-to-end driving model for Formula Student Driverless.**
+*Fine-tune openpilot's end-to-end driving model for Formula Student Driverless.*
 Camera in → drivable path + cones out. No map, no SLAM.
 
-<img src="docs/media/demo.gif" alt="fs-openpilot driving a held-out track in simulation" width="100%">
+<a href="docs/media/demo_full.gif"><img src="docs/media/demo.gif" alt="fs-openpilot driving a held-out track in simulation" width="100%"></a>
 
-<sub>Fine-tuned model (`a100_v2_refresh`, trained on a cloud A100) driving a held-out track in the simulator: a clean lap, no cones hit. Left: model-frame
+<sub>Fine-tuned model (`a100_v2_refresh`, trained on a cloud A100) driving a held-out track in the simulator's
+venue mode: a clean lap, no cones hit (click for the full-resolution GIF). Left: model-frame
 camera inputs with the predicted path (magenta, ±1σ) vs. the expert (green) and detected cones (rings).
 Right: track map and ego view (dots = true cones, rings = detections).</sub>
 
