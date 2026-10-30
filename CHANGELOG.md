@@ -35,6 +35,7 @@ separately in [benchmarks/](benchmarks/README.md).
 - `fsop eval real-clip`: cone detection on an unlabelled real video against colour pseudo-labels, a
   relative sim-to-real measure. `configs/profiles/fsg_onboard_clip.yaml` describes the FSG onboard clip.
 - `configs/train/cuda_adapt_profile.yaml`: adapt the best reference model to a team profile on a GPU.
+- `fsop viz gif --out *.webp`: animated WebP (full colour, ~3x smaller than a GIF); the README demo uses it.
 
 ### Fixed
 - Fog fogged the whole ground in heavy-DR scenes: fixed-function fog is per vertex, and the ground was

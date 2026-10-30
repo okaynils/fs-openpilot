@@ -330,12 +330,13 @@ def viz_real(video: Path = typer.Option(..., help="onboard video file"),
 
 
 @viz_app.command("gif")
-def viz_gif(video: Path, out: Path = Path("docs/media/demo.gif"), start: float = 5.0, duration: float = 13.0,
-            fps: float = 10.0, width: int = 720):
-  """Convert an MP4 (e.g. from `fsop viz video`) into a README-sized GIF."""
+def viz_gif(video: Path, out: Path = Path("docs/media/demo.webp"), start: float = 5.0, duration: float = 13.0,
+            fps: float = 10.0, width: int = 960, quality: int = typer.Option(70, help="WebP quality")):
+  """Convert an MP4 (e.g. from `fsop viz video`) into a README animation: animated WebP (recommended) or GIF,
+  chosen by the output extension."""
   from fsop.viz.video import mp4_to_gif
 
-  p = mp4_to_gif(video, out, start_s=start, duration_s=duration, fps=fps, width=width, colors=192)
+  p = mp4_to_gif(video, out, start_s=start, duration_s=duration, fps=fps, width=width, colors=192, quality=quality)
   typer.echo(f"{p} ({p.stat().st_size / 1e6:.1f} MB)")
 
 
