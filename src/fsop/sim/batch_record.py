@@ -10,6 +10,8 @@ from pathlib import Path
 import numpy as np
 from tqdm import tqdm
 
+from fsop.sim.raceline import PLANNER_VERSION
+
 
 @dataclass
 class EpisodeSpec:
@@ -98,6 +100,14 @@ def plan_dataset(track_dir: str, n_random: int = 1, n_standing: float = 0.15, n_
 def record_dataset(specs: list[EpisodeSpec], out_dir: str, workers: int = 4) -> list[dict]:
   out = Path(out_dir)
   out.mkdir(parents=True, exist_ok=True)
+  # Resume only compatible labels. Otherwise an old dataset silently keeps its
+  # centerline plans despite the new expert being selected by default.
+  for spec in specs:
+    metadata = out / spec.episode_id / "meta.json"
+    if metadata.exists():
+      planner = json.loads(metadata.read_text()).get("label_planner", {})
+      if planner.get("version") != PLANNER_VERSION or planner.get("mode") != "racing":
+        raise ValueError(f"{metadata}: incompatible expert labels; record into a fresh dataset directory")
   todo = [s for s in specs if not (out / s.episode_id / "meta.json").exists()]
   ctx = mp.get_context("spawn")
   rows = []

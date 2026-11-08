@@ -55,7 +55,7 @@ class Episode:
 
   @cached_property
   def frames(self):
-    return zarr.open_group(str(self.path / "frames.zarr"), mode="r")
+    return zarr.open_group(str(self.meta.get("frames_source", self.path / "frames.zarr")), mode="r")
 
   def frame_pair(self, cam: str, k: int) -> np.ndarray:
     a = self.frames[cam]

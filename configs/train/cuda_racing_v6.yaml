@@ -1,0 +1,19 @@
+# Run entirely on Modal: modal run --detach scripts/modal_app.py::racing
+name: cuda_racing_v6
+sim_root: data/sim/racing_v6
+label_mode: racing
+init_ckpt: runs/cuda_stage2_v2_refresh/ckpt/best.pt
+cache_tag: racing_init
+stage: 2
+trunk: last
+batch_size: 64
+num_workers: 12
+steps: 4000
+lr: 1.0e-4
+lr_policy: 0.3
+lr_trunk: 0.1
+l2sp: 1.0e-3
+warmup: 100
+val_every: 500
+val_batches: 60
+selection_metric: ade_4s

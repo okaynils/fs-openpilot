@@ -25,6 +25,7 @@ from zarr.codecs import BloscCodec
 
 from fsop.geometry.yuv import rgb_to_model
 from fsop.sim.env import FSEnv, Obs
+from fsop.sim.raceline import PLANNER_VERSION
 from fsop.track.io import save_json
 from fsop.track.schema import CONE_CLASS_INDEX
 
@@ -109,8 +110,20 @@ class EpisodeWriter:
       "record_every": self.record_every, "cameras": list(env.cfg.cameras), "state_cols": STATE_COLS,
       "mount": {"x": m.x, "y": m.y, "z": m.z, "roll": m.roll, "pitch": m.pitch, "yaw": m.yaw},
       "scene": env.scene.to_dict(), "vehicle": asdict(env.vp), "expert": asdict(env.expert_params),
-      "dr": asdict(env.dr_cfg), "summary": summary, "schema_version": 1,
+      "dr": asdict(env.dr_cfg), "summary": summary, "schema_version": 1, "label_dt": env.cfg.label_dt,
     }
+    reference = env.mission.racing_line
+    meta["label_planner"] = {"version": PLANNER_VERSION, "mode": env.expert_params.path_mode}
+    if reference is not None:
+      np.savez(self.dir / "reference.npz", route_s=env.mission.s_arr, points=reference.points,
+               speed=reference.speed, offset=reference.offset)
+      meta["label_planner"].update({"optimized": reference.optimized, "travel_time": reference.travel_time,
+                                    "baseline_time": reference.baseline_time,
+                                    "baseline_feasible": reference.baseline_feasible,
+                                    "solver_message": reference.solver_message, "converged": reference.converged,
+                                    "iterations": reference.iterations,
+                                    "clearance_required": reference.clearance_required,
+                                    "rollout_safety": env.expert.rollout_stats})
     (self.dir / "meta.json").write_text(json.dumps(meta, indent=1, default=float))
     return meta
 

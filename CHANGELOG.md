@@ -7,6 +7,33 @@ separately in [benchmarks/](benchmarks/README.md).
 ## [Unreleased]
 
 ### Added
+- Racing trajectory validation against the full simulated body footprint. Unsafe nominal rollouts
+  search slower speed schedules for the greatest collision-free route progress; unavoidable contacts
+  remain explicitly flagged. Clear nominal rollouts are retained unchanged.
+- Trained racing-path checkpoint and [matched evaluation](benchmarks/racing/v6.json): held-out
+  10 m path error falls 25% overall and 41% on changed paths. Trackdrive cone hits fall from four
+  to two in the quick suite, with no lap-time improvement; skidpad remains a failure.
+- Modal racing pipeline: CPU relabeling shards, a sampled label-clearance gate, L4/A10 feature caching,
+  and A100 training with trajectory-based checkpoint selection. Cloud SSD staging resolves external
+  frame references without changing source datasets.
+- Prioritize the desired tracking reserve, with a smaller hard body margin and local speed reduction
+  only when no full-reserve reference is found. Braking is propagated ahead of narrow sections and
+  the required clearance is recorded in label provenance.
+- Plan against the actual episode cones (including randomization), and accept necessary feasible
+  detours when the centerline is invalid. A sampled body/cone clearance audit compares new labels
+  against the original teacher on the same observations.
+- Configurable validation metric for checkpoint selection; racing training minimizes trajectory ADE
+  over four seconds and retains the initialization checkpoint if training does not improve it.
+- `fsop data relabel-racing`: regenerate racing plans from recorded states into a separate dataset,
+  reusing source images read-only and preserving behavior/label provenance. Includes atomic episode
+  writes, source/code fingerprint checks on resume, and a racing-only training recipe.
+- Retain constraint-checked improvements when the path solver reaches its iteration budget;
+  record convergence separately from whether the path improved.
+- Racing-reference expert: local travel-time optimization with track/body/cone clearance,
+  curvature and vehicle-aware speed constraints; counterfactual labels follow the planned reference.
+  Episodes store planner provenance and `reference.npz`. Legacy centerline mode remains available
+  for comparisons. Existing datasets/checkpoints need regeneration/retraining to learn the new targets.
+- `scripts/benchmark_expert.py`: matched headless teacher evaluation with referee results.
 - `fsop viz real`: run a model on a real onboard video. The output shows the plan and cones projected
   back through the physical lens, the model-frame inputs and an ego view.
 - `fsop.geometry.warp.project_to_camera`: ego frame → physical camera pixels, distortion included.

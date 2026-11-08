@@ -1,0 +1,1179 @@
+{
+  "date": "2026-11-08",
+  "name": "cuda_racing_v6",
+  "protocol": "Validation-selected step 3500; held-out predictions and baseline/candidate closed-loop evaluation in the same Modal A10 container. Open-loop targets are racing labels, so these errors are not comparable to the legacy centerline-target benchmark table.",
+  "training_gpu": "NVIDIA A100-SXM4-40GB",
+  "evaluation_hardware": "name, uuid, driver_version\nNVIDIA A10, GPU-116db4b0-77aa-7438-b3a5-b335ff54e64b, 610.57.04\n",
+  "checkpoint": {
+    "checkpoint": "runs/cuda_racing_v6/ckpt/best.pt",
+    "step": 3500,
+    "sha256": "fdf1b3d56ebd110658dace49a8c9ab25fa50c42ce076b09c0b0b5d418746f507",
+    "label_mode": "racing",
+    "selection_metric": "ade_4s"
+  },
+  "training_validation": [
+    {
+      "step": 0,
+      "tag": "baseline",
+      "plan": 0.1409750796854496,
+      "bev_heat": 0.6591892729202906,
+      "bev_off": 0.19900184844930965,
+      "img_road_heat": 0.08734301043053468,
+      "img_road_wh": 0.014090220568080743,
+      "img_road_off": 0.08446634598076344,
+      "img_wide_heat": 0.22736135472853977,
+      "img_wide_wh": 0.012143676728010177,
+      "img_wide_off": 0.12044532323877016,
+      "loss": 1.545016132729749,
+      "ade_4s": 1.346083402633667,
+      "long_err_1s": 0.49715155363082886,
+      "lat_err_1s": 0.39484062790870667,
+      "long_err_2s": 1.158743977546692,
+      "lat_err_2s": 0.8440870046615601,
+      "long_err_4s": 4.0997633934021,
+      "lat_err_4s": 2.811044216156006,
+      "bev_f1": 0.5992122748819915,
+      "bev_precision": 0.6797098813150835,
+      "bev_recall": 0.5357622896467679,
+      "bev_pos_err": 0.301067189764882,
+      "bev_swap": 0.00013825044067327966,
+      "bev": {
+        "precision": 0.6797098813150835,
+        "recall": 0.5357622896467679,
+        "f1": 0.5992122748819915,
+        "per_class_f1": [
+          0.5998398178982421,
+          0.6197218289331223,
+          0.2801932367149758,
+          0.42716857610474634
+        ],
+        "pos_err_m": 0.301067189764882,
+        "blue_yellow_swap_rate": 0.00013825044067327966,
+        "by_range": {
+          "0-10m": {
+            "precision": 0.9131952263003827,
+            "recall": 0.9190934844192634,
+            "f1": 0.916134861919015
+          },
+          "10-20m": {
+            "precision": 0.7589330290278867,
+            "recall": 0.7681923187987294,
+            "f1": 0.7635346033796147
+          },
+          "20-45m": {
+            "precision": 0.5286303904359789,
+            "recall": 0.33642292132117624,
+            "f1": 0.41117322558624375
+          }
+        }
+      }
+    },
+    {
+      "step": 500,
+      "tag": "step500",
+      "plan": -0.295916514021034,
+      "bev_heat": 0.6779416258136431,
+      "bev_off": 0.20055592382947604,
+      "img_road_heat": 0.0889978232483069,
+      "img_road_wh": 0.015743965096771718,
+      "img_road_off": 0.08533381161590417,
+      "img_wide_heat": 0.23022649039824802,
+      "img_wide_wh": 0.012649812906359633,
+      "img_wide_off": 0.12102783421675364,
+      "loss": 1.1365607731044292,
+      "ade_4s": 1.297607183456421,
+      "long_err_1s": 0.4976237714290619,
+      "lat_err_1s": 0.3096984326839447,
+      "long_err_2s": 1.1440303325653076,
+      "lat_err_2s": 0.7699297070503235,
+      "long_err_4s": 4.050525188446045,
+      "lat_err_4s": 2.7568793296813965,
+      "bev_f1": 0.5980833249268637,
+      "bev_precision": 0.6841291454155224,
+      "bev_recall": 0.5312640011469739,
+      "bev_pos_err": 0.3053507783520839,
+      "bev_swap": 0.00020961430967020682,
+      "bev": {
+        "precision": 0.6841291454155224,
+        "recall": 0.5312640011469739,
+        "f1": 0.5980833249268637,
+        "per_class_f1": [
+          0.599262368052906,
+          0.6182558676575556,
+          0.30413756045137025,
+          0.407000407000407
+        ],
+        "pos_err_m": 0.3053507783520839,
+        "blue_yellow_swap_rate": 0.00020961430967020682,
+        "by_range": {
+          "0-10m": {
+            "precision": 0.9227619155954954,
+            "recall": 0.9193109700815957,
+            "f1": 0.9210332103321033
+          },
+          "10-20m": {
+            "precision": 0.7633076424403947,
+            "recall": 0.766122035858878,
+            "f1": 0.7647122496842865
+          },
+          "20-45m": {
+            "precision": 0.5293605073340756,
+            "recall": 0.32993392269860905,
+            "f1": 0.40650557620817845
+          }
+        }
+      }
+    },
+    {
+      "step": 1000,
+      "tag": "step1000",
+      "plan": -0.3093818691248695,
+      "bev_heat": 0.6686813473701477,
+      "bev_off": 0.20137689436475437,
+      "img_road_heat": 0.08921334929764271,
+      "img_road_wh": 0.01513251989769439,
+      "img_road_off": 0.08512450431783994,
+      "img_wide_heat": 0.2298395812511444,
+      "img_wide_wh": 0.012579918497552474,
+      "img_wide_off": 0.12064354196190834,
+      "loss": 1.113209787833815,
+      "ade_4s": 1.3021775484085083,
+      "long_err_1s": 0.4888954162597656,
+      "lat_err_1s": 0.30635860562324524,
+      "long_err_2s": 1.1500513553619385,
+      "lat_err_2s": 0.7671918869018555,
+      "long_err_4s": 4.096575736999512,
+      "lat_err_4s": 2.750582456588745,
+      "bev_f1": 0.597818519378046,
+      "bev_precision": 0.6840306640805394,
+      "bev_recall": 0.5309055717844405,
+      "bev_pos_err": 0.3067911698153986,
+      "bev_swap": 0.00020940215684221548,
+      "bev": {
+        "precision": 0.6840306640805394,
+        "recall": 0.5309055717844405,
+        "f1": 0.597818519378046,
+        "per_class_f1": [
+          0.6017436939224649,
+          0.6147637464267699,
+          0.29594017094017094,
+          0.42030794839783603
+        ],
+        "pos_err_m": 0.3067911698153986,
+        "blue_yellow_swap_rate": 0.00020940215684221548,
+        "by_range": {
+          "0-10m": {
+            "precision": 0.9237693710118505,
+            "recall": 0.9195780399274047,
+            "f1": 0.921668940427467
+          },
+          "10-20m": {
+            "precision": 0.760344209394048,
+            "recall": 0.7655042957187207,
+            "f1": 0.7629155274140162
+          },
+          "20-45m": {
+            "precision": 0.5301403798513625,
+            "recall": 0.32940963419051067,
+            "f1": 0.4063366778979504
+          }
+        }
+      }
+    },
+    {
+      "step": 1500,
+      "tag": "step1500",
+      "plan": -0.3115949491194139,
+      "bev_heat": 0.6662187894185384,
+      "bev_off": 0.199990563839674,
+      "img_road_heat": 0.08781087280561527,
+      "img_road_wh": 0.014267107751220465,
+      "img_road_off": 0.08462043106555939,
+      "img_wide_heat": 0.22841386968890826,
+      "img_wide_wh": 0.012460326651732127,
+      "img_wide_off": 0.12035989214976629,
+      "loss": 1.1025469042516003,
+      "ade_4s": 1.2901148796081543,
+      "long_err_1s": 0.4865965247154236,
+      "lat_err_1s": 0.30439454317092896,
+      "long_err_2s": 1.1398786306381226,
+      "lat_err_2s": 0.7632724642753601,
+      "long_err_4s": 4.036250591278076,
+      "lat_err_4s": 2.7503581047058105,
+      "bev_f1": 0.5986073291064198,
+      "bev_precision": 0.6812817345958556,
+      "bev_recall": 0.5338267710890876,
+      "bev_pos_err": 0.3036341910082035,
+      "bev_swap": 0.0002081165452653486,
+      "bev": {
+        "precision": 0.6812817345958556,
+        "recall": 0.5338267710890876,
+        "f1": 0.5986073291064198,
+        "per_class_f1": [
+          0.6025535507016988,
+          0.6161278179764942,
+          0.2881628280664167,
+          0.41697266421868623
+        ],
+        "pos_err_m": 0.3036341910082035,
+        "blue_yellow_swap_rate": 0.0002081165452653486,
+        "by_range": {
+          "0-10m": {
+            "precision": 0.9160261557875415,
+            "recall": 0.9129887948776584,
+            "f1": 0.9145049533298975
+          },
+          "10-20m": {
+            "precision": 0.7652080344332856,
+            "recall": 0.7687927927927928,
+            "f1": 0.7669962250584217
+          },
+          "20-45m": {
+            "precision": 0.5286019463565156,
+            "recall": 0.33561396105853275,
+            "f1": 0.41055988791180426
+          }
+        }
+      }
+    },
+    {
+      "step": 2000,
+      "tag": "step2000",
+      "plan": -0.32236973858283213,
+      "bev_heat": 0.6592849537730217,
+      "bev_off": 0.1992461974422137,
+      "img_road_heat": 0.08689479486395915,
+      "img_road_wh": 0.014259481010958553,
+      "img_road_off": 0.08430965294440587,
+      "img_wide_heat": 0.22638899236917495,
+      "img_wide_wh": 0.011996375629678369,
+      "img_wide_off": 0.12003266749282678,
+      "loss": 1.0800433769434068,
+      "ade_4s": 1.2800259590148926,
+      "long_err_1s": 0.4825177490711212,
+      "lat_err_1s": 0.30034399032592773,
+      "long_err_2s": 1.1291247606277466,
+      "lat_err_2s": 0.7555930018424988,
+      "long_err_4s": 4.012048721313477,
+      "lat_err_4s": 2.7347917556762695,
+      "bev_f1": 0.6003385179324366,
+      "bev_precision": 0.6804168180167091,
+      "bev_recall": 0.5371243212243947,
+      "bev_pos_err": 0.3025939439753685,
+      "bev_swap": 0.00017249111670748955,
+      "bev": {
+        "precision": 0.6804168180167091,
+        "recall": 0.5371243212243947,
+        "f1": 0.6003385179324366,
+        "per_class_f1": [
+          0.5980326496442026,
+          0.6243765455383712,
+          0.2799575821845175,
+          0.4246853430775477
+        ],
+        "pos_err_m": 0.3025939439753685,
+        "blue_yellow_swap_rate": 0.00017249111670748955,
+        "by_range": {
+          "0-10m": {
+            "precision": 0.914275956284153,
+            "recall": 0.9149008885850991,
+            "f1": 0.9145883156815852
+          },
+          "10-20m": {
+            "precision": 0.7559350861030402,
+            "recall": 0.7691253875549787,
+            "f1": 0.7624731951393853
+          },
+          "20-45m": {
+            "precision": 0.5329267716163192,
+            "recall": 0.3400398166023166,
+            "f1": 0.41517355676272905
+          }
+        }
+      }
+    },
+    {
+      "step": 2500,
+      "tag": "step2500",
+      "plan": -0.3306916446968292,
+      "bev_heat": 0.6572904537121455,
+      "bev_off": 0.19870970050493877,
+      "img_road_heat": 0.08633914515376091,
+      "img_road_wh": 0.013931912928819656,
+      "img_road_off": 0.08393913134932518,
+      "img_wide_heat": 0.22508239907522995,
+      "img_wide_wh": 0.011941408055524032,
+      "img_wide_off": 0.11962298390765985,
+      "loss": 1.0661654899905746,
+      "ade_4s": 1.2714378833770752,
+      "long_err_1s": 0.47546911239624023,
+      "lat_err_1s": 0.29991284012794495,
+      "long_err_2s": 1.1163513660430908,
+      "lat_err_2s": 0.7556167840957642,
+      "long_err_4s": 3.993187427520752,
+      "lat_err_4s": 2.7302682399749756,
+      "bev_f1": 0.5982451264541231,
+      "bev_precision": 0.6704487307837772,
+      "bev_recall": 0.5400813634652951,
+      "bev_pos_err": 0.29952311408789334,
+      "bev_swap": 0.00027494243392789635,
+      "bev": {
+        "precision": 0.6704487307837772,
+        "recall": 0.5400813634652951,
+        "f1": 0.5982451264541231,
+        "per_class_f1": [
+          0.600279219020233,
+          0.6172885417957935,
+          0.3020277481323372,
+          0.411124546553809
+        ],
+        "pos_err_m": 0.29952311408789334,
+        "blue_yellow_swap_rate": 0.00027494243392789635,
+        "by_range": {
+          "0-10m": {
+            "precision": 0.9042291340344596,
+            "recall": 0.9170543515261546,
+            "f1": 0.9105965861078249
+          },
+          "10-20m": {
+            "precision": 0.7552964595478459,
+            "recall": 0.7692419086235609,
+            "f1": 0.7622054023029737
+          },
+          "20-45m": {
+            "precision": 0.5208475734791524,
+            "recall": 0.3445365486058779,
+            "f1": 0.41473149492017414
+          }
+        }
+      }
+    },
+    {
+      "step": 3000,
+      "tag": "step3000",
+      "plan": -0.3347848472961535,
+      "bev_heat": 0.6562865590055783,
+      "bev_off": 0.19825121859709421,
+      "img_road_heat": 0.0861704754953583,
+      "img_road_wh": 0.013817567517980934,
+      "img_road_off": 0.08372873303790887,
+      "img_wide_heat": 0.22368262993792692,
+      "img_wide_wh": 0.011858103408788642,
+      "img_wide_off": 0.11946856590608755,
+      "loss": 1.0584790056105702,
+      "ade_4s": 1.273767352104187,
+      "long_err_1s": 0.4771799147129059,
+      "lat_err_1s": 0.2989004850387573,
+      "long_err_2s": 1.115584135055542,
+      "lat_err_2s": 0.7539603114128113,
+      "long_err_4s": 4.022514343261719,
+      "lat_err_4s": 2.713963747024536,
+      "bev_f1": 0.602010030170433,
+      "bev_precision": 0.680150793471636,
+      "bev_recall": 0.539973834656535,
+      "bev_pos_err": 0.3001487642839283,
+      "bev_swap": 0.00024059943630989208,
+      "bev": {
+        "precision": 0.680150793471636,
+        "recall": 0.539973834656535,
+        "f1": 0.602010030170433,
+        "per_class_f1": [
+          0.6009963578515511,
+          0.6236715982496354,
+          0.30988894764674774,
+          0.4224314367580843
+        ],
+        "pos_err_m": 0.3001487642839283,
+        "blue_yellow_swap_rate": 0.00024059943630989208,
+        "by_range": {
+          "0-10m": {
+            "precision": 0.9111706282780939,
+            "recall": 0.9218697075759287,
+            "f1": 0.9164889437647323
+          },
+          "10-20m": {
+            "precision": 0.7565278757939309,
+            "recall": 0.774622443818195,
+            "f1": 0.7654682423506731
+          },
+          "20-45m": {
+            "precision": 0.5312263794406652,
+            "recall": 0.3396973084010513,
+            "f1": 0.4144017983821931
+          }
+        }
+      }
+    },
+    {
+      "step": 3500,
+      "tag": "step3500",
+      "plan": -0.33553445612390836,
+      "bev_heat": 0.6486382057269414,
+      "bev_off": 0.1976623147726059,
+      "img_road_heat": 0.08529067027072111,
+      "img_road_wh": 0.013795135216787458,
+      "img_road_off": 0.08356127552688122,
+      "img_wide_heat": 0.22314719905455907,
+      "img_wide_wh": 0.011822788945088784,
+      "img_wide_off": 0.11929760413865248,
+      "loss": 1.047680737528329,
+      "ade_4s": 1.2695518732070923,
+      "long_err_1s": 0.4740806221961975,
+      "lat_err_1s": 0.29805997014045715,
+      "long_err_2s": 1.1101429462432861,
+      "lat_err_2s": 0.7507549524307251,
+      "long_err_4s": 4.013675212860107,
+      "lat_err_4s": 2.709404945373535,
+      "bev_f1": 0.6045460428717929,
+      "bev_precision": 0.6801075268817204,
+      "bev_recall": 0.544095772325669,
+      "bev_pos_err": 0.2980549086371654,
+      "bev_swap": 0.00017051461310234288,
+      "bev": {
+        "precision": 0.6801075268817204,
+        "recall": 0.544095772325669,
+        "f1": 0.6045460428717929,
+        "per_class_f1": [
+          0.603832730768427,
+          0.626078301260783,
+          0.30914826498422715,
+          0.42485783915515846
+        ],
+        "pos_err_m": 0.2980549086371654,
+        "blue_yellow_swap_rate": 0.00017051461310234288,
+        "by_range": {
+          "0-10m": {
+            "precision": 0.9104075446278208,
+            "recall": 0.9203268641470889,
+            "f1": 0.9153403318658991
+          },
+          "10-20m": {
+            "precision": 0.7633094036534224,
+            "recall": 0.7758832454302435,
+            "f1": 0.7695449659620207
+          },
+          "20-45m": {
+            "precision": 0.5313884785819794,
+            "recall": 0.34730141490934324,
+            "f1": 0.42006166645381404
+          }
+        }
+      }
+    },
+    {
+      "step": 4000,
+      "tag": "step4000",
+      "plan": -0.33439930660339695,
+      "bev_heat": 0.648083180685838,
+      "bev_off": 0.19754488493005434,
+      "img_road_heat": 0.08553212427844605,
+      "img_road_wh": 0.013790912584712108,
+      "img_road_off": 0.08348153196275235,
+      "img_wide_heat": 0.22260365933179854,
+      "img_wide_wh": 0.011841367619733015,
+      "img_wide_off": 0.11922279832263788,
+      "loss": 1.0477011531125753,
+      "ade_4s": 1.270714282989502,
+      "long_err_1s": 0.4742099940776825,
+      "lat_err_1s": 0.298056036233902,
+      "long_err_2s": 1.1122698783874512,
+      "lat_err_2s": 0.7508294582366943,
+      "long_err_4s": 4.013760089874268,
+      "lat_err_4s": 2.709078073501587,
+      "bev_f1": 0.6057065514873458,
+      "bev_precision": 0.6810572490040733,
+      "bev_recall": 0.5453681965626624,
+      "bev_pos_err": 0.29717600415308126,
+      "bev_swap": 0.00016977928692699492,
+      "bev": {
+        "precision": 0.6810572490040733,
+        "recall": 0.5453681965626624,
+        "f1": 0.6057065514873458,
+        "per_class_f1": [
+          0.6055279529038454,
+          0.6272753659244517,
+          0.3007360672975815,
+          0.4207941056078592
+        ],
+        "pos_err_m": 0.29717600415308126,
+        "blue_yellow_swap_rate": 0.00016977928692699492,
+        "by_range": {
+          "0-10m": {
+            "precision": 0.9121014818140997,
+            "recall": 0.9206798866855525,
+            "f1": 0.9163706084700841
+          },
+          "10-20m": {
+            "precision": 0.7635446992828233,
+            "recall": 0.7760536951501155,
+            "f1": 0.7697483804001576
+          },
+          "20-45m": {
+            "precision": 0.5326172145129316,
+            "recall": 0.3488435291986231,
+            "f1": 0.4215730993085077
+          }
+        }
+      }
+    }
+  ],
+  "label_quality": {
+    "training": {
+      "episodes": 1438,
+      "frames": 284172,
+      "racing_frames_with_contact": 187,
+      "original_frames_with_contact": 251
+    },
+    "heldout": {
+      "episodes": 17,
+      "frames": 3400,
+      "racing_frames_with_contact": 0,
+      "original_frames_with_contact": 6
+    }
+  },
+  "validation": {
+    "dataset": "data/sim/racing_v6",
+    "split": "val",
+    "episodes": [
+      "ep00009_trackdrive_020004",
+      "ep00010_trackdrive_020004",
+      "ep00028_trackdrive_020013",
+      "ep00029_trackdrive_020013",
+      "ep00038_trackdrive_020018",
+      "ep00039_trackdrive_020018",
+      "ep00040_trackdrive_020019",
+      "ep00041_trackdrive_020019",
+      "ep00044_trackdrive_020021",
+      "ep00045_trackdrive_020021",
+      "ep00079_trackdrive_020037",
+      "ep00080_trackdrive_020037",
+      "ep00087_trackdrive_020041",
+      "ep00088_trackdrive_020041",
+      "ep00147_trackdrive_020069",
+      "ep00148_trackdrive_020069",
+      "ep00156_trackdrive_020073",
+      "ep00157_trackdrive_020073",
+      "ep00198_trackdrive_020093",
+      "ep00199_trackdrive_020093",
+      "ep00211_trackdrive_020099",
+      "ep00212_trackdrive_020099",
+      "ep00226_trackdrive_020106",
+      "ep00227_trackdrive_020106",
+      "ep00228_trackdrive_020107",
+      "ep00229_trackdrive_020107",
+      "ep00302_trackdrive_020141",
+      "ep00303_trackdrive_020141",
+      "ep00314_trackdrive_020147",
+      "ep00315_trackdrive_020147",
+      "ep00332_trackdrive_020156",
+      "ep00333_trackdrive_020156",
+      "ep00334_trackdrive_020157",
+      "ep00335_trackdrive_020157",
+      "ep00340_trackdrive_020160",
+      "ep00341_trackdrive_020160",
+      "ep00369_trackdrive_020174",
+      "ep00370_trackdrive_020174",
+      "ep00371_trackdrive_020174_stand",
+      "ep00374_trackdrive_020176",
+      "ep00375_trackdrive_020176",
+      "ep00389_trackdrive_020183",
+      "ep00390_trackdrive_020183",
+      "ep00391_trackdrive_020184",
+      "ep00392_trackdrive_020184",
+      "ep00401_trackdrive_020189",
+      "ep00402_trackdrive_020189",
+      "ep00411_trackdrive_020194",
+      "ep00412_trackdrive_020194",
+      "ep00424_trackdrive_020200",
+      "ep00425_trackdrive_020200",
+      "ep00445_trackdrive_020210",
+      "ep00446_trackdrive_020210",
+      "ep00447_trackdrive_020210_stand",
+      "ep00469_trackdrive_020220",
+      "ep00470_trackdrive_020220",
+      "ep00471_trackdrive_020221",
+      "ep00472_trackdrive_020221",
+      "ep00516_trackdrive_020243",
+      "ep00517_trackdrive_020243",
+      "ep00534_trackdrive_020252",
+      "ep00535_trackdrive_020252",
+      "ep00554_trackdrive_020262",
+      "ep00555_trackdrive_020262",
+      "ep00558_trackdrive_020264",
+      "ep00559_trackdrive_020264",
+      "ep00582_trackdrive_020275",
+      "ep00583_trackdrive_020275",
+      "ep00588_trackdrive_020278",
+      "ep00589_trackdrive_020278",
+      "ep00612_trackdrive_020290",
+      "ep00613_trackdrive_020290",
+      "ep00627_trackdrive_020297",
+      "ep00628_trackdrive_020297",
+      "ep00697_trackdrive_020328",
+      "ep00698_trackdrive_020328",
+      "ep00699_trackdrive_020328_stand",
+      "ep00706_trackdrive_020332",
+      "ep00707_trackdrive_020332",
+      "ep00708_trackdrive_020332_stand",
+      "ep00733_trackdrive_020345",
+      "ep00734_trackdrive_020345",
+      "ep00735_trackdrive_020346",
+      "ep00736_trackdrive_020346",
+      "ep00741_trackdrive_020349",
+      "ep00742_trackdrive_020349",
+      "ep00758_trackdrive_020356",
+      "ep00759_trackdrive_020356",
+      "ep00785_trackdrive_020368",
+      "ep00786_trackdrive_020368",
+      "ep00787_trackdrive_020368_stand",
+      "ep00823_trackdrive_020385",
+      "ep00824_trackdrive_020385",
+      "ep00837_trackdrive_020392",
+      "ep00838_trackdrive_020392",
+      "ep00839_trackdrive_020392_stand",
+      "ep00871_trackdrive_020408",
+      "ep00872_trackdrive_020408",
+      "ep00927_trackdrive_020433",
+      "ep00928_trackdrive_020433",
+      "ep00968_trackdrive_020452",
+      "ep00969_trackdrive_020452",
+      "ep00991_trackdrive_020462",
+      "ep00992_trackdrive_020462",
+      "ep00993_trackdrive_020463",
+      "ep00994_trackdrive_020463",
+      "ep00995_trackdrive_020463_stand",
+      "ep01022_trackdrive_020476",
+      "ep01023_trackdrive_020476",
+      "ep01024_trackdrive_020476_stand",
+      "ep01025_trackdrive_020477",
+      "ep01026_trackdrive_020477",
+      "ep01027_trackdrive_020477_stand",
+      "ep01030_trackdrive_020479",
+      "ep01031_trackdrive_020479",
+      "ep01033_skidpad",
+      "ep01039_skidpad",
+      "ep01043_skidpad",
+      "ep01044_skidpad",
+      "ep01046_skidpad",
+      "ep01062_skidpad",
+      "ep01069_skidpad",
+      "ep01098_trackdrive_030003",
+      "ep01099_trackdrive_030003",
+      "ep01100_trackdrive_030003_stand",
+      "ep01166_trackdrive_030036",
+      "ep01167_trackdrive_030036",
+      "ep01170_trackdrive_030038",
+      "ep01171_trackdrive_030038",
+      "ep01192_trackdrive_030049",
+      "ep01193_trackdrive_030049",
+      "ep01194_trackdrive_030049_stand",
+      "ep01294_trackdrive_030097",
+      "ep01295_trackdrive_030097",
+      "ep01313_trackdrive_030105",
+      "ep01314_trackdrive_030105",
+      "ep01315_trackdrive_030105_stand",
+      "ep01320_trackdrive_030108",
+      "ep01321_trackdrive_030108",
+      "ep01334_trackdrive_030114",
+      "ep01335_trackdrive_030114",
+      "ep01336_trackdrive_030114_stand",
+      "ep01361_trackdrive_030126",
+      "ep01362_trackdrive_030126",
+      "ep01377_trackdrive_030133",
+      "ep01378_trackdrive_030133"
+    ],
+    "checkpoints": {
+      "baseline": "ded681ee7e8b33e39b58308acd4455916de1e2814171e751308b5b704d3d91d0",
+      "candidate": "fdf1b3d56ebd110658dace49a8c9ab25fa50c42ce076b09c0b0b5d418746f507"
+    },
+    "mean_target_change_lat_2s": 0.47602578997612,
+    "geometry_frames_10m": 28245,
+    "mean_target_change_path_10m": 0.29867426364450644,
+    "changed_path_frames_10m": 16522,
+    "changed_frames": 18773,
+    "metrics": {
+      "baseline": {
+        "long_0.5s": 0.2161453366279602,
+        "lat_0.5s": 0.18186990916728973,
+        "long_1.0s": 0.4904850721359253,
+        "lat_1.0s": 0.39279434084892273,
+        "long_2.0s": 1.1352059841156006,
+        "lat_2.0s": 0.8302170634269714,
+        "long_4.0s": 3.9297285079956055,
+        "lat_4.0s": 2.818126916885376,
+        "ade_4s": 1.3154231309890747,
+        "heading_1s_deg": 2.607677936553955,
+        "speed_0.5s": 0.5341285467147827,
+        "calib_lat_2s": 0.3816341644038509,
+        "lat_2s_on_changed_targets": 0.9725634455680847,
+        "path_error_10m": 0.3487494304061442,
+        "path_error_10m_on_changed_paths": 0.46954542316867787,
+        "path_coverage_10m": 1.0
+      },
+      "candidate": {
+        "long_0.5s": 0.20574472844600677,
+        "lat_0.5s": 0.1249556615948677,
+        "long_1.0s": 0.4666144549846649,
+        "lat_1.0s": 0.29302963614463806,
+        "long_2.0s": 1.0889172554016113,
+        "lat_2.0s": 0.73055100440979,
+        "long_4.0s": 3.8900837898254395,
+        "lat_4.0s": 2.7024786472320557,
+        "ade_4s": 1.241089105606079,
+        "heading_1s_deg": 2.1909146308898926,
+        "speed_0.5s": 0.5058689713478088,
+        "calib_lat_2s": 0.5427231371442677,
+        "lat_2s_on_changed_targets": 0.8062127232551575,
+        "path_error_10m": 0.24764336253634595,
+        "path_error_10m_on_changed_paths": 0.2749976828565051,
+        "path_coverage_10m": 1.0
+      }
+    }
+  },
+  "test": {
+    "dataset": "data/sim/racing_v6_test",
+    "split": "test",
+    "episodes": [
+      "ep00007_trackdrive_001006",
+      "ep00015_trackdrive_001013",
+      "ep00052_trackdrive_001046",
+      "ep00058_trackdrive_001052",
+      "ep00059_trackdrive_001052_stand",
+      "ep00080_trackdrive_001070",
+      "ep00082_trackdrive_001072",
+      "ep00131_trackdrive_001113",
+      "ep00137_trackdrive_001119",
+      "ep00138_trackdrive_001119_stand",
+      "ep00140_trackdrive_001121",
+      "ep00154_trackdrive_001134",
+      "ep00155_trackdrive_001134_stand",
+      "ep00158_trackdrive_001137",
+      "ep00159_trackdrive_001137_stand",
+      "ep00160_trackdrive_001138",
+      "ep00180_trackdrive_001157"
+    ],
+    "checkpoints": {
+      "baseline": "ded681ee7e8b33e39b58308acd4455916de1e2814171e751308b5b704d3d91d0",
+      "candidate": "fdf1b3d56ebd110658dace49a8c9ab25fa50c42ce076b09c0b0b5d418746f507"
+    },
+    "mean_target_change_lat_2s": 0.5079725980758667,
+    "geometry_frames_10m": 3315,
+    "mean_target_change_path_10m": 0.2695444694325831,
+    "changed_path_frames_10m": 1863,
+    "changed_frames": 2327,
+    "metrics": {
+      "baseline": {
+        "long_0.5s": 0.2804827094078064,
+        "lat_0.5s": 0.17791254818439484,
+        "long_1.0s": 0.6466459035873413,
+        "lat_1.0s": 0.4000117778778076,
+        "long_2.0s": 1.4896711111068726,
+        "lat_2.0s": 0.9814237952232361,
+        "long_4.0s": 4.266213417053223,
+        "lat_4.0s": 3.4333741664886475,
+        "ade_4s": 1.5741558074951172,
+        "heading_1s_deg": 2.4738616943359375,
+        "speed_0.5s": 0.6892258524894714,
+        "calib_lat_2s": 0.3526395173453997,
+        "lat_2s_on_changed_targets": 1.1307889223098755,
+        "path_error_10m": 0.30560200055593223,
+        "path_error_10m_on_changed_paths": 0.4018547501069763,
+        "path_coverage_10m": 1.0
+      },
+      "candidate": {
+        "long_0.5s": 0.257237046957016,
+        "lat_0.5s": 0.12335114181041718,
+        "long_1.0s": 0.5966043472290039,
+        "lat_1.0s": 0.3056536316871643,
+        "long_2.0s": 1.399337887763977,
+        "lat_2.0s": 0.8374581933021545,
+        "long_4.0s": 4.239669322967529,
+        "lat_4.0s": 3.0896174907684326,
+        "ade_4s": 1.4554325342178345,
+        "heading_1s_deg": 2.062070369720459,
+        "speed_0.5s": 0.6411508917808533,
+        "calib_lat_2s": 0.538763197586727,
+        "lat_2s_on_changed_targets": 0.9315655827522278,
+        "path_error_10m": 0.22927345052653236,
+        "path_error_10m_on_changed_paths": 0.2351538726008741,
+        "path_coverage_10m": 1.0
+      }
+    }
+  },
+  "closed_loop": {
+    "baseline": {
+      "ckpt": "runs/cuda_stage2_v2_refresh/ckpt/best.pt",
+      "baseline": "model",
+      "controller": "pp",
+      "suite": {
+        "tracks": "data/tracks/td_v1",
+        "split": "test",
+        "n_trackdrive": 3,
+        "laps": 1,
+        "skidpad": true,
+        "acceleration": true,
+        "dr_levels": [
+          "light"
+        ],
+        "seeds": [
+          0
+        ],
+        "max_seconds": 90
+      },
+      "profile": "default",
+      "runs": [
+        {
+          "discipline": "trackdrive",
+          "result": "finished",
+          "laps": [
+            52.8499999999976
+          ],
+          "n_laps": 1,
+          "doo": 3,
+          "oc": 0,
+          "max_speed": 9.253594344317566,
+          "avg_speed_first3": null,
+          "raw_time": 52.8499999999976,
+          "penalty": 6.0,
+          "time": 58.8499999999976,
+          "dq": false,
+          "complete": true,
+          "pass": true,
+          "track": "trackdrive_001000",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 0.8986799239358393,
+          "rms_lat": 0.25617459405700677,
+          "progress": 1.0012217187944004
+        },
+        {
+          "discipline": "trackdrive",
+          "result": "finished",
+          "laps": [
+            31.50000000000185
+          ],
+          "n_laps": 1,
+          "doo": 0,
+          "oc": 0,
+          "max_speed": 10.012132580119378,
+          "avg_speed_first3": null,
+          "raw_time": 31.50000000000185,
+          "penalty": 0.0,
+          "time": 31.50000000000185,
+          "dq": false,
+          "complete": true,
+          "pass": true,
+          "track": "trackdrive_001004",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 0.7856409289933179,
+          "rms_lat": 0.24704007319389917,
+          "progress": 1.0016504627074825
+        },
+        {
+          "discipline": "trackdrive",
+          "result": "finished",
+          "laps": [
+            53.19999999999755
+          ],
+          "n_laps": 1,
+          "doo": 1,
+          "oc": 0,
+          "max_speed": 8.243845478889153,
+          "avg_speed_first3": null,
+          "raw_time": 53.19999999999755,
+          "penalty": 2.0,
+          "time": 55.19999999999755,
+          "dq": false,
+          "complete": true,
+          "pass": true,
+          "track": "trackdrive_001008",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 0.8290070220161265,
+          "rms_lat": 0.19632752604166617,
+          "progress": 1.0012025070074633
+        },
+        {
+          "discipline": "skidpad",
+          "result": "running",
+          "laps": [
+            9.3499999999998,
+            9.400000000000917,
+            9.40000000000147,
+            23.49999999999543,
+            9.199999999998454,
+            9.250000000004732,
+            9.200000000004707
+          ],
+          "n_laps": 7,
+          "doo": 23,
+          "oc": 2,
+          "max_speed": 10.73817231640979,
+          "raw_time": 16.449999999998173,
+          "penalty": 4.6000000000000005,
+          "time": 21.049999999998175,
+          "dq": true,
+          "complete": true,
+          "pass": false,
+          "track": "skidpad",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 43.45880560878277,
+          "rms_lat": 14.340541822276371,
+          "progress": 0.6886302619423186
+        },
+        {
+          "discipline": "acceleration",
+          "result": "finished",
+          "laps": [
+            8.749999999999831
+          ],
+          "n_laps": 1,
+          "doo": 0,
+          "oc": 0,
+          "max_speed": 9.617555434998225,
+          "raw_time": 8.749999999999831,
+          "penalty": 0.0,
+          "time": 8.749999999999831,
+          "dq": false,
+          "complete": true,
+          "pass": true,
+          "track": "acceleration_w3.0",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 0.14270089361326477,
+          "rms_lat": 0.08541837489735826,
+          "progress": 1.0043362935503513
+        }
+      ],
+      "aggregate": {
+        "acceleration/light": {
+          "runs": 1,
+          "pass_rate": 1.0,
+          "completion": 1.0,
+          "doo_per_run": 0.0,
+          "oc_per_run": 0.0,
+          "mean_time": 8.749999999999831,
+          "rms_lat": 0.08541837489735826
+        },
+        "skidpad/light": {
+          "runs": 1,
+          "pass_rate": 0.0,
+          "completion": 0.6886302619423186,
+          "doo_per_run": 23.0,
+          "oc_per_run": 2.0,
+          "mean_time": 21.049999999998175,
+          "rms_lat": 14.340541822276371
+        },
+        "trackdrive/light": {
+          "runs": 3,
+          "pass_rate": 1.0,
+          "completion": 1.0,
+          "doo_per_run": 1.3333333333333333,
+          "oc_per_run": 0.0,
+          "mean_time": 48.516666666665664,
+          "rms_lat": 0.23318073109752402
+        }
+      }
+    },
+    "candidate": {
+      "ckpt": "runs/cuda_racing_v6/ckpt/best.pt",
+      "baseline": "model",
+      "controller": "pp",
+      "suite": {
+        "tracks": "data/tracks/td_v1",
+        "split": "test",
+        "n_trackdrive": 3,
+        "laps": 1,
+        "skidpad": true,
+        "acceleration": true,
+        "dr_levels": [
+          "light"
+        ],
+        "seeds": [
+          0
+        ],
+        "max_seconds": 90
+      },
+      "profile": "default",
+      "runs": [
+        {
+          "discipline": "trackdrive",
+          "result": "finished",
+          "laps": [
+            54.449999999997296
+          ],
+          "n_laps": 1,
+          "doo": 2,
+          "oc": 0,
+          "max_speed": 7.836216431770835,
+          "avg_speed_first3": null,
+          "raw_time": 54.449999999997296,
+          "penalty": 4.0,
+          "time": 58.449999999997296,
+          "dq": false,
+          "complete": true,
+          "pass": true,
+          "track": "trackdrive_001000",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 0.7844026639621117,
+          "rms_lat": 0.3444870905349965,
+          "progress": 1.001218778655601
+        },
+        {
+          "discipline": "trackdrive",
+          "result": "finished",
+          "laps": [
+            32.3500000000017
+          ],
+          "n_laps": 1,
+          "doo": 0,
+          "oc": 0,
+          "max_speed": 9.737417838470707,
+          "avg_speed_first3": null,
+          "raw_time": 32.3500000000017,
+          "penalty": 0.0,
+          "time": 32.3500000000017,
+          "dq": false,
+          "complete": true,
+          "pass": true,
+          "track": "trackdrive_001004",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 0.7226770589820771,
+          "rms_lat": 0.3180019889114477,
+          "progress": 1.0016696583606524
+        },
+        {
+          "discipline": "trackdrive",
+          "result": "finished",
+          "laps": [
+            55.14999999999716
+          ],
+          "n_laps": 1,
+          "doo": 0,
+          "oc": 0,
+          "max_speed": 7.944401057655006,
+          "avg_speed_first3": null,
+          "raw_time": 55.14999999999716,
+          "penalty": 0.0,
+          "time": 55.14999999999716,
+          "dq": false,
+          "complete": true,
+          "pass": true,
+          "track": "trackdrive_001008",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 0.6312330676144847,
+          "rms_lat": 0.2805006025088815,
+          "progress": 1.0011926357683891
+        },
+        {
+          "discipline": "skidpad",
+          "result": "finished",
+          "laps": [
+            8.499999999999819,
+            10.000000000000833,
+            9.6000000000015,
+            9.999999999998188
+          ],
+          "n_laps": 4,
+          "doo": 19,
+          "oc": 1,
+          "max_speed": 7.8134344264438,
+          "raw_time": 9.99999999999951,
+          "penalty": 3.8000000000000003,
+          "time": 13.79999999999951,
+          "dq": true,
+          "complete": true,
+          "pass": false,
+          "track": "skidpad",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 2.920335816278732,
+          "rms_lat": 0.770398313944971,
+          "progress": 1.0017653918560983
+        },
+        {
+          "discipline": "acceleration",
+          "result": "finished",
+          "laps": [
+            9.049999999999825
+          ],
+          "n_laps": 1,
+          "doo": 0,
+          "oc": 0,
+          "max_speed": 9.45772212104861,
+          "raw_time": 9.049999999999825,
+          "penalty": 0.0,
+          "time": 9.049999999999825,
+          "dq": false,
+          "complete": true,
+          "pass": true,
+          "track": "acceleration_w3.0",
+          "dr": "light",
+          "seed": 0,
+          "max_lat": 0.20660174758244218,
+          "rms_lat": 0.12077108179347625,
+          "progress": 1.004350694403944
+        }
+      ],
+      "aggregate": {
+        "acceleration/light": {
+          "runs": 1,
+          "pass_rate": 1.0,
+          "completion": 1.0,
+          "doo_per_run": 0.0,
+          "oc_per_run": 0.0,
+          "mean_time": 9.049999999999825,
+          "rms_lat": 0.12077108179347625
+        },
+        "skidpad/light": {
+          "runs": 1,
+          "pass_rate": 0.0,
+          "completion": 1.0,
+          "doo_per_run": 19.0,
+          "oc_per_run": 1.0,
+          "mean_time": 13.79999999999951,
+          "rms_lat": 0.770398313944971
+        },
+        "trackdrive/light": {
+          "runs": 3,
+          "pass_rate": 1.0,
+          "completion": 1.0,
+          "doo_per_run": 0.6666666666666666,
+          "oc_per_run": 0.0,
+          "mean_time": 48.64999999999872,
+          "rms_lat": 0.3143298939851085
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "src/fsop/sim/raceline.py": "6736173ec7bc8a68917cf7b70415426486ecf2ea757da1fb935eafe6055a9b70",
+    "src/fsop/sim/expert.py": "372a5592f7fdd5426e7df943473b09d1930ee1da38c8ee42105251631babaade",
+    "src/fsop/sim/env.py": "9fb688ff1d11e780b031e524072e42b16d831ba920bddf694a9caa320f5cc239",
+    "src/fsop/sim/vehicle.py": "55643a3d4f43c1a7605b8da3641517a8c0380bc92ba7526a5e555e0f7cd3ae39",
+    "src/fsop/data/relabel.py": "6edef743dca16e30b43d3af40ded5b4aed8ee17f7470475a46e9aa9e29876ab7",
+    "src/fsop/data/staging.py": "8fe505a772b3e22b22dd2e3f956bb0dbee88b9b1e9330e5092f62f0cf13bcf7c",
+    "src/fsop/train/trainer.py": "1c8ff34dad4557e52c293438448ad83f4f394c09f60c0dbc4d0063b97793fbe2",
+    "scripts/evaluate_racing.py": "f3ac3e3adc7d18e9f965583fec685874c5bc9849ac99cbbe80011775671dc060",
+    "scripts/audit_racing_labels.py": "793cc8c91e69544fb2e3847c346d05096f58906f8705a6df827e98a2b3426d39",
+    "configs/train/cuda_racing_v6.yaml": "f69bb7e161d532b9be2d6960eb51d3aa6bd1627f19c7ba27b33c6151f570eb2f",
+    "configs/eval/closed_loop_quick.yaml": "d9f975daf90759d3f3cdb8b3a15f84bf6c9b84747c1a193f69a4f02b367168ad"
+  },
+  "modal_apps": {
+    "training": "ap-l40rBr8CGdSu5tT4AbUXyM",
+    "validation": "ap-ufoswBBnaIOjzsmQiDicIe",
+    "final_evaluation": "ap-1sZgEMCWH6uIups7yS9DYA"
+  },
+  "limitations": [
+    "Local numerical racing-reference optimization, not a global-optimality guarantee.",
+    "Label contact audit samples 0.5\u20134 s poses; recovery search checks integrated poses, not continuous swept volumes.",
+    "Closed-loop quick suite covers three trackdrive tracks and one seed under light randomization; it is not a broad driving guarantee.",
+    "Trackdrive cone hits decrease, but raw lap times increase; no learned lap-time improvement is established.",
+    "Skidpad still fails despite completing its route. Simulation-only evaluation does not establish real-car readiness."
+  ]
+}

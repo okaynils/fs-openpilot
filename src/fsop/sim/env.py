@@ -31,9 +31,9 @@ class NoiseCfg:
   on_time: tuple[float, float] = (1.5, 5.0)
   off_time: tuple[float, float] = (2.0, 7.0)
   speed_scale: tuple[float, float] = (0.85, 1.1)
-  # recovery excursions: during a noise burst the expert drives a line offset from the centreline
-  # (|offset| in [offset_min, offset_max] m, probability offset_prob per burst) and returns to the centre
-  # when the burst ends; the labels stay the centreline expert, so these frames teach recovery.
+  # recovery excursions: during a noise burst the expert drives a line offset from the planned path
+  # (|offset| in [offset_min, offset_max] m, probability offset_prob per burst) and returns to the reference
+  # when the burst ends; the labels stay the unperturbed expert, so these frames teach recovery.
   offset_max: float = 0.0
   offset_min: float = 0.3
   offset_prob: float = 0.6
@@ -95,9 +95,9 @@ class FSEnv:
     if expert_params is None:
       expert_params = sample_expert(self.rng, track.discipline) if self.cfg.randomize_expert else ExpertParams()
     self.expert_params = expert_params
-    self.mission = Mission(track, expert_params)
-    self.expert = Expert(self.mission, self.vp)
     self.cones_xy, self.cone_colors, self.cone_src = self._episode_cones()
+    self.mission = Mission(track, expert_params, self.vp, cones_xy=self.cones_xy)
+    self.expert = Expert(self.mission, self.vp)
     self.renderer = renderer
     if self.cfg.render and self.renderer is None:
       from fsop.sim.render.panda3d_backend import Panda3DRenderer
@@ -126,7 +126,7 @@ class FSEnv:
         xy.append(out.tolist())
         colors.append(ConeColor.ORANGE if self.rng.random() < 0.5 else ConeColor.UNKNOWN)
         src.append(-1)
-    return np.array(xy), colors, np.array(src)
+    return np.asarray(xy, dtype=float).reshape(-1, 2), colors, np.array(src)
 
   def reset(self) -> Obs:
     x, y, yaw = self.track.start_pose

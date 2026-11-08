@@ -33,6 +33,7 @@ class TrainCfg:
   out_dir: str = "runs"
   sim_root: str = "data/sim/v1"
   cache_tag: str = "op_b361e952"
+  label_mode: str = ""  # optional dataset requirement: racing | centerline
   fsoco_root: str = ""
   fsoco_every: int = 4  # one FSOCO batch every N sim batches (stage 2)
   stage: int = 1
@@ -53,6 +54,7 @@ class TrainCfg:
   w_img: float = 1.0
   val_every: int = 500
   val_batches: int = 40
+  selection_metric: str = "loss"  # minimize on validation; racing uses ade_4s
   log_every: int = 25
   seed: int = 0
   device: str = "auto"
@@ -76,6 +78,12 @@ class Trainer:
       self.train_ds = SimDataset(cfg.sim_root, "train", mode, cfg.cache_tag,
                                  episodes=[e.path.name for e in self.train_ds.eps[: cfg.max_episodes]])
     self.val_ds = SimDataset(cfg.sim_root, "val", mode, cfg.cache_tag)
+    if cfg.label_mode:
+      for dataset in (self.train_ds, self.val_ds):
+        for episode in dataset.eps:
+          planner = episode.meta.get("label_planner", {"mode": "centerline"})
+          if planner.get("mode") != cfg.label_mode:
+            raise ValueError(f"{episode.path}: expected {cfg.label_mode} labels, found {planner.get('mode')}")
     self.model = SupercomboFS(image_head=cfg.stage >= 2)
     if cfg.init_ckpt:
       sd = torch.load(cfg.init_ckpt, map_location="cpu", weights_only=False)["model"]
@@ -221,6 +229,7 @@ class Trainer:
     scorer = BevScorer()
     errs = {t: [] for t in (1.0, 2.0, 4.0)}
     viz = []
+    ade = []
     for b in self._val_loader:
       b = self._to(b)
       out = self.forward(b)
@@ -228,6 +237,7 @@ class Trainer:
         agg.setdefault(k, []).append(float(v))
       mu = op_to_ego_plan(out["plan_mu"].cpu().numpy())
       gt = op_to_ego_plan(b["plan"].cpu().numpy())
+      ade.append(np.linalg.norm(mu[:, T_IDXS <= 4, :2] - gt[:, T_IDXS <= 4, :2], axis=-1).mean(1))
       for t in errs:
         i = int(np.argmin(np.abs(T_IDXS - t)))
         errs[t].append(np.c_[np.abs(mu[:, i, 0] - gt[:, i, 0]), np.abs(mu[:, i, 1] - gt[:, i, 1])])
@@ -239,6 +249,7 @@ class Trainer:
         viz.append((b, out, mu, gt, preds))
     res = {k: float(np.mean(v)) for k, v in agg.items()}
     res["loss"] = float(sum(res.values()))
+    res["ade_4s"] = float(np.concatenate(ade).mean())
     for t, e in errs.items():
       e = np.concatenate(e)
       res[f"long_err_{t:.0f}s"] = float(e[:, 0].mean())
@@ -253,10 +264,17 @@ class Trainer:
     with open(self.run_dir / "val.jsonl", "a") as f:
       f.write(json.dumps({"step": self.step, "tag": step_tag, **res, "bev": bev}) + "\n")
     self._viz(viz, step_tag)
-    if tag is None and res["loss"] < self.best:
-      self.best = res["loss"]
-      self.save("best")
+    self._select_checkpoint(res)
     return res
+
+  def _select_checkpoint(self, metrics: dict) -> None:
+    metric = self.cfg.selection_metric
+    if metric not in metrics:
+      raise ValueError(f"Unknown checkpoint selection metric: {metric}")
+    score = metrics[metric]
+    if np.isfinite(score) and score < self.best:
+      self.best = score
+      self.save("best")  # baseline is eligible: never silently replace it with a worse model
 
   def _viz(self, viz, tag: str) -> None:
     """Per-validation Rerun recording of fixed samples: GT vs predicted plan + BEV cones."""

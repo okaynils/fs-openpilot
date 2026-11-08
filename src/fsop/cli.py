@@ -205,6 +205,14 @@ def data_fsoco(src: Path = typer.Option(..., help="FSOCO root (Supervisely expor
   typer.echo(f"{len(idx['images'])} images, splits: { {k: len(v) for k, v in idx['splits'].items()} }")
 
 
+@data_app.command("relabel-racing")
+def data_relabel_racing(source: Path = typer.Option(...), out: Path = typer.Option(...), workers: int = 2):
+  """Write racing targets to a separate dataset; reference source images read-only."""
+  from fsop.data.relabel import relabel_dataset
+
+  typer.echo(relabel_dataset(source, out, workers=workers))
+
+
 @data_app.command("cache-features")
 def data_cache(dataset: Path = typer.Option(...), ckpt: Path | None = None, batch: int = 32,
                tag: str | None = typer.Option(None, help="cache tag (default: derived from the checkpoint)"),

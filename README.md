@@ -84,7 +84,7 @@ uv run fsop sim drive --track skidpad      # watch the expert drive in the Rerun
 uv run pytest                              # ~10 s
 ```
 
-Full pipeline (about 2 h on an M1, most of it training):
+Original local pipeline (the racing-path training workflow below uses Modal):
 
 ```bash
 uv run fsop track gen --out data/tracks/td_v1 --n 160 --seed 1000      # rule-compliant tracks
@@ -94,6 +94,41 @@ uv run fsop train --cfg configs/train/mac_stage1.yaml                  # frozen 
 uv run fsop train --cfg configs/train/mac_stage2.yaml                  # fine-tune trunk + cone heads
 uv run fsop bench run --name my_run --ckpt runs/mac_stage2/ckpt/best.pt
 uv run fsop viz video --ckpt runs/mac_stage2/ckpt/best.pt --track gen:7 --out runs/demo.mp4
+```
+
+### Racing-path training on Modal
+
+With `data/sim/v2`, the prepared model artifacts, and
+`runs/cuda_stage2_v2_refresh/ckpt/best.pt` already on the `fsop` Modal volume:
+
+```bash
+modal run --detach scripts/modal_app.py::racing
+modal app logs <app-id> --follow
+```
+
+This regenerates labels from the original observations, checks sampled vehicle–cone
+contacts against the original labels, caches temporal features on a GPU, then trains
+with `configs/train/cuda_racing_v6.yaml` on an A100. Outputs remain on the volume at
+`data/sim/racing_v6` and `runs/cuda_racing_v6`. The command refuses to overwrite an
+existing training run. Follow the existing app rather than launching it again while it runs.
+
+The reference optimizes estimated travel time subject to vehicle dynamics and clearance;
+counterfactual rollouts also check recovery from the recorded state. This is a numerical
+racing-line approximation, not a guarantee of global optimality. Model selection uses
+validation trajectory error. Use `scripts/evaluate_racing.py` to compare baseline and
+candidate predictions on identical observations, including geometry at 10 m travel
+distance, then evaluate the selected checkpoint in closed loop. Training completion
+alone does not establish improved driving. See [architecture](docs/architecture.md)
+for the planner, label provenance, and evaluation details.
+
+The completed [v6 evaluation](benchmarks/racing/v6.json) shows 25% lower held-out
+path error at 10 m and 41% lower error on changed paths. The quick driving suite
+halved trackdrive cone hits (four to two), but did not improve lap time; skidpad
+still fails. The selected checkpoint is `runs/cuda_racing_v6/ckpt/best.pt`:
+
+```bash
+modal volume get fsop runs/cuda_racing_v6/ckpt/best.pt runs/cuda_racing_v6/ckpt/
+uv run fsop sim drive --track gen:7 --ckpt runs/cuda_racing_v6/ckpt/best.pt
 ```
 
 ## Use it for your team

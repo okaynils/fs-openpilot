@@ -1,4 +1,4 @@
-"""Expert driver (pure pursuit + speed profile) and counterfactual plan labels.
+"""Expert driver (racing reference + feedback control) and counterfactual plan labels.
 
 Mission progress is tracked as unrolled arc length ``s_mission`` (lap k at k*L + s for closed loops),
 so the same expert handles trackdrive (10 laps + stop), autocross, skidpad (route already unrolled in
@@ -20,6 +20,9 @@ T_IDXS = np.array([10.0 * (i / 32) ** 2 for i in range(33)])
 
 @dataclass
 class ExpertParams:
+  path_mode: str = "racing"  # racing | centerline (legacy comparison)
+  path_clearance: float = 0.60
+  path_min_clearance: float = 0.35
   a_lat_max: float = 8.0
   a_acc: float = 5.0
   a_brk: float = 8.0
@@ -68,7 +71,8 @@ def speed_profile(kappa: np.ndarray, ds: float, closed: bool, p: ExpertParams) -
 class Mission:
   """Track geometry + unrolled progress bookkeeping shared by expert, referee and labels."""
 
-  def __init__(self, track: Track, p: ExpertParams):
+  def __init__(self, track: Track, p: ExpertParams, vp: VehicleParams | None = None,
+               cones_xy: np.ndarray | None = None):
     self.track = track
     self.p = p
     self.pts = track.centerline
@@ -77,7 +81,22 @@ class Mission:
     self.s_arr = cl.arclength(self.pts, self.closed)
     self.L = track.length if self.closed else float(self.s_arr[-1])
     self.ds = self.L / self.n if self.closed else self.L / (self.n - 1)
-    self.kappa = track.curvature()
+    self.path = self.pts
+    self.racing_line = None
+    from scipy.spatial import cKDTree
+
+    self.cones_xy = track.cone_array()[0] if cones_xy is None else np.asarray(cones_xy)
+    self.cone_tree = cKDTree(self.cones_xy) if len(self.cones_xy) else None
+    if p.path_mode == "racing":
+      from fsop.sim.raceline import RacingLimits, optimize_raceline
+
+      limits = RacingLimits(v_max=p.v_cap, a_lat=p.a_lat_max, a_acc=p.a_acc, a_brake=p.a_brk,
+                            clearance=p.path_clearance, clearance_min=p.path_min_clearance)
+      self.racing_line = optimize_raceline(track, vp or VehicleParams(), limits, cones_xy=cones_xy)
+      self.path = self.racing_line.points
+    elif p.path_mode != "centerline":
+      raise ValueError(f"Unknown expert path mode: {p.path_mode}")
+    self.kappa = cl.curvature(self.path, self.closed)
     if self.closed:
       nxt = np.roll(self.pts, -1, 0)
     else:
@@ -88,6 +107,8 @@ class Mission:
 
     k_s = gaussian_filter1d(np.abs(self.kappa), 1.0 / self.ds, mode="wrap" if self.closed else "nearest")
     self.v_ref = speed_profile(np.maximum(np.abs(self.kappa), k_s), self.ds, self.closed, p)
+    if self.racing_line is not None:
+      self.v_ref = self.racing_line.speed
     if self.closed:
       # staging pose is before s=0 -> mission starts at -staging; finish after `laps` crossings
       self.s_end = track.laps * self.L + p.stop_after_line
@@ -133,24 +154,23 @@ class Mission:
     return i, s, lat
 
   def point_at(self, s: float) -> np.ndarray:
+    return np.array([self._at(s, self.path[:, 0]), self._at(s, self.path[:, 1])])
+
+  def _at(self, s: float, values: np.ndarray) -> float:
+    # Progress remains in route coordinates, including skidpad segment indices.
+    # Racing points are not uniformly spaced, nor are imported centerlines.
     if self.closed:
-      s = s % self.L
-      k = s / self.ds
-      i0 = int(np.floor(k)) % self.n
-      f = k - np.floor(k)
-      return self.pts[i0] * (1 - f) + self.pts[(i0 + 1) % self.n] * f
-    s = float(np.clip(s, 0.0, self.L))
-    return np.array([np.interp(s, self.s_arr, self.pts[:, 0]), np.interp(s, self.s_arr, self.pts[:, 1])])
+      s %= self.L
+      if s > self.s_arr[-1]:
+        f = (s - self.s_arr[-1]) / (self.L - self.s_arr[-1])
+        return float(values[-1] * (1 - f) + values[0] * f)
+    return float(np.interp(s, self.s_arr, values))
 
   def kappa_at(self, s: float) -> float:
-    if self.closed:
-      return float(self.kappa[int(round((s % self.L) / self.ds)) % self.n])
-    return float(np.interp(s, self.s_arr, self.kappa))
+    return self._at(s, self.kappa)
 
   def v_at(self, s: float) -> float:
-    if self.closed:
-      return float(self.v_ref[int(round((s % self.L) / self.ds)) % self.n])
-    return float(np.interp(s, self.s_arr, self.v_ref))
+    return self._at(s, self.v_ref)
 
   def target_speed(self, s: float) -> float:
     v = self.v_at(s)
@@ -160,12 +180,15 @@ class Mission:
 
 
 class Expert:
-  def __init__(self, mission: Mission, vp: VehicleParams):
+  def __init__(self, mission: Mission, vp: VehicleParams, speed_scale: float = 1.0):
     self.m = mission
     self.vp = vp
+    self.speed_scale = speed_scale
+    self.rollout_stats = {"frames": 0, "adjusted_frames": 0, "unresolved_frames": 0}
+    self.last_rollout = {}
 
   def act(self, st: VehicleState, s: float, offset: float = 0.0) -> tuple[float, float]:
-    """``offset`` [m, left +] tracks a line parallel to the centreline (recovery excursions while recording;
+    """``offset`` [m, left +] tracks a line parallel to the planned path (recovery excursions while recording;
     labels always use 0)."""
     p = self.m.p
     v = max(st.vx, 0.0)
@@ -173,8 +196,8 @@ class Expert:
       steer = self._pure_pursuit(st, s, v, offset)
     else:
       steer = self._stanley_ff(st, s, v, offset)
-    v_t = self.m.target_speed(s + 0.5 * v * 0.3)
-    v_ahead = self.m.target_speed(s + v * 0.6)
+    v_t = self.speed_scale * self.m.target_speed(s + 0.5 * v * 0.3)
+    v_ahead = self.speed_scale * self.m.target_speed(s + v * 0.6)
     a_ff = (v_ahead**2 - v**2) / max(2 * max(v * 0.6, 1.0), 1e-3)
     accel = float(np.clip(p.kp_speed * (v_t - v) + 0.5 * a_ff, -p.a_brk, p.a_acc))
     if v_t <= 0.0 and v < 0.3:
@@ -212,8 +235,8 @@ class Expert:
     return float(ff - p.k_head * e_head - np.arctan2(p.k_lat * e_lat, v + 1.0))
 
 
-def rollout(mission: Mission, expert: Expert, vp: VehicleParams, st: VehicleState, s: float, hint: int,
-            horizon: float = 10.0, dt: float = 0.02, ctrl_dt: float = 0.05) -> np.ndarray:
+def _rollout(mission: Mission, expert: Expert, vp: VehicleParams, st: VehicleState, s: float, hint: int,
+            horizon: float = 10.0, dt: float = 0.02, ctrl_dt: float = 0.05) -> tuple[np.ndarray, float]:
   """Noise-free closed-loop expert rollout. Returns [N,9] state rows (x,y,yaw,vx,vy,r,steer,accel,t)."""
   n = int(round(horizon / dt)) + 1
   out = np.zeros((n, 9))
@@ -227,7 +250,67 @@ def rollout(mission: Mission, expert: Expert, vp: VehicleParams, st: VehicleStat
       hint, s, _ = mission.update_progress(cur.x, cur.y, hint, s)
       u = expert.act(cur, s)
     cur = step(cur, u[0], u[1], vp, dt)
-  return out
+  return out, s
+
+
+def _trajectory_contacts(mission: Mission, vehicle: VehicleParams, trajectory: np.ndarray) -> np.ndarray:
+  """Check every integrated pose against full cone bases, with a small tracking reserve."""
+  from fsop.track.rules import RULES
+
+  hit = np.zeros(len(trajectory), dtype=bool)
+  if mission.cone_tree is None:
+    return hit
+  front, rear = vehicle.lf + vehicle.front_overhang, vehicle.lr + vehicle.rear_overhang
+  half = vehicle.width / 2
+  radius = max(RULES.small_cone.base, RULES.large_cone.base) / 2 + 0.03
+  pairs = mission.cone_tree.query_ball_point(trajectory[:, :2], np.hypot(max(front, rear), half) + radius)
+  rows = np.repeat(np.arange(len(trajectory)), [len(ids) for ids in pairs])
+  if len(rows):
+    ids = np.concatenate([np.asarray(ids, dtype=int) for ids in pairs])
+    delta = mission.cones_xy[ids] - trajectory[rows, :2]
+    h = trajectory[rows, 2]
+    x = np.cos(h) * delta[:, 0] + np.sin(h) * delta[:, 1]
+    y = -np.sin(h) * delta[:, 0] + np.cos(h) * delta[:, 1]
+    dx = np.maximum(np.maximum(-rear - x, x - front), 0)
+    dy = np.maximum(np.abs(y) - half, 0)
+    np.logical_or.at(hit, rows, np.hypot(dx, dy) < radius)
+  return hit
+
+
+def rollout(mission: Mission, expert: Expert, vp: VehicleParams, st: VehicleState, s: float, hint: int,
+            horizon: float = 10.0, dt: float = 0.02, ctrl_dt: float = 0.05) -> np.ndarray:
+  """Plan a dynamically simulated racing trajectory from the recorded state.
+
+  A clear geometric reference can still produce a tracking collision. Retain the
+  nominal rollout if it is clear; otherwise compare slower speed schedules over
+  the entire horizon and maximize route progress among contact-free candidates.
+  If the state admits no clear candidate, delay contact and then minimize its
+  duration. Such a rollout is explicitly counted as unresolved, never called safe.
+  This is a finite candidate search, not a global optimality or swept-volume proof.
+  """
+  trajectory, end_s = _rollout(mission, expert, vp, st, s, hint, horizon, dt, ctrl_dt)
+  if mission.p.path_mode != "racing":
+    return trajectory
+  hit = _trajectory_contacts(mission, vp, trajectory)
+
+  def score(contacts, progress):
+    indices = np.flatnonzero(contacts)
+    return (bool(len(indices)), -int(indices[0]) if len(indices) else 0, int(contacts.sum()), -progress)
+
+  best, scale = score(hit, end_s - s), expert.speed_scale
+  if hit.any():
+    for factor in (0.9, 0.8, 0.65, 0.5, 0.25, 0.0):
+      candidate_expert = Expert(mission, vp, speed_scale=expert.speed_scale * factor)
+      candidate, end_s = _rollout(mission, candidate_expert, vp, st, s, hint, horizon, dt, ctrl_dt)
+      contacts = _trajectory_contacts(mission, vp, candidate)
+      cost = score(contacts, end_s - s)
+      if cost < best:
+        trajectory, hit, best, scale = candidate, contacts, cost, candidate_expert.speed_scale
+  expert.last_rollout = {"speed_scale": scale, "contact_samples": int(hit.sum()), "checked_samples": len(hit)}
+  expert.rollout_stats["frames"] += 1
+  expert.rollout_stats["adjusted_frames"] += int(scale != expert.speed_scale)
+  expert.rollout_stats["unresolved_frames"] += int(hit.any())
+  return trajectory
 
 
 def plan_from_rollout(traj: np.ndarray, dt: float = 0.02) -> np.ndarray:

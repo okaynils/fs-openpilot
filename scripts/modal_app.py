@@ -40,6 +40,7 @@ image = (
   .env({"PYTHONPATH": f"{WORK}/src", "PYTHONUNBUFFERED": "1"})
   .add_local_dir(REPO / "src", f"{WORK}/src", ignore=["**/__pycache__"])
   .add_local_dir(REPO / "configs", f"{WORK}/configs")
+  .add_local_dir(REPO / "scripts", f"{WORK}/scripts", ignore=["**/__pycache__"])
   .add_local_dir(REPO / "benchmarks", f"{WORK}/benchmarks")
   .add_local_file(REPO / "README.md", f"{WORK}/README.md")
 )
@@ -145,8 +146,89 @@ def repack_dataset(dataset: str, shard: int) -> int:
   return n
 
 
+# ---------------------------------------------------------------------------------------------- racing labels
+@app.function(cpu=2.0, memory=4096, timeout=3 * 3600, max_containers=32)
+def relabel_shard(source: str, destination: str, ids: list[str]) -> list[dict]:
+  _setup()
+  from fsop.data.relabel import relabel_episode
+
+  results = []
+  for eid in ids:
+    try:
+      meta = relabel_episode(Path(source) / eid, Path(destination) / eid)
+      results.append({"id": eid, "frames": meta["frames"]})
+    except Exception as exc:
+      results.append({"id": eid, "error": str(exc)})
+    finally:
+      vol.commit()
+  return results
+
+
+@app.function(cpu=4.0, memory=8192, timeout=6 * 3600)
+def relabel_remote(source: str, destination: str, shard: int = 6) -> dict:
+  import json
+  import runpy
+
+  _setup()
+  src, dst = Path(source).resolve(), Path(destination).resolve()
+  if src == dst or src.is_relative_to(dst) or dst.is_relative_to(src):
+    raise ValueError("Relabel into a separate dataset")
+  index = json.loads(Path(source, "index.json").read_text())
+  ids = [row["id"] for row in index["episodes"]]
+  if any(Path(eid).name != eid or eid in (".", "..") for eid in ids):
+    raise ValueError("Invalid episode ID")
+  if not ids or shard < 1:
+    raise ValueError("Relabeling requires a nonempty dataset and positive shard size")
+  chunks = [ids[i:i + shard] for i in range(0, len(ids), shard)]
+  output = Path(destination)
+  output.mkdir(parents=True, exist_ok=True)
+  vol.commit()
+  errors, completed = [], 0
+  for rows in relabel_shard.map([source] * len(chunks), [destination] * len(chunks), chunks,
+                                return_exceptions=True):
+    if isinstance(rows, Exception):
+      errors.append({"error": str(rows)})
+    else:
+      errors.extend(row for row in rows if "error" in row)
+      completed += sum("error" not in row for row in rows)
+    print(f"relabeled {completed}/{len(ids)}, errors {len(errors)}", flush=True)
+  vol.reload()
+  (output / "relabel_errors.json").write_text(json.dumps(errors, indent=2))
+  vol.commit()
+  if errors or completed != len(ids):
+    raise RuntimeError(f"Relabel incomplete: {completed}/{len(ids)}, {len(errors)} failures; see relabel_errors.json")
+  quality_path = output / "label_quality.json"
+  runpy.run_path(f"{WORK}/scripts/audit_racing_labels.py")["audit"](output, quality_path, episode_ids=ids)
+  quality = json.loads(quality_path.read_text())["summary"]
+  vol.commit()
+  if quality["racing_frames_with_contact"] > quality["original_frames_with_contact"]:
+    raise RuntimeError(f"Sampled label-contact regression; training withheld: {quality}")
+  (output / "index.json").write_text(json.dumps(index, indent=1))
+  vol.commit()
+  return {"dataset": destination, "quality": quality}
+
+
+@app.function(cpu=1.0, memory=2048, timeout=12 * 3600)
+def racing_remote(source: str, destination: str, cfg: str) -> dict:
+  """CPU relabel/quality gate -> GPU history cache -> GPU training. No local training."""
+  from fsop.config import load_config
+  from fsop.train.trainer import TrainCfg
+
+  _setup()
+  config = load_config(TrainCfg, Path(cfg))
+  if config.sim_root != destination or config.label_mode != "racing":
+    raise ValueError("Training configuration must require the relabeled racing dataset")
+  if Path(config.out_dir, config.name).exists():
+    raise ValueError("Refusing to overwrite an existing training run")
+  labels = relabel_remote.remote(source, destination)
+  cache_remote.remote(destination, config.init_ckpt, config.cache_tag, True)
+  train_remote.remote(cfg, [], True)
+  vol.reload()
+  return {"labels": labels, "checkpoint": str(Path(config.out_dir, config.name, "ckpt/best.pt"))}
+
+
 # ---------------------------------------------------------------------------------------------- GPU
-@app.function(gpu="L4", cpu=8.0, memory=32768, timeout=6 * 3600)
+@app.function(gpu=["L4", "A10"], cpu=8.0, memory=32768, timeout=6 * 3600)
 def cache_remote(dataset: str, ckpt: str | None, tag: str | None, hidden_only: bool) -> None:
   _setup()
   args = f"--dataset {dataset} --batch 64" + (f" --ckpt {ckpt}" if ckpt else "") + (f" --tag {tag}" if tag else "")
@@ -156,23 +238,13 @@ def cache_remote(dataset: str, ckpt: str | None, tag: str | None, hidden_only: b
 
 def _local_copy(src: Path, tag: str, stage: int) -> Path:
   """Copy a dataset to local disk: frames + labels + the ``tag`` cache (stage 2: hidden features only)."""
-  import shutil
   import time
-  from concurrent.futures import ThreadPoolExecutor
 
-  dst = Path("/tmp/sim") / src.name
-  skip = {"final.npy", "s16.npy"} if stage >= 2 else set()
-
-  def ignore(d: str, names: list[str]) -> set[str]:
-    return {n for n in names if n in skip or (n.startswith("cache_") and n != f"cache_{tag}")}
+  from fsop.data.staging import stage_dataset
 
   t0 = time.time()
-  dst.mkdir(parents=True, exist_ok=True)
-  shutil.copy2(src / "index.json", dst / "index.json")
-  eps = [p for p in src.iterdir() if p.is_dir()]
-  with ThreadPoolExecutor(32) as ex:
-    list(ex.map(lambda p: shutil.copytree(p, dst / p.name, ignore=ignore, dirs_exist_ok=True), eps))
-  print(f"copied {len(eps)} episodes to {dst} in {time.time() - t0:.0f} s", flush=True)
+  dst = stage_dataset(src, Path("/tmp/sim") / src.name, tag, stage)
+  print(f"staged dataset at {dst} in {time.time() - t0:.0f} s", flush=True)
   return dst
 
 
@@ -193,7 +265,7 @@ def train_remote(cfg: str, overrides: list[str], local_copy: bool) -> None:
     vol.commit()
 
 
-@app.function(gpu="L4", cpu=8.0, memory=32768, timeout=6 * 3600)
+@app.function(gpu=["L4", "A10"], cpu=8.0, memory=32768, timeout=6 * 3600)
 def bench_remote(cmd: str) -> None:
   _setup()
   try:
@@ -284,3 +356,16 @@ def bench(name: str, ckpt: str, suite: str = "configs/eval/closed_loop_quick.yam
 def sh(cmd: str) -> None:
   """Escape hatch: run any shell command in the working copy (GPU container)."""
   bench_remote.remote(cmd)
+
+
+@app.local_entrypoint()
+def relabel(source: str, destination: str, shard: int = 6) -> None:
+  """Regenerate racing labels in CPU shards; require the sampled-clearance audit before publishing."""
+  _spawned(relabel_remote.spawn(source, destination, shard))
+
+
+@app.local_entrypoint()
+def racing(source: str = "data/sim/v2", destination: str = "data/sim/racing_v6",
+           cfg: str = "configs/train/cuda_racing_v6.yaml") -> None:
+  """Run the complete racing-label and training pipeline in Modal."""
+  _spawned(racing_remote.spawn(source, destination, cfg))
