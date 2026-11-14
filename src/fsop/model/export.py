@@ -10,6 +10,7 @@ openpilot's Parser slices the original fields unchanged.
 from __future__ import annotations
 
 import base64
+import json
 import pickle
 from pathlib import Path
 
@@ -30,11 +31,12 @@ class ExportWrapper(nn.Module):
     self.m = m
     self.topk = topk
 
-  def forward(self, img, big_img, features_buffer, desire_pulse, traffic_convention, action_t):
+  def forward(self, img, big_img, features_buffer, desire_pulse, traffic_convention, action_t, geometry=None):
     base = self.m.base
     v = base.encode(img.float(), big_img.float())
-    fb_full = torch.cat([features_buffer, v.hidden[:, None]], 1)
-    plan, desire_state = base.policy_raw(fb_full, desire_pulse, traffic_convention)
+    pred = self.m.plan(features_buffer, v.hidden, desire_pulse, traffic_convention, geometry)
+    plan = torch.cat([pred["plan_mu"].flatten(1), pred["plan_logstd"].flatten(1)], 1)
+    desire_state = pred["desire_state"]
     pad = plan.new_zeros(plan.shape[0], 2) + 0 * action_t[:, :1]
     o = self.m.bev(v.s16, v.final)
     p = torch.sigmoid(o["heat"])
@@ -90,6 +92,12 @@ def export_onnx(ckpt: str | Path, out: str | Path, src_onnx: str | Path = SRC_ON
   args = (torch.zeros(1, 12, 128, 256, dtype=torch.uint8), torch.zeros(1, 12, 128, 256, dtype=torch.uint8),
           torch.zeros(1, 24, 512), torch.zeros(1, 25, 8), torch.tensor([[1.0, 0.0]]), torch.zeros(1, 2))
   names = ["img", "big_img", "features_buffer", "desire_pulse", "traffic_convention", "action_t"]
+  if m.context_adapter is not None:
+    from fsop.geometry.camera import CameraMount
+    from fsop.model.conditioning import geometry_context
+    from fsop.sim.vehicle import VehicleParams
+    args += (torch.from_numpy(geometry_context(CameraMount(), VehicleParams(), m.context_version)[None]),)
+    names.append("geometry")
   torch.onnx.export(w, args, str(out), input_names=names, output_names=["outputs"], opset_version=opset,
                     dynamo=False, do_constant_folding=True)
   model = onnx.load(str(out))
@@ -107,6 +115,14 @@ def export_onnx(ckpt: str | Path, out: str | Path, src_onnx: str | Path = SRC_ON
     slices["cones_img_wide"] = slice(a + 6 * TOPK, a + 12 * TOPK)
     meta["fsop_cones_img_layout"] = f"top{TOPK} x [u, v (bottom centre px, 512x256 slot), w, h, class, score]"
   meta["output_slices"] = base64.b64encode(pickle.dumps(slices)).decode()
+  if m.context_adapter is not None:
+    from fsop.model.conditioning import context_fields, context_scale
+    meta["fsop_context_fields"] = json.dumps(list(context_fields(m.context_version)))
+    meta["fsop_context_scale"] = json.dumps(context_scale(m.context_version).tolist())
+  meta["fsop_context_version"] = str(m.context_version) if m.context_adapter is not None else "0"
+  meta["fsop_trajectory_origin"] = "ground_projected_cog"
+  if m.context_anchor is not None:
+    meta["fsop_context_anchor"] = json.dumps(m.context_anchor.cpu().tolist())
   meta["fsop_checkpoint"] = str(ckpt)
   meta["fsop_cones_bev_layout"] = f"top{TOPK} x [x_m, y_m (left+), class(0 blue,1 yellow,2 orange,3 big_orange), score]"
   del model.metadata_props[:]

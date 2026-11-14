@@ -59,7 +59,11 @@ class ModelFrameWarper:
     out = {}
     for slot, cam in self.cams.items():
       mx, my = self.maps[slot]
-      src = np.ascontiguousarray(images[cam.name])  # cv2.remap misreads negative-stride views (bgr[..., ::-1])
+      image = images[cam.name]
+      if image.shape != (cam.height, cam.width, 3) or image.dtype != np.uint8:
+        raise ValueError(f"{cam.name}: expected uint8 RGB {(cam.height, cam.width, 3)}, "
+                         f"got {image.shape}/{image.dtype}")
+      src = np.ascontiguousarray(image)  # cv2.remap misreads negative-stride views (bgr[..., ::-1])
       out[slot] = cv2.remap(src, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=(0, 0, 0))
     return out
 

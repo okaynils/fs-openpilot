@@ -1,0 +1,47 @@
+[
+  {
+    "path": "runs/cuda_racing_v6/ckpt/best.pt",
+    "sha256": "fdf1b3d56ebd110658dace49a8c9ab25fa50c42ce076b09c0b0b5d418746f507",
+    "bytes": 124749704
+  },
+  {
+    "path": "runs/transfer_image_v1/ckpt/best.pt",
+    "sha256": "6ac87770eed4f6e0327804180f231d9c83e2f6c1dd02fdc5650ec1e2c33d9de0",
+    "bytes": 186999055
+  },
+  {
+    "path": "runs/transfer_conditioned_v1/ckpt/best.pt",
+    "sha256": "4ddc1a62ae0b10d610ab0665040e9bdc2cf79321b923fcd17cf7e7996dfdf71f",
+    "bytes": 190207615
+  },
+  {
+    "path": "runs/transfer_anchored_v1/ckpt/best.pt",
+    "sha256": "76e52828c7b9643ad78c0a136bc9e9c5fb2dcaae13562cd6b7d5ba443bb71891",
+    "bytes": 134733360
+  },
+  {
+    "path": "runs/transfer_minimal_v1/ckpt/best.pt",
+    "sha256": "2b949c9b7caf959349cb05d3a4635f85ff18f329ecd8bac31de1e7817bc97dd2",
+    "bytes": 125791087
+  },
+  {
+    "path": "artifacts/export/transfer_minimal_v1/conditioned.onnx",
+    "sha256": "54864f99c1f103d726eb924646012f21f473887cecab6b2181d7ae7531e3077f",
+    "bytes": 125914287
+  },
+  {
+    "path": "artifacts/export/transfer_minimal_v1/source.tar.gz",
+    "sha256": "72df547270c6103dd0db2624a15086a57a5d359c348c80ac13946751456d24cc",
+    "bytes": 224088
+  },
+  {
+    "path": "artifacts/experiments/transfer_closed_isolated_v1/source.tar.gz",
+    "sha256": "d126c79d4082a24d3fdd7ed5dd26cf66f792fe28655b400e6ca4f6719b3713e4",
+    "bytes": 225505
+  },
+  {
+    "path": "artifacts/experiments/transfer_runtime_isolated_v1/source.tar.gz",
+    "sha256": "880996a5e8e7eb281b241f82c255d50d9255e0e699937633db44fa2bc4b15c04",
+    "bytes": 225505
+  }
+]

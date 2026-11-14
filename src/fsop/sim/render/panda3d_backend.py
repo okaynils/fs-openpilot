@@ -1,7 +1,7 @@
-"""Offscreen Panda3D renderer producing openpilot model-frame images directly.
+"""Offscreen Panda3D renderer with explicit camera dimensions and intrinsics.
 
-Each camera renders into its own 512x256 buffer with the exact model-frame intrinsics (fl, cy), so no
-warp is needed and pixel <-> 3D geometry is exact (checked by tests/test_reprojection.py).
+Legacy cameras render directly to 512x256 model slots. Physical-sensor simulation renders the
+configured sensor before shared deployment warping (checked by tests/test_reprojection.py).
 
 Panda3D lens convention (verified empirically): film offset y = cy - H/2, and the RAM image is
 bottom-up (flip rows). Panda3D camera axes are x right, y forward, z up.
@@ -68,6 +68,17 @@ def mat_from_T(T: np.ndarray) -> LMatrix4f:
   return LMatrix4f(*T.T.astype(np.float64).ravel())
 
 
+def camera_lens(cam: CameraModel) -> PerspectiveLens:
+  """Panda film coordinates have opposite horizontal principal-point sign to pixels."""
+  lens = PerspectiveLens()
+  lens.setFilmSize(cam.width, cam.height * cam.K[0, 0] / cam.K[1, 1])
+  lens.setFocalLength(cam.K[0, 0])
+  lens.setFilmOffset(cam.width / 2 - cam.K[0, 2],
+                     (cam.K[1, 2] - cam.height / 2) * cam.K[0, 0] / cam.K[1, 1])
+  lens.setNearFar(0.1, 600.0)
+  return lens
+
+
 class Panda3DRenderer:
   def __init__(self, cameras: dict[str, CameraModel], msaa: int = 0):
     self.base = _showbase()
@@ -91,14 +102,29 @@ class Panda3DRenderer:
       tex = Texture()
       buf.addRenderTexture(tex, GraphicsOutput.RTMCopyRam)
       np_cam = self.base.makeCamera(buf)
-      lens = PerspectiveLens()
-      lens.setFilmSize(cam.width, cam.height)
-      lens.setFocalLength(cam.K[0, 0])
-      lens.setFilmOffset(cam.K[0, 2] - cam.width / 2, cam.K[1, 2] - cam.height / 2)
-      lens.setNearFar(0.1, 600.0)
-      np_cam.node().setLens(lens)
+      np_cam.node().setLens(camera_lens(cam))
       self.buffers[name], self.textures[name], self.cam_nps[name] = buf, tex, np_cam
     self.base.win.setActive(False)
+
+  def close(self) -> None:
+    """Release this renderer's scene, cameras and offscreen buffers; safe to repeat."""
+    for camera in self.cam_nps.values():
+      camera.removeNode()
+    for buffer in self.buffers.values():
+      self.base.graphicsEngine.removeWindow(buffer)
+    if self.scene is not None:
+      self.scene.removeNode()
+    self.scene = self.sky = None
+    self.cam_nps.clear()
+    self.buffers.clear()
+    self.textures.clear()
+    self.cone_nodes.clear()
+
+  def __enter__(self):
+    return self
+
+  def __exit__(self, *_):
+    self.close()
 
   # ------------------------------------------------------------------------------------------
   def load_scene(self, track: Track, cones_xy: np.ndarray, cone_colors: list[ConeColor], dr: SceneDR) -> None:
@@ -107,6 +133,8 @@ class Panda3DRenderer:
     rng = np.random.default_rng(dr.seed)
     root = self.base.render.attachNewNode("scene")
     self.scene = root
+    for camera in self.cam_nps.values():
+      camera.node().setScene(root)  # isolate simultaneous renderers sharing ShowBase
     for buf in self.buffers.values():
       buf.setClearColor((*dr.sky_color, 1.0))
     self.sky = venue.sky_dome(root, dr.sky_pano, yaw=dr.sky_yaw) if dr.sky_pano else None

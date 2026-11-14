@@ -10,6 +10,8 @@ import numpy as np
 
 @dataclass
 class VehicleParams:
+  max_speed: float = 30.0  # configured operating limit [m/s]
+  body_height: float = 0.0  # 0 preserves legacy rendering; otherwise opaque chassis box [m]
   mass: float = 230.0
   iz: float = 110.0
   lf: float = 0.80

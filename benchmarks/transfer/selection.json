@@ -1,0 +1,24 @@
+{
+  "final_transfer_data_not_yet_generated": true,
+  "selection_basis": "validation ADE; one anchored retention revision; remove camera-angle inputs based on validation intervention and equivalence check",
+  "models": {
+    "baseline": {
+      "run": "cuda_racing_v6"
+    },
+    "image": {
+      "run": "transfer_image_v1",
+      "step": 1200
+    },
+    "conditioned": {
+      "run": "transfer_conditioned_v1",
+      "step": 400
+    },
+    "candidate": {
+      "run": "transfer_minimal_v1",
+      "source_run": "transfer_anchored_v1",
+      "source_step": 800,
+      "context_version": 2
+    }
+  },
+  "further_training_planned": false
+}

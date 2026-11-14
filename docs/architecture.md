@@ -142,8 +142,9 @@ both cameras are fused in the trunk.
   selection and reserve the test split for the final comparison.
   For background on the distinction between minimum curvature and minimum time, see
   [TUM's racing trajectory optimization](https://github.com/TUMFTM/global_racetrajectory_optimization).
-- **Recording.** Data is stored on the 5 Hz grid. The model only needs frames t and t−4 at 20 Hz plus
-  5 Hz history, so this loses nothing and saves 4× space.
+- **Recording.** Data is stored on the 5 Hz grid, matching the model’s 0.2 s frame-pair/history
+  spacing and saving 4× stored frames. This does not replace evaluation on actual
+  20 Hz sequences or capture every faster sensor/mounting disturbance.
 - **Referee.** Implements D 2.6, D 4–8 and D 10, with penalties per D 10.1.7.
 - **Mission layer** (`fsop.eval.closed_loop.mission_brake`): launch on "go" and braking into the stop
   zone. It currently uses the simulator's track progress, standing in for odometry and lap counting
@@ -172,3 +173,37 @@ map geometry and scene randomization; it is not a continuous swept-volume guaran
 prioritizes the desired reserve, uses clearance-dependent speed limits when it must fall back to the
 hard margin, and distinguishes an infeasible centerline from a valid time baseline. Safety and
 closed-loop completion must be assessed alongside travel time and imitation error.
+
+
+## Experimental transfer contract
+
+[Camera/vehicle transfer](transfer.md) adds optional versioned geometry inputs to
+`SupercomboFS.plan`. A zero-initialized adapter combines calibrated geometry with the
+current visual feature before the existing temporal policy. Vision history remains
+unconditioned, so cache identity is tied to the vision checkpoint, episode metadata and
+inference precision; geometry is loaded from episode metadata for every sample.
+
+The physical-sensor path renders rectilinear source pixels and calls the deployment
+warper before YUV packing. Per-frame `camera_poses.npy` drives moving-camera targets;
+`calibrated_mount` is the separate estimate available to the policy. Labels stay in the
+ground-projected CoG frame. Body visibility uses the same ray/box geometry in images
+and targets. Distribution manifests, configuration-level split assignments and source
+snapshots accompany generated datasets.
+
+Training checkpoints now include optimizer/RNG state and an input contract. Explicit
+resume continues the optimizer and random state, but restarts the shuffled data loader;
+it is not a promise of bitwise identical sample order after interruption. Existing
+checkpoint loading remains strict and infers legacy head presence from the state dict.
+
+Inference and newly cached features disable TF32 to agree with the FP32 export reference.
+BF16 training autocast is still intentional. ONNX CUDA inference sets `use_tf32=0`, as
+documented by the [ONNX Runtime CUDA provider](https://onnxruntime.ai/docs/execution-providers/CUDA-ExecutionProvider.html#use_tf32).
+TensorRT/CoreML reduced-precision execution remains opt-in and needs its own parity checks.
+
+Context v1 retains the experimental 16 fields. Context v2 removes camera-angle
+channels after validation intervention, retaining 13 calibrated translation/vehicle
+fields. The anchored residual subtracts its response at a checkpoint-stored reference
+configuration while the original policy remains frozen. Specialization removes the
+three first-layer columns at zero angle, with recorded-sequence equivalence tests.
+Profiles retain full angles for rendering, warping and cone projection. `FSDriver`
+reads the input version from the artifact; training selects it with `context_version`.

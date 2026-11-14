@@ -19,6 +19,7 @@ import numpy as np
 import yaml
 
 from fsop.geometry.camera import CameraMount
+from fsop.geometry.mounting import MountDynamics
 from fsop.sim.vehicle import VehicleParams
 
 DEFAULT_PROFILE = Path("configs/profiles/default.yaml")
@@ -54,6 +55,27 @@ class TeamProfile:
   mount: CameraMount = field(default_factory=lambda: CameraMount(z=1.1))
   cameras: list[CameraSpec] = field(default_factory=lambda: [CameraSpec()])
   notes: str = ""
+  motion: MountDynamics = field(default_factory=MountDynamics)
+  calibration_error: CameraMount = field(default_factory=lambda: CameraMount(z=0.0))
+
+  def __post_init__(self):
+    v = self.vehicle
+    positive = ("mass", "iz", "lf", "lr", "track", "length", "width", "cf", "cr", "mu", "max_speed",
+                "max_steer", "max_steer_rate", "max_accel", "max_brake", "tau_steer", "tau_accel")
+    if any(not np.isfinite(getattr(v, k)) or getattr(v, k) <= 0 for k in positive):
+      raise ValueError("Vehicle geometry and dynamic limits must be finite and positive")
+    if v.v_blend[0] < 0 or v.v_blend[1] <= v.v_blend[0]:
+      raise ValueError("Invalid kinematic/dynamic blending interval")
+    if not np.isfinite(list(asdict(self.mount).values())).all() or self.mount.z <= 0:
+      raise ValueError("Camera installation must be finite and above the ground")
+    if len({c.name for c in self.cameras}) != len(self.cameras):
+      raise ValueError("Physical camera names must be unique")
+    for c in self.cameras:
+      if min(c.width, c.height, c.fx, c.fy) <= 0 or not np.isfinite(c.K).all():
+        raise ValueError("Invalid camera resolution or intrinsics")
+    for slot in ("road", "wide"):
+      if sum(slot in c.slots for c in self.cameras) != 1:
+        raise ValueError(f"Exactly one physical camera must feed {slot}")
 
   def camera_for(self, slot: str) -> CameraSpec:
     for c in self.cameras:
@@ -66,6 +88,8 @@ class TeamProfile:
     m = d["mount"]
     for k in ("roll", "pitch", "yaw"):
       m[f"{k}_deg"] = float(np.rad2deg(m.pop(k)))
+    for k in ("roll", "pitch", "yaw"):
+      d["calibration_error"][f"{k}_deg"] = float(np.rad2deg(d["calibration_error"].pop(k)))
     d["vehicle"]["max_steer_deg"] = float(np.rad2deg(d["vehicle"].pop("max_steer")))
     d["vehicle"]["max_steer_rate_deg"] = float(np.rad2deg(d["vehicle"].pop("max_steer_rate")))
     return d
@@ -95,6 +119,13 @@ def load_profile(path: str | Path | None = None) -> TeamProfile:
     if f"{k}_deg" in mount:
       mount[k] = float(np.deg2rad(mount.pop(f"{k}_deg")))
   cams = [CameraSpec(**_pick(CameraSpec, c)) for c in raw.get("cameras", [])] or [CameraSpec()]
-  return TeamProfile(name=raw.get("name", Path(path).stem), team=raw.get("team", ""),
+  error = dict(raw.get("calibration_error", {}))
+  error.setdefault("z", 0.0)
+  for k in ("roll", "pitch", "yaw"):
+    if f"{k}_deg" in error:
+      error[k] = float(np.deg2rad(error.pop(f"{k}_deg")))
+  return TeamProfile(motion=MountDynamics(**_pick(MountDynamics, raw.get("motion", {}))),
+                     calibration_error=CameraMount(**_pick(CameraMount, error)),
+                     name=raw.get("name", Path(path).stem), team=raw.get("team", ""),
                      vehicle=VehicleParams(**_pick(VehicleParams, veh)),
                      mount=CameraMount(**_pick(CameraMount, mount)), cameras=cams, notes=raw.get("notes", ""))

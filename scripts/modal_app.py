@@ -40,6 +40,7 @@ image = (
   .env({"PYTHONPATH": f"{WORK}/src", "PYTHONUNBUFFERED": "1"})
   .add_local_dir(REPO / "src", f"{WORK}/src", ignore=["**/__pycache__"])
   .add_local_dir(REPO / "configs", f"{WORK}/configs")
+  .add_local_dir(REPO / "tests", f"{WORK}/tests", ignore=["**/__pycache__"])
   .add_local_dir(REPO / "scripts", f"{WORK}/scripts", ignore=["**/__pycache__"])
   .add_local_dir(REPO / "benchmarks", f"{WORK}/benchmarks")
   .add_local_file(REPO / "README.md", f"{WORK}/README.md")
@@ -60,6 +61,22 @@ def _sh(cmd: str) -> None:
   subprocess.run(cmd, shell=True, check=True)
 
 
+def _source_identity() -> dict:
+  import hashlib
+
+  files = [*Path("src/fsop").rglob("*.py"), *Path("configs").rglob("*.yaml")]
+  return {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(files)}
+
+
+def _archive_source(out: Path) -> None:
+  import tarfile
+
+  if not (out / "source.tar.gz").exists():
+    with tarfile.open(out / "source.tar.gz", "w:gz") as archive:
+      for folder in ("src", "configs", "scripts", "tests"):
+        archive.add(folder, filter=lambda info: None if "__pycache__" in info.name else info)
+
+
 # ---------------------------------------------------------------------------------------------- data
 @app.function(cpu=2.0, memory=4096, timeout=3 * 3600, max_containers=100)
 def record_shard(specs: list[dict], out_dir: str) -> list[dict]:
@@ -69,6 +86,18 @@ def record_shard(specs: list[dict], out_dir: str) -> list[dict]:
   rows = _worker(([EpisodeSpec(**s) for s in specs], out_dir))
   vol.commit()
   return rows
+
+
+@app.function(gpu=["L4", "A10"], cpu=4.0, memory=16384, timeout=3600, max_containers=3)
+def transfer_record_shard(specs: list[dict], out_dir: str) -> list[dict]:
+  """Bounded GPU rendering for low cameras where software rasterization is very slow."""
+  _setup()
+  from fsop.sim.batch_record import EpisodeSpec, _worker
+
+  try:
+    return _worker(([EpisodeSpec(**s) for s in specs], out_dir))
+  finally:
+    vol.commit()
 
 
 @app.function(cpu=8.0, memory=8192, timeout=6 * 3600)
@@ -230,9 +259,15 @@ def racing_remote(source: str, destination: str, cfg: str) -> dict:
 # ---------------------------------------------------------------------------------------------- GPU
 @app.function(gpu=["L4", "A10"], cpu=8.0, memory=32768, timeout=6 * 3600)
 def cache_remote(dataset: str, ckpt: str | None, tag: str | None, hidden_only: bool) -> None:
+  import json
+  import time
+
   _setup()
+  started = time.time()
   args = f"--dataset {dataset} --batch 64" + (f" --ckpt {ckpt}" if ckpt else "") + (f" --tag {tag}" if tag else "")
   _sh(f"python -m fsop.cli data cache-features {args}" + (" --hidden-only" if hidden_only else ""))
+  Path(dataset, f"cache_{tag}_timing.json").write_text(json.dumps({"seconds": time.time() - started,
+                                                               "checkpoint": ckpt}, indent=2))
   vol.commit()
 
 
@@ -369,3 +404,392 @@ def racing(source: str = "data/sim/v2", destination: str = "data/sim/racing_v6",
            cfg: str = "configs/train/cuda_racing_v6.yaml") -> None:
   """Run the complete racing-label and training pipeline in Modal."""
   _spawned(racing_remote.spawn(source, destination, cfg))
+
+
+@app.function(cpu=8.0, memory=16384, timeout=3600)
+def transfer_generate_remote(name: str, configurations: int, seconds: float) -> dict:
+  import runpy
+
+  _setup()
+  try:
+    return runpy.run_path(f"{WORK}/scripts/transfer_experiment.py")["generate"](name, configurations, seconds)
+  finally:
+    vol.commit()
+
+
+@app.local_entrypoint()
+def transfer_generate(name: str = "transfer_pilot_v1", configurations: int = 4, seconds: float = 10.0):
+  print(transfer_generate_remote.remote(name, configurations, seconds))
+
+
+@app.function(cpu=1.0, memory=2048, timeout=7200)
+def transfer_pilot_remote() -> dict:
+  import json
+  import time
+
+  _setup()
+  output = Path("runs/transfer_pilot_v1")
+  output.mkdir(exist_ok=True)
+  start = time.time()
+  cache_remote.remote("data/sim/transfer_pilot_v1", "runs/cuda_racing_v6/ckpt/best.pt", "transfer_baseline_v1", False)
+  for name, conditioned in (("transfer_pilot_image_v1", False), ("transfer_pilot_conditioned_v1", True)):
+    train_remote.remote("configs/train/transfer_pilot_v1.yaml", [f"name={name}", f"conditioned={conditioned}"], True)
+  report = {"wall_seconds": time.time() - start, "runs": ["transfer_pilot_image_v1", "transfer_pilot_conditioned_v1"]}
+  (output / "timing.json").write_text(json.dumps(report, indent=2))
+  vol.commit()
+  return report
+
+
+@app.local_entrypoint()
+def transfer_pilot():
+  print(transfer_pilot_remote.remote())
+
+
+@app.function(cpu=2.0, memory=4096, timeout=7200)
+def transfer_full_remote(name: str, configurations: int, seconds: float) -> dict:
+  import runpy
+
+  _setup()
+  api = runpy.run_path(f"{WORK}/scripts/transfer_experiment.py")
+  specs = api["prepare_full"](name, configurations, seconds)
+  vol.commit()
+  # Eight work units, at most three GPU workers; resume by complete episode.
+  chunks = [specs[i::8] for i in range(min(8, len(specs)))]
+  for rows in transfer_record_shard.map(chunks, kwargs={"out_dir": f"data/sim/{name}"}):
+    print(f"completed {len(rows)} episodes", flush=True)
+  vol.reload()
+  result = api["finalize_full"](name)
+  vol.commit()
+  return result
+
+
+@app.local_entrypoint()
+def transfer_full(name: str = "transfer_train_v1", configurations: int = 16, seconds: float = 20.0):
+  print(transfer_full_remote.remote(name, configurations, seconds))
+
+
+@app.function(gpu=["L4", "A10"], cpu=4.0, memory=16384, timeout=7200)
+def transfer_finish_remote(name: str) -> dict:
+  """Resume a stopped generation job with its archived source and exact remaining specs.
+
+  GPU rasterization avoids pathological Mesa software-rendering time at low camera heights.
+  Do not run concurrently with generation of the same dataset.
+  """
+  import json
+  import tarfile
+  import tempfile
+  import time
+
+  _setup()
+  root = Path("data/sim") / name
+  if (root / "index.json").exists():
+    return {"status": "already complete", "index": str(root / "index.json")}
+  manifest = json.loads((root / "manifest.json").read_text())
+  pending = [s for s in manifest["specs"] if not (root / s["episode_id"] / "meta.json").exists()]
+  started = time.time()
+  with tempfile.TemporaryDirectory() as directory:
+    snapshot = Path(directory)
+    with tarfile.open(root / "source.tar.gz") as archive:
+      archive.extractall(snapshot, filter="data")
+    for folder in LINKED:
+      (snapshot / folder).symlink_to(Path(VOL_DIR) / folder)
+    (snapshot / "pending.json").write_text(json.dumps(pending))
+    code = ("import json,runpy; from fsop.sim.batch_record import EpisodeSpec,_worker; "
+            f"_worker(([EpisodeSpec(**s) for s in json.load(open('pending.json'))], 'data/sim/{name}')); "
+            f"print(runpy.run_path('scripts/transfer_experiment.py')['finalize_full']('{name}'))")
+    try:
+      subprocess.run(["python", "-c", code], cwd=snapshot,
+                     env={**os.environ, "PYTHONPATH": str(snapshot / "src")}, check=True)
+    finally:
+      (root / "gpu_resume.json").write_text(json.dumps({"episode_ids": [s["episode_id"] for s in pending],
+                                                       "seconds": time.time() - started,
+                                                       "source": "source.tar.gz", "renderer": "GPU EGL"}, indent=2))
+      vol.commit()
+  return {"resumed_episodes": len(pending), "seconds": time.time() - started}
+
+
+@app.local_entrypoint()
+def transfer_finish(name: str = "transfer_train_v1"):
+  print(transfer_finish_remote.remote(name))
+
+
+@app.function(gpu=["L4", "A10"], cpu=4.0, memory=8192, timeout=1800)
+def transfer_verify_remote() -> dict:
+  import json
+
+  import cv2
+  import numpy as np
+
+  _setup()
+  from fsop.geometry.camera import CameraModel
+  from fsop.profile import load_profile
+  from fsop.sim.env import FSEnv, SimCfg
+  from fsop.sim.render.panda3d_backend import Panda3DRenderer
+  from fsop.track.fixed_layouts import acceleration
+
+  out = Path("runs/transfer_geometry_v1")
+  out.mkdir(exist_ok=True)
+  subprocess.run(["python", "-c", "import torch, pytest; raise SystemExit(pytest.main(["
+                  "'tests/test_reprojection.py', 'tests/test_transfer_geometry.py', 'tests/test_warp.py', '-q']))"],
+                 check=True)
+  panels, rows = [], []
+  for name, z, x, y, pitch in (("rover", .22, -.25, .12, 6), ("rover", .25, .35, -.12, -3),
+                               ("formula", 1.65, -.8, .3, 8), ("formula", .75, 1.1, -.3, -3)):
+    profile = load_profile(f"configs/profiles/generic_{name}.yaml")
+    profile.mount.z, profile.mount.x, profile.mount.y = z, x, y
+    profile.mount.pitch = np.deg2rad(pitch)
+    cams = {c.name: CameraModel(c.name, c.K, c.width, c.height) for c in profile.cameras}
+    renderer = Panda3DRenderer(cams)
+    cfg = SimCfg(physical_camera=True, dr="off", randomize_expert=False)
+    env = FSEnv(acceleration(width=4), cfg, renderer=renderer, profile=profile)
+    env.state.x = 10.0
+    obs = env.observe()
+    panel = np.hstack([obs.images[c] for c in ("road", "wide")])
+    cv2.putText(panel, f"{name}: x={x} y={y} z={z} pitch={pitch}", (12, 24),
+                cv2.FONT_HERSHEY_SIMPLEX, .6, (255, 255, 255), 1)
+    panels.append(panel)
+    rows.append(profile.to_dict())
+    for node in renderer.cam_nps.values():
+      node.removeNode()
+    for buffer in renderer.buffers.values():
+      renderer.base.graphicsEngine.removeWindow(buffer)
+    renderer.scene.removeNode()
+  cv2.imwrite(str(out / "extremes.jpg"), np.vstack(panels)[..., ::-1])
+  (out / "profiles.json").write_text(json.dumps(rows, indent=2))
+  vol.commit()
+  return {"preview": str(out / "extremes.jpg"), "tests": "passed"}
+
+
+@app.local_entrypoint()
+def transfer_verify():
+  print(transfer_verify_remote.remote())
+
+
+@app.function(gpu=["L4", "A10"], cpu=8.0, memory=32768, timeout=3600)
+def transfer_analyze_remote(dataset: str, image_run: str, conditioned_run: str, name: str) -> dict:
+  import hashlib
+  import json
+  import time
+
+  _setup()
+  from fsop.data.sim_dataset import Episode, split_episodes
+  from fsop.eval.transfer import context_ablation, paired_open_loop, temporal_parity
+  from fsop.model.export import export_onnx
+
+  out = Path("runs") / name
+  checkpoints = ["runs/cuda_racing_v6/ckpt/best.pt", f"runs/{image_run}/ckpt/best.pt",
+                 f"runs/{conditioned_run}/ckpt/best.pt"]
+  identity = {"dataset": dataset,
+              "source_sha256": _source_identity(),
+              "manifest": hashlib.sha256((Path(dataset) / "manifest.json").read_bytes()).hexdigest(),
+              "checkpoints": {c: hashlib.sha256(Path(c).read_bytes()).hexdigest() for c in checkpoints}}
+  if (out / "identity.json").exists():
+    if json.loads((out / "identity.json").read_text()) != identity:
+      raise ValueError("Analysis inputs changed; use a distinct run name")
+    if (out / "complete.json").exists():
+      return json.loads((out / "complete.json").read_text())
+  elif out.exists():
+    raise ValueError("Existing analysis has no identity; use a distinct run name")
+  out.mkdir(exist_ok=True)
+  (out / "identity.json").write_text(json.dumps(identity, indent=2))
+  _archive_source(out)
+  started = time.time()
+  try:
+    paired_open_loop(dataset, checkpoints, out / "paired_validation.json", split="val")
+    context_ablation(dataset, checkpoints[-1], out / "context_ablation.json")
+    exported = export_onnx(checkpoints[-1], out / "conditioned.onnx")
+    ep = Episode(Path(dataset) / split_episodes(dataset, "val")[0])
+    parity = temporal_parity(checkpoints[-1], exported, ep)
+    report = {"seconds": time.time() - started, "parity": parity, "export": str(exported)}
+    (out / "complete.json").write_text(json.dumps(report, indent=2))
+    return report
+  finally:
+    vol.commit()
+
+
+@app.local_entrypoint()
+def transfer_analyze(dataset: str = "data/sim/transfer_pilot_v1", image_run: str = "transfer_pilot_image_v1",
+                     conditioned_run: str = "transfer_pilot_conditioned_v1", name: str = "transfer_pilot_analysis_v1"):
+  print(transfer_analyze_remote.remote(dataset, image_run, conditioned_run, name))
+
+
+@app.function(gpu=["L4", "A10"], cpu=8.0, memory=32768, timeout=3600)
+def transfer_open_remote(dataset: str, image_run: str, conditioned_run: str, name: str, extra_run: str) -> dict:
+  import hashlib
+  import json
+  import time
+
+  _setup()
+  from fsop.eval.transfer import paired_open_loop
+
+  checkpoints = ["runs/cuda_racing_v6/ckpt/best.pt", f"runs/{image_run}/ckpt/best.pt",
+                 f"runs/{conditioned_run}/ckpt/best.pt"]
+  if extra_run:
+    checkpoints.append(f"runs/{extra_run}/ckpt/best.pt")
+  out = Path("runs") / name
+  identity = {"source_sha256": _source_identity(), "dataset": dataset,
+              "manifest": hashlib.sha256((Path(dataset) / "manifest.json").read_bytes()).hexdigest(),
+              "checkpoints": {c: hashlib.sha256(Path(c).read_bytes()).hexdigest() for c in checkpoints}}
+  if (out / "identity.json").exists():
+    if json.loads((out / "identity.json").read_text()) != identity:
+      raise ValueError("Evaluation inputs changed; use a distinct run name")
+    if (out / "complete.json").exists():
+      return json.loads((out / "complete.json").read_text())
+  elif out.exists():
+    raise ValueError("Existing evaluation has no identity; use a distinct run name")
+  out.mkdir(exist_ok=True)
+  (out / "identity.json").write_text(json.dumps(identity, indent=2))
+  _archive_source(out)
+  started = time.time()
+  try:
+    result = paired_open_loop(dataset, checkpoints, out / "paired_test.json", split="test")
+    report = {"rows": len(result["rows"]), "seconds": time.time() - started}
+    (out / "complete.json").write_text(json.dumps(report, indent=2))
+    return report
+  finally:
+    vol.commit()
+
+
+@app.local_entrypoint()
+def transfer_open(dataset: str = "data/sim/transfer_test_v1", image_run: str = "transfer_image_v1",
+                  conditioned_run: str = "transfer_conditioned_v1", name: str = "transfer_open_v1",
+                  extra_run: str = ""):
+  print(transfer_open_remote.remote(dataset, image_run, conditioned_run, name, extra_run))
+
+
+@app.function(cpu=2.0, memory=4096, timeout=7200)
+def transfer_train_remote() -> dict:
+  import json
+  import runpy
+  import time
+
+  _setup()
+  started = time.time()
+  dataset = "data/sim/transfer_train_v1"
+  quality = runpy.run_path(f"{WORK}/scripts/transfer_experiment.py")["audit_dataset"](dataset)
+  vol.commit()
+  cache_remote.remote(dataset, "runs/cuda_racing_v6/ckpt/best.pt", "transfer_baseline_strict_v1", False)
+  for name, conditioned in (("transfer_image_v1", False), ("transfer_conditioned_v1", True)):
+    train_remote.remote("configs/train/transfer_v1.yaml", [f"name={name}", f"conditioned={conditioned}"], True)
+  result = {"wall_seconds": time.time() - started, "dataset_frames": quality["frames"],
+            "runs": ["transfer_image_v1", "transfer_conditioned_v1"]}
+  Path("runs/transfer_train_v1").mkdir(exist_ok=True)
+  Path("runs/transfer_train_v1/timing.json").write_text(json.dumps(result, indent=2))
+  vol.commit()
+  return result
+
+
+@app.local_entrypoint()
+def transfer_train():
+  print(transfer_train_remote.remote())
+
+
+@app.function(gpu=["L4", "A10"], cpu=4.0, memory=8192, timeout=1800)
+def transfer_audit_remote(dataset: str) -> dict:
+  import runpy
+
+  _setup()
+  api = runpy.run_path(f"{WORK}/scripts/transfer_experiment.py")
+  try:
+    quality = api["audit_dataset"](dataset)
+    preview = api["preview_dataset"](dataset)
+    return {"frames": quality["frames"], "unresolved_fraction": quality["unresolved_fraction"],
+            "preview": preview}
+  finally:
+    vol.commit()
+
+
+@app.local_entrypoint()
+def transfer_audit(dataset: str = "data/sim/transfer_train_v1"):
+  print(transfer_audit_remote.remote(dataset))
+
+
+@app.function(cpu=2.0, memory=4096, timeout=7200)
+def transfer_test_data_remote(name: str) -> dict:
+  import runpy
+
+  _setup()
+  api = runpy.run_path(f"{WORK}/scripts/transfer_experiment.py")
+  specs = api["prepare_test"](name)
+  vol.commit()
+  chunks = [specs[i::6] for i in range(min(6, len(specs)))]
+  for rows in transfer_record_shard.map(chunks, kwargs={"out_dir": f"data/sim/{name}"}):
+    print(f"completed {len(rows)} final-test episodes", flush=True)
+  vol.reload()
+  result = api["finalize_test"](name)
+  vol.commit()
+  return result
+
+
+@app.local_entrypoint()
+def transfer_test_data(name: str = "transfer_test_v1"):
+  print(transfer_test_data_remote.remote(name))
+
+
+@app.function(gpu=["L4", "A10"], cpu=4.0, memory=16384, timeout=3600, max_containers=3)
+def transfer_case_remote(configuration: dict, checkpoints: list[str], track_seed: int,
+                         scene_seed: int, recovery: bool, name: str) -> list[dict]:
+  import hashlib
+  import json
+
+  _setup()
+  vol.reload()  # reused workers must see completed cases after orchestrator retries
+  from fsop.eval.transfer import closed_loop_case
+
+  root = Path("runs") / name
+  root.mkdir(exist_ok=True)
+  path = root / f"{configuration['name']}_{track_seed}_{scene_seed}.json"
+  identity = {"configuration": configuration, "track_seed": track_seed, "scene_seed": scene_seed,
+              "source_sha256": _source_identity(),
+              "recovery": recovery,
+              "checkpoints": {c: hashlib.sha256(Path(c).read_bytes()).hexdigest() for c in checkpoints}}
+  if path.exists():
+    saved = json.loads(path.read_text())
+    if saved["identity"] != identity:
+      raise ValueError("Evaluation identity differs; use a distinct run name")
+    return saved["results"]
+  try:
+    results = closed_loop_case(configuration, checkpoints, track_seed, scene_seed, recovery)
+    path.write_text(json.dumps({"identity": identity, "results": results}, indent=2))
+    return results
+  finally:
+    vol.commit()
+
+
+@app.function(cpu=1.0, memory=2048, timeout=10800)
+def transfer_closed_remote(image_run: str, conditioned_run: str, name: str, runtime: bool,
+                           export_run: str, extra_run: str) -> dict:
+  import json
+
+  import yaml
+
+  _setup()
+  cfg = yaml.safe_load(Path("configs/eval/transfer_v1.yaml").read_text())
+  checkpoints = ["runs/cuda_racing_v6/ckpt/best.pt", f"runs/{image_run}/ckpt/best.pt",
+                 f"runs/{conditioned_run}/ckpt/best.pt"]
+  if extra_run:
+    checkpoints.append(f"runs/{extra_run}/ckpt/best.pt")
+  configurations = cfg["configurations"]
+  if runtime:
+    checkpoints = [f"runs/{conditioned_run}/ckpt/best.pt", f"runs/{export_run}/conditioned.onnx"]
+    configurations = [c for c in configurations if c["name"] in ("formula_high_rear", "rover_low_forward")]
+  args = [(c, checkpoints, ts, ss, bool(i), name) for c in configurations
+          for i, (ts, ss) in enumerate(zip(cfg["track_seeds"], cfg["scene_seeds"], strict=True))]
+  results = []
+  for rows in transfer_case_remote.starmap(args):
+    results.extend(rows)
+  vol.reload()
+  out = Path("runs") / name
+  out.mkdir(exist_ok=True)
+  _archive_source(out)
+  report = {"suite": cfg, "runtime": runtime, "results": results}
+  (out / "report.json").write_text(json.dumps(report, indent=2))
+  vol.commit()
+  return {"runs": len(results), "report": str(out / "report.json")}
+
+
+@app.local_entrypoint()
+def transfer_closed(image_run: str = "transfer_image_v1", conditioned_run: str = "transfer_conditioned_v1",
+                    name: str = "transfer_closed_v1", runtime: bool = False,
+                    export_run: str = "transfer_analysis_v1", extra_run: str = ""):
+  print(transfer_closed_remote.remote(image_run, conditioned_run, name, runtime, export_run, extra_run))

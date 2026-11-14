@@ -7,8 +7,10 @@ stage 2: images in, last trunk stages unfrozen (L2-SP to pretrained weights), + 
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
+import tarfile
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -24,7 +26,7 @@ from fsop.geometry.op_frames import op_to_ego_plan
 from fsop.model.build import SupercomboFS
 from fsop.sim.expert import T_IDXS
 from fsop.train import losses as L
-from fsop.train.device import autocast_ctx, pick_device
+from fsop.train.device import autocast_ctx, pick_device, strict_inference_precision
 
 
 @dataclass
@@ -39,6 +41,11 @@ class TrainCfg:
   stage: int = 1
   trunk: str = "frozen"  # frozen | last | all
   init_ckpt: str = ""
+  conditioned: bool = False
+  context_version: int = 1
+  anchored_context: bool = False
+  freeze_policy: bool = False
+  resume: str = ""
   batch_size: int = 64
   num_workers: int = 4
   steps: int = 4000
@@ -69,33 +76,74 @@ class Trainer:
     torch.manual_seed(cfg.seed)
     np.random.seed(cfg.seed)
     self.device = pick_device(cfg.device)
+    strict_inference_precision()
     self.run_dir = Path(cfg.out_dir) / cfg.name
+    if (self.run_dir / "config.yaml").exists() and not cfg.resume:
+      raise ValueError(f"Run already exists: {self.run_dir}; use resume or a distinct run name")
+    saved = None
+    if cfg.resume:
+      saved = torch.load(cfg.resume, map_location="cpu", weights_only=False)
+      if saved.get("inference_only"):
+        raise ValueError("Derived inference checkpoint has no optimizer state; initialize a fresh run instead")
+      if saved["cfg"].get("context_version", 1) != cfg.context_version:
+        raise ValueError("Resume requires matching context version")
+      if saved["cfg"]["conditioned"] != cfg.conditioned or saved["cfg"]["sim_root"] != cfg.sim_root:
+        raise ValueError("Resume requires matching conditioning and dataset")
+      if any(saved["cfg"].get(key, False) != getattr(cfg, key) for key in ("anchored_context", "freeze_policy")):
+        raise ValueError("Resume requires matching adapter and trainable policy configuration")
+      provenance = self.run_dir / "provenance.json"
+      manifest = Path(cfg.sim_root) / "manifest.json"
+      if provenance.exists():
+        expected = json.loads(provenance.read_text()).get("dataset_manifest")
+        actual = json.loads(manifest.read_text()) if manifest.exists() else None
+        if expected != actual:
+          raise ValueError("Resume dataset manifest differs from recorded provenance")
     (self.run_dir / "ckpt").mkdir(parents=True, exist_ok=True)
-    save_config(cfg, self.run_dir / "config.yaml")
+    if not cfg.resume:
+      save_config(cfg, self.run_dir / "config.yaml")
+      identity = {"init_checkpoint": cfg.init_ckpt,
+                  "init_sha256": (hashlib.sha256(Path(cfg.init_ckpt).read_bytes()).hexdigest()
+                                  if cfg.init_ckpt else None),
+                  "source_sha256": {str(p): hashlib.sha256(p.read_bytes()).hexdigest()
+                                    for p in sorted(Path("src/fsop").rglob("*.py"))},
+                  "dataset_manifest": json.loads((Path(cfg.sim_root) / "manifest.json").read_text())
+                  if (Path(cfg.sim_root) / "manifest.json").exists() else None}
+      (self.run_dir / "provenance.json").write_text(json.dumps(identity, indent=2))
+      with tarfile.open(self.run_dir / "source.tar.gz", "w:gz") as archive:
+        for path in ("src", "configs", "scripts", "tests", "pyproject.toml", "uv.lock"):
+          if Path(path).exists():
+            archive.add(path, filter=lambda item: None if "__pycache__" in item.name else item)
     mode = "cached" if cfg.stage == 1 else "images"
-    self.train_ds = SimDataset(cfg.sim_root, "train", mode, cfg.cache_tag)
+    self.train_ds = SimDataset(cfg.sim_root, "train", mode, cfg.cache_tag, context_version=cfg.context_version)
     if cfg.max_episodes:
       self.train_ds = SimDataset(cfg.sim_root, "train", mode, cfg.cache_tag,
+                                 context_version=cfg.context_version,
                                  episodes=[e.path.name for e in self.train_ds.eps[: cfg.max_episodes]])
-    self.val_ds = SimDataset(cfg.sim_root, "val", mode, cfg.cache_tag)
+    self.val_ds = SimDataset(cfg.sim_root, "val", mode, cfg.cache_tag, context_version=cfg.context_version)
     if cfg.label_mode:
       for dataset in (self.train_ds, self.val_ds):
         for episode in dataset.eps:
           planner = episode.meta.get("label_planner", {"mode": "centerline"})
           if planner.get("mode") != cfg.label_mode:
             raise ValueError(f"{episode.path}: expected {cfg.label_mode} labels, found {planner.get('mode')}")
-    self.model = SupercomboFS(image_head=cfg.stage >= 2)
+    sd = torch.load(cfg.init_ckpt, map_location="cpu", weights_only=False)["model"] if cfg.init_ckpt else {}
+    self.model = SupercomboFS(image_head=cfg.stage >= 2 or any(k.startswith("img.") for k in sd),
+                             conditioned=cfg.conditioned, anchored_context=cfg.anchored_context,
+                             context_version=cfg.context_version)
     if cfg.init_ckpt:
-      sd = torch.load(cfg.init_ckpt, map_location="cpu", weights_only=False)["model"]
       missing, unexpected = self.model.load_state_dict(sd, strict=False)
       print(f"init from {cfg.init_ckpt}: missing {len(missing)} unexpected {len(unexpected)}")
     self.model.set_trunk_trainable(cfg.trunk if cfg.stage >= 2 else "frozen")
+    if cfg.freeze_policy:
+      self.model.base.policy.requires_grad_(False)
     self.model.to(self.device)
     self.ref = {n: p.detach().clone() for n, p in self.model.base.vision.named_parameters() if p.requires_grad}
     groups = [
       {"params": [p for p in self.model.base.policy.parameters() if p.requires_grad], "lr": cfg.lr * cfg.lr_policy},
       {"params": list(self.model.bev.parameters()), "lr": cfg.lr},
     ]
+    if self.model.context_adapter is not None:
+      groups.append({"params": list(self.model.context_adapter.parameters()), "lr": cfg.lr})
     if self.model.img is not None:
       groups.append({"params": list(self.model.img.parameters()), "lr": cfg.lr})
     trunk = [p for p in self.model.base.vision.parameters() if p.requires_grad]
@@ -114,6 +162,15 @@ class Trainer:
     self.tb = SummaryWriter(str(self.run_dir / "tb"))
     self.step = 0
     self.best = math.inf
+    if cfg.resume:
+      self.model.load_state_dict(saved["model"], strict=True)
+      self.opt.load_state_dict(saved["optimizer"])
+      self.step, self.best = saved["step"], saved["best"]
+      torch.set_rng_state(saved["torch_rng"])
+      np.random.set_state(saved["numpy_rng"])
+      if self.device.type == "cuda" and saved.get("cuda_rng") is not None:
+        torch.cuda.set_rng_state_all(saved["cuda_rng"])
+      save_config(cfg, self.run_dir / f"resume_{self.step}_{time.time_ns()}.yaml")
     n_tr = sum(p.numel() for g in groups for p in g["params"])
     print(f"device {self.device} | train {len(self.train_ds)} samples ({len(self.train_ds.eps)} eps) | "
           f"val {len(self.val_ds)} | trainable params {n_tr / 1e6:.1f}M")
@@ -156,8 +213,9 @@ class Trainer:
 
   # ------------------------------------------------------------------------------------------
   def fit(self) -> None:
+    started = time.time()
     c = self.cfg
-    self.validate(tag="baseline")  # untouched model / init checkpoint as reference
+    self.validate(tag="resume" if c.resume else "baseline")  # init remains eligible for selection
     loader = self._loader(self.train_ds, True)
     fs_iter = iter(self._loader(self.fsoco, True, max(c.batch_size // 2, 2))) if self.fsoco else None
     it = iter(loader)
@@ -205,12 +263,24 @@ class Trainer:
               + f" | {sps:.0f} samples/s")
       if self.step % c.val_every == 0 or self.step == c.steps:
         self.validate()
+        self.save("last")
         self.model.train()
     self.save("last")
+    (self.run_dir / "timing.json").write_text(json.dumps({"fit_seconds": time.time() - started,
+                                                        "steps": self.step, "device": str(self.device)}, indent=2))
 
   def save(self, name: str) -> Path:
     p = self.run_dir / "ckpt" / f"{name}.pt"
-    torch.save({"model": self.model.state_dict(), "step": self.step, "cfg": asdict(self.cfg)}, p)
+    from fsop.model.conditioning import context_fields
+    contract = {"geometry_version": self.cfg.context_version if self.cfg.conditioned else 0,
+                "anchored_context": self.cfg.anchored_context,
+                "fields": list(context_fields(self.cfg.context_version)) if self.cfg.conditioned else [],
+                "trajectory_origin": "ground_projected_cog", "preprocessing": "model_slots_yuv_v1"}
+    torch.save({"input_contract": contract, "model": self.model.state_dict(),
+                "step": self.step, "cfg": asdict(self.cfg),
+                "optimizer": self.opt.state_dict(), "best": self.best, "torch_rng": torch.get_rng_state(),
+                "numpy_rng": np.random.get_state(),
+                "cuda_rng": torch.cuda.get_rng_state_all() if self.device.type == "cuda" else None}, p)
     return p
 
   # ------------------------------------------------------------------------------------------

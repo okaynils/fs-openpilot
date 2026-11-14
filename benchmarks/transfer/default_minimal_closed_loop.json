@@ -1,0 +1,179 @@
+{
+ "ckpt": "runs/transfer_minimal_v1/ckpt/best.pt",
+ "baseline": "model",
+ "controller": "pp",
+ "suite": {
+  "tracks": "data/tracks/td_v1",
+  "split": "test",
+  "n_trackdrive": 3,
+  "laps": 1,
+  "skidpad": true,
+  "acceleration": true,
+  "dr_levels": [
+   "light"
+  ],
+  "seeds": [
+   0
+  ],
+  "max_seconds": 90
+ },
+ "profile": "default",
+ "physical_camera": false,
+ "privileged_inputs": [
+  "simulator wheel speed",
+  "route desire",
+  "mission progress for launch/stop"
+ ],
+ "runs": [
+  {
+   "discipline": "trackdrive",
+   "result": "finished",
+   "laps": [
+    54.449999999997296
+   ],
+   "n_laps": 1,
+   "doo": 2,
+   "oc": 0,
+   "max_speed": 7.91414358931896,
+   "avg_speed_first3": null,
+   "raw_time": 54.449999999997296,
+   "penalty": 4.0,
+   "time": 58.449999999997296,
+   "dq": false,
+   "complete": true,
+   "pass": true,
+   "track": "trackdrive_001000",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 0.797467903915748,
+   "rms_lat": 0.34168461816492934,
+   "progress": 1.0012342641632619
+  },
+  {
+   "discipline": "trackdrive",
+   "result": "finished",
+   "laps": [
+    33.25000000000151
+   ],
+   "n_laps": 1,
+   "doo": 0,
+   "oc": 0,
+   "max_speed": 9.634340166047089,
+   "avg_speed_first3": null,
+   "raw_time": 33.25000000000151,
+   "penalty": 0.0,
+   "time": 33.25000000000151,
+   "dq": false,
+   "complete": true,
+   "pass": true,
+   "track": "trackdrive_001004",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 0.7122571286462595,
+   "rms_lat": 0.3152110276962522,
+   "progress": 1.0016779365855764
+  },
+  {
+   "discipline": "trackdrive",
+   "result": "finished",
+   "laps": [
+    54.949999999997196
+   ],
+   "n_laps": 1,
+   "doo": 0,
+   "oc": 0,
+   "max_speed": 7.9829950925982125,
+   "avg_speed_first3": null,
+   "raw_time": 54.949999999997196,
+   "penalty": 0.0,
+   "time": 54.949999999997196,
+   "dq": false,
+   "complete": true,
+   "pass": true,
+   "track": "trackdrive_001008",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 0.6476036617558117,
+   "rms_lat": 0.27801356254730836,
+   "progress": 1.001197203325605
+  },
+  {
+   "discipline": "skidpad",
+   "result": "finished",
+   "laps": [
+    8.44999999999982,
+    10.050000000000841,
+    9.700000000001516,
+    9.899999999998155
+   ],
+   "n_laps": 4,
+   "doo": 18,
+   "oc": 1,
+   "max_speed": 7.7631178562620065,
+   "raw_time": 9.974999999999497,
+   "penalty": 3.6,
+   "time": 13.574999999999497,
+   "dq": true,
+   "complete": true,
+   "pass": false,
+   "track": "skidpad",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 3.0447252579910327,
+   "rms_lat": 0.7798552312357558,
+   "progress": 1.0017578845005297
+  },
+  {
+   "discipline": "acceleration",
+   "result": "finished",
+   "laps": [
+    9.24999999999982
+   ],
+   "n_laps": 1,
+   "doo": 0,
+   "oc": 0,
+   "max_speed": 9.296832401832816,
+   "raw_time": 9.24999999999982,
+   "penalty": 0.0,
+   "time": 9.24999999999982,
+   "dq": false,
+   "complete": true,
+   "pass": true,
+   "track": "acceleration_w3.0",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 0.20030977985004925,
+   "rms_lat": 0.12251849257122843,
+   "progress": 1.0043552974272882
+  }
+ ],
+ "aggregate": {
+  "acceleration/light": {
+   "runs": 1,
+   "pass_rate": 1.0,
+   "completion": 1.0,
+   "doo_per_run": 0.0,
+   "oc_per_run": 0.0,
+   "mean_time": 9.24999999999982,
+   "rms_lat": 0.12251849257122843
+  },
+  "skidpad/light": {
+   "runs": 1,
+   "pass_rate": 0.0,
+   "completion": 1.0,
+   "doo_per_run": 18.0,
+   "oc_per_run": 1.0,
+   "mean_time": 13.574999999999497,
+   "rms_lat": 0.7798552312357558
+  },
+  "trackdrive/light": {
+   "runs": 3,
+   "pass_rate": 1.0,
+   "completion": 1.0,
+   "doo_per_run": 0.6666666666666666,
+   "oc_per_run": 0.0,
+   "mean_time": 48.883333333332,
+   "rms_lat": 0.31163640280282995
+  }
+ }
+}

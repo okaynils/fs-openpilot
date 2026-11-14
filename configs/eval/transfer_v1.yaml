@@ -1,0 +1,11 @@
+version: 1
+# Frozen complete final-test configurations. Never used for checkpoint selection.
+track_seeds: [99001, 99002]
+scene_seeds: [4101, 4102]
+configurations:
+  - {name: formula_low_forward, family: formula, regime: interpolation, x: 1.05, y: 0.24, z: 0.78, pitch_deg: 5.0, roll_deg: -2.0, yaw_deg: 4.0}
+  - {name: formula_high_rear, family: formula, regime: interpolation, x: -0.72, y: -0.26, z: 1.58, pitch_deg: -2.0, roll_deg: 2.4, yaw_deg: -5.0}
+  - {name: rover_low_forward, family: rover, regime: interpolation, x: 0.32, y: -0.10, z: 0.24, pitch_deg: 4.5, roll_deg: 2.0, yaw_deg: -4.0}
+  - {name: rover_rear_offset, family: rover, regime: interpolation, x: -0.23, y: 0.11, z: 0.58, pitch_deg: -2.0, roll_deg: -2.0, yaw_deg: 5.5}
+  - {name: formula_outside_high, family: formula, regime: extrapolation, x: 1.3, y: 0.40, z: 1.85, pitch_deg: 9.0, roll_deg: -4.0, yaw_deg: 8.0}
+  - {name: rover_outside_low_rear, family: rover, regime: extrapolation, x: -0.38, y: -0.18, z: 0.19, pitch_deg: 9.0, roll_deg: 4.0, yaw_deg: -8.0}

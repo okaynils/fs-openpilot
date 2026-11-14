@@ -1,0 +1,24 @@
+{
+  "tests": 71,
+  "seconds": 80.97,
+  "warnings": 6,
+  "command": "modal run scripts/modal_app.py::sh --cmd \"python -m pytest tests -q\"",
+  "app_id": "ap-HvLDRExtJPwflRIM4hbhF7",
+  "ruff": "passed",
+  "git_diff_check": "passed",
+  "renderer_isolation_tests": 3,
+  "additional_local_regression": {
+    "test": "tests/test_training_provenance.py",
+    "passed": 1,
+    "seconds": 2.35
+  },
+  "artifact_integrity": "Evaluated checkpoint hashes, anchored lineage, ONNX checker and source gzip CRC passed after explicit-file downloads",
+  "final_evaluation_identity_checks": {
+    "main_cases": 12,
+    "runtime_cases": 4,
+    "aggregate_rows_match_case_files": true,
+    "checkpoint_hashes_match_local_artifacts": true,
+    "source_archives_crc": "passed"
+  },
+  "remaining_modal_containers_after_completion": 0
+}

@@ -100,7 +100,7 @@ def track_preview(path: Path, png: Path | None = None, rerun: bool = False, limi
 def sim_drive(track: str = typer.Option("skidpad", help="track json | skidpad | acceleration"),
               dr: str = "light", seed: int = 0, noise: bool = False, ckpt: Path | None = None,
               save: Path | None = typer.Option(None, help="write .rrd instead of spawning the viewer"),
-              max_seconds: float = 0.0, controller: str = "pp",
+              max_seconds: float = 0.0, controller: str = "pp", physical_camera: bool = False,
               profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
   """Drive one episode (expert, or a checkpoint with --ckpt) with Rerun visualization."""
   from fsop.sim.drive import expert_policy, run_episode
@@ -108,7 +108,7 @@ def sim_drive(track: str = typer.Option("skidpad", help="track json | skidpad | 
   from fsop.viz import rr_log
 
   t = _load_track(track)
-  cfg = SimCfg(dr=dr, max_time=max_seconds)
+  cfg = SimCfg(dr=dr, max_time=max_seconds, physical_camera=physical_camera)
   cfg.noise.enabled = noise
   from fsop.profile import load_profile
 
@@ -127,7 +127,7 @@ def sim_drive(track: str = typer.Option("skidpad", help="track json | skidpad | 
 @sim_app.command("record")
 def sim_record(tracks: Path = typer.Option(..., help="track set directory (fsop track gen)"),
                out: Path = typer.Option(...), workers: int = 4, seconds: float = 40.0, seed: int = 0,
-               skidpad: int = 10, accel: int = 10, standing: float = 0.15,
+               skidpad: int = 10, accel: int = 10, standing: float = 0.15, physical_camera: bool = False,
                per_track: int = typer.Option(1, help="random-start episodes per track"),
                offset_max: float = typer.Option(0.0, help="recovery excursions: max lateral offset [m] the "
                                                        "expert drives during noise bursts (0 = off)"),
@@ -141,6 +141,8 @@ def sim_record(tracks: Path = typer.Option(..., help="track set directory (fsop 
   specs = plan_dataset(str(tracks), n_random=per_track, n_standing=standing, n_skidpad=skidpad, n_accel=accel,
                        max_seconds=seconds, seed=seed, profile=str(profile or ""), offset_max=offset_max,
                        venue_prob=venue_prob)
+  for spec in specs:
+    spec.physical_camera = physical_camera
   idx = record_dataset(specs, str(out), workers=workers)
   typer.echo(f"{len(idx)} episodes, {sum(e['frames'] for e in idx)} frames in {out}")
 
@@ -249,13 +251,15 @@ def eval_open_loop(dataset: Path = typer.Option(...), ckpt: Path | None = None, 
 @eval_app.command("closed-loop")
 def eval_closed_loop(ckpt: Path | None = None, suite: Path = Path("configs/eval/closed_loop_suite.yaml"),
                      out: Path = Path("runs/closed_loop"), controller: str = "pp", rrd: bool = True,
+                     physical_camera: bool = False,
                      baseline: str = typer.Option(
                        "model", help="model | openpilot | geometric_gt | geometric_model | expert"),
                      profile: Path | None = typer.Option(None, help=PROFILE_HELP)):
   """Closed-loop suite in the simulator with the FSG referee."""
   from fsop.eval.closed_loop import run_suite
 
-  r = run_suite(suite, ckpt, out, controller=controller, save_rrd=rrd, baseline=baseline, profile=profile)
+  r = run_suite(suite, ckpt, out, controller=controller, save_rrd=rrd, baseline=baseline, profile=profile,
+                physical_camera=physical_camera)
   typer.echo(json.dumps(r["aggregate"], indent=1, default=float))
 
 

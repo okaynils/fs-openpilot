@@ -1,0 +1,12 @@
+{
+  "seconds": 90.47586345672607,
+  "parity": {
+    "plan_max_abs": 9.5367431640625e-05,
+    "steer_max_abs": 6.744793430712992e-08,
+    "accel_max_abs": 5.067586899443199e-06,
+    "hidden_max_abs": 2.4959444999694824e-07,
+    "ticks": 48,
+    "input_cadence": "5 Hz recorded images repeated four times; runtime queues at 20 Hz"
+  },
+  "export": "runs/transfer_minimal_analysis_v1/conditioned.onnx"
+}

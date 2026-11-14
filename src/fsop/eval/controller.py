@@ -23,12 +23,13 @@ class PlanPurePursuit:
     y = np.interp(t_la, T_IDXS, plan[:, 1])
     # path is relative to the CoG; pure pursuit geometry from the rear axle
     xr = x + self.vp.lr
-    ld2 = max(xr * xr + y * y, 1.0)
+    ld2 = max(xr * xr + y * y, (self.vp.wheelbase / 1.55) ** 2)
     steer = float(np.arctan(2 * self.vp.wheelbase * y / ld2))
-    v_tgt = float(np.interp(self.action_t, T_IDXS, plan[:, 3]))
+    v_tgt = float(np.clip(np.interp(self.action_t, T_IDXS, plan[:, 3]), 0, self.vp.max_speed))
     a_plan = float(np.interp(self.action_t, T_IDXS, plan[:, 6]))
     accel = self.kp_v * (v_tgt - v) + 0.5 * a_plan
-    return steer, float(np.clip(accel, -self.vp.max_brake, self.vp.max_accel))
+    return (float(np.clip(steer, -self.vp.max_steer, self.vp.max_steer)),
+            float(np.clip(accel, -self.vp.max_brake, self.vp.max_accel)))
 
 
 class OpenpilotFollower:
@@ -47,9 +48,12 @@ class OpenpilotFollower:
     curv = 2 * psi / (vego * self.lat_t) - yaw_rates[0] / vego
     steer = float(np.arctan(self.vp.wheelbase * curv))
     speeds, accels = plan[:, 3], plan[:, 6]
-    v_target = np.interp(self.long_t, T_IDXS, speeds)
+    v_target = np.clip(np.interp(self.long_t, T_IDXS, speeds), 0, self.vp.max_speed)
     a_target = 2 * (v_target - speeds[0]) / self.long_t - accels[0]
-    return steer, float(np.clip(a_target, -self.vp.max_brake, self.vp.max_accel))
+    if v > self.vp.max_speed:
+      a_target = min(a_target, -1.5 * (v - self.vp.max_speed))
+    return (float(np.clip(steer, -self.vp.max_steer, self.vp.max_steer)),
+            float(np.clip(a_target, -self.vp.max_brake, self.vp.max_accel)))
 
 
 def make_controller(name: str, vp: VehicleParams):

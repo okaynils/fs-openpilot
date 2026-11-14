@@ -1,0 +1,66 @@
+[
+  {
+    "checkpoint": "runs/cuda_racing_v6/ckpt/best.pt",
+    "regime": "interpolation",
+    "episodes": 8,
+    "ade_4s": 5.78931525349617,
+    "predicted_contact_frame_rate": 0.635551948051948,
+    "expert_contact_frame_rate": 0.0
+  },
+  {
+    "checkpoint": "runs/cuda_racing_v6/ckpt/best.pt",
+    "regime": "extrapolation",
+    "episodes": 4,
+    "ade_4s": 8.90701973438263,
+    "predicted_contact_frame_rate": 0.7219967532467533,
+    "expert_contact_frame_rate": 0.0
+  },
+  {
+    "checkpoint": "runs/transfer_image_v1/ckpt/best.pt",
+    "regime": "interpolation",
+    "episodes": 8,
+    "ade_4s": 2.3660335019230843,
+    "predicted_contact_frame_rate": 0.5880681818181818,
+    "expert_contact_frame_rate": 0.0
+  },
+  {
+    "checkpoint": "runs/transfer_image_v1/ckpt/best.pt",
+    "regime": "extrapolation",
+    "episodes": 4,
+    "ade_4s": 4.126985013484955,
+    "predicted_contact_frame_rate": 0.7150974025974026,
+    "expert_contact_frame_rate": 0.0
+  },
+  {
+    "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+    "regime": "interpolation",
+    "episodes": 8,
+    "ade_4s": 3.1131265088915825,
+    "predicted_contact_frame_rate": 0.5083198051948052,
+    "expert_contact_frame_rate": 0.0
+  },
+  {
+    "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+    "regime": "extrapolation",
+    "episodes": 4,
+    "ade_4s": 3.7594709619879723,
+    "predicted_contact_frame_rate": 0.5714285714285714,
+    "expert_contact_frame_rate": 0.0
+  },
+  {
+    "checkpoint": "runs/transfer_conditioned_v1/ckpt/best.pt",
+    "regime": "interpolation",
+    "episodes": 8,
+    "ade_4s": 2.7072213515639305,
+    "predicted_contact_frame_rate": 0.5383522727272727,
+    "expert_contact_frame_rate": 0.0
+  },
+  {
+    "checkpoint": "runs/transfer_conditioned_v1/ckpt/best.pt",
+    "regime": "extrapolation",
+    "episodes": 4,
+    "ade_4s": 4.744101881980896,
+    "predicted_contact_frame_rate": 0.692775974025974,
+    "expert_contact_frame_rate": 0.0
+  }
+]

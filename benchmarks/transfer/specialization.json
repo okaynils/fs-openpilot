@@ -1,0 +1,7 @@
+{
+  "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+  "source_checkpoint": "runs/transfer_anchored_v1/ckpt/best.pt",
+  "specialization_max_abs": 1.71661376953125e-05,
+  "validation_episode": "data/sim/transfer_train_v1/val_1001_drive",
+  "frames": 100
+}

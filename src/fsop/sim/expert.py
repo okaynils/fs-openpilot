@@ -39,6 +39,14 @@ class ExpertParams:
   stop_after_line: float = 12.0  # stop this far after the final timing line (within the stop zone)
 
 
+def configured_expert(vehicle: VehicleParams) -> ExpertParams:
+  """Deterministic conservative expert for a supplied transfer configuration."""
+  v = vehicle
+  return ExpertParams(v_cap=v.max_speed, a_acc=.8 * v.max_accel, a_brk=.8 * v.max_brake,
+                      a_lat_max=min(8., .8 * v.mu * 9.81), stop_decel=min(4., .8 * v.max_brake),
+                      lookahead_min=1.8 * v.wheelbase / 1.55, lookahead_max=9.0 * v.wheelbase / 1.55)
+
+
 def sample_expert(rng: np.random.Generator, discipline: str) -> ExpertParams:
   p = ExpertParams(
     a_lat_max=float(rng.uniform(4.0, 11.0)),

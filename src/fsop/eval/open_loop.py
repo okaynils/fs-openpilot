@@ -20,20 +20,25 @@ from fsop.eval.bev_metrics import BevScorer, decode_bev, gt_from_targets
 from fsop.geometry.op_frames import op_to_ego_plan
 from fsop.model.temporal import N_FEAT
 from fsop.sim.expert import T_IDXS
-from fsop.train.device import pick_device
+from fsop.train.device import pick_device, strict_inference_precision
 
 HORIZONS = (0.5, 1.0, 2.0, 4.0)
 
 
 @torch.no_grad()
-def run_episode_model(model, ep: Episode, device, batch: int = 32, bev: bool = True) -> dict:
+def run_episode_model(model, ep: Episode, device, batch: int = 32, bev: bool = True, geometry_override=None,
+                      encoded_hidden=None, return_hidden=False) -> dict:
+  strict_inference_precision()
   base = model.base if hasattr(model, "base") else model
-  road, wide = ep.frames["road"][:], ep.frames["wide"][:]
   T = ep.T
-  hidden = torch.zeros(T, 512, device=device)
+  if encoded_hidden is None:
+    road, wide = ep.frames["road"][:T], ep.frames["wide"][:T]
+  if encoded_hidden is not None and (bev or tuple(encoded_hidden.shape) != (T, 512)):
+    raise ValueError("Reused vision features require bev=False and matching episode length")
+  hidden = torch.zeros(T, 512, device=device) if encoded_hidden is None else encoded_hidden
   heats, offs, img_cones = [], [], []
-  has_img = getattr(model, "img", None) is not None
-  for a in range(0, T, batch):
+  has_img = bev and getattr(model, "img", None) is not None
+  for a in range(0, T if encoded_hidden is None else 0, batch):
     ks = np.arange(a, min(a + batch, T))
     k0 = np.maximum(ks - 1, 0)
     img = torch.from_numpy(np.concatenate([road[k0], road[ks]], 1)).to(device).float()
@@ -48,7 +53,7 @@ def run_episode_model(model, ep: Episode, device, batch: int = 32, bev: bool = T
       from fsop.eval.img_to_bev import bev_from_image_head
 
       io_ = model.img(v.s4, v.s8, v.s16)
-      img_cones.extend(bev_from_image_head(io_, ep.T_ego_cam, b=j) for j in range(len(ks)))
+      img_cones.extend(bev_from_image_head(io_, ep.calibrated_pose, b=j) for j in range(len(ks)))
   mus, stds = [], []
   tc = torch.tensor([[1.0, 0.0]], device=device)
   desire = torch.from_numpy(ep.desire).to(device)
@@ -61,11 +66,24 @@ def run_episode_model(model, ep: Episode, device, batch: int = 32, bev: bool = T
       ok = idx >= 0
       hist[j, torch.from_numpy(ok)] = hidden[idx[ok]]
       des[j, torch.from_numpy(ok)] = desire[idx[ok]]
-    plan, _ = base.policy_raw(hist, des, tc.expand(len(ks), -1))
+    if hasattr(model, "plan"):
+      from fsop.geometry.camera import CameraMount
+      from fsop.model.conditioning import geometry_context
+      context = geometry_context(CameraMount(**ep.meta.get("calibrated_mount", ep.meta["mount"])), ep.vehicle,
+                                 getattr(model, "context_version", 1))
+      if geometry_override is not None:
+        context = np.asarray(geometry_override, np.float32)
+      geometry = torch.from_numpy(np.repeat(context[None], len(ks), axis=0)).to(device)
+      pred = model.plan(hist[:, :-1], hist[:, -1], des, tc.expand(len(ks), -1), geometry)
+      plan = torch.cat([pred["plan_mu"].flatten(1), pred["plan_logstd"].flatten(1)], 1)
+    else:
+      plan, _ = base.policy_raw(hist, des, tc.expand(len(ks), -1))
     p = plan.reshape(len(ks), 2, 33, 15)
     mus.append(p[:, 0].cpu().numpy())
     stds.append(np.exp(p[:, 1].clamp(-7, 7).cpu().numpy()))
   out = {"mu": op_to_ego_plan(np.concatenate(mus)), "std": np.concatenate(stds) * 1.0}
+  if return_hidden:
+    out["encoded_hidden"] = hidden
   if heats:
     out["heat"], out["off"] = torch.cat(heats), torch.cat(offs)
   if img_cones:

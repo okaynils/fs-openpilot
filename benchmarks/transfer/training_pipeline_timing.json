@@ -1,0 +1,8 @@
+{
+  "wall_seconds": 662.4618921279907,
+  "dataset_frames": 6664,
+  "runs": [
+    "transfer_image_v1",
+    "transfer_conditioned_v1"
+  ]
+}

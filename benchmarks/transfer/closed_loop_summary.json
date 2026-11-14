@@ -1,0 +1,112 @@
+[
+  {
+    "regime": "interpolation",
+    "model": "Baseline",
+    "cases": 8,
+    "passes": 7,
+    "contacts": 96,
+    "mean_progress": 0.9215518379619468,
+    "minimum_clearance_m": -0.8495611969387628,
+    "mean_rms_lateral_m": 7.413819116383828,
+    "mean_rms_steer_rate_rad_s": 0.09102376009940237
+  },
+  {
+    "regime": "interpolation",
+    "model": "Image-only",
+    "cases": 8,
+    "passes": 2,
+    "contacts": 67,
+    "mean_progress": 0.8544581871897841,
+    "minimum_clearance_m": -0.8491064575075665,
+    "mean_rms_lateral_m": 18.368992860741983,
+    "mean_rms_steer_rate_rad_s": 0.06649948309339714
+  },
+  {
+    "regime": "interpolation",
+    "model": "Context v1",
+    "cases": 8,
+    "passes": 1,
+    "contacts": 78,
+    "mean_progress": 0.6655742107894316,
+    "minimum_clearance_m": -0.8490695499903977,
+    "mean_rms_lateral_m": 15.188022467648196,
+    "mean_rms_steer_rate_rad_s": 0.09456725938417389
+  },
+  {
+    "regime": "interpolation",
+    "model": "Selected v2",
+    "cases": 8,
+    "passes": 0,
+    "contacts": 55,
+    "mean_progress": 0.624596997189411,
+    "minimum_clearance_m": -0.8491976550822853,
+    "mean_rms_lateral_m": 13.767434412330775,
+    "mean_rms_steer_rate_rad_s": 0.10838047005836543
+  },
+  {
+    "regime": "interpolation",
+    "model": "Expert",
+    "cases": 8,
+    "passes": 8,
+    "contacts": 0,
+    "mean_progress": 1.0,
+    "minimum_clearance_m": 0.15003253357482457,
+    "mean_rms_lateral_m": 0.6599339014087101,
+    "mean_rms_steer_rate_rad_s": 0.17114919950542531
+  },
+  {
+    "regime": "extrapolation",
+    "model": "Baseline",
+    "cases": 4,
+    "passes": 0,
+    "contacts": 64,
+    "mean_progress": 0.75,
+    "minimum_clearance_m": -0.8492600941265197,
+    "mean_rms_lateral_m": 3.3722469706968154,
+    "mean_rms_steer_rate_rad_s": 0.08961783007905114
+  },
+  {
+    "regime": "extrapolation",
+    "model": "Image-only",
+    "cases": 4,
+    "passes": 0,
+    "contacts": 4,
+    "mean_progress": 0.42391981815844093,
+    "minimum_clearance_m": -0.6412342889322683,
+    "mean_rms_lateral_m": 40.82993348378734,
+    "mean_rms_steer_rate_rad_s": 0.06078564341208986
+  },
+  {
+    "regime": "extrapolation",
+    "model": "Context v1",
+    "cases": 4,
+    "passes": 0,
+    "contacts": 23,
+    "mean_progress": 0.25994486442560405,
+    "minimum_clearance_m": -0.8493271624919453,
+    "mean_rms_lateral_m": 87.48077492273755,
+    "mean_rms_steer_rate_rad_s": 0.08095489476439219
+  },
+  {
+    "regime": "extrapolation",
+    "model": "Selected v2",
+    "cases": 4,
+    "passes": 0,
+    "contacts": 24,
+    "mean_progress": 0.2636570459118674,
+    "minimum_clearance_m": -0.8396374116718047,
+    "mean_rms_lateral_m": 18.482111718604386,
+    "mean_rms_steer_rate_rad_s": 0.11031176035625342
+  },
+  {
+    "regime": "extrapolation",
+    "model": "Expert",
+    "cases": 4,
+    "passes": 4,
+    "contacts": 0,
+    "mean_progress": 1.0,
+    "minimum_clearance_m": 0.15003253357482457,
+    "mean_rms_lateral_m": 0.7882878961911152,
+    "mean_rms_steer_rate_rad_s": 0.16728431156975399
+  }
+]

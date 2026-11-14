@@ -1,0 +1,1101 @@
+{
+  "frames": 6664,
+  "unresolved_label_frames": 69,
+  "unresolved_fraction": 0.010354141656662664,
+  "episodes": [
+    {
+      "episode": "train_0_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.5846477280000002,
+        "environment_seconds": 14.497731668,
+        "record_seconds": 47.48933939999999
+      },
+      "contacts": 0,
+      "peak_speed": 14.094824359732323
+    },
+    {
+      "episode": "train_0_recovery",
+      "split": "train",
+      "frames": 99,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.5514531639999998,
+        "environment_seconds": 14.736958503,
+        "record_seconds": 43.74297929
+      },
+      "contacts": 0,
+      "peak_speed": 14.141952336471313
+    },
+    {
+      "episode": "train_0_start",
+      "split": "train",
+      "frames": 55,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.3769975409999997,
+        "environment_seconds": 1.5253314370000002,
+        "record_seconds": 20.370038509
+      },
+      "contacts": 0,
+      "peak_speed": 14.149555916902083
+    },
+    {
+      "episode": "train_0_stop",
+      "split": "train",
+      "frames": 12,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.3378351369999999,
+        "environment_seconds": 1.4610244040000002,
+        "record_seconds": 4.138758522
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "train_1_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.5641470639999997,
+        "environment_seconds": 9.337375549,
+        "record_seconds": 27.231911856
+      },
+      "contacts": 0,
+      "peak_speed": 1.2130937977438485
+    },
+    {
+      "episode": "train_1_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.430298627,
+        "environment_seconds": 5.274336064,
+        "record_seconds": 19.018935414
+      },
+      "contacts": 0,
+      "peak_speed": 1.2130436114095522
+    },
+    {
+      "episode": "train_1_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.386689123,
+        "environment_seconds": 13.69215827,
+        "record_seconds": 1747.820745899
+      },
+      "contacts": 0,
+      "peak_speed": 1.2372171083945247
+    },
+    {
+      "episode": "train_1_stop",
+      "split": "train",
+      "frames": 25,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.2960651790000002,
+        "environment_seconds": 0.9363811779999995,
+        "record_seconds": 5.738225645000001
+      },
+      "contacts": 0,
+      "peak_speed": 1.2282953515375694
+    },
+    {
+      "episode": "train_2_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.08525989599999662,
+        "environment_seconds": 10.630362562000002,
+        "record_seconds": 39.709182404
+      },
+      "contacts": 0,
+      "peak_speed": 9.813598289681934
+    },
+    {
+      "episode": "train_2_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.20869607200000218,
+        "environment_seconds": 8.367909944999994,
+        "record_seconds": 34.171854315000004
+      },
+      "contacts": 0,
+      "peak_speed": 9.882044420216438
+    },
+    {
+      "episode": "train_2_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01869072899999935,
+        "environment_seconds": 0.6583793089999972,
+        "record_seconds": 18.934292293000002
+      },
+      "contacts": 0,
+      "peak_speed": 9.858138578682265
+    },
+    {
+      "episode": "train_2_stop",
+      "split": "train",
+      "frames": 12,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.025340200999998785,
+        "environment_seconds": 0.714007564000001,
+        "record_seconds": 4.379233795999999
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "train_3_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.05494259200000329,
+        "environment_seconds": 5.109064085,
+        "record_seconds": 28.85289477
+      },
+      "contacts": 0,
+      "peak_speed": 2.6279439051328137
+    },
+    {
+      "episode": "train_3_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.2621359830000003,
+        "environment_seconds": 4.041526659999999,
+        "record_seconds": 22.287119335
+      },
+      "contacts": 0,
+      "peak_speed": 2.624888602359312
+    },
+    {
+      "episode": "train_3_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.022641671999963364,
+        "environment_seconds": 0.5589997029999267,
+        "record_seconds": 18.090109230000053
+      },
+      "contacts": 0,
+      "peak_speed": 2.641678520846483
+    },
+    {
+      "episode": "train_3_stop",
+      "split": "train",
+      "frames": 19,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.018098250000001315,
+        "environment_seconds": 0.5191005390000001,
+        "record_seconds": 3.8056486859999996
+      },
+      "contacts": 0,
+      "peak_speed": 2.333084406631271
+    },
+    {
+      "episode": "train_4_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.07812230300000067,
+        "environment_seconds": 9.292937512000009,
+        "record_seconds": 39.71589488299999
+      },
+      "contacts": 0,
+      "peak_speed": 12.253376068886638
+    },
+    {
+      "episode": "train_4_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 9,
+      "generation_timing": {
+        "setup_seconds": 0.27531195699999955,
+        "environment_seconds": 11.759880346000003,
+        "record_seconds": 35.151519179000005
+      },
+      "contacts": 3,
+      "peak_speed": 12.419198709617591
+    },
+    {
+      "episode": "train_4_start",
+      "split": "train",
+      "frames": 59,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.016303188000001967,
+        "environment_seconds": 0.49384278899999856,
+        "record_seconds": 20.743932107000006
+      },
+      "contacts": 0,
+      "peak_speed": 12.281366605768302
+    },
+    {
+      "episode": "train_4_stop",
+      "split": "train",
+      "frames": 12,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.022289935999999955,
+        "environment_seconds": 0.5913083950000004,
+        "record_seconds": 3.9925119969999994
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "train_5_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.059906757999996785,
+        "environment_seconds": 10.810586741000009,
+        "record_seconds": 15.220912380000001
+      },
+      "contacts": 0,
+      "peak_speed": 2.1388928813459156
+    },
+    {
+      "episode": "train_5_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 1,
+      "generation_timing": {
+        "setup_seconds": 0.14534613500000404,
+        "environment_seconds": 10.495339291,
+        "record_seconds": 12.207159887000003
+      },
+      "contacts": 0,
+      "peak_speed": 2.139687459007157
+    },
+    {
+      "episode": "train_5_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.022418840999989698,
+        "environment_seconds": 0.3103547539999454,
+        "record_seconds": 8.955592688000024
+      },
+      "contacts": 0,
+      "peak_speed": 2.1446785445634644
+    },
+    {
+      "episode": "train_5_stop",
+      "split": "train",
+      "frames": 18,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.017406721000000402,
+        "environment_seconds": 0.3818242189999985,
+        "record_seconds": 2.2325249550000006
+      },
+      "contacts": 0,
+      "peak_speed": 2.1056035034668343
+    },
+    {
+      "episode": "train_6_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.08944243999999912,
+        "environment_seconds": 30.935077115000013,
+        "record_seconds": 25.153697422999983
+      },
+      "contacts": 0,
+      "peak_speed": 13.037492102977412
+    },
+    {
+      "episode": "train_6_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 2,
+      "generation_timing": {
+        "setup_seconds": 0.2566396250000196,
+        "environment_seconds": 24.734382573000005,
+        "record_seconds": 20.686051243999998
+      },
+      "contacts": 1,
+      "peak_speed": 13.444973401930437
+    },
+    {
+      "episode": "train_6_start",
+      "split": "train",
+      "frames": 57,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.016829098999991743,
+        "environment_seconds": 0.42958340100000214,
+        "record_seconds": 12.333809837000004
+      },
+      "contacts": 0,
+      "peak_speed": 13.049144805945309
+    },
+    {
+      "episode": "train_6_stop",
+      "split": "train",
+      "frames": 12,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.017433230000001743,
+        "environment_seconds": 0.4733508240000006,
+        "record_seconds": 2.6855558219999978
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "train_7_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.7400651699999994,
+        "environment_seconds": 21.160925005000003,
+        "record_seconds": 11.707642678
+      },
+      "contacts": 0,
+      "peak_speed": 2.9334797431124233
+    },
+    {
+      "episode": "train_7_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.20274939600000152,
+        "environment_seconds": 17.04372359,
+        "record_seconds": 11.204922093000008
+      },
+      "contacts": 0,
+      "peak_speed": 2.918669324233842
+    },
+    {
+      "episode": "train_7_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01046612999999752,
+        "environment_seconds": 0.41908412000000084,
+        "record_seconds": 7.034419130000003
+      },
+      "contacts": 0,
+      "peak_speed": 2.9329776222889086
+    },
+    {
+      "episode": "train_7_stop",
+      "split": "train",
+      "frames": 16,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.017665202999999963,
+        "environment_seconds": 0.2149612559999987,
+        "record_seconds": 1.7371815579999996
+      },
+      "contacts": 0,
+      "peak_speed": 2.5976477127728854
+    },
+    {
+      "episode": "train_8_drive",
+      "split": "train",
+      "frames": 83,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.10818116400000122,
+        "environment_seconds": 15.916975374000003,
+        "record_seconds": 32.685016700000034
+      },
+      "contacts": 0,
+      "peak_speed": 16.328301856503586
+    },
+    {
+      "episode": "train_8_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 6,
+      "generation_timing": {
+        "setup_seconds": 0.298448135000001,
+        "environment_seconds": 9.506329464000004,
+        "record_seconds": 34.07880196799999
+      },
+      "contacts": 3,
+      "peak_speed": 16.330304168462526
+    },
+    {
+      "episode": "train_8_start",
+      "split": "train",
+      "frames": 52,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.04812998799999946,
+        "environment_seconds": 0.4926785390000106,
+        "record_seconds": 18.351072630999994
+      },
+      "contacts": 0,
+      "peak_speed": 16.33561844098687
+    },
+    {
+      "episode": "train_8_stop",
+      "split": "train",
+      "frames": 13,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.05082965500000114,
+        "environment_seconds": 0.5251564480000006,
+        "record_seconds": 4.231561415999998
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "train_9_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.15454344599999814,
+        "environment_seconds": 2.7958350910000007,
+        "record_seconds": 31.050846204000003
+      },
+      "contacts": 0,
+      "peak_speed": 1.4923748316796264
+    },
+    {
+      "episode": "train_9_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.17614332699999125,
+        "environment_seconds": 2.380579787000002,
+        "record_seconds": 30.512383977
+      },
+      "contacts": 0,
+      "peak_speed": 1.4983522160802052
+    },
+    {
+      "episode": "train_9_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.009590402000000608,
+        "environment_seconds": 0.430839081000002,
+        "record_seconds": 18.652004954999995
+      },
+      "contacts": 0,
+      "peak_speed": 1.5069511748152087
+    },
+    {
+      "episode": "train_9_stop",
+      "split": "train",
+      "frames": 22,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.04458728900000253,
+        "environment_seconds": 0.44494360999999927,
+        "record_seconds": 7.444159031999998
+      },
+      "contacts": 0,
+      "peak_speed": 1.487590358415409
+    },
+    {
+      "episode": "train_10_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.08257581299994854,
+        "environment_seconds": 21.64865254800003,
+        "record_seconds": 15.855856771999981
+      },
+      "contacts": 0,
+      "peak_speed": 16.65614832196072
+    },
+    {
+      "episode": "train_10_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 2,
+      "generation_timing": {
+        "setup_seconds": 0.22935838099999728,
+        "environment_seconds": 13.807241200999982,
+        "record_seconds": 13.632160313000043
+      },
+      "contacts": 0,
+      "peak_speed": 16.896303011122374
+    },
+    {
+      "episode": "train_10_start",
+      "split": "train",
+      "frames": 51,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.017158168999998225,
+        "environment_seconds": 0.28165819200000897,
+        "record_seconds": 5.811597652999993
+      },
+      "contacts": 0,
+      "peak_speed": 16.649110659737012
+    },
+    {
+      "episode": "train_10_stop",
+      "split": "train",
+      "frames": 13,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.016747511999998466,
+        "environment_seconds": 0.32542266800000164,
+        "record_seconds": 1.8596499770000001
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "train_11_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.13546082400000614,
+        "environment_seconds": 3.581907888999993,
+        "record_seconds": 11.560350001000003
+      },
+      "contacts": 0,
+      "peak_speed": 1.325456274333635
+    },
+    {
+      "episode": "train_11_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.22318469699999355,
+        "environment_seconds": 3.8444991450000146,
+        "record_seconds": 10.99013456199998
+      },
+      "contacts": 0,
+      "peak_speed": 1.3361166775640274
+    },
+    {
+      "episode": "train_11_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.00997843999999759,
+        "environment_seconds": 0.24237956300000008,
+        "record_seconds": 6.97048113000001
+      },
+      "contacts": 0,
+      "peak_speed": 1.3417976442700463
+    },
+    {
+      "episode": "train_11_stop",
+      "split": "train",
+      "frames": 22,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01771299099999979,
+        "environment_seconds": 0.3199509090000028,
+        "record_seconds": 2.447995290999998
+      },
+      "contacts": 0,
+      "peak_speed": 1.3155133764722395
+    },
+    {
+      "episode": "train_12_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.07863633900001332,
+        "environment_seconds": 15.026051763999988,
+        "record_seconds": 15.577017077999983
+      },
+      "contacts": 0,
+      "peak_speed": 11.32921043432447
+    },
+    {
+      "episode": "train_12_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.20186068399999613,
+        "environment_seconds": 10.320942902000013,
+        "record_seconds": 12.570269919999987
+      },
+      "contacts": 0,
+      "peak_speed": 11.548498500760807
+    },
+    {
+      "episode": "train_12_start",
+      "split": "train",
+      "frames": 59,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01735457899999915,
+        "environment_seconds": 0.33846835700001066,
+        "record_seconds": 6.82808236599999
+      },
+      "contacts": 0,
+      "peak_speed": 11.352992465803602
+    },
+    {
+      "episode": "train_12_stop",
+      "split": "train",
+      "frames": 12,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01694590199999979,
+        "environment_seconds": 0.36973139999999916,
+        "record_seconds": 1.6533069890000007
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "train_13_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.13135989199999187,
+        "environment_seconds": 10.924141399000007,
+        "record_seconds": 11.702889629999987
+      },
+      "contacts": 0,
+      "peak_speed": 1.3410728308137678
+    },
+    {
+      "episode": "train_13_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.282969922999996,
+        "environment_seconds": 9.408023526000022,
+        "record_seconds": 13.194082940999976
+      },
+      "contacts": 0,
+      "peak_speed": 1.345850549279726
+    },
+    {
+      "episode": "train_13_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.009641173000005665,
+        "environment_seconds": 0.36851500000000215,
+        "record_seconds": 6.986371798999983
+      },
+      "contacts": 0,
+      "peak_speed": 1.3945931624735428
+    },
+    {
+      "episode": "train_13_stop",
+      "split": "train",
+      "frames": 22,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.018211265000001475,
+        "environment_seconds": 0.38554401000000027,
+        "record_seconds": 3.0501020559999965
+      },
+      "contacts": 0,
+      "peak_speed": 1.35099828384373
+    },
+    {
+      "episode": "train_14_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.07893620400000145,
+        "environment_seconds": 13.414281469999992,
+        "record_seconds": 41.00109879799999
+      },
+      "contacts": 0,
+      "peak_speed": 7.891722372236108
+    },
+    {
+      "episode": "train_14_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 9,
+      "generation_timing": {
+        "setup_seconds": 0.250424847999966,
+        "environment_seconds": 3.9039874210000107,
+        "record_seconds": 35.58454825199999
+      },
+      "contacts": 2,
+      "peak_speed": 8.025458085370577
+    },
+    {
+      "episode": "train_14_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.0230417589999945,
+        "environment_seconds": 0.7221368659999996,
+        "record_seconds": 20.421835385999998
+      },
+      "contacts": 0,
+      "peak_speed": 7.877271656625719
+    },
+    {
+      "episode": "train_14_stop",
+      "split": "train",
+      "frames": 12,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.020942314999999212,
+        "environment_seconds": 0.6078118840000002,
+        "record_seconds": 4.611972484999999
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "train_15_drive",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.1359339939999984,
+        "environment_seconds": 14.471282918000014,
+        "record_seconds": 32.135295318999994
+      },
+      "contacts": 0,
+      "peak_speed": 2.9986506542652926
+    },
+    {
+      "episode": "train_15_recovery",
+      "split": "train",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.1799732160000076,
+        "environment_seconds": 15.432122824000004,
+        "record_seconds": 65.48258954699998
+      },
+      "contacts": 0,
+      "peak_speed": 2.9752438173663562
+    },
+    {
+      "episode": "train_15_start",
+      "split": "train",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.00953278099999011,
+        "environment_seconds": 0.5319593279999992,
+        "record_seconds": 19.423182424000004
+      },
+      "contacts": 0,
+      "peak_speed": 2.9986033688014953
+    },
+    {
+      "episode": "train_15_stop",
+      "split": "train",
+      "frames": 16,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01812541999999695,
+        "environment_seconds": 0.4314351789999975,
+        "record_seconds": 5.146432485000005
+      },
+      "contacts": 0,
+      "peak_speed": 2.763398929227155
+    },
+    {
+      "episode": "val_1000_drive",
+      "split": "val",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.07132347599997502,
+        "environment_seconds": 23.356372512999997,
+        "record_seconds": 16.206232709999995
+      },
+      "contacts": 0,
+      "peak_speed": 11.85757000083233
+    },
+    {
+      "episode": "val_1000_recovery",
+      "split": "val",
+      "frames": 100,
+      "unresolved_label_frames": 10,
+      "generation_timing": {
+        "setup_seconds": 0.22028263100003187,
+        "environment_seconds": 10.956779859999983,
+        "record_seconds": 13.781270940000013
+      },
+      "contacts": 5,
+      "peak_speed": 12.1384128565104
+    },
+    {
+      "episode": "val_1000_start",
+      "split": "val",
+      "frames": 58,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01681216799997287,
+        "environment_seconds": 0.35594639700002517,
+        "record_seconds": 7.963585662999975
+      },
+      "contacts": 0,
+      "peak_speed": 11.859306395867945
+    },
+    {
+      "episode": "val_1000_stop",
+      "split": "val",
+      "frames": 13,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.017213865999998745,
+        "environment_seconds": 0.3065108099999989,
+        "record_seconds": 1.718274884000003
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "val_1001_drive",
+      "split": "val",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.1872315710000123,
+        "environment_seconds": 7.189196770999985,
+        "record_seconds": 19.67286276600001
+      },
+      "contacts": 0,
+      "peak_speed": 3.071044849111053
+    },
+    {
+      "episode": "val_1001_recovery",
+      "split": "val",
+      "frames": 100,
+      "unresolved_label_frames": 3,
+      "generation_timing": {
+        "setup_seconds": 0.29119786000001113,
+        "environment_seconds": 9.150768684000013,
+        "record_seconds": 54.798449957
+      },
+      "contacts": 1,
+      "peak_speed": 3.1513260004628716
+    },
+    {
+      "episode": "val_1001_start",
+      "split": "val",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.009983949999991637,
+        "environment_seconds": 0.381552752999994,
+        "record_seconds": 11.918441449000028
+      },
+      "contacts": 0,
+      "peak_speed": 3.104240885364578
+    },
+    {
+      "episode": "val_1001_stop",
+      "split": "val",
+      "frames": 16,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.017658404999998822,
+        "environment_seconds": 0.33193470700000205,
+        "record_seconds": 3.164047251999996
+      },
+      "contacts": 0,
+      "peak_speed": 2.812522316425464
+    },
+    {
+      "episode": "val_1002_drive",
+      "split": "val",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.08802654400000165,
+        "environment_seconds": 20.71755830699999,
+        "record_seconds": 23.870685933999994
+      },
+      "contacts": 0,
+      "peak_speed": 14.732529861526187
+    },
+    {
+      "episode": "val_1002_recovery",
+      "split": "val",
+      "frames": 79,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.2543400249999763,
+        "environment_seconds": 10.924083412000016,
+        "record_seconds": 15.847623474999978
+      },
+      "contacts": 0,
+      "peak_speed": 14.808329246366341
+    },
+    {
+      "episode": "val_1002_start",
+      "split": "val",
+      "frames": 54,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01842922800000224,
+        "environment_seconds": 0.49222451500000375,
+        "record_seconds": 10.528682483000011
+      },
+      "contacts": 0,
+      "peak_speed": 14.73967459207609
+    },
+    {
+      "episode": "val_1002_stop",
+      "split": "val",
+      "frames": 13,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01761176599999459,
+        "environment_seconds": 0.46104091300000505,
+        "record_seconds": 2.768747624999996
+      },
+      "contacts": 0,
+      "peak_speed": 6.0
+    },
+    {
+      "episode": "val_1003_drive",
+      "split": "val",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.1602572529999975,
+        "environment_seconds": 4.993885987999988,
+        "record_seconds": 19.373435311000037
+      },
+      "contacts": 0,
+      "peak_speed": 1.0767508510005714
+    },
+    {
+      "episode": "val_1003_recovery",
+      "split": "val",
+      "frames": 100,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.2950427720000448,
+        "environment_seconds": 4.514275793999957,
+        "record_seconds": 19.896545600000024
+      },
+      "contacts": 0,
+      "peak_speed": 1.0635301983382002
+    },
+    {
+      "episode": "val_1003_start",
+      "split": "val",
+      "frames": 61,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.009911018999957832,
+        "environment_seconds": 0.43435978200000136,
+        "record_seconds": 11.81108092300002
+      },
+      "contacts": 0,
+      "peak_speed": 1.0917541045958536
+    },
+    {
+      "episode": "val_1003_stop",
+      "split": "val",
+      "frames": 26,
+      "unresolved_label_frames": 0,
+      "generation_timing": {
+        "setup_seconds": 0.01823160600000051,
+        "environment_seconds": 0.427527953000002,
+        "record_seconds": 5.755925157
+      },
+      "contacts": 0,
+      "peak_speed": 1.059675877718147
+    },
+    {
+      "episode": "replay_ep00003_trackdrive_020001",
+      "split": "train",
+      "frames": 200,
+      "unresolved_label_frames": 0,
+      "generation_timing": null,
+      "contacts": 0,
+      "peak_speed": 16.92243732126928
+    },
+    {
+      "episode": "replay_ep00004_trackdrive_020001",
+      "split": "train",
+      "frames": 200,
+      "unresolved_label_frames": 8,
+      "generation_timing": null,
+      "contacts": 5,
+      "peak_speed": 13.718222263444476
+    },
+    {
+      "episode": "replay_ep00005_trackdrive_020002",
+      "split": "train",
+      "frames": 200,
+      "unresolved_label_frames": 6,
+      "generation_timing": null,
+      "contacts": 3,
+      "peak_speed": 9.415103976120566
+    },
+    {
+      "episode": "replay_ep00006_trackdrive_020002",
+      "split": "train",
+      "frames": 200,
+      "unresolved_label_frames": 8,
+      "generation_timing": null,
+      "contacts": 2,
+      "peak_speed": 11.507365825697365
+    },
+    {
+      "episode": "replay_ep00009_trackdrive_020004",
+      "split": "val",
+      "frames": 200,
+      "unresolved_label_frames": 5,
+      "generation_timing": null,
+      "contacts": 2,
+      "peak_speed": 12.240915395782142
+    },
+    {
+      "episode": "replay_ep00010_trackdrive_020004",
+      "split": "val",
+      "frames": 200,
+      "unresolved_label_frames": 0,
+      "generation_timing": null,
+      "contacts": 0,
+      "peak_speed": 9.922781832447155
+    }
+  ]
+}

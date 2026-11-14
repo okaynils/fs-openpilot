@@ -1,0 +1,1822 @@
+{
+  "83191": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83191,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_83191",
+      "team": "",
+      "vehicle": {
+        "max_speed": 14.311171636801589,
+        "body_height": 0.35598910355060204,
+        "mass": 242.01028194056357,
+        "iz": 119.73909953179515,
+        "lf": 0.8136893795442334,
+        "lr": 0.7628337933227187,
+        "track": 1.22053406931635,
+        "length": 2.9496240008478463,
+        "width": 1.4239564142024081,
+        "front_overhang": 0.8136893795442334,
+        "rear_overhang": 0.5594114484366605,
+        "cf": 33670.995748252324,
+        "cr": 37879.870216783864,
+        "mu": 1.4,
+        "max_accel": 5.074413926072454,
+        "max_brake": 7.280901868435663,
+        "tau_steer": 0.11983527941459807,
+        "tau_accel": 0.17035814390336643,
+        "drag": 0.6207097559841369,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 24.570758152677776,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": -0.7749397598763964,
+        "y": -0.19999299678707205,
+        "z": 1.0896756797332448,
+        "roll_deg": -0.06321560156087958,
+        "pitch_deg": 2.8326740794044887,
+        "yaw_deg": 0.8301771116461869
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 1280,
+          "height": 720,
+          "fx": 938.0323404752238,
+          "fy": 938.0323404752238,
+          "cx": 640.0,
+          "cy": 360.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.4515693562102607,
+        "phase": [
+          0.6568026564846023,
+          0.17893989952988054,
+          0.20165617237689412,
+          2.512738176099523,
+          3.6344728261814954,
+          3.770108790336672
+        ]
+      },
+      "calibration_error": {
+        "x": 0.0021951730640706667,
+        "y": 0.0021879732927295114,
+        "z": -0.0008060902975586659,
+        "roll_deg": -0.06999844093950325,
+        "pitch_deg": -0.2262705810906519,
+        "yaw_deg": 0.2424032575953357
+      }
+    }
+  },
+  "83192": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83192,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_83192",
+      "team": "",
+      "vehicle": {
+        "max_speed": 1.214595869091726,
+        "body_height": 0.12490075467224303,
+        "mass": 14.201724255809157,
+        "iz": 0.8477667768528023,
+        "lf": 0.1962726144849533,
+        "lr": 0.20519409696154212,
+        "track": 0.2854874392508412,
+        "length": 0.6066608084080375,
+        "width": 0.3568592990635515,
+        "front_overhang": 0.10705778971906543,
+        "rear_overhang": 0.09813630724247666,
+        "cf": 1278.1551830228243,
+        "cr": 1420.1724255809158,
+        "mu": 0.8,
+        "max_accel": 0.6291210894521012,
+        "max_brake": 1.134377792400096,
+        "tau_steer": 0.24147758125934685,
+        "tau_accel": 0.2726808710134394,
+        "drag": 0.06367427966406464,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 33.63275317097267,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": 0.037263707137799126,
+        "y": 0.04135889170276873,
+        "z": 0.3121432896697501,
+        "roll_deg": -0.44605123791062185,
+        "pitch_deg": -2.3030558474347176,
+        "yaw_deg": 3.922653153508984
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 960,
+          "height": 540,
+          "fx": 617.9910860835358,
+          "fy": 617.9910860835358,
+          "cx": 480.0,
+          "cy": 270.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.8921418405747303,
+        "phase": [
+          3.393382008241149,
+          3.438671542499245,
+          4.931644338645119,
+          0.5813253191327861,
+          0.6995546053221952,
+          1.2172834496805132
+        ]
+      },
+      "calibration_error": {
+        "x": -0.00019674269590420513,
+        "y": -0.0005041393339757672,
+        "z": 0.004123346894862734,
+        "roll_deg": -0.17170141726847332,
+        "pitch_deg": -0.17508440001864667,
+        "yaw_deg": 0.07223053182370659
+      }
+    }
+  },
+  "83193": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83193,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_83193",
+      "team": "",
+      "vehicle": {
+        "max_speed": 9.91394934325053,
+        "body_height": 0.3655764700234313,
+        "mass": 262.094802082624,
+        "iz": 136.7551337127389,
+        "lf": 0.8356033600535574,
+        "lr": 0.7833781500502099,
+        "track": 1.253405040080336,
+        "length": 3.0290621801941455,
+        "width": 1.4623058800937252,
+        "front_overhang": 0.8356033600535574,
+        "rear_overhang": 0.5744773100368207,
+        "cf": 36465.363768017254,
+        "cr": 41023.53423901941,
+        "mu": 1.4,
+        "max_accel": 4.725215511196221,
+        "max_brake": 10.649332787637142,
+        "tau_steer": 0.11545787795648087,
+        "tau_accel": 0.16381922767016244,
+        "drag": 0.6545934143744953,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 20.249986186323838,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": -0.5071213198941829,
+        "y": 0.20787011955225265,
+        "z": 1.4708556160732222,
+        "roll_deg": -0.11476368173446905,
+        "pitch_deg": 4.255011370909481,
+        "yaw_deg": 3.986941284502866
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 1280,
+          "height": 720,
+          "fx": 943.0026968024167,
+          "fy": 943.0026968024167,
+          "cx": 640.0,
+          "cy": 360.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.3644822533675414,
+        "phase": [
+          2.366375255501556,
+          1.542728858615908,
+          0.37523645910575976,
+          4.54529531403079,
+          2.290641513181862,
+          1.6095187447378392
+        ]
+      },
+      "calibration_error": {
+        "x": -0.001855937269538316,
+        "y": -0.002696617339515134,
+        "z": 0.0039918254969292044,
+        "roll_deg": -0.1409190702317163,
+        "pitch_deg": 0.13823067787681076,
+        "yaw_deg": 0.07153914637339337
+      }
+    }
+  },
+  "83194": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83194,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_83194",
+      "team": "",
+      "vehicle": {
+        "max_speed": 2.5185361606828467,
+        "body_height": 0.14998229378690306,
+        "mass": 24.59041524555318,
+        "iz": 2.1166596803362623,
+        "lf": 0.23568646166513338,
+        "lr": 0.24639948264991215,
+        "track": 0.3428166715129213,
+        "length": 0.7284854269649577,
+        "width": 0.4285208393911516,
+        "front_overhang": 0.12855625181734548,
+        "rear_overhang": 0.11784323083256669,
+        "cf": 2213.1373720997867,
+        "cr": 2459.041524555318,
+        "mu": 0.8,
+        "max_accel": 1.8249833332628427,
+        "max_brake": 1.5117918649026838,
+        "tau_steer": 0.20951733449620108,
+        "tau_accel": 0.327472514016044,
+        "drag": 0.09181505489624855,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 24.54762731523851,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": 0.15737315545347447,
+        "y": 0.020128921024840467,
+        "z": 0.6223028132743774,
+        "roll_deg": -0.20482659552743576,
+        "pitch_deg": -1.8189248143027552,
+        "yaw_deg": 1.2991698700482779
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 960,
+          "height": 540,
+          "fx": 557.8012774729582,
+          "fy": 557.8012774729582,
+          "cx": 480.0,
+          "cy": 270.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.1215971082612346,
+        "phase": [
+          5.183472224411328,
+          1.5895092077537218,
+          5.531140316251616,
+          3.864899649994824,
+          4.356211661654343,
+          4.64474309127603
+        ]
+      },
+      "calibration_error": {
+        "x": -0.00476177818415243,
+        "y": -0.001389848445536015,
+        "z": 0.0049098012824834135,
+        "roll_deg": -0.1226948034079966,
+        "pitch_deg": 0.14968031456099073,
+        "yaw_deg": 0.07779220889189686
+      }
+    }
+  },
+  "83195": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83195,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_83195",
+      "team": "",
+      "vehicle": {
+        "max_speed": 12.419745329841488,
+        "body_height": 0.35041984907771506,
+        "mass": 230.82869575055742,
+        "iz": 110.66134759811943,
+        "lf": 0.8009596550347773,
+        "lr": 0.7508996765951037,
+        "track": 1.201439482552166,
+        "length": 2.903478749501068,
+        "width": 1.4016793963108602,
+        "front_overhang": 0.8009596550347773,
+        "rear_overhang": 0.5506597628364094,
+        "cf": 32115.29680007755,
+        "cr": 36129.708900087244,
+        "mu": 1.4,
+        "max_accel": 4.0180599438357465,
+        "max_brake": 6.939901312028111,
+        "tau_steer": 0.11000539398885703,
+        "tau_accel": 0.15708951191857115,
+        "drag": 0.6014403459313401,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 20.994686643464043,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": 0.114795780621356,
+        "y": -0.1779351612199107,
+        "z": 1.5862824965739089,
+        "roll_deg": 2.6681057433013224,
+        "pitch_deg": 7.980423350877319,
+        "yaw_deg": -2.7854432263055533
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 1280,
+          "height": 720,
+          "fx": 872.5903548625108,
+          "fy": 872.5903548625108,
+          "cx": 640.0,
+          "cy": 360.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.8184276145980247,
+        "phase": [
+          3.5659021982430263,
+          4.857594806912964,
+          5.529617344930673,
+          2.702592718032598,
+          1.9441767507076986,
+          0.08707654792775639
+        ]
+      },
+      "calibration_error": {
+        "x": -0.002578890143509214,
+        "y": 0.004483616782853772,
+        "z": 0.0024953189839852586,
+        "roll_deg": -0.08848109101231849,
+        "pitch_deg": -0.05166344205017992,
+        "yaw_deg": 0.07220805738497876
+      }
+    }
+  },
+  "83196": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83196,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_83196",
+      "team": "",
+      "vehicle": {
+        "max_speed": 2.099333095119663,
+        "body_height": 0.15337219563065826,
+        "mass": 26.295763988301736,
+        "iz": 2.366923681732043,
+        "lf": 0.24101345027674867,
+        "lr": 0.25196860710751,
+        "track": 0.35056501858436173,
+        "length": 0.7449506644917687,
+        "width": 0.43820627323045214,
+        "front_overhang": 0.13146188196913564,
+        "rear_overhang": 0.12050672513837433,
+        "cf": 2366.618758947156,
+        "cr": 2629.5763988301733,
+        "mu": 0.8,
+        "max_accel": 1.2602072291291153,
+        "max_brake": 2.3161670635991376,
+        "tau_steer": 0.1375131298023528,
+        "tau_accel": 0.24753982171077699,
+        "drag": 0.09601236894926084,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 32.22934469329267,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": -0.2324112187858582,
+        "y": 0.0432541474099573,
+        "z": 0.5578317991627861,
+        "roll_deg": -2.3714805974355655,
+        "pitch_deg": 2.5305420021203173,
+        "yaw_deg": 1.1486769299841617
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 483.7476260267369,
+          "fy": 483.7476260267369,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.5045975837041654,
+        "phase": [
+          4.327385105991784,
+          2.732918422475719,
+          3.3294182636002554,
+          4.441022010626259,
+          4.8620424142993235,
+          6.261326955439658
+        ]
+      },
+      "calibration_error": {
+        "x": 0.0037326811344483503,
+        "y": -0.0035788296712609834,
+        "z": 0.0029408820458546735,
+        "roll_deg": 0.1352536301822595,
+        "pitch_deg": -0.24731323212372058,
+        "yaw_deg": -0.12642696433259504
+      }
+    }
+  },
+  "83197": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83197,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_83197",
+      "team": "",
+      "vehicle": {
+        "max_speed": 13.21491024026261,
+        "body_height": 0.37442713181088133,
+        "mass": 281.5954520427208,
+        "iz": 154.13065325417787,
+        "lf": 0.8558334441391575,
+        "lr": 0.8023438538804601,
+        "track": 1.283750166208736,
+        "length": 3.102396235004446,
+        "width": 1.4977085272435253,
+        "front_overhang": 0.8558334441391575,
+        "rear_overhang": 0.5883854928456708,
+        "cf": 39178.49767550898,
+        "cr": 44075.8098849476,
+        "mu": 1.4,
+        "max_accel": 4.683572204501824,
+        "max_brake": 9.311113814837526,
+        "tau_steer": 0.09843270135368137,
+        "tau_accel": 0.13624693751755051,
+        "drag": 0.686672703850399,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 23.58648030215542,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": -0.2976536882676582,
+        "y": -0.14480793980052048,
+        "z": 0.8644603618137506,
+        "roll_deg": -2.2496112909524824,
+        "pitch_deg": 4.753989516164385,
+        "yaw_deg": -4.887460359207244
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 960,
+          "height": 540,
+          "fx": 718.171223398684,
+          "fy": 718.171223398684,
+          "cx": 480.0,
+          "cy": 270.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.249315195976508,
+        "phase": [
+          1.9828780029242339,
+          1.2049035424372552,
+          0.5625513783471349,
+          5.735259499950569,
+          0.8933026582853367,
+          0.05245413018599452
+        ]
+      },
+      "calibration_error": {
+        "x": -0.0006028067278517779,
+        "y": -0.0037473040981672355,
+        "z": 0.002466569183343208,
+        "roll_deg": -0.15247385583405776,
+        "pitch_deg": 0.09042000291144675,
+        "yaw_deg": 0.20045616254195275
+      }
+    }
+  },
+  "83198": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83198,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_83198",
+      "team": "",
+      "vehicle": {
+        "max_speed": 2.924807222637674,
+        "body_height": 0.13682884441057278,
+        "mass": 18.67148525614547,
+        "iz": 1.3376403978666338,
+        "lf": 0.21501675550232863,
+        "lr": 0.2247902443887981,
+        "track": 0.31275164436702346,
+        "length": 0.6645972442799248,
+        "width": 0.39093955545877934,
+        "front_overhang": 0.11728186663763379,
+        "rear_overhang": 0.10750837775116431,
+        "cf": 1680.4336730530924,
+        "cr": 1867.148525614547,
+        "mu": 0.8,
+        "max_accel": 0.636562243920256,
+        "max_brake": 3.204296233057095,
+        "tau_steer": 0.1466447609985413,
+        "tau_accel": 0.2407727465848007,
+        "drag": 0.076416868011154,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 25.792880417464755,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": -0.18548765206427834,
+        "y": -0.10940696064348218,
+        "z": 0.3240419899565996,
+        "roll_deg": -1.071504388852183,
+        "pitch_deg": -0.1361089609391736,
+        "yaw_deg": 3.3071374194679177
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 399.84458559271116,
+          "fy": 399.84458559271116,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.7401070622152703,
+        "phase": [
+          3.1430697278754907,
+          4.254124369890261,
+          3.7137561642331613,
+          2.4459879469428176,
+          0.35206315938541083,
+          4.826552947409365
+        ]
+      },
+      "calibration_error": {
+        "x": 0.004758725976343652,
+        "y": 0.004597844634514162,
+        "z": -0.0039864650634433,
+        "roll_deg": -0.03031341383770664,
+        "pitch_deg": -0.11191013551302943,
+        "yaw_deg": 0.15612716495304652
+      }
+    }
+  },
+  "83199": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83199,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_83199",
+      "team": "",
+      "vehicle": {
+        "max_speed": 16.632747716909194,
+        "body_height": 0.35285991745165635,
+        "mass": 235.68431864833275,
+        "iz": 114.56820381599789,
+        "lf": 0.8065369541752146,
+        "lr": 0.7561283945392636,
+        "track": 1.209805431262822,
+        "length": 2.923696458885153,
+        "width": 1.4114396698066254,
+        "front_overhang": 0.8065369541752146,
+        "rear_overhang": 0.55449415599546,
+        "cf": 32790.86172498543,
+        "cr": 36889.719440608606,
+        "mu": 1.4,
+        "max_accel": 5.846868006301277,
+        "max_brake": 9.312189591935518,
+        "tau_steer": 0.08793518875092392,
+        "tau_accel": 0.11506214025079373,
+        "drag": 0.6098454922970927,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 25.68863065257035,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": 0.4195852644634188,
+        "y": 0.19295672451065105,
+        "z": 1.549770299058957,
+        "roll_deg": -2.999882216608418,
+        "pitch_deg": 3.4530148913440772,
+        "yaw_deg": -3.2652821862274375
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 1280,
+          "height": 720,
+          "fx": 674.8629467388378,
+          "fy": 674.8629467388378,
+          "cx": 640.0,
+          "cy": 360.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.9483783796987426,
+        "phase": [
+          3.59602924854567,
+          2.6988582802213648,
+          3.1934481733358875,
+          1.6314845673084584,
+          0.5085637867980856,
+          0.4126805258782486
+        ]
+      },
+      "calibration_error": {
+        "x": 0.00042106948135601564,
+        "y": 0.00471474688420442,
+        "z": -0.0038154347504798635,
+        "roll_deg": 0.22035301727467677,
+        "pitch_deg": 0.0297378358879431,
+        "yaw_deg": -0.15687489520668046
+      }
+    }
+  },
+  "83200": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83200,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_83200",
+      "team": "",
+      "vehicle": {
+        "max_speed": 1.4715813696978084,
+        "body_height": 0.13374180763690724,
+        "mass": 17.43602387185205,
+        "iz": 1.1934027232135822,
+        "lf": 0.21016569771513993,
+        "lr": 0.21971868397491903,
+        "track": 0.3056955603129308,
+        "length": 0.649603065664978,
+        "width": 0.3821194503911636,
+        "front_overhang": 0.11463583511734905,
+        "rear_overhang": 0.10508284885756997,
+        "cf": 1569.2421484666845,
+        "cr": 1743.602387185205,
+        "mu": 0.8,
+        "max_accel": 1.043449870500305,
+        "max_brake": 1.0734581334749518,
+        "tau_steer": 0.18060859708202445,
+        "tau_accel": 0.25256134900316696,
+        "drag": 0.07300763718362245,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 34.582376833053445,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": 0.03784663515143655,
+        "y": -0.054010679291728925,
+        "z": 0.350444608434617,
+        "roll_deg": 2.334032552880185,
+        "pitch_deg": -0.7729469824711032,
+        "yaw_deg": 2.240249325042662
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 1280,
+          "height": 720,
+          "fx": 981.6582159382335,
+          "fy": 981.6582159382335,
+          "cx": 640.0,
+          "cy": 360.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.4194398367909562,
+        "phase": [
+          1.3774661076630228,
+          4.2384410984345005,
+          4.5255271666035455,
+          0.5666617258324257,
+          0.878261072710099,
+          2.610343115438514
+        ]
+      },
+      "calibration_error": {
+        "x": -0.0008345214373593901,
+        "y": -0.002873640646912863,
+        "z": 0.0009064804043774899,
+        "roll_deg": 0.20879083532826548,
+        "pitch_deg": -0.05451713890097326,
+        "yaw_deg": -0.20440749965538896
+      }
+    }
+  },
+  "83201": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83201,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_83201",
+      "team": "",
+      "vehicle": {
+        "max_speed": 16.96018973479905,
+        "body_height": 0.35780433945851436,
+        "mass": 245.73131976640698,
+        "iz": 122.82322042183502,
+        "lf": 0.8178384901908902,
+        "lr": 0.7667235845539595,
+        "track": 1.226757735286335,
+        "length": 2.964664526941977,
+        "width": 1.4312173578340575,
+        "front_overhang": 0.8178384901908902,
+        "rear_overhang": 0.562263962006237,
+        "cf": 34188.70535880445,
+        "cr": 38462.293528655006,
+        "mu": 1.4,
+        "max_accel": 6.952224712063354,
+        "max_brake": 12.997747082966363,
+        "tau_steer": 0.11668237885129375,
+        "tau_accel": 0.09720070082829307,
+        "drag": 0.6270560587853574,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 27.243196355874563,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": -0.22386181037852074,
+        "y": 0.002366481752595062,
+        "z": 1.0516357254899218,
+        "roll_deg": -0.8629063254084992,
+        "pitch_deg": 1.8983026911258785,
+        "yaw_deg": 4.678441604857383
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 327.8158949925668,
+          "fy": 327.8158949925668,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 0.7582122334521,
+        "phase": [
+          5.249423080707732,
+          6.047182816158514,
+          2.5369760926838314,
+          4.276964435857743,
+          4.747519423920432,
+          4.816728644762906
+        ]
+      },
+      "calibration_error": {
+        "x": -0.004700244076744682,
+        "y": 0.0025880842303631158,
+        "z": 0.0038804718620209645,
+        "roll_deg": -0.07906357324221847,
+        "pitch_deg": 0.19937937235208486,
+        "yaw_deg": -0.12100748438382887
+      }
+    }
+  },
+  "83202": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83202,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_83202",
+      "team": "",
+      "vehicle": {
+        "max_speed": 1.303829100334134,
+        "body_height": 0.1670537290823937,
+        "mass": 33.9792988162223,
+        "iz": 3.628540326825912,
+        "lf": 0.2625130028437615,
+        "lr": 0.27444541206393247,
+        "track": 0.38183709504547125,
+        "length": 0.8114038269716265,
+        "width": 0.47729636880683907,
+        "front_overhang": 0.14318891064205172,
+        "rear_overhang": 0.13125650142188075,
+        "cf": 3058.1368934600064,
+        "cr": 3397.9298816222295,
+        "mu": 0.8,
+        "max_accel": 1.3711294276232742,
+        "max_brake": 2.118158129303565,
+        "tau_steer": 0.13927609500715876,
+        "tau_accel": 0.24057825096947405,
+        "drag": 0.11390591183809706,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 29.710474411285155,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": -0.05667388407194252,
+        "y": 0.02442687666208113,
+        "z": 0.40802336831120056,
+        "roll_deg": -0.892698605171014,
+        "pitch_deg": -2.1703260372022695,
+        "yaw_deg": 3.1542417457861216
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 320.33802839319605,
+          "fy": 320.33802839319605,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.5586752267564503,
+        "phase": [
+          0.6213240226608959,
+          3.481351301390609,
+          0.6453905177491878,
+          1.135838925082191,
+          0.16754855233285654,
+          2.7533796650810842
+        ]
+      },
+      "calibration_error": {
+        "x": 0.004858143866127114,
+        "y": -0.00011269355244343582,
+        "z": 0.0032673555589120794,
+        "roll_deg": 0.19027145788619154,
+        "pitch_deg": -0.06887119936947028,
+        "yaw_deg": -0.025965547604587524
+      }
+    }
+  },
+  "83203": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83203,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_83203",
+      "team": "",
+      "vehicle": {
+        "max_speed": 11.449846029202037,
+        "body_height": 0.348738759021934,
+        "mass": 227.52250276123806,
+        "iz": 108.03228260628694,
+        "lf": 0.7971171634787064,
+        "lr": 0.7472973407612873,
+        "track": 1.1956757452180595,
+        "length": 2.889549717610311,
+        "width": 1.394955036087736,
+        "front_overhang": 0.7971171634787064,
+        "rear_overhang": 0.5480180498916106,
+        "cf": 31655.304731998338,
+        "cr": 35612.21782349813,
+        "mu": 1.4,
+        "max_accel": 5.440360552094264,
+        "max_brake": 10.207263840965233,
+        "tau_steer": 0.08018270464777573,
+        "tau_accel": 0.1592586089795478,
+        "drag": 0.5956835365428175,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 23.205782367247878,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": -0.27730123585306055,
+        "y": -0.27870295346408264,
+        "z": 1.3809501005690317,
+        "roll_deg": 2.604139443007626,
+        "pitch_deg": 6.811670486060853,
+        "yaw_deg": 3.326970926410732
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 335.77611298598754,
+          "fy": 335.77611298598754,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.8463699780861673,
+        "phase": [
+          4.8344525040632265,
+          5.872260744673727,
+          3.0576306254186654,
+          2.7771738114035345,
+          3.1361356196511916,
+          2.309603682435879
+        ]
+      },
+      "calibration_error": {
+        "x": -0.003542396978520641,
+        "y": -0.0047666341072069565,
+        "z": -0.004479293774875381,
+        "roll_deg": 0.08985706683512379,
+        "pitch_deg": -0.04481902177495717,
+        "yaw_deg": 0.20741102318690635
+      }
+    }
+  },
+  "83204": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83204,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_83204",
+      "team": "",
+      "vehicle": {
+        "max_speed": 1.328165572442384,
+        "body_height": 0.14667776387252643,
+        "mass": 23.000576944856093,
+        "iz": 1.8935312760453873,
+        "lf": 0.23049362894254152,
+        "lr": 0.24097061207629342,
+        "track": 0.3352634602800604,
+        "length": 0.7124348530951283,
+        "width": 0.4190793253500755,
+        "front_overhang": 0.12572379760502264,
+        "rear_overhang": 0.11524681447127076,
+        "cf": 2070.0519250370485,
+        "cr": 2300.0576944856093,
+        "mu": 0.8,
+        "max_accel": 1.2092253275668652,
+        "max_brake": 2.8675522918025202,
+        "tau_steer": 0.17755086187355407,
+        "tau_accel": 0.3161106573941648,
+        "drag": 0.0878137404679372,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 29.39620782438464,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": -0.004099515433701227,
+        "y": -0.0700383329546086,
+        "z": 0.5909015041949044,
+        "roll_deg": -1.5569823031800722,
+        "pitch_deg": -1.6421666428517172,
+        "yaw_deg": -1.3148409294668482
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 431.66087010884377,
+          "fy": 431.66087010884377,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.016513599528193,
+        "phase": [
+          1.2148448035797426,
+          3.3714511527742856,
+          2.8786874562354896,
+          4.798890985577789,
+          1.8041534066998135,
+          2.264363540883718
+        ]
+      },
+      "calibration_error": {
+        "x": -0.003429074301680197,
+        "y": -0.0006533863493229108,
+        "z": -0.004334868354022068,
+        "roll_deg": 0.13217309919625336,
+        "pitch_deg": 0.08243974238529755,
+        "yaw_deg": -0.18160871374871168
+      }
+    }
+  },
+  "83205": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83205,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_83205",
+      "team": "",
+      "vehicle": {
+        "max_speed": 7.93781764497562,
+        "body_height": 0.38133622344600987,
+        "mass": 297.4732283217477,
+        "iz": 168.88565772400247,
+        "lf": 0.8716256535908798,
+        "lr": 0.8171490502414498,
+        "track": 1.3074384803863197,
+        "length": 3.1596429942669397,
+        "width": 1.5253448937840395,
+        "front_overhang": 0.8716256535908798,
+        "rear_overhang": 0.5992426368437299,
+        "cf": 41387.579592590984,
+        "cr": 46561.02704166486,
+        "mu": 1.4,
+        "max_accel": 3.633327652252973,
+        "max_brake": 12.409039208132674,
+        "tau_steer": 0.11212435800289758,
+        "tau_accel": 0.12390030069890075,
+        "drag": 0.7122480749978704,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 22.24657694951468,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": -0.6581636397124045,
+        "y": 0.2658561215681249,
+        "z": 1.1462501544563233,
+        "roll_deg": 1.1599475182601768,
+        "pitch_deg": -1.593657406635069,
+        "yaw_deg": -2.404546690771025
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 1280,
+          "height": 720,
+          "fx": 1007.8996055335705,
+          "fy": 1007.8996055335705,
+          "cx": 640.0,
+          "cy": 360.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 0.9208395089977666,
+        "phase": [
+          0.739696113959064,
+          3.876313411761523,
+          5.005194026734419,
+          2.935717625327247,
+          6.12138820167485,
+          1.3727683176576069
+        ]
+      },
+      "calibration_error": {
+        "x": 0.0021663549350188793,
+        "y": 0.0013131707431313967,
+        "z": -0.003597394868954743,
+        "roll_deg": 0.016682520522938393,
+        "pitch_deg": -0.2284018179779972,
+        "yaw_deg": -0.03190274020757944
+      }
+    }
+  },
+  "83206": {
+    "split": "train",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 83206,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_83206",
+      "team": "",
+      "vehicle": {
+        "max_speed": 2.981982606523724,
+        "body_height": 0.14743502154971663,
+        "mass": 23.358656565756355,
+        "iz": 1.94291753873285,
+        "lf": 0.23168360529241183,
+        "lr": 0.24221467826024873,
+        "track": 0.33699433497078085,
+        "length": 0.7161129618129093,
+        "width": 0.4212429187134761,
+        "front_overhang": 0.1263728756140428,
+        "rear_overhang": 0.11584180264620592,
+        "cf": 2102.279090918072,
+        "cr": 2335.8656565756355,
+        "mu": 0.8,
+        "max_accel": 1.149525165100989,
+        "max_brake": 3.277208877034306,
+        "tau_steer": 0.14846823266399872,
+        "tau_accel": 0.21208712724988849,
+        "drag": 0.0887227982831241,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 34.14936051645489,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": -0.18838453716788553,
+        "y": -0.09564430378058457,
+        "z": 0.39958659143342795,
+        "roll_deg": -0.10218003458541781,
+        "pitch_deg": 5.581860741649912,
+        "yaw_deg": 3.910354943588296
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 1280,
+          "height": 720,
+          "fx": 750.8255275407298,
+          "fy": 750.8255275407298,
+          "cx": 640.0,
+          "cy": 360.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.733641426079225,
+        "phase": [
+          1.3692448063584453,
+          4.737110868514777,
+          1.608812962692346,
+          0.2062365483428239,
+          1.464950617149958,
+          5.18566571504462
+        ]
+      },
+      "calibration_error": {
+        "x": 0.0013174727293769916,
+        "y": 0.0014858009253987758,
+        "z": 0.0009268941673871545,
+        "roll_deg": 0.14389852672623782,
+        "pitch_deg": 0.029750657889489107,
+        "yaw_deg": 0.17321073024397882
+      }
+    }
+  },
+  "84191": {
+    "split": "val",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 84191,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_84191",
+      "team": "",
+      "vehicle": {
+        "max_speed": 12.007845969679636,
+        "body_height": 0.3696751121429983,
+        "mass": 271.0093925996176,
+        "iz": 144.59508465615465,
+        "lf": 0.8449716848982819,
+        "lr": 0.7921609545921393,
+        "track": 1.2674575273474227,
+        "length": 3.063022357756272,
+        "width": 1.4787004485719932,
+        "front_overhang": 0.8449716848982819,
+        "rear_overhang": 0.5809180333675689,
+        "cf": 37705.6546225555,
+        "cr": 42418.861450374934,
+        "mu": 1.4,
+        "max_accel": 5.272100175567178,
+        "max_brake": 10.006471620066248,
+        "tau_steer": 0.05884599774004684,
+        "tau_accel": 0.10348972497327155,
+        "drag": 0.6693535765123512,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 23.764325983507227,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": 0.9009946359020595,
+        "y": -0.14276677487300712,
+        "z": 1.4581471257403258,
+        "roll_deg": 0.21134363377005982,
+        "pitch_deg": 2.7543860294349347,
+        "yaw_deg": -5.36048637498552
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 390.5131922165805,
+          "fy": 390.5131922165805,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.6390030099265336,
+        "phase": [
+          5.01899527408512,
+          3.510464783564819,
+          4.516357981704474,
+          6.282649433915408,
+          3.395390511907582,
+          3.9734202347674867
+        ]
+      },
+      "calibration_error": {
+        "x": 0.003232511975438015,
+        "y": 0.0001639826770896391,
+        "z": 0.0008699119071081707,
+        "roll_deg": 0.03356425845149996,
+        "pitch_deg": -0.1914084435569614,
+        "yaw_deg": -0.16170269890363542
+      }
+    }
+  },
+  "84192": {
+    "split": "val",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 84192,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_84192",
+      "team": "",
+      "vehicle": {
+        "max_speed": 2.9710120102780797,
+        "body_height": 0.1642396307652915,
+        "mass": 32.2908716692328,
+        "iz": 3.333042724570514,
+        "lf": 0.25809084834545803,
+        "lr": 0.26982225054297887,
+        "track": 0.3754048703206662,
+        "length": 0.7977353494314157,
+        "width": 0.4692560879008328,
+        "front_overhang": 0.14077682637024982,
+        "rear_overhang": 0.12904542417272902,
+        "cf": 2906.178450230952,
+        "cr": 3229.0871669232797,
+        "mu": 0.8,
+        "max_accel": 1.873121991307455,
+        "max_brake": 3.2983466495564735,
+        "tau_steer": 0.20944571005277135,
+        "tau_accel": 0.345843965000746,
+        "drag": 0.11010063801599705,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 24.045448210859146,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": -0.18011637726322346,
+        "y": -0.01826569233160705,
+        "z": 0.3308425941369997,
+        "roll_deg": 2.860994782103274,
+        "pitch_deg": 6.6482014843795305,
+        "yaw_deg": -0.8906705612547277
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 960,
+          "height": 540,
+          "fx": 693.6219056854388,
+          "fy": 693.6219056854388,
+          "cx": 480.0,
+          "cy": 270.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 0.9621499928365292,
+        "phase": [
+          2.711332377359144,
+          0.7795275784469613,
+          2.0732105646435044,
+          5.431765570135519,
+          4.67901679688538,
+          6.2786182276278595
+        ]
+      },
+      "calibration_error": {
+        "x": -0.0034854872128362445,
+        "y": 0.003280714042719294,
+        "z": -0.000902942864470907,
+        "roll_deg": -0.14472790572723,
+        "pitch_deg": -0.04167400787845671,
+        "yaw_deg": 0.13223318377222965
+      }
+    }
+  },
+  "84193": {
+    "split": "val",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 84193,
+      "family": "formula"
+    },
+    "profile": {
+      "name": "transfer_v1_formula_84193",
+      "team": "",
+      "vehicle": {
+        "max_speed": 14.998879042271138,
+        "body_height": 0.3170116359293598,
+        "mass": 170.90285305702702,
+        "iz": 67.0545851480333,
+        "lf": 0.724598024981394,
+        "lr": 0.6793106484200568,
+        "track": 1.086897037472091,
+        "length": 2.6266678405575536,
+        "width": 1.2680465437174393,
+        "front_overhang": 0.724598024981394,
+        "rear_overhang": 0.4981611421747084,
+        "cf": 23777.788251412458,
+        "cr": 26750.011782839014,
+        "mu": 1.4,
+        "max_accel": 5.247786082941847,
+        "max_brake": 6.027417794043213,
+        "tau_steer": 0.06008274919270744,
+        "tau_accel": 0.1291289793274261,
+        "drag": 0.49222715419400326,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 21.605387704808294,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": 0.3654318501791277,
+        "y": -0.2639878508970034,
+        "z": 1.3914201368044714,
+        "roll_deg": -2.2588569138143155,
+        "pitch_deg": 3.4643571156318442,
+        "yaw_deg": -1.5524093203626452
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 960,
+          "height": 540,
+          "fx": 555.4776648554889,
+          "fy": 555.4776648554889,
+          "cx": 480.0,
+          "cy": 270.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.5293475762738304,
+        "phase": [
+          3.5650952180492435,
+          5.392122915048616,
+          0.23490600897981848,
+          4.125080947524083,
+          1.9900242944464577,
+          4.344528725883975
+        ]
+      },
+      "calibration_error": {
+        "x": -0.004912924758022395,
+        "y": -0.0007981544261420648,
+        "z": -0.0038950203243358805,
+        "roll_deg": 0.13429441933450886,
+        "pitch_deg": 0.24952290114627163,
+        "yaw_deg": 0.22194927164515044
+      }
+    }
+  },
+  "84194": {
+    "split": "val",
+    "identity": {
+      "version": 1,
+      "distribution": "configs/distributions/transfer_v1.yaml",
+      "sha256": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "seed": 84194,
+      "family": "rover"
+    },
+    "profile": {
+      "name": "transfer_v1_rover_84194",
+      "team": "",
+      "vehicle": {
+        "max_speed": 1.0497823157338941,
+        "body_height": 0.1283153556496504,
+        "mass": 15.398619393154615,
+        "iz": 0.9701619572944604,
+        "lf": 0.2016384160208792,
+        "lr": 0.21080379856728282,
+        "track": 0.29329224148491523,
+        "length": 0.6453458710739876,
+        "width": 0.366615301856144,
+        "front_overhang": 0.13208444847538592,
+        "rear_overhang": 0.1008192080104396,
+        "cf": 1385.8757453839155,
+        "cr": 1539.8619393154615,
+        "mu": 0.8,
+        "max_accel": 1.3805742228567546,
+        "max_brake": 1.9369222247023299,
+        "tau_steer": 0.08646631673875657,
+        "tau_accel": 0.2646929155691112,
+        "drag": 0.06720338977753579,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 32.98108167389017,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": 0.3037228644962651,
+        "y": -0.07172047261811997,
+        "z": 0.3202226257987985,
+        "roll_deg": -1.6881666111283198,
+        "pitch_deg": 7.75403370997629,
+        "yaw_deg": -0.8191717301879371
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 960,
+          "height": 540,
+          "fx": 791.2352192545028,
+          "fy": 791.2352192545028,
+          "cx": 480.0,
+          "cy": 270.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.9042182006229909,
+        "phase": [
+          5.974966729858832,
+          4.15107179299978,
+          5.254952588858946,
+          4.758603834541788,
+          4.320842072340858,
+          2.933531674626318
+        ]
+      },
+      "calibration_error": {
+        "x": 0.0016113379047398312,
+        "y": 0.0049434236391485845,
+        "z": 0.0006330760529981216,
+        "roll_deg": -0.2156563512281766,
+        "pitch_deg": 0.014048225018404747,
+        "yaw_deg": 0.18026998426262686
+      }
+    }
+  }
+}

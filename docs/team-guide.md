@@ -1,7 +1,9 @@
 # Team guide: using fs-openpilot with your car
 
 This guide walks through adapting the pipeline to your vehicle and cameras, from profile to an ONNX
-model running in your stack.
+model running in your stack. For the experimental shared-model path, start with the
+[transfer range, calibration contract and evidence](transfer.md). Profiles configure the runtime;
+per-team training is an optional adaptation path, not a required part of the conditioned input contract.
 
 > Safety: fs-openpilot is research software. It does not implement the AS state machine, EBS, RES
 > handling or any safety monitoring, and it has not been validated on a real vehicle. Treat its
@@ -30,8 +32,11 @@ Both are virtual pinhole cameras at your `mount`.
 
 - **One camera, both slots (most FS cars).** Set `slots: [road, wide]`. The camera needs at least
   about 60° horizontal FOV to fill the wide slot; the road slot is a 2× zoom of the centre.
-- **Two cameras** (narrow and wide). Give each camera one slot.
-- **Mount height.** Train with your real height. The simulator randomizes ±0.1 m (light DR) to
+- **Two cameras** (narrow and wide). Give each camera one slot. The current contract assumes a shared
+  optical centre; separated camera translations require further implementation and evaluation.
+- **Mount height.** Supply the measured height and translation. Legacy image-only checkpoints may need
+  adaptation when the viewpoint differs substantially from their training data. For those checkpoints,
+  train with your real height. The simulator randomizes ±0.1 m (light DR) to
   ±0.25 m (heavy DR) around it. Higher mounts see the ground closer to the car: at 1.1 m the first
   visible ground is about 5 m ahead in the road slot.
 - **Steeply pitched cameras.** openpilot's virtual cameras look roughly level. If your camera looks
@@ -51,7 +56,9 @@ Both are virtual pinhole cameras at your `mount`.
 
 - **Simulation.**
   - Run `fsop track gen` (presets in `configs/track/`: `trackdrive`, `autocross`, `tight`).
-  - Then run `fsop sim record --profile <p>`. Every episode uses your dynamics and camera mount.
+  - Then run `fsop sim record --profile <p> --physical-camera` for rectilinear sensors. This uses your
+    physical intrinsics and resolution, then the deployment warper. Without `--physical-camera`,
+    the legacy path renders ideal model slots directly. Every episode uses your vehicle dynamics and mount.
   - Plan labels are counterfactual expert rollouts, so they encode how to recover from the
     noise-injected states.
 - **FSOCO** (real images, for the cone head). Use `fsop data fsoco-import --src <supervisely or yolo export>`.
@@ -81,7 +88,9 @@ It renders the plan and cones projected back into the original frames, the two m
 ego view. It's the quickest sanity check of a profile and of sim-to-real transfer.
 
 - `fsop eval open-loop --dataset … --ckpt …` gives trajectory errors and cone P/R/F1 on held-out tracks.
-- `fsop eval closed-loop --ckpt … --profile <p>` runs the suite with the FSG referee. The suites are
+- `fsop eval closed-loop --ckpt … --profile <p> --physical-camera` runs the physical-sensor suite
+  (rectilinear sensors; omit the flag for the legacy default benchmark). `.onnx` checkpoints use
+  the exported deployment runtime. This runs the suite with the FSG referee. The suites are
   `configs/eval/closed_loop_quick.yaml` and `closed_loop_suite.yaml`.
 - `fsop bench run --name <id> --ckpt …` does both and adds a record to `benchmarks/results/`.
 - `fsop viz video` renders an MP4 like the one in the README.

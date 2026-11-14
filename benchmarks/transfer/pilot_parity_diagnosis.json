@@ -1,0 +1,25 @@
+{
+  "providers": [
+    "CPUExecutionProvider"
+  ],
+  "initial_cudnn_tf32": true,
+  "initial_matmul_tf32": false,
+  "comparisons": {
+    "cuda_initial": {
+      "plan": 0.1024932861328125,
+      "hidden_state": 0.00039308611303567886
+    },
+    "cuda_cudnn_tf32_off": {
+      "plan": 2.288818359375e-05,
+      "hidden_state": 3.129243850708008e-07
+    },
+    "cuda_all_tf32_off": {
+      "plan": 2.288818359375e-05,
+      "hidden_state": 3.129243850708008e-07
+    },
+    "cpu": {
+      "plan": 5.7220458984375e-05,
+      "hidden_state": 2.692686393857002e-07
+    }
+  }
+}

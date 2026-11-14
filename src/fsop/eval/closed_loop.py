@@ -21,7 +21,7 @@ from fsop.geometry.op_frames import op_to_ego_plan
 from fsop.geometry.yuv import rgb_to_model
 from fsop.model.temporal import TemporalState
 from fsop.sim.env import FSEnv, Obs, SimCfg
-from fsop.train.device import pick_device
+from fsop.train.device import pick_device, strict_inference_precision
 
 
 class ModelPolicy:
@@ -30,6 +30,7 @@ class ModelPolicy:
   def __init__(self, model, controller: str = "pp", device=None, bev: bool = True, cones: str = "img"):
     self.cones = cones  # img: image head + ground projection | bev: learned BEV head
     self.device = device or pick_device()
+    strict_inference_precision()
     self.model = model.to(self.device).eval()
     self.controller_name = controller
     self.ctrl = None
@@ -68,7 +69,14 @@ class ModelPolicy:
     base = m.base if hasattr(m, "base") else m
     v = base.encode(img, big)
     fb_full = torch.cat([hist, v.hidden[:, None]], 1)
-    plan, _ = base.policy_raw(fb_full, des, tc)
+    if hasattr(m, "plan"):
+      from fsop.model.conditioning import geometry_context
+      context = torch.from_numpy(geometry_context(env.calibrated_mount(), env.vp,
+                                                 getattr(m, "context_version", 1))[None]).to(dev)
+      pred = m.plan(hist, v.hidden, des, tc, context)
+      plan = torch.cat([pred["plan_mu"].flatten(1), pred["plan_logstd"].flatten(1)], 1)
+    else:
+      plan, _ = base.policy_raw(fb_full, des, tc)
     p = plan.reshape(1, 2, 33, 15)
     mu = op_to_ego_plan(p[0, 0].cpu().numpy())
     std = np.exp(p[0, 1].clamp(-7, 7).cpu().numpy())
@@ -79,7 +87,7 @@ class ModelPolicy:
       if self.cones == "img" and getattr(m, "img", None) is not None:
         from fsop.eval.img_to_bev import bev_from_image_head
 
-        xy, cls, sc = bev_from_image_head(m.img(v.s4, v.s8, v.s16), env.T_ego_cam())
+        xy, cls, sc = bev_from_image_head(m.img(v.s4, v.s8, v.s16), env.calibrated_mount().T_ego_cam())
       else:
         from fsop.eval.bev_metrics import decode_bev
 
@@ -98,8 +106,9 @@ def mission_brake(accel: float, obs: Obs, env: FSEnv, decel: float = 3.5, launch
   to count laps itself, D 8.3.4)."""
   rem = env.mission.s_end - obs.s
   v = obs.state.vx
-  if v < 2.0 and rem > 15.0:
-    accel = max(accel, launch_accel)
+  decel = min(decel, env.vp.max_brake)
+  if v < min(2.0, .5 * env.vp.max_speed) and rem > 15.0:
+    accel = max(accel, min(launch_accel, env.vp.max_accel))
   if rem > 60.0:
     return accel
   v_allowed = float(np.sqrt(2 * decel * max(rem, 0.0)))
@@ -107,7 +116,29 @@ def mission_brake(accel: float, obs: Obs, env: FSEnv, decel: float = 3.5, launch
     accel = min(accel, -(v * v - v_allowed**2) / max(2 * max(rem, 0.5), 1.0) - 0.5)
   if rem <= 0.5:
     accel = min(accel, -3.0 if v > 0.3 else -1.0)
-  return accel
+  return float(np.clip(accel, -env.vp.max_brake, env.vp.max_accel))
+
+
+class RuntimePolicy:
+  """Exported deployment pipeline, with the same explicitly privileged mission assistance."""
+
+  def __init__(self, path, controller="pp"):
+    self.path, self.controller, self.driver = path, controller, None
+
+  def reset(self):
+    self.driver = None
+
+  def __call__(self, obs, env):
+    if self.driver is None:
+      from dataclasses import replace
+
+      from fsop.runtime import FSDriver
+      profile = replace(env.profile, mount=env.calibrated_mount(), vehicle=env.vp)
+      self.driver = FSDriver(self.path, profile=profile, controller=self.controller)
+    physical = env.warper is not None
+    out = self.driver.step(env.sensor_images if physical else obs.images, obs.state.vx,
+                           desire=obs.desire, already_model_frame=not physical)
+    return out.steer, mission_brake(out.accel, obs, env), {"plan": out.plan, "plan_std": out.plan_std}
 
 
 class GeometricPolicy:
@@ -178,7 +209,8 @@ def _suite_tracks(cfg: SuiteCfg):
 
 
 def run_suite(suite_path: str | Path, ckpt: str | Path | None, out_dir: str | Path, controller: str = "pp",
-              save_rrd: bool = True, baseline: str = "model", profile: str | None = None) -> dict:
+              save_rrd: bool = True, baseline: str = "model", profile: str | None = None,
+              physical_camera: bool = False) -> dict:
   from fsop.profile import load_profile
   from fsop.sim.drive import expert_policy, run_episode
   from fsop.sim.env import CAMERAS
@@ -190,9 +222,14 @@ def run_suite(suite_path: str | Path, ckpt: str | Path | None, out_dir: str | Pa
   cfg = SuiteCfg(**raw)
   out_dir = Path(out_dir)
   out_dir.mkdir(parents=True, exist_ok=True)
-  renderer = Panda3DRenderer(CAMERAS)
   team = load_profile(profile)
-  if baseline == "expert":
+  from fsop.geometry.camera import CameraModel
+  cameras = ({c.name: CameraModel(c.name, c.K, c.width, c.height) for c in team.cameras}
+             if physical_camera else CAMERAS)
+  renderer = Panda3DRenderer(cameras)
+  if ckpt is not None and str(ckpt).endswith(".onnx") and baseline == "model":
+    policy = RuntimePolicy(ckpt, controller)
+  elif baseline == "expert":
     policy = expert_policy
   elif baseline == "geometric_gt":
     policy = GeometricPolicy("gt", controller=controller)
@@ -204,7 +241,7 @@ def run_suite(suite_path: str | Path, ckpt: str | Path | None, out_dir: str | Pa
   for track in _suite_tracks(cfg):
     for dr in cfg.dr_levels:
       for seed in cfg.seeds:
-        sim = SimCfg(dr=dr, max_time=cfg.max_seconds)
+        sim = SimCfg(dr=dr, max_time=cfg.max_seconds, physical_camera=physical_camera)
         sim.noise.enabled = False
         env = FSEnv(track, sim, seed=seed, renderer=renderer, profile=team)
         if hasattr(policy, "reset"):
@@ -224,7 +261,9 @@ def run_suite(suite_path: str | Path, ckpt: str | Path | None, out_dir: str | Pa
               f"progress {summ['progress']:.2f} time {summ['time']}")
   agg = aggregate(results)
   report = {"ckpt": str(ckpt), "baseline": baseline, "controller": controller, "suite": raw,
-            "profile": team.name, "runs": results,
+            "profile": team.name, "physical_camera": physical_camera,
+            "privileged_inputs": ["simulator wheel speed", "route desire", "mission progress for launch/stop"],
+            "runs": results,
             "aggregate": agg}
   (out_dir / "report.json").write_text(json.dumps(report, indent=1, default=float))
   (out_dir / "report.md").write_text(markdown_report(report))

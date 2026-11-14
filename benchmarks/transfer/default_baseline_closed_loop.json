@@ -1,0 +1,173 @@
+{
+ "ckpt": "runs/cuda_racing_v6/ckpt/best.pt",
+ "baseline": "model",
+ "controller": "pp",
+ "suite": {
+  "tracks": "data/tracks/td_v1",
+  "split": "test",
+  "n_trackdrive": 3,
+  "laps": 1,
+  "skidpad": true,
+  "acceleration": true,
+  "dr_levels": [
+   "light"
+  ],
+  "seeds": [
+   0
+  ],
+  "max_seconds": 90
+ },
+ "profile": "default",
+ "runs": [
+  {
+   "discipline": "trackdrive",
+   "result": "finished",
+   "laps": [
+    54.449999999997296
+   ],
+   "n_laps": 1,
+   "doo": 2,
+   "oc": 0,
+   "max_speed": 7.836216431770835,
+   "avg_speed_first3": null,
+   "raw_time": 54.449999999997296,
+   "penalty": 4.0,
+   "time": 58.449999999997296,
+   "dq": false,
+   "complete": true,
+   "pass": true,
+   "track": "trackdrive_001000",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 0.7844026639621117,
+   "rms_lat": 0.3444870905349965,
+   "progress": 1.001218778655601
+  },
+  {
+   "discipline": "trackdrive",
+   "result": "finished",
+   "laps": [
+    32.3500000000017
+   ],
+   "n_laps": 1,
+   "doo": 0,
+   "oc": 0,
+   "max_speed": 9.737417838470707,
+   "avg_speed_first3": null,
+   "raw_time": 32.3500000000017,
+   "penalty": 0.0,
+   "time": 32.3500000000017,
+   "dq": false,
+   "complete": true,
+   "pass": true,
+   "track": "trackdrive_001004",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 0.7226770589820771,
+   "rms_lat": 0.3180019889114477,
+   "progress": 1.0016696583606524
+  },
+  {
+   "discipline": "trackdrive",
+   "result": "finished",
+   "laps": [
+    55.14999999999716
+   ],
+   "n_laps": 1,
+   "doo": 0,
+   "oc": 0,
+   "max_speed": 7.944401057655006,
+   "avg_speed_first3": null,
+   "raw_time": 55.14999999999716,
+   "penalty": 0.0,
+   "time": 55.14999999999716,
+   "dq": false,
+   "complete": true,
+   "pass": true,
+   "track": "trackdrive_001008",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 0.6312330676144847,
+   "rms_lat": 0.2805006025088815,
+   "progress": 1.0011926357683891
+  },
+  {
+   "discipline": "skidpad",
+   "result": "finished",
+   "laps": [
+    8.499999999999819,
+    10.000000000000833,
+    9.6000000000015,
+    9.999999999998188
+   ],
+   "n_laps": 4,
+   "doo": 19,
+   "oc": 1,
+   "max_speed": 7.8134344264438,
+   "raw_time": 9.99999999999951,
+   "penalty": 3.8000000000000003,
+   "time": 13.79999999999951,
+   "dq": true,
+   "complete": true,
+   "pass": false,
+   "track": "skidpad",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 2.920335816278732,
+   "rms_lat": 0.770398313944971,
+   "progress": 1.0017653918560983
+  },
+  {
+   "discipline": "acceleration",
+   "result": "finished",
+   "laps": [
+    9.049999999999825
+   ],
+   "n_laps": 1,
+   "doo": 0,
+   "oc": 0,
+   "max_speed": 9.45772212104861,
+   "raw_time": 9.049999999999825,
+   "penalty": 0.0,
+   "time": 9.049999999999825,
+   "dq": false,
+   "complete": true,
+   "pass": true,
+   "track": "acceleration_w3.0",
+   "dr": "light",
+   "seed": 0,
+   "max_lat": 0.20660174758244218,
+   "rms_lat": 0.12077108179347625,
+   "progress": 1.004350694403944
+  }
+ ],
+ "aggregate": {
+  "acceleration/light": {
+   "runs": 1,
+   "pass_rate": 1.0,
+   "completion": 1.0,
+   "doo_per_run": 0.0,
+   "oc_per_run": 0.0,
+   "mean_time": 9.049999999999825,
+   "rms_lat": 0.12077108179347625
+  },
+  "skidpad/light": {
+   "runs": 1,
+   "pass_rate": 0.0,
+   "completion": 1.0,
+   "doo_per_run": 19.0,
+   "oc_per_run": 1.0,
+   "mean_time": 13.79999999999951,
+   "rms_lat": 0.770398313944971
+  },
+  "trackdrive/light": {
+   "runs": 3,
+   "pass_rate": 1.0,
+   "completion": 1.0,
+   "doo_per_run": 0.6666666666666666,
+   "oc_per_run": 0.0,
+   "mean_time": 48.64999999999872,
+   "rms_lat": 0.3143298939851085
+  }
+ }
+}

@@ -7,7 +7,7 @@ Labels (counterfactual expert plans) are computed from state_t by ``label()``.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 import numpy as np
 
@@ -42,6 +42,7 @@ class NoiseCfg:
 
 @dataclass
 class SimCfg:
+  physical_camera: bool = False  # render sensor pixels then use deployment remap
   fps: int = 20
   substeps: int = 5
   max_time: float = 0.0  # 0 = derived from mission length (at 2.5 m/s) + 60 s
@@ -94,15 +95,28 @@ class FSEnv:
                              pitch=m.pitch + self.scene.cam_pitch, yaw=m.yaw + self.scene.cam_yaw)
     if expert_params is None:
       expert_params = sample_expert(self.rng, track.discipline) if self.cfg.randomize_expert else ExpertParams()
+    expert_params = replace(expert_params, v_cap=min(expert_params.v_cap, self.vp.max_speed),
+                            a_acc=min(expert_params.a_acc, self.vp.max_accel),
+                            a_brk=min(expert_params.a_brk, self.vp.max_brake),
+                            a_lat_max=min(expert_params.a_lat_max, self.vp.mu * 9.81),
+                            stop_decel=min(expert_params.stop_decel, self.vp.max_brake))
     self.expert_params = expert_params
     self.cones_xy, self.cone_colors, self.cone_src = self._episode_cones()
     self.mission = Mission(track, expert_params, self.vp, cones_xy=self.cones_xy)
     self.expert = Expert(self.mission, self.vp)
+    self.warper = None
+    self.render_cameras = {k: CAMERAS[k] for k in self.cfg.cameras}
+    if self.cfg.physical_camera:
+      from fsop.geometry.warp import ModelFrameWarper
+      self.warper = ModelFrameWarper(self.profile)
+      self.render_cameras = {c.name: CameraModel(c.name, c.K, c.width, c.height) for c in self.profile.cameras}
+      if any(c.dist or c.fisheye for c in self.profile.cameras):
+        raise ValueError("Physical simulation currently supports rectilinear undistorted sensors only")
     self.renderer = renderer
     if self.cfg.render and self.renderer is None:
       from fsop.sim.render.panda3d_backend import Panda3DRenderer
 
-      self.renderer = Panda3DRenderer({k: CAMERAS[k] for k in self.cfg.cameras})
+      self.renderer = Panda3DRenderer(self.render_cameras)
     self.reset()
 
   # ------------------------------------------------------------------------------------------
@@ -164,7 +178,13 @@ class FSEnv:
     return se2_to_se3(self.state.x, self.state.y, self.state.yaw)
 
   def T_ego_cam(self) -> np.ndarray:
-    return self.mount.T_ego_cam()
+    return self.profile.motion.pose(self.mount, self.state.t).T_ego_cam()
+
+  def calibrated_mount(self) -> CameraMount:
+    """Estimated installation available at deployment; flex is deliberately unobserved."""
+    e = self.profile.calibration_error
+    return CameraMount(**{k: getattr(self.mount, k) + getattr(e, k)
+                          for k in ("x", "y", "z", "roll", "pitch", "yaw")})
 
   def mission_done(self) -> bool:
     return self.s >= self.mission.s_end - 0.5
@@ -185,10 +205,27 @@ class FSEnv:
 
   def observe(self, render: bool = True) -> Obs:
     imgs = {}
+    self.sensor_images = {}  # latest physical RGB pixels, for end-to-end deployment evaluation
     if self.renderer is not None and render:
       T = self.T_world_ego() @ self.T_ego_cam()
-      raw = self.renderer.render({k: T for k in self.cfg.cameras})
+      transforms = {k: T for k in self.render_cameras}
+      if self.warper is not None:
+        from fsop.geometry.warp import _cam_rot
+        for c in self.profile.cameras:
+          offset = np.eye(4)
+          offset[:3, :3] = _cam_rot(*np.deg2rad([c.roll_deg, c.pitch_deg, c.yaw_deg]))
+          transforms[c.name] = T @ offset
+      raw = self.renderer.render(transforms)
+      if self.vp.body_height > 0:
+        from fsop.geometry.mounting import body_image_mask
+
+        for k, image in raw.items():
+          image[body_image_mask(self.render_cameras[k],
+                                     np.linalg.inv(self.T_world_ego()) @ transforms[k], self.vp)] = (35, 38, 42)
       imgs = {k: postprocess(v, self.scene, self.rng, self.state.r) for k, v in raw.items()}
+      if self.warper is not None:
+        self.sensor_images = imgs
+        imgs = self.warper(imgs)
     ev, self.pending_events = self.pending_events, []
     return Obs(self.frame, self.state.t, self.state.copy(), self.s, self.lat, imgs, self.T_world_ego(),
                self.route_desire(), ev, self.noise_val)

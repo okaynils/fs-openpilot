@@ -1,0 +1,39 @@
+name: generic_ackermann_rover
+notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+vehicle:
+  mass: 20.0
+  iz: 1.5
+  lf: 0.22
+  lr: 0.23
+  track: 0.32
+  length: 0.68
+  width: 0.40
+  front_overhang: 0.12
+  rear_overhang: 0.11
+  body_height: 0.14
+  cf: 1800.0
+  cr: 2000.0
+  mu: 0.8
+  max_speed: 2.0
+  max_steer_deg: 30.0
+  max_steer_rate_deg: 100.0
+  max_accel: 1.2
+  max_brake: 2.0
+  tau_steer: 0.15
+  tau_accel: 0.2
+  drag: 0.08
+  v_blend: [2.0, 4.0]
+mount:
+  x: 0.12
+  y: 0.0
+  z: 0.35
+  pitch_deg: 2.0
+cameras:
+  - name: front
+    width: 1280
+    height: 720
+    fx: 700.0
+    fy: 700.0
+    cx: 640.0
+    cy: 360.0
+    slots: [road, wide]

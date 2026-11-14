@@ -5,6 +5,8 @@ Stage-1 training (policy + BEV head) then never touches images. ~130 KB / frame.
 
 from __future__ import annotations
 
+import hashlib
+import json
 from pathlib import Path
 
 import numpy as np
@@ -13,10 +15,17 @@ from tqdm import tqdm
 
 from fsop.data.sim_dataset import Episode, load_index
 from fsop.model.build import build_base
-from fsop.train.device import pick_device
+from fsop.train.device import pick_device, strict_inference_precision
 
 
 def _done(ep: Episode, tag: str, hidden_only: bool) -> bool:
+  manifest = ep.cache_dir(tag) / "identity.json"
+  if ep.meta.get("schema_version", 1) >= 2:
+    if not manifest.exists():
+      return False
+    saved = json.loads(manifest.read_text())
+    if saved.get("episode_sha256") != hashlib.sha256((ep.path / "meta.json").read_bytes()).hexdigest():
+      raise ValueError(f"Stale geometry cache: {manifest}")
   return (ep.cache_dir(tag) / ("hidden.npy" if hidden_only else "s16.npy")).exists()
 
 
@@ -49,6 +58,9 @@ def cache_episode(model, ep: Episode, tag: str, device, batch: int = 32, overwri
   if not hidden_only:
     np.save(d / "final.npy", final)
     np.save(d / "s16.npy", s16)
+  identity = {"episode_sha256": hashlib.sha256((ep.path / "meta.json").read_bytes()).hexdigest(),
+              "vision_identity": getattr(model, "cache_identity", "unspecified")}
+  (d / "identity.json").write_text(json.dumps(identity, indent=2))
   return d
 
 
@@ -58,9 +70,16 @@ def build_cache(dataset: str | Path, ckpt: str | Path | None = None, tag: str | 
   from concurrent.futures import ThreadPoolExecutor
 
   device = pick_device()
+  strict_inference_precision()
   model = build_base(ckpt).to(device).eval()
   tag = tag or ("op_b361e952" if ckpt is None else Path(ckpt).parent.parent.name + "_" + Path(ckpt).stem)
+  model.cache_identity = ((hashlib.sha256(Path(ckpt).read_bytes()).hexdigest() if ckpt else "op_b361e952")
+                          + ":fp32_no_tf32_v1")
   eps = [Episode(Path(dataset) / e["id"]) for e in load_index(dataset)]
+  for ep in eps:
+    identity = ep.cache_dir(tag) / "identity.json"
+    if identity.exists() and json.loads(identity.read_text()).get("vision_identity") != model.cache_identity:
+      raise ValueError(f"Cache tag {tag} belongs to another checkpoint; use a new tag")
   eps = [ep for ep in eps if not _done(ep, tag, hidden_only)]
 
   def load(ep: Episode):

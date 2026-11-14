@@ -1,0 +1,116 @@
+{
+  "basis": "Published resource rates applied to measured execution only, not invoice; incomplete accounting",
+  "rates_url": "https://modal.com/pricing",
+  "excluded": "startup, idle, orchestrators, staging, pilot training, earlier tests/default benchmarks, CPU generation workers, GPU generation workers, diagnostic probes, stopped runs, preemption retries, storage",
+  "stages": [
+    {
+      "stage": "Pilot data",
+      "measured_seconds": 1129.786,
+      "requested_cpu_cores": 8,
+      "requested_memory_gib": 16,
+      "gpu": null,
+      "execution_cost_usd_low": 0.15853157152,
+      "execution_cost_usd_high": 0.15853157152
+    },
+    {
+      "stage": "Image-only fit",
+      "measured_seconds": 164.643630266,
+      "requested_cpu_cores": 16,
+      "requested_memory_gib": 64,
+      "gpu": "A100",
+      "execution_cost_usd_low": 0.15388910833702488,
+      "execution_cost_usd_high": 0.15388910833702488
+    },
+    {
+      "stage": "Conditioned fit",
+      "measured_seconds": 165.355060816,
+      "requested_cpu_cores": 16,
+      "requested_memory_gib": 64,
+      "gpu": "A100",
+      "execution_cost_usd_low": 0.15455406824349888,
+      "execution_cost_usd_high": 0.15455406824349888
+    },
+    {
+      "stage": "Anchored fit",
+      "measured_seconds": 151.662671328,
+      "requested_cpu_cores": 16,
+      "requested_memory_gib": 64,
+      "gpu": "A100",
+      "execution_cost_usd_low": 0.14175606563685503,
+      "execution_cost_usd_high": 0.14175606563685503
+    },
+    {
+      "stage": "Full feature cache",
+      "measured_seconds": 90.550956726,
+      "requested_cpu_cores": 8,
+      "requested_memory_gib": 32,
+      "gpu": "L4/A10",
+      "execution_cost_usd_low": 0.036024792623871836,
+      "execution_cost_usd_high": 0.04363107298885584
+    },
+    {
+      "stage": "Full analysis/export",
+      "measured_seconds": 44.916400194,
+      "requested_cpu_cores": 8,
+      "requested_memory_gib": 32,
+      "gpu": "L4/A10",
+      "execution_cost_usd_low": 0.01786954065318096,
+      "execution_cost_usd_high": 0.021642518269476958
+    },
+    {
+      "stage": "Anchored analysis/export",
+      "measured_seconds": 36.711,
+      "requested_cpu_cores": 8,
+      "requested_memory_gib": 32,
+      "gpu": "L4/A10",
+      "execution_cost_usd_low": 0.01460510424,
+      "execution_cost_usd_high": 0.01768882824
+    },
+    {
+      "stage": "Minimal analysis/export",
+      "measured_seconds": 90.475863457,
+      "requested_cpu_cores": 8,
+      "requested_memory_gib": 32,
+      "gpu": "L4/A10",
+      "execution_cost_usd_low": 0.03599491751773288,
+      "execution_cost_usd_high": 0.04359489004812088
+    },
+    {
+      "stage": "Final paired open-loop",
+      "measured_seconds": 32.118,
+      "requested_cpu_cores": 8,
+      "requested_memory_gib": 32,
+      "gpu": "L4/A10",
+      "execution_cost_usd_low": 0.01277782512,
+      "execution_cost_usd_high": 0.015475737120000001
+    },
+    {
+      "stage": "Final runtime subset",
+      "measured_seconds": 1055.2351558208466,
+      "requested_cpu_cores": 4,
+      "requested_memory_gib": 16,
+      "gpu": "L4/A10",
+      "execution_cost_usd_low": 0.32703847949199677,
+      "execution_cost_usd_high": 0.4156782325809479
+    },
+    {
+      "stage": "Final full test execution",
+      "measured_seconds": 80.97,
+      "requested_cpu_cores": 8,
+      "requested_memory_gib": 32,
+      "gpu": "L4/A10",
+      "execution_cost_usd_low": 0.032213104799999996,
+      "execution_cost_usd_high": 0.039014584799999995
+    },
+    {
+      "stage": "Final full closed-loop",
+      "measured_seconds": 6253.727472305298,
+      "requested_cpu_cores": 4,
+      "requested_memory_gib": 16,
+      "gpu": "L4/A10",
+      "execution_cost_usd_low": 1.9381552182168578,
+      "execution_cost_usd_high": 2.4634683258905032
+    }
+  ],
+  "metered_record": "modal_metered_costs.json"
+}

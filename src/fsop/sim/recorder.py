@@ -77,10 +77,12 @@ class EpisodeWriter:
     self.frames: dict[str, list[np.ndarray]] = {c: [] for c in env.cfg.cameras}  # written at close (one shard)
     self.states, self.plans, self.desires, self.down = [], [], [], []
     self.events = []
+    self.camera_poses = []
 
   def add(self, obs: Obs, plan: np.ndarray) -> None:
     for c, img in obs.images.items():
       self.frames[c].append(rgb_to_model(img))
+    self.camera_poses.append(self.env.T_ego_cam())
     st = obs.state
     self.states.append([obs.t, st.x, st.y, st.yaw, st.vx, st.vy, st.r, st.steer, st.accel, obs.s, obs.lat, obs.noise])
     self.plans.append(plan.astype(np.float32))
@@ -93,6 +95,7 @@ class EpisodeWriter:
     env = self.env
     write_frames(self.dir / "frames.zarr", {c: np.stack(v) if v else np.zeros((0, 6, 128, 256), np.uint8)
                                             for c, v in self.frames.items()})
+    np.save(self.dir / "camera_poses.npy", np.asarray(self.camera_poses))
     np.save(self.dir / "states.npy", np.asarray(self.states, np.float64))
     np.save(self.dir / "plan.npy", np.asarray(self.plans, np.float32))
     np.save(self.dir / "desire.npy", np.asarray(self.desires, np.float32))
@@ -100,6 +103,10 @@ class EpisodeWriter:
     cls = np.array([CONE_CLASS_INDEX.get(c, -1) for c in env.cone_colors], np.float64)
     np.save(self.dir / "cones.npy", np.c_[env.cones_xy, cls])
     save_json(env.track, self.dir / "track.json")
+    if env.warper is not None:
+      white = {c.name: np.full((c.height, c.width, 3), 255, np.uint8) for c in env.profile.cameras}
+      masks = {k: (v[..., 0] == 255) for k, v in env.warper(white).items()}
+      np.savez(self.dir / "sensor_masks.npz", **masks)
     with open(self.dir / "events.jsonl", "w") as f:
       for e in self.events:
         f.write(json.dumps(e, default=float) + "\n")
@@ -110,8 +117,11 @@ class EpisodeWriter:
       "record_every": self.record_every, "cameras": list(env.cfg.cameras), "state_cols": STATE_COLS,
       "mount": {"x": m.x, "y": m.y, "z": m.z, "roll": m.roll, "pitch": m.pitch, "yaw": m.yaw},
       "scene": env.scene.to_dict(), "vehicle": asdict(env.vp), "expert": asdict(env.expert_params),
-      "dr": asdict(env.dr_cfg), "summary": summary, "schema_version": 1, "label_dt": env.cfg.label_dt,
+      "dr": asdict(env.dr_cfg), "summary": summary, "schema_version": 2, "label_dt": env.cfg.label_dt,
     }
+    meta["profile"] = env.profile.to_dict()
+    meta["calibrated_mount"] = asdict(env.calibrated_mount())
+    meta["trajectory_origin"] = "ground_projected_cog"
     reference = env.mission.racing_line
     meta["label_planner"] = {"version": PLANNER_VERSION, "mode": env.expert_params.path_mode}
     if reference is not None:

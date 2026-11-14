@@ -52,7 +52,9 @@ a **living research project**: it improves over time, and every model is recorde
   200 FPS for both cameras on an M1, with exact pixel geometry.
   - **Driving data:** an expert driver with noise injection, plus counterfactual "recovery" labels.
   - **Referee:** laps, DOO, OC, stop zone, DQ rules.
-  - **Domain randomization:** lighting, textures, cones, camera mount, image effects, dynamics.
+  - **Domain randomization:** lighting, textures, cones, camera mount and image effects.
+    The experimental [transfer distribution](docs/transfer.md) also samples coherent vehicle families,
+    physical sensor geometry, calibration errors and smooth mounting motion.
   - **Venue mode** (`--venue-prob`): real sky panoramas, event asphalt, banner walls, fences, people and
     shadows ([classic vs venue](docs/media/venue_comparison.jpg)). Measured on a real FSG clip with
     `fsop eval real-clip`, it raises cone AP from 0.60 to 0.71 over the classic scenes.
@@ -132,6 +134,11 @@ uv run fsop sim drive --track gen:7 --ckpt runs/cuda_racing_v6/ckpt/best.pt
 ```
 
 ## Use it for your team
+
+The [camera and vehicle transfer experiment](docs/transfer.md) adds calibrated model inputs and generic
+Formula Student/rover profiles. The [experiment report](benchmarks/transfer/report.md) recommends retaining the current default:
+trajectory-error improvements did not establish reliable closed-loop camera transfer. The training steps below remain available for legacy checkpoints
+and configurations outside the measured range.
 
 1. **Describe your car.** Copy [`configs/profiles/example_team.yaml`](configs/profiles/example_team.yaml):
    vehicle geometry and limits, camera mount, camera intrinsics and distortion.

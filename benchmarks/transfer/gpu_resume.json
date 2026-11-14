@@ -1,0 +1,21 @@
+{
+  "episode_ids": [
+    "train_7_drive",
+    "train_7_start",
+    "train_9_drive",
+    "train_9_start",
+    "train_11_drive",
+    "train_11_start",
+    "train_13_drive",
+    "train_13_start",
+    "train_15_drive",
+    "train_15_start",
+    "val_1001_drive",
+    "val_1001_start",
+    "val_1003_drive",
+    "val_1003_start"
+  ],
+  "seconds": 305.903746843338,
+  "source": "source.tar.gz",
+  "renderer": "GPU EGL"
+}

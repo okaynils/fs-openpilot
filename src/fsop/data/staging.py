@@ -34,5 +34,8 @@ def stage_dataset(source: Path, destination: Path, cache_tag: str, stage: int, w
   with ThreadPoolExecutor(workers) as pool:
     list(pool.map(copy_episode, ids))
   # Publish only after every episode and external frame store is present.
+  for name in ("manifest.json", "distribution.yaml"):
+    if (source / name).exists():
+      shutil.copy2(source / name, destination / name)
   shutil.copy2(source / "index.json", destination / "index.json")
   return destination

@@ -1,0 +1,140 @@
+[
+  {
+    "stage": "baseline_original",
+    "app_id": "ap-OOSS58RG3IJwuEvKadP2ee",
+    "url": "https://modal.com/apps/okaynils/main/ap-OOSS58RG3IJwuEvKadP2ee",
+    "status": "complete"
+  },
+  {
+    "stage": "baseline_strict",
+    "app_id": "ap-Dq72hiIwi2d3NiDEjTpqCV",
+    "url": "https://modal.com/apps/okaynils/main/ap-Dq72hiIwi2d3NiDEjTpqCV",
+    "status": "complete"
+  },
+  {
+    "stage": "pilot_data",
+    "app_id": "ap-O6e4JZ9DDsxlOP2Uelgh91",
+    "url": "https://modal.com/apps/okaynils/main/ap-O6e4JZ9DDsxlOP2Uelgh91",
+    "status": "complete"
+  },
+  {
+    "stage": "pilot_training",
+    "app_id": "ap-YmjvzqemK96zmH93U7kEIx",
+    "url": "https://modal.com/apps/okaynils/main/ap-YmjvzqemK96zmH93U7kEIx",
+    "status": "complete"
+  },
+  {
+    "stage": "full_data_cpu",
+    "app_id": "ap-lFjoDAxu0sEE5Zc6XrYJKA",
+    "url": "https://modal.com/apps/okaynils/main/ap-lFjoDAxu0sEE5Zc6XrYJKA",
+    "status": "stopped; remaining episodes resumed on GPU"
+  },
+  {
+    "stage": "full_data_gpu_resume",
+    "app_id": "ap-SUdNjBR9gCIySZhPoiDutj",
+    "url": "https://modal.com/apps/okaynils/main/ap-SUdNjBR9gCIySZhPoiDutj",
+    "status": "complete"
+  },
+  {
+    "stage": "full_training",
+    "app_id": "ap-ymHEu5B6wVaS9MXTN2SLwi",
+    "url": "https://modal.com/apps/okaynils/main/ap-ymHEu5B6wVaS9MXTN2SLwi",
+    "status": "complete"
+  },
+  {
+    "stage": "full_validation",
+    "app_id": "ap-3UaUfqRpS6qBR28VRGZmtr",
+    "url": "https://modal.com/apps/okaynils/main/ap-3UaUfqRpS6qBR28VRGZmtr",
+    "status": "complete"
+  },
+  {
+    "stage": "anchored_training",
+    "app_id": "ap-6w8jJmevrdOmPLBQz1l1HG",
+    "url": "https://modal.com/apps/okaynils/main/ap-6w8jJmevrdOmPLBQz1l1HG",
+    "status": "complete"
+  },
+  {
+    "stage": "anchored_validation",
+    "app_id": "ap-LCoLPkGhe1AcAEYuhhDkTQ",
+    "url": "https://modal.com/apps/okaynils/main/ap-LCoLPkGhe1AcAEYuhhDkTQ",
+    "status": "complete"
+  },
+  {
+    "stage": "specialization",
+    "app_id": "ap-sbAtyL7roqqnAll3WA6AVL",
+    "url": "https://modal.com/apps/okaynils/main/ap-sbAtyL7roqqnAll3WA6AVL",
+    "status": "complete"
+  },
+  {
+    "stage": "final_data",
+    "app_id": "ap-ZpsLElZyuAa66JUO5HMDHI",
+    "url": "https://modal.com/apps/okaynils/main/ap-ZpsLElZyuAa66JUO5HMDHI",
+    "status": "complete"
+  },
+  {
+    "stage": "minimal_export",
+    "app_id": "ap-Z3RtCpmA3TimESUSsKWkEE",
+    "url": "https://modal.com/apps/okaynils/main/ap-Z3RtCpmA3TimESUSsKWkEE",
+    "status": "complete"
+  },
+  {
+    "stage": "final_open_loop",
+    "app_id": "ap-7xxNxKO1ojZ3NJGoR35w6P",
+    "url": "https://modal.com/apps/okaynils/main/ap-7xxNxKO1ojZ3NJGoR35w6P",
+    "status": "complete"
+  },
+  {
+    "stage": "closed_loop_invalid",
+    "app_id": "ap-RNGjrmNdo6fdhS5wRqnUz7",
+    "url": "https://modal.com/apps/okaynils/main/ap-RNGjrmNdo6fdhS5wRqnUz7",
+    "status": "stopped; stale renderer scenes; excluded"
+  },
+  {
+    "stage": "runtime_invalid",
+    "app_id": "ap-bh8778y5QvN6P0uTOd5QjH",
+    "url": "https://modal.com/apps/okaynils/main/ap-bh8778y5QvN6P0uTOd5QjH",
+    "status": "stopped; stale renderer scenes; excluded"
+  },
+  {
+    "stage": "diagnostics",
+    "app_id": "ap-8tBrU6kgwB0B1vW2jhGYhZ",
+    "url": "https://modal.com/apps/okaynils/main/ap-8tBrU6kgwB0B1vW2jhGYhZ",
+    "status": "complete"
+  },
+  {
+    "stage": "minimal_default",
+    "app_id": "ap-a0VDsodgk783Y7MxOG2whS",
+    "url": "https://modal.com/apps/okaynils/main/ap-a0VDsodgk783Y7MxOG2whS",
+    "status": "complete"
+  },
+  {
+    "stage": "renderer_isolation_tests",
+    "app_id": "ap-t3uZFChXsgy9q5LZYglqjD",
+    "url": "https://modal.com/apps/okaynils/main/ap-t3uZFChXsgy9q5LZYglqjD",
+    "status": "3 passed"
+  },
+  {
+    "stage": "closed_loop_corrected",
+    "app_id": "ap-GJ8QGGImCBAuVmXyDPKlOR",
+    "url": "https://modal.com/apps/okaynils/main/ap-GJ8QGGImCBAuVmXyDPKlOR",
+    "status": "complete; 60 unique records, 12 verified case identities"
+  },
+  {
+    "stage": "runtime_corrected",
+    "app_id": "ap-EDnUkvfmNL9k6z464rmHq3",
+    "url": "https://modal.com/apps/okaynils/main/ap-EDnUkvfmNL9k6z464rmHq3",
+    "status": "complete; orchestrator preemption caused automatic retries, report contains 12 unique comparisons"
+  },
+  {
+    "stage": "final_tests",
+    "app_id": "ap-snJoWl6OMOtDBBBXV6Adz0",
+    "url": "https://modal.com/apps/okaynils/main/ap-snJoWl6OMOtDBBBXV6Adz0",
+    "status": "stopped during discovery: pytest traversed mounted volume without explicit tests path; no tests executed"
+  },
+  {
+    "stage": "final_tests_explicit_directory",
+    "app_id": "ap-HvLDRExtJPwflRIM4hbhF7",
+    "url": "https://modal.com/apps/okaynils/main/ap-HvLDRExtJPwflRIM4hbhF7",
+    "status": "71 passed, 6 upstream warnings, 80.97 seconds"
+  }
+]

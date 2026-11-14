@@ -22,3 +22,13 @@ def autocast_ctx(device: torch.device, enabled: bool = True):
   import contextlib
 
   return contextlib.nullcontext()
+
+
+def strict_inference_precision() -> None:
+  """Use IEEE FP32 for inference/cache parity with the exported CPU reference.
+
+  cuDNN TF32 convolutions measurably perturb this model's metric trajectory head.
+  Explicit BF16 training autocast remains a separate, intentional choice.
+  """
+  torch.backends.cuda.matmul.allow_tf32 = False
+  torch.backends.cudnn.allow_tf32 = False

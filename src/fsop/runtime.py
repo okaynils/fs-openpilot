@@ -17,6 +17,7 @@ car's AS state machine.
 from __future__ import annotations
 
 import base64
+import json
 import pickle
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -45,20 +46,40 @@ class OnnxEngine:
     import onnxruntime as ort
 
     meta = {p.key: p.value for p in onnx.load(str(path), load_external_data=False).metadata_props}
+    version = meta.get("fsop_context_version", "0")
+    if version not in ("0", "1", "2"):
+      raise ValueError(f"Unsupported geometry contract version: {version}")
+    self.context_version = int(version)
     self.slices = pickle.loads(base64.b64decode(meta["output_slices"]))
     if providers is None:  # CoreML/TensorRT fp16 paths drift on the long plan horizon -> opt-in only
       avail = ort.get_available_providers()
       providers = [p for p in ("CUDAExecutionProvider", "CPUExecutionProvider") if p in avail]
+    providers = [("CUDAExecutionProvider", {"use_tf32": 0}) if p == "CUDAExecutionProvider" else p
+                 for p in providers]
     self.sess = ort.InferenceSession(str(path), providers=providers)
     self.types = {i.name: i.type for i in self.sess.get_inputs()}
+    if (version != "0") != ("geometry" in self.types):
+      raise ValueError("ONNX geometry input disagrees with its versioned contract")
+    if version != "0":
+      from fsop.model.conditioning import context_fields
+      fields = context_fields(self.context_version)
+      geometry_input = next(i for i in self.sess.get_inputs() if i.name == "geometry")
+      if geometry_input.shape != [1, len(fields)]:
+        raise ValueError("Unsupported ONNX geometry shape")
+      if version == "2" and json.loads(meta.get("fsop_context_fields", "[]")) != list(fields):
+        raise ValueError("ONNX geometry fields disagree with context v2")
 
-  def __call__(self, img, big, feats, desire, traffic) -> dict[str, np.ndarray]:
+  def __call__(self, img, big, feats, desire, traffic, geometry=None) -> dict[str, np.ndarray]:
     def f(x, name):
       return x.astype(np.float16) if "float16" in self.types[name] else x.astype(np.float32)
 
     feed = {"img": img[None], "big_img": big[None], "features_buffer": f(feats[None], "features_buffer"),
             "desire_pulse": f(desire[None], "desire_pulse"),
             "traffic_convention": f(traffic[None], "traffic_convention"), "action_t": f(np.zeros((1, 2)), "action_t")}
+    if "geometry" in self.types:
+      if geometry is None:
+        raise ValueError(f"Export requires calibrated geometry context v{self.context_version}")
+      feed["geometry"] = f(geometry[None], "geometry")
     out = self.sess.run(None, feed)[0][0].astype(np.float32)
     return {k: out[s] for k, s in self.slices.items()}
 
@@ -69,22 +90,29 @@ class TorchEngine:
 
     from fsop.model.build import load_fs
     from fsop.model.export import TOPK, ExportWrapper
-    from fsop.train.device import pick_device
+    from fsop.train.device import pick_device, strict_inference_precision
 
     self.torch = torch
     self.device = pick_device(device)
+    strict_inference_precision()
     self.m = ExportWrapper(load_fs(ckpt)).to(self.device).eval()
+    self.context_version = self.m.m.context_version if self.m.m.context_adapter is not None else 0
     n = 2576 + 4 * TOPK
     self.slices = {"hidden_state": slice(1064, 1576), "plan": slice(1576, 2566), "cones_bev": slice(2576, n)}
     if self.m.m.img is not None:
       self.slices.update(cones_img_road=slice(n, n + 6 * TOPK), cones_img_wide=slice(n + 6 * TOPK, n + 12 * TOPK))
 
-  def __call__(self, img, big, feats, desire, traffic) -> dict[str, np.ndarray]:
+  def __call__(self, img, big, feats, desire, traffic, geometry=None) -> dict[str, np.ndarray]:
     t = self.torch
     with t.no_grad():
       args = [t.from_numpy(x[None]).to(self.device) for x in (img, big)]
       args += [t.from_numpy(np.asarray(x[None], np.float32)).to(self.device) for x in (feats, desire, traffic)]
-      out = self.m(*args, t.zeros(1, 2, device=self.device))[0].cpu().numpy()
+      args.append(t.zeros(1, 2, device=self.device))
+      if self.m.m.context_adapter is not None:
+        if geometry is None:
+          raise ValueError(f"Checkpoint requires calibrated geometry context v{self.context_version}")
+        args.append(t.from_numpy(geometry[None]).to(self.device))
+      out = self.m(*args)[0].cpu().numpy()
     return {k: out[s] for k, s in self.slices.items()}
 
 
@@ -98,12 +126,17 @@ class FSDriver:
     self.engine = OnnxEngine(model, providers) if str(model).endswith(".onnx") else TorchEngine(model)
     self.warper = ModelFrameWarper(self.profile)
     self.ts = TemporalState()
+    self.controller_name = controller
     self.ctrl = make_controller(controller, self.profile.vehicle)
     self.min_score = min_score
+    from fsop.model.conditioning import geometry_context
+    self.geometry = geometry_context(self.profile.mount, self.profile.vehicle, self.engine.context_version or 1)
     self.T_ego_cam = self.profile.mount.T_ego_cam()
 
   def reset(self) -> None:
     self.ts = TemporalState()
+    from fsop.eval.controller import make_controller
+    self.ctrl = make_controller(self.controller_name, self.profile.vehicle)
 
   def step(self, images: dict[str, np.ndarray], v_ego: float, desire: np.ndarray | None = None,
            already_model_frame: bool = False) -> DriverOutput:
@@ -111,7 +144,8 @@ class FSDriver:
     slots = images if already_model_frame else self.warper(images)
     pair = self.ts.push_frames({s: rgb_to_model(im) for s, im in slots.items()})
     des = self.ts.push_desire(np.zeros(8, np.float32) if desire is None else desire.astype(np.float32))
-    out = self.engine(pair["road"], pair["wide"], self.ts.features(), des, np.array([1.0, 0.0], np.float32))
+    out = self.engine(pair["road"], pair["wide"], self.ts.features(), des, np.array([1.0, 0.0], np.float32),
+                      self.geometry)
     self.ts.push_hidden(out["hidden_state"])
     p = out["plan"].reshape(2, 33, 15)
     plan = op_to_ego_plan(p[0])
