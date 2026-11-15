@@ -1,0 +1,16 @@
+version: 1
+name: current_policy_refresh_pilot_v7
+source_design: configs/distributions/transfer_v2_design.yaml
+configuration_indices: [0, 3, 4, 13]
+seconds: 40.0
+random_start: false
+track_seed_base: 882101
+scene_seed_base: 7301
+collectors:
+  previous: runs/transfer_minimal_v1/ckpt/best.pt
+  current: runs/transfer_state_speed_v5/ckpt/step_000250.pt
+intervention:
+  lateral_limit_m: 1.25
+  steering_disagreement_rad: 0.20
+  hold_seconds: 1.5
+  lateral_reference: reference_path

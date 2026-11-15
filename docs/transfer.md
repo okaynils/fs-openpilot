@@ -227,3 +227,171 @@ source snapshot. For historical reproduction, restore the corresponding archived
 source/configuration first. The final test configurations are already disclosed
 and must not be reused for selecting a new candidate; reserve new complete
 configurations for any further iteration.
+
+### Recovery-transfer experiment (v2, negative result)
+
+The next experiment is specified in [its frozen comparison plan](../benchmarks/transfer_v2/plan.md).
+[The versioned design](../configs/distributions/transfer_v2_design.yaml) deliberately
+covers installation extremes for 24 generic car/rover configurations. Complete new
+validation and final-test configurations are separate. Existing v1 test results remain
+public regression cases; they are not reused as independent final evidence.
+
+New recordings can carry `label_valid.npy`: infeasible counterfactual trajectories
+are excluded as supervision, while every observed frame remains available to temporal
+history. Recovery collection mixes the current policy with marked expert takeovers;
+its true track error, expert action and mission progress are privileged collection
+inputs, not additional deployed-policy inputs. Recordings retain the complete referee
+event log, including contacts between stored 5 Hz frames.
+
+Conditioned checkpoints also declare `conditioning_scope`: `current` preserves the
+v1 behavior; `sequence` applies the same calibrated installation/vehicle context to
+all observed history features. Zero-padding remains zero. Both use raw, unconditioned
+vision caches and the existing 13-field geometry contract; the runtime queue format
+is unchanged. Missing scope metadata means legacy `current`; unknown scopes are
+rejected. Scope is part of resume compatibility and exported ONNX metadata.
+Sequence-conditioned PyTorch checkpoints require the updated loader; the older v1
+loader does not implement sequence conditioning and is unsupported for these files.
+
+V2 saves explicitly named snapshots for closed-loop validation selection. A training
+run's `best.pt` still denotes its offline validation metric and must not be confused
+with a driving-selected candidate. No v2 model is recommended as a replacement until
+paired driving evaluation and default-benchmark retention have been completed.
+
+
+V2 recovery recordings deliberately reach camera translations of x = −0.8…1.1 m,
+y = ±0.3 m, height = 0.75…1.65 m for Formula cars, and x = −0.25…0.35 m,
+y = ±0.12 m, height = 0.22…0.65 m for rovers. These are experimental distribution
+bounds, **not a validated operating envelope**. See the complete versioned profiles
+and [realized configuration ranges](../benchmarks/transfer_v2/configuration_ranges.json)
+for coupled vehicle dynamics and camera intrinsics. V2's new physical images are
+640×360; other image conditions come from preserved v1 replay.
+
+The bounded v2 validation comparison did not improve driving transfer: the best new
+snapshot passes 2/4 cases, versus 3/4 for both references. Expert-plan tracking passes
+all four. Added assisted-policy data was 94.5% expert-controlled on rovers, limiting
+its coverage of the model's own recovery states. Sequence conditioning and low-rate
+policy adaptation did not resolve the failure. These features and artifacts remain
+experimental; teams must not interpret the available profile bounds as a guarantee
+that calibration alone is sufficient for deployment.
+
+
+On the independent v2 final suite, the original baseline passes **7/12**, the previous
+candidate **6/12**, and the selected v2 candidate **5/12**. Actual contacts are
+153, 90 and 140 respectively. The selected model retains 3/3 default trackdrive
+completions with two contacts and ADE 1.385 m, but should **not replace the default**.
+The new training and runtime contracts are available for research; the shared-model
+transfer goal remains unmet. [Full experiment report](../benchmarks/transfer_v2/report.md),
+[reproduction commands](../benchmarks/transfer_v2/commands.md),
+[checkpoint/export hashes](../benchmarks/transfer_v2/artifacts.json).
+
+The selected research checkpoint is `runs/transfer_selected_v2/selected.pt` and its
+local export is `artifacts/export/transfer_selected_v2/candidate.onnx`. Modal volume
+`fsop` stores both under `runs/transfer_selected_v2/`; all original named training
+snapshots remain under their individual run directories. The selected model uses
+current-feature conditioning; sequence conditioning is an evaluated experimental
+alternative. Use the accompanying source and calibration/profile contract.
+
+
+The subsequent [v3 investigation](../benchmarks/transfer_v3/report.md) tests an
+optional training-side steering-consistency loss (`w_steering`, default zero).
+It compares trajectories through the existing follower using sampled vehicle geometry
+and speed. These values already exist in the data/controller; no deployment input
+contract changes. Checkpoints remain compatible with the v2 calibrated model loader.
+This remains experimental until full paired driving and default-retention evaluation.
+
+The v3 control-loss experiment did not improve full-course validation: both fixed
+snapshots passed 2/4 configurations, versus 3/4 for the original baseline. It is not
+recommended for promotion. A collector defect was also isolated: centerline offset
+incorrectly triggered expert takeover when the intended racing line was offset.
+The optional, versioned `reference_path_recovery_v3` collection policy measures error
+relative to that racing line. It uses privileged simulator route information during
+collection only; deployment requirements are unchanged. A matched diagnostic reduced
+expert takeover from 100% to 9.6% with all labels feasible and zero contacts. Whether
+training on the corrected data improves transfer is still under evaluation.
+
+For new recovery-data experiments, explicitly select
+[`reference_path_guarded_v3`](../configs/distributions/transfer_collection_guarded_v3.yaml).
+It corrects the lateral reference while preserving the original steering safeguard.
+Across the fixed 24 training configurations, it produced 99.33% feasible labels and
+reduced mean rover expert takeover from 94.55% to 47.95%. The unguarded variant failed
+the collection quality gate and was not used for training. Implicit legacy settings
+remain unchanged for historical reproduction; record the explicit intervention profile
+in each new dataset. These results validate collection behavior, not shared-model
+transfer or real-vehicle readiness.
+
+
+Training on the guarded data also failed the model promotion gate: both fixed v3
+snapshots pass 2/4 validation configurations, versus 3/4 for the original baseline.
+The later snapshot reduces contacts to 26 from baseline 33, but loses a completion;
+it should not replace the default. A separate counterfactual test confirms that the
+current policy cannot distinguish different measured speeds with identical images
+and empty history, although the controller receives speed. This is a documented
+initialization limitation, not proof that speed conditioning alone will fix driving.
+
+For image-stage training that updates vision weights, `history_mode: fresh` rebuilds
+the eight policy-relevant past features from recorded frame pairs using the current
+encoder. It preserves 0.2-second spacing, startup padding and detached runtime-queue
+semantics, and requires raw frames. It does not read `cache_tag` features. The legacy
+`cached` mode retains its initialization-cache approximation for reproduction;
+changing vision weights requires regenerating caches before any later frozen stage.
+Resume rejects a changed history mode. This training-only option introduces no new
+deployment input. Its transfer benefit is being evaluated in the
+[v4 comparison](../benchmarks/transfer_v4/report.md).
+
+
+### Experimental measured-speed input
+
+New research checkpoints may declare `state_mode: speed`, `state_version: 1` and
+`speed_scale_mps: 15.0`. They require the current measured longitudinal velocity in
+m/s in addition to calibration and vehicle configuration. `FSDriver.step(...,
+v_ego=...)` forwards the same speed already used by the controller to the policy;
+the model normalizes it internally. It must correspond to the current image time,
+be finite, and use forward-positive vehicle coordinates. Simulator experiments use
+exact simulated speed; noisy, delayed real odometry has not been validated.
+
+The ONNX input is `speed`, float32 `[1, 1]`, in m/s. Geometry and visual feature
+caches retain their existing contracts. A missing/invalid speed is rejected before
+runtime temporal queues advance. Legacy checkpoints declare no state input and
+retain their prior behavior. `state_mode: constant` is a research control with the
+same adapter capacity but a constant zero state; it has no new deployment input.
+Only `speed` checkpoints consume measured velocity for prediction. These modes
+are experimental and do not establish improved transfer or replace the default.
+
+
+For training that includes sensor startup or restart, `include_initial_frame: true`
+includes valid recorded frame-zero labels with empty history and a repeated initial
+image pair. This option applies consistently to training and validation samples;
+its default is false to preserve historical experiments. Changing it requires a
+new run rather than resuming an incompatible sampling contract. It does not create
+additional low-speed data or establish restart robustness by itself.
+
+
+The [v5 paired experiment](../benchmarks/transfer_v5/report.md) completed training
+and full validation for speed and capacity-matched constant-input adapters. The
+best new checkpoint passes 2/4 configurations versus baseline/v1 3/4; all new
+snapshots fail both rover cases. Measured speed improves offline error relative to
+the control but does not establish successful transfer. Keep the current default.
+
+
+The [v7 correction-data pilot](../benchmarks/transfer_v7/report.md) adds a
+speed/wheelbase-aware collection safeguard and matched data from successive
+policies. Its current-policy arm has a locally verified experimental ONNX export,
+but the control fit and paired driving evaluation remain incomplete after a Modal
+spending-limit interruption. Export parity is not evidence of better transfer.
+This checkpoint is not a recommended replacement for the current default.
+
+
+Simulation benchmarks advance a fixed timestep after each prediction. Measured
+inference latency is reported, but elapsed compute time is not automatically
+added to actuator delay. Check the full deployment pipeline against the 20 Hz
+deadline on target hardware; simulated completion does not establish real-time
+tracking performance.
+
+### Latest rover result
+
+The completed [v7 supplemental CPU comparison](../benchmarks/transfer_v7/report.md#completed-supplemental-cpu-comparison)
+finds v1 (`runs/transfer_minimal_v1/ckpt/best.pt`) passes one of two rover
+validation configurations cleanly, with zero contacts across both and one off-course
+event on the failed case. The v7 refresh candidate and its ONNX export pass neither.
+V1 is useful for simulator experimentation, but no candidate has established reliable
+rover transfer or real-vehicle readiness. Keep the original default unchanged.

@@ -1,0 +1,14 @@
+[
+  {
+    "path": "artifacts/export/transfer_state_pilot_v5/constant.onnx",
+    "sha256": "05acc041e7bd7b89bd6173391d65d8e33793092ab9f62e3936a39fe107e5ef64",
+    "bytes": 126451245,
+    "role": "pilot research export; not default"
+  },
+  {
+    "path": "artifacts/export/transfer_state_pilot_v5/speed.onnx",
+    "sha256": "add36a73b1247f6f113786b757aa504ffd5deaa0c66b9633ea8b5ea82ae62337",
+    "bytes": 126450956,
+    "role": "pilot research export; not default"
+  }
+]

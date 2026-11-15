@@ -1,0 +1,253 @@
+{
+  "configuration": {
+    "name": "train_v2_03",
+    "family": "rover",
+    "regime": "interpolation",
+    "profile": {
+      "name": "train_v2_03",
+      "team": "",
+      "vehicle": {
+        "max_speed": 2.4758300960804167,
+        "body_height": 0.1341507217828388,
+        "mass": 17.59644472797635,
+        "iz": 1.2117587072854408,
+        "lf": 0.21080827708731809,
+        "lr": 0.22039047150037802,
+        "track": 0.3066302212179172,
+        "length": 0.7057946100440371,
+        "width": 0.38328777652239654,
+        "front_overhang": 0.1691917229126819,
+        "rear_overhang": 0.10540413854365904,
+        "cf": 1583.6800255178716,
+        "cr": 1759.6444727976352,
+        "mu": 0.8,
+        "max_accel": 1.3826446388702776,
+        "max_brake": 3.1760938031387522,
+        "tau_steer": 0.09960160418737857,
+        "tau_accel": 0.3331148204364527,
+        "drag": 0.0734547598157413,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 26.99806357373856,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": 0.35,
+        "y": 0.12,
+        "z": 0.22,
+        "roll_deg": 0.5162756795013081,
+        "pitch_deg": -0.15298892210234483,
+        "yaw_deg": -0.5523146484043333
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 384.4252493329127,
+          "fy": 384.4252493329127,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.485469991593921,
+        "phase": [
+          5.268125533625996,
+          2.901716873169839,
+          4.111693195321083,
+          2.2492947118382896,
+          3.6922230343273865,
+          4.739238596708787
+        ]
+      },
+      "calibration_error": {
+        "x": -0.0038256866892673624,
+        "y": 0.002228029473488822,
+        "z": 0.0009341903958284293,
+        "roll_deg": -0.21471398464593605,
+        "pitch_deg": -0.1385570869703936,
+        "yaw_deg": -0.1166859537000632
+      }
+    },
+    "design": {
+      "seed": 184194,
+      "placement_fractions": [
+        1,
+        1,
+        0
+      ],
+      "distribution": {
+        "version": 1,
+        "distribution": "configs/distributions/transfer_v2.yaml",
+        "sha256": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+        "profile_sha256": "857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3",
+        "seed": 184194,
+        "family": "rover"
+      }
+    }
+  },
+  "track_seed": 880004,
+  "scene_seed": 7104,
+  "results": [
+    {
+      "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+      "sha256": "2b949c9b7caf959349cb05d3a4635f85ff18f329ecd8bac31de1e7817bc97dd2",
+      "rows": [
+        {
+          "speed": 0.0,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.023097785194048082,
+          "predicted_x_035": 0.25643022862347686
+        },
+        {
+          "speed": 0.5,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.19532612680712702,
+          "predicted_x_035": 0.25643022862347686
+        },
+        {
+          "speed": 1.0,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.36333187067299033,
+          "predicted_x_035": 0.25643022862347686
+        },
+        {
+          "speed": 1.5,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.5275881434828549,
+          "predicted_x_035": 0.25643022862347686
+        }
+      ],
+      "max_prediction_difference": 0.0,
+      "mean_abs_x_035_error": 0.1681240255386675
+    },
+    {
+      "checkpoint": "runs/transfer_state_constant_pilot_v5/ckpt/step_000300.pt",
+      "sha256": "e20a234dda6186b6b44092d33cd4984b16f40709954c3cf2cc033f4449d4f93a",
+      "rows": [
+        {
+          "speed": 0.0,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.023097785194048082,
+          "predicted_x_035": 0.4306091124361211
+        },
+        {
+          "speed": 0.5,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.19532612680712702,
+          "predicted_x_035": 0.4306091124361211
+        },
+        {
+          "speed": 1.0,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.36333187067299033,
+          "predicted_x_035": 0.4306091124361211
+        },
+        {
+          "speed": 1.5,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.5275881434828549,
+          "predicted_x_035": 0.4306091124361211
+        }
+      ],
+      "max_prediction_difference": 0.0,
+      "mean_abs_x_035_error": 0.20176264642023292
+    },
+    {
+      "checkpoint": "runs/transfer_state_speed_pilot_v5/ckpt/step_000300.pt",
+      "sha256": "b5886adc685bf2767ed3788c668964cb888da8961ad25a36c9ad85e23cc3265c",
+      "rows": [
+        {
+          "speed": 0.0,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.023097785194048082,
+          "predicted_x_035": 0.4202989560907537
+        },
+        {
+          "speed": 0.5,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.19532612680712702,
+          "predicted_x_035": 0.427635581926866
+        },
+        {
+          "speed": 1.0,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.36333187067299033,
+          "predicted_x_035": 0.43481046405705537
+        },
+        {
+          "speed": 1.5,
+          "image_hashes": {
+            "road": "2d0cd7bc8d78e1f200ee93421485098d3339c3f605a5757c7cfa2dcc88113109",
+            "wide": "5846b2c2effcab834787b0579d002e0dac7d3117bfcf36ec97d7f60dd93ea254"
+          },
+          "feasible": true,
+          "target_x_035": 0.5275881434828549,
+          "predicted_x_035": 0.4420336850122972
+        }
+      ],
+      "max_prediction_difference": 0.27620840072631836,
+      "mean_abs_x_035_error": 0.19663591946776682
+    }
+  ],
+  "limitation": "One counterfactual reset state on a training configuration; not a transfer result."
+}

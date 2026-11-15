@@ -1,0 +1,1025 @@
+{
+  "suite": {
+    "version": 2,
+    "track_seeds": [
+      98011
+    ],
+    "scene_seeds": [
+      5101
+    ],
+    "configurations": [
+      {
+        "name": "val_v2_0",
+        "family": "formula",
+        "regime": "interpolation",
+        "profile": {
+          "name": "val_v2_0",
+          "team": "",
+          "vehicle": {
+            "max_speed": 7.314764396395093,
+            "body_height": 0.3765904558970491,
+            "mass": 286.504620877772,
+            "iz": 158.63499889156586,
+            "lf": 0.8607781849075409,
+            "lr": 0.8069795483508195,
+            "track": 1.2911672773613112,
+            "length": 3.120320920289836,
+            "width": 1.5063618235881964,
+            "front_overhang": 0.8607781849075409,
+            "rear_overhang": 0.5917850021239344,
+            "cf": 39861.51246995089,
+            "cr": 44844.20152869475,
+            "mu": 1.4,
+            "max_accel": 5.884069157815277,
+            "max_brake": 11.712042863945113,
+            "tau_steer": 0.0504625308212992,
+            "tau_accel": 0.1735057897547657,
+            "drag": 0.6946303908869255,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 26.78720672474648,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": -0.553,
+            "y": -0.16199999999999998,
+            "z": 1.002,
+            "roll_deg": 1.1318978600525367,
+            "pitch_deg": 4.516841307261267,
+            "yaw_deg": 0.7837407824003259
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 339.1475644599415,
+              "fy": 339.1475644599415,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.0,
+            "angle_amplitude_deg": 0.0,
+            "frequency_hz": 1.0,
+            "phase": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "roll_deg": 0.0,
+            "pitch_deg": 0.0,
+            "yaw_deg": 0.0
+          }
+        },
+        "design": {
+          "seed": 284191,
+          "placement_fractions": [
+            0.13,
+            0.23,
+            0.28
+          ],
+          "distribution": {
+            "version": 1,
+            "distribution": "configs/distributions/transfer_v2.yaml",
+            "sha256": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+            "profile_sha256": "3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6",
+            "seed": 284191,
+            "family": "formula"
+          }
+        }
+      },
+      {
+        "name": "val_v2_1",
+        "family": "formula",
+        "regime": "interpolation",
+        "profile": {
+          "name": "val_v2_1",
+          "team": "",
+          "vehicle": {
+            "max_speed": 9.354480403509385,
+            "body_height": 0.36548727810404663,
+            "mass": 261.9030142832987,
+            "iz": 136.58839017835808,
+            "lf": 0.8353994928092496,
+            "lr": 0.7831870245086714,
+            "track": 1.2530992392138742,
+            "length": 3.02832316143353,
+            "width": 1.4619491124161865,
+            "front_overhang": 0.8353994928092496,
+            "rear_overhang": 0.5743371513063591,
+            "cf": 36438.68024811112,
+            "cr": 40993.515279125015,
+            "mu": 1.4,
+            "max_accel": 4.9249318048538955,
+            "max_brake": 12.640925033529168,
+            "tau_steer": 0.09125450847701165,
+            "tau_accel": 0.17855769440969738,
+            "drag": 0.6542740430493293,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 27.379402071048247,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": 0.853,
+            "y": 0.14999999999999997,
+            "z": 1.488,
+            "roll_deg": 1.5373533378928996,
+            "pitch_deg": -0.10083308978028138,
+            "yaw_deg": 5.1740151993439545
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 451.1524002533671,
+              "fy": 451.1524002533671,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.0,
+            "angle_amplitude_deg": 0.0,
+            "frequency_hz": 1.0,
+            "phase": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "roll_deg": 0.0,
+            "pitch_deg": 0.0,
+            "yaw_deg": 0.0
+          }
+        },
+        "design": {
+          "seed": 284192,
+          "placement_fractions": [
+            0.87,
+            0.75,
+            0.82
+          ],
+          "distribution": {
+            "version": 1,
+            "distribution": "configs/distributions/transfer_v2.yaml",
+            "sha256": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+            "profile_sha256": "3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6",
+            "seed": 284192,
+            "family": "formula"
+          }
+        }
+      },
+      {
+        "name": "val_v2_2",
+        "family": "rover",
+        "regime": "interpolation",
+        "profile": {
+          "name": "val_v2_2",
+          "team": "",
+          "vehicle": {
+            "max_speed": 2.0107959755610816,
+            "body_height": 0.16463028143458924,
+            "mass": 32.521835627421936,
+            "iz": 3.3728706302647833,
+            "lf": 0.25870472796864025,
+            "lr": 0.27046403378539663,
+            "track": 0.37629778613620396,
+            "length": 0.7996327955394334,
+            "width": 0.47037223267025496,
+            "front_overhang": 0.14111166980107648,
+            "rear_overhang": 0.12935236398432012,
+            "cf": 2926.965206467974,
+            "cr": 3252.1835627421933,
+            "mu": 0.8,
+            "max_accel": 1.2674793689800408,
+            "max_brake": 3.212729033181575,
+            "tau_steer": 0.16059485142477464,
+            "tau_accel": 0.3398883382183748,
+            "drag": 0.11062501863360023,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 34.220803925736156,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": 0.266,
+            "y": -0.0576,
+            "z": 0.2974,
+            "roll_deg": -2.141967928579627,
+            "pitch_deg": -0.17541426169029672,
+            "yaw_deg": -4.20421284167862
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 344.12949835803676,
+              "fy": 344.12949835803676,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.0,
+            "angle_amplitude_deg": 0.0,
+            "frequency_hz": 1.0,
+            "phase": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "roll_deg": 0.0,
+            "pitch_deg": 0.0,
+            "yaw_deg": 0.0
+          }
+        },
+        "design": {
+          "seed": 284193,
+          "placement_fractions": [
+            0.86,
+            0.26,
+            0.18
+          ],
+          "distribution": {
+            "version": 1,
+            "distribution": "configs/distributions/transfer_v2.yaml",
+            "sha256": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+            "profile_sha256": "857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3",
+            "seed": 284193,
+            "family": "rover"
+          }
+        }
+      },
+      {
+        "name": "val_v2_3",
+        "family": "rover",
+        "regime": "interpolation",
+        "profile": {
+          "name": "val_v2_3",
+          "team": "",
+          "vehicle": {
+            "max_speed": 2.4001816087844925,
+            "body_height": 0.14442978377256555,
+            "mass": 21.95918268803394,
+            "iz": 1.7528101763971025,
+            "lf": 0.22696108878546012,
+            "lr": 0.23727750191207195,
+            "track": 0.33012522005157835,
+            "length": 0.7015160926096039,
+            "width": 0.4126565250644729,
+            "front_overhang": 0.12379695751934187,
+            "rear_overhang": 0.11348054439273006,
+            "cf": 1976.3264419230545,
+            "cr": 2195.918268803394,
+            "mu": 0.8,
+            "max_accel": 1.7895784231320793,
+            "max_brake": 1.3642407731571344,
+            "tau_steer": 0.14204373317083682,
+            "tau_accel": 0.21145170190125293,
+            "drag": 0.08514270383914299,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 30.96462255511347,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": -0.136,
+            "y": 0.07440000000000002,
+            "z": 0.5726,
+            "roll_deg": -0.16008548718817872,
+            "pitch_deg": -0.42319653247145295,
+            "yaw_deg": -4.650209943476719
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 447.6281073143969,
+              "fy": 447.6281073143969,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.0,
+            "angle_amplitude_deg": 0.0,
+            "frequency_hz": 1.0,
+            "phase": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "roll_deg": 0.0,
+            "pitch_deg": 0.0,
+            "yaw_deg": 0.0
+          }
+        },
+        "design": {
+          "seed": 284194,
+          "placement_fractions": [
+            0.19,
+            0.81,
+            0.82
+          ],
+          "distribution": {
+            "version": 1,
+            "distribution": "configs/distributions/transfer_v2.yaml",
+            "sha256": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+            "profile_sha256": "857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3",
+            "seed": 284194,
+            "family": "rover"
+          }
+        }
+      }
+    ]
+  },
+  "suite_path": "configs/eval/transfer_v2_val.yaml",
+  "checkpoints": [
+    "runs/transfer_guarded_v3/ckpt/step_000500.pt",
+    "runs/transfer_guarded_v3/ckpt/step_001500.pt"
+  ],
+  "time_limits_seconds": {
+    "formula": 100.0,
+    "rover": 180.0
+  },
+  "recovery_rule": "second seed, or odd configuration for a single-seed validation suite",
+  "results": [
+    {
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        14.399999999999771
+      ],
+      "n_laps": 1,
+      "doo": 14,
+      "oc": 0,
+      "max_speed": 7.317602800390283,
+      "raw_time": 14.399999999999771,
+      "penalty": 28.0,
+      "time": 42.39999999999977,
+      "dq": false,
+      "complete": true,
+      "pass": true,
+      "checkpoint": "runs/transfer_guarded_v3/ckpt/step_000500.pt",
+      "configuration": "val_v2_0",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": false,
+      "completion_fraction": 1.0,
+      "minimum_clearance_m": -0.8922368932930153,
+      "rms_lateral_m": 1.111887958149488,
+      "rms_steer_rate_rad_s": 0.10543009071014818,
+      "max_yaw_rate_rad_s": 0.8214710717051891,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 5.339378238341969,
+      "body_occlusion_fraction": {
+        "road": 0.13010406494140625,
+        "wide": 0.03845977783203125
+      },
+      "recovery_lateral_4_to_6s_m": 1.0360862895292964,
+      "online_expert_ade_4s": 4.620441814748172,
+      "one_second_tracking_error_m": 2.1998448964628374,
+      "elapsed_seconds": 35.450175762176514,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 648.4046200000009,
+      "policy_steady_p95_ms": 15.55127899999853,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop"
+      ],
+      "expert_privileged": false
+    },
+    {
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        14.599999999999802
+      ],
+      "n_laps": 1,
+      "doo": 17,
+      "oc": 0,
+      "max_speed": 7.338099691616173,
+      "raw_time": 14.599999999999802,
+      "penalty": 34.0,
+      "time": 48.5999999999998,
+      "dq": false,
+      "complete": true,
+      "pass": true,
+      "checkpoint": "runs/transfer_guarded_v3/ckpt/step_001500.pt",
+      "configuration": "val_v2_0",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": false,
+      "completion_fraction": 1.0,
+      "minimum_clearance_m": -0.8980680004414927,
+      "rms_lateral_m": 1.2540269043173256,
+      "rms_steer_rate_rad_s": 0.10026689529860733,
+      "max_yaw_rate_rad_s": 0.8343047672834208,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 5.315384615384615,
+      "body_occlusion_fraction": {
+        "road": 0.13010406494140625,
+        "wide": 0.03845977783203125
+      },
+      "recovery_lateral_4_to_6s_m": 1.0583832555792096,
+      "online_expert_ade_4s": 4.386510369818402,
+      "one_second_tracking_error_m": 2.1618829835236526,
+      "elapsed_seconds": 33.517788887023926,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 16.107686000005117,
+      "policy_steady_p95_ms": 15.460655099996501,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop"
+      ],
+      "expert_privileged": false
+    },
+    {
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        12.399999999999736
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 7.3415321680240275,
+      "raw_time": 12.399999999999736,
+      "penalty": 0.0,
+      "time": 12.399999999999736,
+      "dq": false,
+      "complete": true,
+      "pass": true,
+      "checkpoint": "expert",
+      "configuration": "val_v2_0",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": false,
+      "completion_fraction": 1.0,
+      "minimum_clearance_m": 0.3587724353937508,
+      "rms_lateral_m": 0.4811954629018804,
+      "rms_steer_rate_rad_s": 0.20162584458329327,
+      "max_yaw_rate_rad_s": 1.1303109385965695,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 7.661971830985915,
+      "body_occlusion_fraction": {
+        "road": 0.13010406494140625,
+        "wide": 0.03845977783203125
+      },
+      "recovery_lateral_4_to_6s_m": 0.4315949939501692,
+      "online_expert_ade_4s": null,
+      "one_second_tracking_error_m": null,
+      "elapsed_seconds": 22.477532386779785,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 0.11412899999641013,
+      "policy_steady_p95_ms": 0.11351419999527934,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop",
+        "full racing line",
+        "true vehicle state and dynamics",
+        "cone map for recovery"
+      ],
+      "expert_privileged": true
+    },
+    {
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        11.349999999999758
+      ],
+      "n_laps": 1,
+      "doo": 20,
+      "oc": 0,
+      "max_speed": 8.902803083887811,
+      "raw_time": 11.349999999999758,
+      "penalty": 40.0,
+      "time": 51.34999999999976,
+      "dq": false,
+      "complete": true,
+      "pass": true,
+      "checkpoint": "runs/transfer_guarded_v3/ckpt/step_000500.pt",
+      "configuration": "val_v2_1",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": true,
+      "completion_fraction": 1.0,
+      "minimum_clearance_m": -0.8781179748113226,
+      "rms_lateral_m": 1.3935675452896499,
+      "rms_steer_rate_rad_s": 0.11785457661053243,
+      "max_yaw_rate_rad_s": 1.0867341125593921,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 3.953416149068323,
+      "body_occlusion_fraction": {
+        "road": 0.0,
+        "wide": 0.0
+      },
+      "recovery_lateral_4_to_6s_m": 2.0465546116084794,
+      "online_expert_ade_4s": 3.757105823041593,
+      "one_second_tracking_error_m": 1.501522453786416,
+      "elapsed_seconds": 29.526768445968628,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 628.1046029999989,
+      "policy_steady_p95_ms": 14.99219334999733,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop"
+      ],
+      "expert_privileged": false
+    },
+    {
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        11.449999999999756
+      ],
+      "n_laps": 1,
+      "doo": 9,
+      "oc": 0,
+      "max_speed": 8.868395999046173,
+      "raw_time": 11.449999999999756,
+      "penalty": 18.0,
+      "time": 29.449999999999754,
+      "dq": false,
+      "complete": true,
+      "pass": true,
+      "checkpoint": "runs/transfer_guarded_v3/ckpt/step_001500.pt",
+      "configuration": "val_v2_1",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": true,
+      "completion_fraction": 1.0,
+      "minimum_clearance_m": -0.8564963315865911,
+      "rms_lateral_m": 0.914796221810389,
+      "rms_steer_rate_rad_s": 0.10199337365862263,
+      "max_yaw_rate_rad_s": 0.9762662338712844,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 3.9065420560747666,
+      "body_occlusion_fraction": {
+        "road": 0.0,
+        "wide": 0.0
+      },
+      "recovery_lateral_4_to_6s_m": 0.8715914249490468,
+      "online_expert_ade_4s": 3.6566459771537314,
+      "one_second_tracking_error_m": 1.9260734833255069,
+      "elapsed_seconds": 26.60484790802002,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 15.40364799999594,
+      "policy_steady_p95_ms": 15.172687999999823,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop"
+      ],
+      "expert_privileged": false
+    },
+    {
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        10.249999999999782
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 9.30810121501023,
+      "raw_time": 10.249999999999782,
+      "penalty": 0.0,
+      "time": 10.249999999999782,
+      "dq": false,
+      "complete": true,
+      "pass": true,
+      "checkpoint": "expert",
+      "configuration": "val_v2_1",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": true,
+      "completion_fraction": 1.0,
+      "minimum_clearance_m": 0.4936172184936658,
+      "rms_lateral_m": 0.3060073216033311,
+      "rms_steer_rate_rad_s": 0.27537520127742166,
+      "max_yaw_rate_rad_s": 1.036082326539194,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 3.4140127388535033,
+      "body_occlusion_fraction": {
+        "road": 0.0,
+        "wide": 0.0
+      },
+      "recovery_lateral_4_to_6s_m": 0.2506408298445895,
+      "online_expert_ade_4s": null,
+      "one_second_tracking_error_m": null,
+      "elapsed_seconds": 19.497177600860596,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 0.0943639999988477,
+      "policy_steady_p95_ms": 0.11965299999303622,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop",
+        "full racing line",
+        "true vehicle state and dynamics",
+        "cone map for recovery"
+      ],
+      "expert_privileged": true
+    },
+    {
+      "discipline": "autocross",
+      "result": "running",
+      "laps": [],
+      "n_laps": 0,
+      "doo": 0,
+      "oc": 1,
+      "max_speed": 2.1737693771246813,
+      "raw_time": null,
+      "penalty": 10.0,
+      "time": null,
+      "dq": false,
+      "complete": false,
+      "pass": false,
+      "checkpoint": "runs/transfer_guarded_v3/ckpt/step_000500.pt",
+      "configuration": "val_v2_2",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": false,
+      "completion_fraction": 0.6205083314479004,
+      "minimum_clearance_m": 0.14370867161800124,
+      "rms_lateral_m": 122.4423772918057,
+      "rms_steer_rate_rad_s": 0.0304482412911118,
+      "max_yaw_rate_rad_s": 0.2505445738349079,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 0.7550680366564844,
+      "body_occlusion_fraction": {
+        "road": 0.0,
+        "wide": 0.0
+      },
+      "recovery_lateral_4_to_6s_m": 0.9395729544361003,
+      "online_expert_ade_4s": 0.9712945059800234,
+      "one_second_tracking_error_m": 0.4298117891650489,
+      "elapsed_seconds": 273.70295786857605,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 686.5084209999992,
+      "policy_steady_p95_ms": 15.655002999992007,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop"
+      ],
+      "expert_privileged": false
+    },
+    {
+      "discipline": "autocross",
+      "result": "running",
+      "laps": [],
+      "n_laps": 0,
+      "doo": 0,
+      "oc": 1,
+      "max_speed": 2.1510252893376895,
+      "raw_time": null,
+      "penalty": 10.0,
+      "time": null,
+      "dq": false,
+      "complete": false,
+      "pass": false,
+      "checkpoint": "runs/transfer_guarded_v3/ckpt/step_001500.pt",
+      "configuration": "val_v2_2",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": false,
+      "completion_fraction": 0.6205083314479004,
+      "minimum_clearance_m": 0.21281489866022216,
+      "rms_lateral_m": 127.98354719815062,
+      "rms_steer_rate_rad_s": 0.03127318097127682,
+      "max_yaw_rate_rad_s": 0.24924452398788907,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 0.7664537628436545,
+      "body_occlusion_fraction": {
+        "road": 0.0,
+        "wide": 0.0
+      },
+      "recovery_lateral_4_to_6s_m": 1.1346300602635901,
+      "online_expert_ade_4s": 1.124886206038693,
+      "one_second_tracking_error_m": 0.6714121593108888,
+      "elapsed_seconds": 272.09191393852234,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 16.75800100002789,
+      "policy_steady_p95_ms": 15.730889999986175,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop"
+      ],
+      "expert_privileged": false
+    },
+    {
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        42.84999999999912
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 2.1043781256174077,
+      "raw_time": 42.84999999999912,
+      "penalty": 0.0,
+      "time": 42.84999999999912,
+      "dq": false,
+      "complete": true,
+      "pass": true,
+      "checkpoint": "expert",
+      "configuration": "val_v2_2",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": false,
+      "completion_fraction": 1.0,
+      "minimum_clearance_m": 0.44640690787207504,
+      "rms_lateral_m": 1.0429643699792408,
+      "rms_steer_rate_rad_s": 0.13983562330760338,
+      "max_yaw_rate_rad_s": 0.6059487768929277,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 9.237057220708447,
+      "body_occlusion_fraction": {
+        "road": 0.0,
+        "wide": 0.0
+      },
+      "recovery_lateral_4_to_6s_m": 0.9958023200897583,
+      "online_expert_ade_4s": null,
+      "one_second_tracking_error_m": null,
+      "elapsed_seconds": 63.60918569564819,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 0.10020800004895136,
+      "policy_steady_p95_ms": 0.10794299998906354,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop",
+        "full racing line",
+        "true vehicle state and dynamics",
+        "cone map for recovery"
+      ],
+      "expert_privileged": true
+    },
+    {
+      "discipline": "autocross",
+      "result": "running",
+      "laps": [],
+      "n_laps": 0,
+      "doo": 1,
+      "oc": 1,
+      "max_speed": 2.259796972891141,
+      "raw_time": null,
+      "penalty": 12.0,
+      "time": null,
+      "dq": false,
+      "complete": false,
+      "pass": false,
+      "checkpoint": "runs/transfer_guarded_v3/ckpt/step_000500.pt",
+      "configuration": "val_v2_3",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": true,
+      "completion_fraction": 0.4464076482943847,
+      "minimum_clearance_m": -0.10920806363668142,
+      "rms_lateral_m": 149.41777628011397,
+      "rms_steer_rate_rad_s": 0.027070956501371184,
+      "max_yaw_rate_rad_s": 0.1953065391751876,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 1.1108025548458762,
+      "body_occlusion_fraction": {
+        "road": 0.0,
+        "wide": 0.0
+      },
+      "recovery_lateral_4_to_6s_m": 0.37313834389225625,
+      "online_expert_ade_4s": 0.4952968722360347,
+      "one_second_tracking_error_m": 0.12049464182881181,
+      "elapsed_seconds": 268.0411169528961,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 15.596884000004252,
+      "policy_steady_p95_ms": 15.469711999998026,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop"
+      ],
+      "expert_privileged": false
+    },
+    {
+      "discipline": "autocross",
+      "result": "running",
+      "laps": [],
+      "n_laps": 0,
+      "doo": 0,
+      "oc": 1,
+      "max_speed": 2.4347778384189875,
+      "raw_time": null,
+      "penalty": 10.0,
+      "time": null,
+      "dq": false,
+      "complete": false,
+      "pass": false,
+      "checkpoint": "runs/transfer_guarded_v3/ckpt/step_001500.pt",
+      "configuration": "val_v2_3",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": true,
+      "completion_fraction": 0.020088436173270333,
+      "minimum_clearance_m": 0.4095260400135663,
+      "rms_lateral_m": 62.13145630280973,
+      "rms_steer_rate_rad_s": 0.044464110830365604,
+      "max_yaw_rate_rad_s": 0.22412569133252658,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 1.2263260205498472,
+      "body_occlusion_fraction": {
+        "road": 0.0,
+        "wide": 0.0
+      },
+      "recovery_lateral_4_to_6s_m": 0.22128744654937807,
+      "online_expert_ade_4s": 0.9056758953757266,
+      "one_second_tracking_error_m": 0.15034048602632089,
+      "elapsed_seconds": 262.20253825187683,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 14.905208000016046,
+      "policy_steady_p95_ms": 15.335089999950924,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop"
+      ],
+      "expert_privileged": false
+    },
+    {
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        35.80000000000065
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 2.453415173634439,
+      "raw_time": 35.80000000000065,
+      "penalty": 0.0,
+      "time": 35.80000000000065,
+      "dq": false,
+      "complete": true,
+      "pass": true,
+      "checkpoint": "expert",
+      "configuration": "val_v2_3",
+      "regime": "interpolation",
+      "track_seed": 98011,
+      "scene_seed": 5101,
+      "recovery": true,
+      "completion_fraction": 1.0,
+      "minimum_clearance_m": 0.4475313547159584,
+      "rms_lateral_m": 1.0707953274439892,
+      "rms_steer_rate_rad_s": 0.14610466592472324,
+      "max_yaw_rate_rad_s": 0.9789517381118829,
+      "steering_saturation_fraction": 0.0,
+      "mean_visible_cones": 9.691239316239317,
+      "body_occlusion_fraction": {
+        "road": 0.0,
+        "wide": 0.0
+      },
+      "recovery_lateral_4_to_6s_m": 1.0640030004611445,
+      "online_expert_ade_4s": null,
+      "one_second_tracking_error_m": null,
+      "elapsed_seconds": 53.89830827713013,
+      "renderer": "NVIDIA A10/PCIe/SSE2",
+      "runtime_physical_sensor_input": false,
+      "input_rate_hz": 20,
+      "policy_first_call_ms": 0.09801900000638852,
+      "policy_steady_p95_ms": 0.1277097500462787,
+      "privileged_inputs": [
+        "simulator wheel speed",
+        "route desire",
+        "mission progress for launch/stop",
+        "full racing line",
+        "true vehicle state and dynamics",
+        "cone map for recovery"
+      ],
+      "expert_privileged": true
+    }
+  ]
+}

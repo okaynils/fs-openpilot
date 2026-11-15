@@ -1,0 +1,53 @@
+[
+  {
+    "stage": "paired_refresh_collection_pilot",
+    "app_id": "ap-tR5Uxu2HD6ZZllb4R19vnA",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-tR5Uxu2HD6ZZllb4R19vnA",
+    "local_session_id": 40728
+  },
+  {
+    "stage": "expert_controls",
+    "app_id": "ap-Rlh8o7oDHgogtvezoS6hAr",
+    "status": "cancelled_partial",
+    "url": "https://modal.com/apps/okaynils/main/ap-Rlh8o7oDHgogtvezoS6hAr",
+    "local_session_id": 13756,
+    "reason": "One completed expert control retained; remaining CPU batch cancelled after over ten minutes without another episode result."
+  },
+  {
+    "stage": "saved_frame_inspection",
+    "app_id": "ap-CLhtHMEQMKvMiHGBm0ZNi4",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-CLhtHMEQMKvMiHGBm0ZNi4",
+    "local_session_id": 46177
+  },
+  {
+    "stage": "dynamic_guard_probe",
+    "app_id": "ap-VF7b4vGc6QqgupkqnHG5UL",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-VF7b4vGc6QqgupkqnHG5UL",
+    "local_session_id": 95529
+  },
+  {
+    "stage": "guarded_pilot_completion",
+    "app_id": "ap-w5HXMTNHyUelRyoNMygDvS",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-w5HXMTNHyUelRyoNMygDvS",
+    "local_session_id": 72603
+  },
+  {
+    "stage": "matched_dataset_staging",
+    "app_id": "ap-L3VmEQhwgzAryLMOhs3HOZ",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-L3VmEQhwgzAryLMOhs3HOZ",
+    "local_session_id": 50721
+  },
+  {
+    "stage": "paired_300_step_training",
+    "app_id": "ap-vIstyc1zvJIgrfVgMpp31V",
+    "status": "partial_stopped",
+    "url": "https://modal.com/apps/okaynils/main/ap-vIstyc1zvJIgrfVgMpp31V",
+    "local_session_id": 91721,
+    "reason": "Current arm completed; previous arm persisted only step100 and no completion artifact. No workers remained; stale orchestrator explicitly stopped."
+  }
+]

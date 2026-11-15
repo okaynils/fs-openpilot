@@ -1,0 +1,8 @@
+version: 1
+name: reference_path_recovery_v3
+# Privileged simulator collection only; not a deployed policy input.
+intervention:
+  lateral_limit_m: 1.25
+  steering_disagreement_rad: null
+  hold_seconds: 1.5
+  lateral_reference: reference_path

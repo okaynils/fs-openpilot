@@ -1,7 +1,9 @@
 """Export the fine-tuned model to ONNX in openpilot's stateless layout.
 
-Inputs are identical to the source graph (img, big_img uint8 [1,12,128,256], features_buffer,
-desire_pulse, traffic_convention, action_t). ``outputs`` keeps the original 2576 values (vision heads,
+Legacy inputs match the source graph (img, big_img uint8 [1,12,128,256], features_buffer,
+desire_pulse, traffic_convention, action_t). Conditioned checkpoints additionally require
+versioned calibrated geometry; measured-speed checkpoints add speed [1,1] in m/s.
+``outputs`` keeps the original 2576 values (vision heads,
 hidden_state, plan, desire_state, pad) and appends the BEV cone detections decoded in-graph
 (top-K peaks: x, y [ego m, x fwd / y left], class, score). ``output_slices`` metadata is updated, so
 openpilot's Parser slices the original fields unchanged.
@@ -31,10 +33,11 @@ class ExportWrapper(nn.Module):
     self.m = m
     self.topk = topk
 
-  def forward(self, img, big_img, features_buffer, desire_pulse, traffic_convention, action_t, geometry=None):
+  def forward(self, img, big_img, features_buffer, desire_pulse, traffic_convention, action_t, geometry=None,
+              speed=None):
     base = self.m.base
     v = base.encode(img.float(), big_img.float())
-    pred = self.m.plan(features_buffer, v.hidden, desire_pulse, traffic_convention, geometry)
+    pred = self.m.plan(features_buffer, v.hidden, desire_pulse, traffic_convention, geometry, speed)
     plan = torch.cat([pred["plan_mu"].flatten(1), pred["plan_logstd"].flatten(1)], 1)
     desire_state = pred["desire_state"]
     pad = plan.new_zeros(plan.shape[0], 2) + 0 * action_t[:, :1]
@@ -98,6 +101,9 @@ def export_onnx(ckpt: str | Path, out: str | Path, src_onnx: str | Path = SRC_ON
     from fsop.sim.vehicle import VehicleParams
     args += (torch.from_numpy(geometry_context(CameraMount(), VehicleParams(), m.context_version)[None]),)
     names.append("geometry")
+  if m.state_mode == "speed":
+    args += (torch.ones(1, 1),)
+    names.append("speed")
   torch.onnx.export(w, args, str(out), input_names=names, output_names=["outputs"], opset_version=opset,
                     dynamo=False, do_constant_folding=True)
   model = onnx.load(str(out))
@@ -120,6 +126,10 @@ def export_onnx(ckpt: str | Path, out: str | Path, src_onnx: str | Path = SRC_ON
     meta["fsop_context_fields"] = json.dumps(list(context_fields(m.context_version)))
     meta["fsop_context_scale"] = json.dumps(context_scale(m.context_version).tolist())
   meta["fsop_context_version"] = str(m.context_version) if m.context_adapter is not None else "0"
+  meta["fsop_context_scope"] = m.context_scope
+  meta["fsop_state_mode"] = m.state_mode
+  meta["fsop_state_version"] = "1"
+  meta["fsop_speed_scale_mps"] = "15.0"
   meta["fsop_trajectory_origin"] = "ground_projected_cog"
   if m.context_anchor is not None:
     meta["fsop_context_anchor"] = json.dumps(m.context_anchor.cpu().tolist())

@@ -1,0 +1,27 @@
+name: transfer_policy_v2
+sim_root: data/sim/transfer_train_v2
+label_mode: racing
+init_ckpt: runs/cuda_racing_v6/ckpt/best.pt
+cache_tag: transfer_baseline_strict_v2_full
+conditioned: true
+context_version: 2
+context_scope: sequence
+anchored_context: true
+freeze_policy: false
+include_on_policy: true
+stage: 1
+trunk: frozen
+batch_size: 64
+num_workers: 8
+steps: 1500
+snapshot_steps:
+- 500
+- 1500
+lr: 0.0003
+lr_policy: 0.05
+warmup: 100
+val_every: 250
+val_batches: 40
+selection_metric: ade_4s
+viz_samples: 0
+seed: 184191

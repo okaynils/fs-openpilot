@@ -1,0 +1,45 @@
+[
+  {
+    "stage": "regression_and_export_contract",
+    "app_id": "ap-XUDJwJQpc71whPb2yAKkmX",
+    "status": "completed: 108 tests and temporal export parity passed",
+    "url": "https://modal.com/apps/okaynils/main/ap-XUDJwJQpc71whPb2yAKkmX"
+  },
+  {
+    "stage": "paired_state_pilots",
+    "app_id": "ap-fpQ8kkDk7VA1WFWgoDjoYc",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-fpQ8kkDk7VA1WFWgoDjoYc"
+  },
+  {
+    "stage": "driving_and_information_probes",
+    "app_id": "ap-mlpgZXhV5inVoURZjQR2EA",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-mlpgZXhV5inVoURZjQR2EA"
+  },
+  {
+    "stage": "trained_export_temporal_parity",
+    "app_id": "ap-LL3OapnUZvWoDjwNepCFp3",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-LL3OapnUZvWoDjwNepCFp3"
+  },
+  {
+    "stage": "paired_full_state_training",
+    "app_id": "ap-ZBEIx7prcP4pkdcjhbogjN",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-ZBEIx7prcP4pkdcjhbogjN"
+  },
+  {
+    "stage": "complete_configuration_validation",
+    "app_id": "ap-WuTnQ1wUkMOqQepma0nuRE",
+    "status": "completed: 28 paired runs; no promotion",
+    "url": "https://modal.com/apps/okaynils/main/ap-WuTnQ1wUkMOqQepma0nuRE",
+    "local_session_id": 58269
+  },
+  {
+    "stage": "training_state_coverage_audit",
+    "app_id": "ap-tPWhf3GXTZVBqTh6TfYAsk",
+    "status": "completed",
+    "url": "https://modal.com/apps/okaynils/main/ap-tPWhf3GXTZVBqTh6TfYAsk"
+  }
+]

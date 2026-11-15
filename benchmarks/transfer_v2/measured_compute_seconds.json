@@ -1,0 +1,13 @@
+{
+  "worker_seconds_by_stage": {
+    "validation": 4751.589525222778,
+    "fallback_validation": 1410.2481455802917,
+    "final_driving": 5876.491236925125,
+    "fit_expert": 111.50772190093994,
+    "fit_recovery": 109.58365082740784,
+    "fit_sequence": 113.41306853294373,
+    "fit_policy": 118.86555767059326,
+    "fresh_sensor_runtime": 492.50762581825256
+  },
+  "note": "Measured work durations, not billed GPU allocation. Excludes startup, cache generation, pilot, downloads and auxiliary diagnostics."
+}

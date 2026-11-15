@@ -1,0 +1,2078 @@
+version: 1
+configurations:
+- name: train_v2_00
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_00
+    team: ''
+    vehicle:
+      max_speed: 15.667929743503436
+      body_height: 0.36077617296252934
+      mass: 251.90526520712
+      iz: 128.00935230198422
+      lf: 0.8246312524857814
+      lr: 0.77309179920542
+      track: 1.236946878728672
+      length: 2.989288290260957
+      width: 1.4431046918501174
+      front_overhang: 0.8246312524857814
+      rear_overhang: 0.5669339860839747
+      cf: 35047.68907229496
+      cr: 39428.650206331826
+      mu: 1.4
+      max_accel: 6.85980182980976
+      max_brake: 6.309863513055284
+      tau_steer: 0.07180319018131444
+      tau_accel: 0.13808327131680045
+      drag: 0.6375156586652517
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 23.773584785940187
+      max_steer_rate_deg: 150.0
+    mount:
+      x: -0.8
+      y: -0.3
+      z: 0.885
+      roll_deg: -1.4552590496525886
+      pitch_deg: 7.146235901689491
+      yaw_deg: 3.8818279553546793
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 527.0442953637513
+      fy: 527.0442953637513
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.1066026521605679
+      phase:
+      - 2.139647299208709
+      - 5.121473517210751
+      - 4.748668832917756
+      - 2.975805231234754
+      - 5.9588413825976705
+      - 3.758403327453944
+    calibration_error:
+      x: -0.0011474782867740684
+      y: 0.004377785640631534
+      z: 0.002037393677429635
+      roll_deg: 0.13026049301171788
+      pitch_deg: -0.09083338975342725
+      yaw_deg: -0.1461006265642642
+  design:
+    seed: 184191
+    placement_fractions:
+    - 0
+    - 0
+    - 0.15
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184191
+      family: formula
+- name: train_v2_01
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_01
+    team: ''
+    vehicle:
+      max_speed: 2.6215002807484256
+      body_height: 0.11710695128360626
+      mass: 11.705606301222875
+      iz: 0.6142772834840708
+      lf: 0.18402520915995269
+      lr: 0.192389991394496
+      track: 0.26767303150538574
+      length: 0.5688051919489446
+      width: 0.3345912893817322
+      front_overhang: 0.10037738681451963
+      rear_overhang: 0.09201260457997633
+      cf: 1053.5045671100588
+      cr: 1170.5606301222874
+      mu: 0.8
+      max_accel: 1.6129543915143174
+      max_brake: 3.3440075067897093
+      tau_steer: 0.11347328780179376
+      tau_accel: 0.23079125330629147
+      drag: 0.05597566546506502
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 28.96037937675389
+      max_steer_rate_deg: 100.0
+    mount:
+      x: -0.25
+      y: -0.12
+      z: 0.2845
+      roll_deg: 0.30162977216235753
+      pitch_deg: 2.2134694019951726
+      yaw_deg: 1.7997633305506022
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 363.32392182923473
+      fy: 363.32392182923473
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.2782287649263915
+      phase:
+      - 5.355227117346436
+      - 5.987418856788288
+      - 2.5812574883143506
+      - 0.154491398419838
+      - 0.7575728763753389
+      - 0.19780773457614623
+    calibration_error:
+      x: -0.0013349110604125591
+      y: -0.0037744087237047298
+      z: -0.004079139299396167
+      roll_deg: -0.002878590014711857
+      pitch_deg: 0.17725252438324063
+      yaw_deg: -0.21405901701025531
+  design:
+    seed: 184192
+    placement_fractions:
+    - 0
+    - 0
+    - 0.15
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184192
+      family: rover
+- name: train_v2_02
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_02
+    team: ''
+    vehicle:
+      max_speed: 12.481364001480788
+      body_height: 0.35386506654173167
+      mass: 237.70415708499613
+      iz: 116.20930932979952
+      lf: 0.8088344378096726
+      lr: 0.758282285446568
+      track: 1.2132516567145086
+      length: 2.9320248370600632
+      width: 1.4154602661669267
+      front_overhang: 0.8088344378096726
+      rear_overhang: 0.5560736759941499
+      cf: 33071.88272486903
+      cr: 37205.868065477654
+      mu: 1.4
+      max_accel: 4.696235939384667
+      max_brake: 8.454331463390298
+      tau_steer: 0.11260934808304107
+      tau_accel: 0.15543369999669013
+      drag: 0.6133248260502083
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 20.27608609213037
+      max_steer_rate_deg: 150.0
+    mount:
+      x: 1.1
+      y: 0.3
+      z: 0.75
+      roll_deg: -1.0493318577366084
+      pitch_deg: 5.211033398844417
+      yaw_deg: 3.0435340038966516
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 408.7205228327425
+      fy: 408.7205228327425
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.892258983054028
+      phase:
+      - 2.2985117677648756
+      - 2.462196929779203
+      - 0.5437904428322157
+      - 1.194162032017753
+      - 0.8501320039698799
+      - 4.545346623801304
+    calibration_error:
+      x: 0.0027644149280737786
+      y: -0.00037979461763853475
+      z: -0.0007811301889430733
+      roll_deg: 0.10224520370946806
+      pitch_deg: -0.21752491643269117
+      yaw_deg: -0.10063761561396184
+  design:
+    seed: 184193
+    placement_fractions:
+    - 1
+    - 1
+    - 0
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184193
+      family: formula
+- name: train_v2_03
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_03
+    team: ''
+    vehicle:
+      max_speed: 2.4758300960804167
+      body_height: 0.1341507217828388
+      mass: 17.59644472797635
+      iz: 1.2117587072854408
+      lf: 0.21080827708731809
+      lr: 0.22039047150037802
+      track: 0.3066302212179172
+      length: 0.7057946100440371
+      width: 0.38328777652239654
+      front_overhang: 0.1691917229126819
+      rear_overhang: 0.10540413854365904
+      cf: 1583.6800255178716
+      cr: 1759.6444727976352
+      mu: 0.8
+      max_accel: 1.3826446388702776
+      max_brake: 3.1760938031387522
+      tau_steer: 0.09960160418737857
+      tau_accel: 0.3331148204364527
+      drag: 0.0734547598157413
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 26.99806357373856
+      max_steer_rate_deg: 100.0
+    mount:
+      x: 0.35
+      y: 0.12
+      z: 0.22
+      roll_deg: 0.5162756795013081
+      pitch_deg: -0.15298892210234483
+      yaw_deg: -0.5523146484043333
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 384.4252493329127
+      fy: 384.4252493329127
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.485469991593921
+      phase:
+      - 5.268125533625996
+      - 2.901716873169839
+      - 4.111693195321083
+      - 2.2492947118382896
+      - 3.6922230343273865
+      - 4.739238596708787
+    calibration_error:
+      x: -0.0038256866892673624
+      y: 0.002228029473488822
+      z: 0.0009341903958284293
+      roll_deg: -0.21471398464593605
+      pitch_deg: -0.1385570869703936
+      yaw_deg: -0.1166859537000632
+  design:
+    seed: 184194
+    placement_fractions:
+    - 1
+    - 1
+    - 0
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184194
+      family: rover
+- name: train_v2_04
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_04
+    team: ''
+    vehicle:
+      max_speed: 11.782342532922314
+      body_height: 0.353915555415323
+      mass: 237.80591729274738
+      iz: 116.29223573578307
+      lf: 0.8089498409493099
+      lr: 0.758390475889978
+      track: 1.2134247614239646
+      length: 2.932443173441248
+      width: 1.415662221661292
+      front_overhang: 0.8089498409493099
+      rear_overhang: 0.5561530156526505
+      cf: 33086.040666817025
+      cr: 37221.795750169156
+      mu: 1.4
+      max_accel: 4.186083341495589
+      max_brake: 10.316769867892589
+      tau_steer: 0.06331382668645134
+      tau_accel: 0.10620037365119132
+      drag: 0.613499854848669
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 27.96746439888254
+      max_steer_rate_deg: 150.0
+    mount:
+      x: 0.625
+      y: -0.3
+      z: 1.65
+      roll_deg: -1.4606904904208469
+      pitch_deg: -1.7296708319868201
+      yaw_deg: -5.578210106747065
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 331.08669194158637
+      fy: 331.08669194158637
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 0.8506860720461322
+      phase:
+      - 6.046523222946312
+      - 4.122296880358901
+      - 4.432816726382729
+      - 0.16889725684674128
+      - 6.05994634220828
+      - 5.584212249174483
+    calibration_error:
+      x: -0.0035122359007925263
+      y: -0.0004657554573448297
+      z: 0.003771486883928318
+      roll_deg: -0.08524192234922684
+      pitch_deg: -0.0076292451334925016
+      yaw_deg: 0.06527821569619896
+  design:
+    seed: 184195
+    placement_fractions:
+    - 0.75
+    - 0
+    - 1
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184195
+      family: formula
+- name: train_v2_05
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_05
+    team: ''
+    vehicle:
+      max_speed: 1.1718698516089439
+      body_height: 0.13432668712680151
+      mass: 17.665779302132222
+      iz: 1.2197268959663206
+      lf: 0.21108479405640235
+      lr: 0.22067955742260245
+      track: 0.3070324277184034
+      length: 0.6524439089016073
+      width: 0.3837905346480043
+      front_overhang: 0.11513716039440129
+      rear_overhang: 0.10554239702820119
+      cf: 1589.9201371918998
+      cr: 1766.577930213222
+      mu: 0.8
+      max_accel: 1.261702872274254
+      max_brake: 2.366451939015592
+      tau_steer: 0.08806091157838805
+      tau_accel: 0.14440164721019963
+      drag: 0.07364758724270047
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 30.139871988482337
+      max_steer_rate_deg: 100.0
+    mount:
+      x: 0.19999999999999996
+      y: -0.12
+      z: 0.65
+      roll_deg: -1.636927350262505
+      pitch_deg: 1.3495125638189047
+      yaw_deg: -1.367124541874043
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 353.5113943801846
+      fy: 353.5113943801846
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.819765465780772
+      phase:
+      - 0.23530395936638424
+      - 5.400042629423423
+      - 6.022466802994215
+      - 1.4950732876576094
+      - 1.0098059623096576
+      - 0.31749482278275803
+    calibration_error:
+      x: 0.0031570311588518174
+      y: 0.00036106827013051234
+      z: 0.00105676656054023
+      roll_deg: -0.12010496835400546
+      pitch_deg: -0.13215950167238139
+      yaw_deg: 0.23586590786028036
+  design:
+    seed: 184196
+    placement_fractions:
+    - 0.75
+    - 0
+    - 1
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184196
+      family: rover
+- name: train_v2_06
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_06
+    team: ''
+    vehicle:
+      max_speed: 11.860105065112586
+      body_height: 0.3410687933159564
+      mass: 212.83823904221035
+      iz: 96.66347124756194
+      lf: 0.7795858132936146
+      lr: 0.7308616999627637
+      track: 1.169378719940422
+      length: 2.825998573189353
+      width: 1.3642751732638256
+      front_overhang: 0.7795858132936146
+      rear_overhang: 0.5359652466393601
+      cf: 29612.276736307525
+      cr: 33313.81132834597
+      mu: 1.4
+      max_accel: 5.853289985253085
+      max_brake: 8.357227143350572
+      tau_steer: 0.10395025874713866
+      tau_accel: 0.10148944710145208
+      drag: 0.5697694127706249
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 21.008294002647446
+      max_steer_rate_deg: 150.0
+    mount:
+      x: -0.8
+      y: 0.3
+      z: 1.515
+      roll_deg: -0.09220672939212338
+      pitch_deg: 3.0588784921613694
+      yaw_deg: -2.7151643708189033
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 458.3819018103975
+      fy: 458.3819018103975
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.8546393011974869
+      phase:
+      - 1.4825449849604881
+      - 6.093371751483749
+      - 1.5891570862977786
+      - 1.5061275872853959
+      - 1.4786528739167022
+      - 4.703476630126373
+    calibration_error:
+      x: 0.0005126465883065057
+      y: -0.002739347385522073
+      z: 0.0012514798327540799
+      roll_deg: -0.06983276333342481
+      pitch_deg: 0.23421149177730025
+      yaw_deg: -0.03871198143867627
+  design:
+    seed: 184197
+    placement_fractions:
+    - 0
+    - 1
+    - 0.85
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184197
+      family: formula
+- name: train_v2_07
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_07
+    team: ''
+    vehicle:
+      max_speed: 1.5657297181369774
+      body_height: 0.13428511395341144
+      mass: 17.649382071324897
+      iz: 1.2178405790684281
+      lf: 0.21101946478393227
+      lr: 0.22061125863774736
+      track: 0.3069374033220833
+      length: 0.652241982059427
+      width: 0.3836717541526041
+      front_overhang: 0.11510152624578122
+      rear_overhang: 0.10550973239196614
+      cf: 1588.4443864192408
+      cr: 1764.9382071324897
+      mu: 0.8
+      max_accel: 1.6041410851887463
+      max_brake: 3.302089136727256
+      tau_steer: 0.10758916349135883
+      tau_accel: 0.22572772104799163
+      drag: 0.07360200746726815
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 28.076748262822843
+      max_steer_rate_deg: 100.0
+    mount:
+      x: -0.25
+      y: 0.12
+      z: 0.5855
+      roll_deg: -2.598012425182201
+      pitch_deg: 2.6995821129817115
+      yaw_deg: 4.140237661005413
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 529.6597173248731
+      fy: 529.6597173248731
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 0.7051299008587724
+      phase:
+      - 4.604241043075184
+      - 6.276098978443664
+      - 2.8195836568695323
+      - 2.0434512308071886
+      - 5.947064218745118
+      - 0.5204104801254094
+    calibration_error:
+      x: -0.0013080093327091091
+      y: -0.0037251053006736533
+      z: 0.0035754086958824692
+      roll_deg: 0.08882498000426559
+      pitch_deg: -0.10926668149814017
+      yaw_deg: 0.10803605697124619
+  design:
+    seed: 184198
+    placement_fractions:
+    - 0
+    - 1
+    - 0.85
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184198
+      family: rover
+- name: train_v2_08
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_08
+    team: ''
+    vehicle:
+      max_speed: 12.971100910746522
+      body_height: 0.3314825940712402
+      mass: 195.39160010827325
+      iz: 83.82163109046046
+      lf: 0.7576745007342633
+      lr: 0.7103198444383718
+      track: 1.136511751101395
+      length: 2.7465700651617047
+      width: 1.3259303762849608
+      front_overhang: 0.7576745007342633
+      rear_overhang: 0.520901219254806
+      cf: 27184.91827593367
+      cr: 30583.033060425376
+      mu: 1.4
+      max_accel: 3.9431990194571997
+      max_brake: 6.1405172330299775
+      tau_steer: 0.08366503773458335
+      tau_accel: 0.1478178778154912
+      drag: 0.5381912334964829
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 26.79983589979555
+      max_steer_rate_deg: 150.0
+    mount:
+      x: 0.15000000000000002
+      y: 0.0
+      z: 1.2
+      roll_deg: -2.351211159693056
+      pitch_deg: -2.290511854249087
+      yaw_deg: 4.251370716516401
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 329.26620626842504
+      fy: 329.26620626842504
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.280385764284222
+      phase:
+      - 4.063120417394432
+      - 3.671924832094002
+      - 0.6925485888757515
+      - 5.479435479459059
+      - 3.8301582583766383
+      - 1.9208349732017787
+    calibration_error:
+      x: 0.0013271405246970637
+      y: 0.002739890395379704
+      z: 0.0018737660730424866
+      roll_deg: -0.034865534233839535
+      pitch_deg: 0.23643626598170125
+      yaw_deg: 0.0675380148367487
+  design:
+    seed: 184199
+    placement_fractions:
+    - 0.5
+    - 0.5
+    - 0.5
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184199
+      family: formula
+- name: train_v2_09
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_09
+    team: ''
+    vehicle:
+      max_speed: 2.2631708235636347
+      body_height: 0.16165405568876093
+      mass: 30.789717451417594
+      iz: 3.0788186276363305
+      lf: 0.2540278017966243
+      lr: 0.26557452006010723
+      track: 0.3694949844314535
+      length: 0.7851768419168388
+      width: 0.46186873053931693
+      front_overhang: 0.1385606191617951
+      rear_overhang: 0.12701390089831216
+      cf: 2771.0745706275834
+      cr: 3078.9717451417596
+      mu: 0.8
+      max_accel: 1.9789412656228087
+      max_brake: 1.028338284202021
+      tau_steer: 0.1166245123533852
+      tau_accel: 0.18718698143592602
+      drag: 0.10666136212500008
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 28.496948244828406
+      max_steer_rate_deg: 100.0
+    mount:
+      x: 0.04999999999999999
+      y: 0.0
+      z: 0.43500000000000005
+      roll_deg: 1.677107217140262
+      pitch_deg: 6.672423415055624
+      yaw_deg: -1.4927116668316516
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 341.42865120256255
+      fy: 341.42865120256255
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.1048997178922813
+      phase:
+      - 0.7346840668423622
+      - 1.7135608542873382
+      - 3.375635320861979
+      - 4.988700108653583
+      - 1.0903869778585704
+      - 3.957601073753844
+    calibration_error:
+      x: 0.004876344082290235
+      y: -0.0043129173140502705
+      z: -0.0008343321103369972
+      roll_deg: 0.13181238906736298
+      pitch_deg: -0.040437061810510544
+      yaw_deg: 0.038563980837834466
+  design:
+    seed: 184200
+    placement_fractions:
+    - 0.5
+    - 0.5
+    - 0.5
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184200
+      family: rover
+- name: train_v2_10
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_10
+    team: ''
+    vehicle:
+      max_speed: 17.813954769128134
+      body_height: 0.35644365205932876
+      mass: 242.93850642577627
+      iz: 120.50550499413423
+      lf: 0.8147283475641802
+      lr: 0.7638078258414189
+      track: 1.22209252134627
+      length: 2.9533902599201536
+      width: 1.425774608237315
+      front_overhang: 0.8147283475641802
+      rear_overhang: 0.5601257389503739
+      cf: 33800.14002445583
+      cr: 38025.157527512805
+      mu: 1.4
+      max_accel: 6.716276455328011
+      max_brake: 6.083227068069724
+      tau_steer: 0.06686988548700086
+      tau_accel: 0.1311590351995694
+      drag: 0.6222958878043683
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 25.102820270722383
+      max_steer_rate_deg: 150.0
+    mount:
+      x: 1.1
+      y: 0.0
+      z: 1.335
+      roll_deg: 1.4437413639796444
+      pitch_deg: -1.767625652620405
+      yaw_deg: -1.9811076969100971
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 432.1015544447788
+      fy: 432.1015544447788
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.57739713347387
+      phase:
+      - 2.5061190654114838
+      - 0.9273711433306528
+      - 5.732577789699386
+      - 3.9559148739973757
+      - 4.673987180450148
+      - 0.2976497770466505
+    calibration_error:
+      x: -0.0025924674296169594
+      y: -0.0022480786525694916
+      z: -0.00019454752483003435
+      roll_deg: 0.1818802021643351
+      pitch_deg: -0.1948965154776094
+      yaw_deg: 0.1863851521039923
+  design:
+    seed: 184201
+    placement_fractions:
+    - 1
+    - 0.5
+    - 0.65
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184201
+      family: formula
+- name: train_v2_11
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_11
+    team: ''
+    vehicle:
+      max_speed: 1.9677745020999962
+      body_height: 0.14178988708998833
+      mass: 20.77694349401543
+      iz: 1.5983701634289207
+      lf: 0.22281267971283877
+      lr: 0.2329405287906951
+      track: 0.32409117049140185
+      length: 0.7243468686471144
+      width: 0.40511396311425235
+      front_overhang: 0.1571873202871612
+      rear_overhang: 0.11140633985641939
+      cf: 1869.9249144613887
+      cr: 2077.694349401543
+      mu: 0.8
+      max_accel: 1.8047129464145115
+      max_brake: 3.463678379162581
+      tau_steer: 0.1762467260033847
+      tau_accel: 0.1703807181655177
+      drag: 0.0820586615550679
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 31.518837537059543
+      max_steer_rate_deg: 100.0
+    mount:
+      x: 0.35
+      y: 0.0
+      z: 0.49950000000000006
+      roll_deg: 2.738809532291846
+      pitch_deg: 5.770070600683231
+      yaw_deg: 5.111949985226498
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 529.0824024097981
+      fy: 529.0824024097981
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.813760171178807
+      phase:
+      - 2.313950691191125
+      - 3.549661577688882
+      - 0.3294438617602306
+      - 2.2126507074206048
+      - 5.328793891656652
+      - 2.4698453450123985
+    calibration_error:
+      x: 0.0033817146046095027
+      y: -0.0023801133784038643
+      z: -0.00020201450104554987
+      roll_deg: -0.10894934809962786
+      pitch_deg: -0.06974402348954478
+      yaw_deg: 0.10759045238341913
+  design:
+    seed: 184202
+    placement_fractions:
+    - 1
+    - 0.5
+    - 0.65
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184202
+      family: rover
+- name: train_v2_12
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_12
+    team: ''
+    vehicle:
+      max_speed: 17.158366374852804
+      body_height: 0.37936322851363136
+      mass: 292.8797875944274
+      iz: 164.5616475079368
+      lf: 0.8671159508883003
+      lr: 0.8129212039577816
+      track: 1.3006739263324503
+      length: 3.1432953219700885
+      width: 1.5174529140545254
+      front_overhang: 0.8671159508883003
+      rear_overhang: 0.5961422162357065
+      cf: 40748.49218705077
+      cr: 45842.05371043211
+      mu: 1.4
+      max_accel: 6.9406744855228
+      max_brake: 6.673771636084541
+      tau_steer: 0.11772125571072135
+      tau_accel: 0.1542767603049708
+      drag: 0.7048969427671136
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 27.72240924561251
+      max_steer_rate_deg: 150.0
+    mount:
+      x: -0.22999999999999998
+      y: 0.3
+      z: 0.75
+      roll_deg: 2.4093948777352407
+      pitch_deg: 5.713257035463426
+      yaw_deg: -3.23928292204502
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 457.76112466867886
+      fy: 457.76112466867886
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 0.6917174792487193
+      phase:
+      - 0.7825548172318638
+      - 3.4784663521713566
+      - 1.9298698183834107
+      - 0.7454035567346844
+      - 3.5340558115481957
+      - 0.5443896454570191
+    calibration_error:
+      x: -0.0025007858586728006
+      y: -0.0014534825520127214
+      z: -0.0009327492655630765
+      roll_deg: -0.1171690661972331
+      pitch_deg: -0.22682252514560705
+      yaw_deg: -0.09818589992466803
+  design:
+    seed: 184203
+    placement_fractions:
+    - 0.3
+    - 1
+    - 0
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184203
+      family: formula
+- name: train_v2_13
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_13
+    team: ''
+    vehicle:
+      max_speed: 2.7821505522974546
+      body_height: 0.15364683829320194
+      mass: 26.437280094399323
+      iz: 2.3881918947422913
+      lf: 0.24144503160360303
+      lr: 0.2524198057674032
+      track: 0.3511927732416044
+      length: 0.7462846431384094
+      width: 0.43899096655200553
+      front_overhang: 0.13169728996560165
+      rear_overhang: 0.12072251580180152
+      cf: 2379.355208495939
+      cr: 2643.728009439932
+      mu: 0.8
+      max_accel: 1.406258599419756
+      max_brake: 3.3683135718268375
+      tau_steer: 0.11646412904821937
+      tau_accel: 0.3353183644154705
+      drag: 0.09635653435713203
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 26.073915375709447
+      max_steer_rate_deg: 100.0
+    mount:
+      x: -0.07
+      y: 0.12
+      z: 0.22
+      roll_deg: 0.32987977610971253
+      pitch_deg: 5.89692350927848
+      yaw_deg: 2.401296192907997
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 419.5996156807713
+      fy: 419.5996156807713
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.840729434046961
+      phase:
+      - 3.0461625193761037
+      - 3.9948100673093165
+      - 1.0427762900384123
+      - 5.780315318824333
+      - 1.8866025408930711
+      - 4.277342750892634
+    calibration_error:
+      x: 0.0011752529031089976
+      y: -0.001981276526080479
+      z: -0.003979775195517754
+      roll_deg: -0.09886730970166924
+      pitch_deg: 0.02122844367226079
+      yaw_deg: 0.08616754993494163
+  design:
+    seed: 184204
+    placement_fractions:
+    - 0.3
+    - 1
+    - 0
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184204
+      family: rover
+- name: train_v2_14
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_14
+    team: ''
+    vehicle:
+      max_speed: 16.838225132191965
+      body_height: 0.36137384251616467
+      mass: 253.15927534629867
+      iz: 129.07318641480734
+      lf: 0.8259973543226622
+      lr: 0.7743725196774958
+      track: 1.2389960314839932
+      length: 2.9942404094196506
+      width: 1.4454953700646587
+      front_overhang: 0.8259973543226622
+      rear_overhang: 0.5678731810968303
+      cf: 35222.16004818068
+      cr: 39624.930054203265
+      mu: 1.4
+      max_accel: 4.640477878032553
+      max_brake: 11.606032842417322
+      tau_steer: 0.06596686286320184
+      tau_accel: 0.14764989466089334
+      drag: 0.6396296525137851
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 20.001313068075653
+      max_steer_rate_deg: 150.0
+    mount:
+      x: 0.7200000000000002
+      y: -0.15
+      z: 0.975
+      roll_deg: 2.7126211823898023
+      pitch_deg: 2.118785889875728
+      yaw_deg: 1.2256313598177555
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 458.3427384866676
+      fy: 458.3427384866676
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 0.6124365599949961
+      phase:
+      - 4.5931378471034305
+      - 2.4147377263360426
+      - 5.919963772364316
+      - 0.40441119708748774
+      - 0.387974766159392
+      - 0.8808876106044286
+    calibration_error:
+      x: -0.003737689652776014
+      y: -0.0049153923626384715
+      z: 0.0014441309706614148
+      roll_deg: 0.2085800648135216
+      pitch_deg: 0.1906529412637254
+      yaw_deg: 0.11156650323787776
+  design:
+    seed: 184205
+    placement_fractions:
+    - 0.8
+    - 0.25
+    - 0.25
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184205
+      family: formula
+- name: train_v2_15
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_15
+    team: ''
+    vehicle:
+      max_speed: 1.883532285178096
+      body_height: 0.13856888029545572
+      mass: 19.392911325124143
+      iz: 1.4248843582532895
+      lf: 0.21775109760714467
+      lr: 0.2276488747711058
+      track: 0.31672886924675586
+      length: 0.6730488471493562
+      width: 0.39591108655844487
+      front_overhang: 0.11877332596753346
+      rear_overhang: 0.10887554880357234
+      cf: 1745.362019261173
+      cr: 1939.2911325124142
+      mu: 0.8
+      max_accel: 0.9731420676845393
+      max_brake: 1.1052326973882884
+      tau_steer: 0.22090638656529607
+      tau_accel: 0.26675613125651265
+      drag: 0.07837279422994421
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 28.944470245315912
+      max_steer_rate_deg: 100.0
+    mount:
+      x: 0.22999999999999998
+      y: -0.06
+      z: 0.3275
+      roll_deg: -1.874330916792002
+      pitch_deg: 5.053767395565803
+      yaw_deg: 3.744587548204423
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 501.1255548466311
+      fy: 501.1255548466311
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.639158129077203
+      phase:
+      - 2.0265950788495983
+      - 5.775511644266222
+      - 2.159563795837266
+      - 2.946318615833891
+      - 5.367410982929275
+      - 2.7348518963789883
+    calibration_error:
+      x: -0.0037074535053200565
+      y: -0.0012301018258162467
+      z: 0.0018601547311614863
+      roll_deg: -0.2048136566524809
+      pitch_deg: -0.07845362329739058
+      yaw_deg: -0.035752628488644966
+  design:
+    seed: 184206
+    placement_fractions:
+    - 0.8
+    - 0.25
+    - 0.25
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184206
+      family: rover
+- name: train_v2_16
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_16
+    team: ''
+    vehicle:
+      max_speed: 13.833267915609735
+      body_height: 0.3261623030172783
+      mass: 186.13369464918432
+      iz: 77.30743934165136
+      lf: 0.7455138354680648
+      lr: 0.6989192207513106
+      track: 1.118270753202097
+      length: 2.702487653571735
+      width: 1.304649212069113
+      front_overhang: 0.7455138354680648
+      rear_overhang: 0.5125407618842945
+      cf: 25896.861864234343
+      cr: 29133.969597263636
+      mu: 1.4
+      max_accel: 6.538601384118507
+      max_brake: 7.137219940708244
+      tau_steer: 0.11069406157260937
+      tau_accel: 0.15270935003847344
+      drag: 0.5210539489446606
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 21.15718784768443
+      max_steer_rate_deg: 150.0
+    mount:
+      x: -0.458
+      y: 0.12
+      z: 0.9299999999999999
+      roll_deg: 0.6840722248943945
+      pitch_deg: 5.105257217792095
+      yaw_deg: -3.980109834369405
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 454.5456131180108
+      fy: 454.5456131180108
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.0623203012567242
+      phase:
+      - 0.5852578800939015
+      - 0.4227934716147713
+      - 0.7225127339671942
+      - 4.7868334125545555
+      - 0.5240644842154737
+      - 3.8941661948250412
+    calibration_error:
+      x: 0.004171981057629082
+      y: -0.0010339183868119306
+      z: 0.0033836746920594663
+      roll_deg: 0.22165060762177366
+      pitch_deg: -0.0738459754461035
+      yaw_deg: -0.13444820236122718
+  design:
+    seed: 184207
+    placement_fractions:
+    - 0.18
+    - 0.7
+    - 0.2
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184207
+      family: formula
+- name: train_v2_17
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_17
+    team: ''
+    vehicle:
+      max_speed: 1.5126709318897418
+      body_height: 0.15783308239072977
+      mass: 28.65761230394611
+      iz: 2.731752009938873
+      lf: 0.24802341518543247
+      lr: 0.2592972067847703
+      track: 0.3607613311788109
+      length: 0.7666178287549732
+      width: 0.4509516639735136
+      front_overhang: 0.13528549919205407
+      rear_overhang: 0.12401170759271624
+      cf: 2579.1851073551497
+      cr: 2865.7612303946107
+      mu: 0.8
+      max_accel: 0.7719103815042131
+      max_brake: 3.2778810840459505
+      tau_steer: 0.10531984645488364
+      tau_accel: 0.25209606896869946
+      drag: 0.10167870162024034
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 31.4377691359894
+      max_steer_rate_deg: 100.0
+    mount:
+      x: -0.14200000000000002
+      y: 0.04799999999999999
+      z: 0.30600000000000005
+      roll_deg: 2.871621352213506
+      pitch_deg: 2.0868474392929093
+      yaw_deg: 4.440074497874106
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 325.89200492541715
+      fy: 325.89200492541715
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.5890241840278105
+      phase:
+      - 2.3236913397843684
+      - 2.0216248444359763
+      - 2.353326632017511
+      - 5.357232479153701
+      - 0.18700107968196297
+      - 5.8210350796695725
+    calibration_error:
+      x: 0.003217809777041456
+      y: -0.0011970667395134593
+      z: -0.0007414557009201894
+      roll_deg: 0.09332020560892151
+      pitch_deg: -0.10814076770501126
+      yaw_deg: 0.07598731645586582
+  design:
+    seed: 184208
+    placement_fractions:
+    - 0.18
+    - 0.7
+    - 0.2
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184208
+      family: rover
+- name: train_v2_18
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_18
+    team: ''
+    vehicle:
+      max_speed: 8.798900193818962
+      body_height: 0.3306963768098427
+      mass: 194.00459355168036
+      iz: 82.83228595602016
+      lf: 0.755877432708212
+      lr: 0.7086350931639487
+      track: 1.1338161490623178
+      length: 2.740055693567268
+      width: 1.3227855072393708
+      front_overhang: 0.7558774327082118
+      rear_overhang: 0.5196657349868957
+      cf: 26991.943450668572
+      cr: 30365.936382002143
+      mu: 1.4
+      max_accel: 4.342393310852108
+      max_brake: 6.5919596341545
+      tau_steer: 0.047685853648590265
+      tau_accel: 0.1644232467699092
+      drag: 0.5356412749477101
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 24.537320006014706
+      max_steer_rate_deg: 150.0
+    mount:
+      x: 0.758
+      y: -0.12
+      z: 1.47
+      roll_deg: -2.322385349577142
+      pitch_deg: -2.7518988731355583
+      yaw_deg: 1.2279684080942441
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 472.4595597445407
+      fy: 472.4595597445407
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 0.5117808240179893
+      phase:
+      - 0.780171091033277
+      - 5.4357750630049475
+      - 1.738933998743716
+      - 3.9631782326043314
+      - 5.967871934593259
+      - 3.761335708649608
+    calibration_error:
+      x: -0.0029929703760653683
+      y: 0.0016483531232944603
+      z: 0.001968839689554156
+      roll_deg: 0.22494202431578908
+      pitch_deg: 0.21200967529944376
+      yaw_deg: 0.24903918178934267
+  design:
+    seed: 184209
+    placement_fractions:
+    - 0.82
+    - 0.3
+    - 0.8
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184209
+      family: formula
+- name: train_v2_19
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_19
+    team: ''
+    vehicle:
+      max_speed: 1.3681777195521123
+      body_height: 0.1253954681014429
+      mass: 14.371146335543719
+      iz: 0.8646896998385101
+      lf: 0.19705002130226737
+      lr: 0.20600684045237044
+      track: 0.286618212803298
+      length: 0.6090637022070083
+      width: 0.3582727660041225
+      front_overhang: 0.10748182980123674
+      rear_overhang: 0.09852501065113368
+      cf: 1293.4031701989347
+      cr: 1437.114633554372
+      mu: 0.8
+      max_accel: 1.828131406843664
+      max_brake: 2.6134850127847615
+      tau_steer: 0.1056715844400023
+      tau_accel: 0.17676060877795957
+      drag: 0.06417968743012235
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 34.929560213867624
+      max_steer_rate_deg: 100.0
+    mount:
+      x: 0.24199999999999994
+      y: -0.048
+      z: 0.5640000000000001
+      roll_deg: -0.2207788462598368
+      pitch_deg: -2.2945694904403307
+      yaw_deg: -3.605070818697188
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 342.9809968062
+      fy: 342.9809968062
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 0.7439868075151922
+      phase:
+      - 3.117257695195451
+      - 4.924279578347271
+      - 5.642264138089845
+      - 1.21123221938732
+      - 3.803856915114305
+      - 5.506267389595579
+    calibration_error:
+      x: -0.004776690111918682
+      y: -0.0023343552222140243
+      z: -0.0047893831192983
+      roll_deg: -0.04351949362653379
+      pitch_deg: -0.14114098382573437
+      yaw_deg: -0.2140315558730374
+  design:
+    seed: 184210
+    placement_fractions:
+    - 0.82
+    - 0.3
+    - 0.8
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184210
+      family: rover
+- name: train_v2_20
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_20
+    team: ''
+    vehicle:
+      max_speed: 8.083503486077822
+      body_height: 0.3661409912624027
+      mass: 263.31085416669737
+      iz: 137.81428247676496
+      lf: 0.8368936943140635
+      lr: 0.7845878384194345
+      track: 1.255340541471095
+      length: 3.03373964188848
+      width: 1.4645639650496107
+      front_overhang: 0.8368936943140635
+      rear_overhang: 0.5753644148409186
+      cf: 36634.55362319268
+      cr: 41213.87282609176
+      mu: 1.4
+      max_accel: 4.650744994769848
+      max_brake: 7.5008562597461825
+      tau_steer: 0.0728735962563248
+      tau_accel: 0.1277326170700551
+      drag: 0.6566166146087259
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 20.324603032066044
+      max_steer_rate_deg: 150.0
+    mount:
+      x: -0.135
+      y: -0.09
+      z: 1.065
+      roll_deg: 2.7119406810405655
+      pitch_deg: 4.271756799805996
+      yaw_deg: -3.8121091763760435
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 350.627945138255
+      fy: 350.627945138255
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 0.6259827610330579
+      phase:
+      - 2.794623509802161
+      - 5.155965655829669
+      - 6.001445691385447
+      - 0.2086603565543999
+      - 4.832669132630817
+      - 4.00841761656675
+    calibration_error:
+      x: -0.00012543474776159248
+      y: 0.003903630029539639
+      z: 0.0027013665264359553
+      roll_deg: -0.2254413279623124
+      pitch_deg: 0.057037978936129004
+      yaw_deg: 0.03093715818498255
+  design:
+    seed: 184211
+    placement_fractions:
+    - 0.35
+    - 0.35
+    - 0.35
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184211
+      family: formula
+- name: train_v2_21
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_21
+    team: ''
+    vehicle:
+      max_speed: 1.8987205617047815
+      body_height: 0.11278671972269631
+      mass: 10.457305271932427
+      iz: 0.5090271066940116
+      lf: 0.17723627384995133
+      lr: 0.18529246811585823
+      track: 0.25779821650902013
+      length: 0.5478212100816677
+      width: 0.3222477706362752
+      front_overhang: 0.09667433119088253
+      rear_overhang: 0.08861813692497567
+      cf: 941.1574744739185
+      cr: 1045.7305271932428
+      mu: 0.8
+      max_accel: 1.8748048315376495
+      max_brake: 3.373936116263704
+      tau_steer: 0.24647621933569983
+      tau_accel: 0.2622965204074339
+      drag: 0.05192181284002469
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 33.14790467331048
+      max_steer_rate_deg: 100.0
+    mount:
+      x: -0.04000000000000001
+      y: -0.036000000000000004
+      z: 0.3705
+      roll_deg: 0.8525588446070045
+      pitch_deg: 0.8908270324824129
+      yaw_deg: -4.872914018846166
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 369.5840524782237
+      fy: 369.5840524782237
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.8899430858916348
+      phase:
+      - 2.0187382463493684
+      - 4.73332445274569
+      - 0.17257438141813036
+      - 2.491203144077852
+      - 5.248292488224453
+      - 3.8824442011716043
+    calibration_error:
+      x: -0.0002242305725034599
+      y: -0.002654494889189656
+      z: 0.0007238083196822453
+      roll_deg: 0.17362660132978494
+      pitch_deg: 0.18221251842934233
+      yaw_deg: 0.2411516193584877
+  design:
+    seed: 184212
+    placement_fractions:
+    - 0.35
+    - 0.35
+    - 0.35
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184212
+      family: rover
+- name: train_v2_22
+  family: formula
+  regime: interpolation
+  profile:
+    name: train_v2_22
+    team: ''
+    vehicle:
+      max_speed: 15.56751573724048
+      body_height: 0.36035203766740864
+      mass: 251.0178754692905
+      iz: 127.25866833172273
+      lf: 0.8236618003826485
+      lr: 0.7721829378587328
+      track: 1.2354927005739726
+      length: 2.9857740263871007
+      width: 1.4414081506696346
+      front_overhang: 0.8236618003826485
+      rear_overhang: 0.5662674877630708
+      cf: 34924.22615224911
+      cr: 39289.75442128025
+      mu: 1.4
+      max_accel: 6.772669558051054
+      max_brake: 6.400370027006704
+      tau_steer: 0.08322441297949651
+      tau_accel: 0.12044967576685879
+      drag: 0.6360175888214866
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 27.810339517569012
+      max_steer_rate_deg: 150.0
+    mount:
+      x: 0.43500000000000005
+      y: 0.09000000000000002
+      z: 1.335
+      roll_deg: 1.4641372921826452
+      pitch_deg: 7.195295705294335
+      yaw_deg: -3.904181931242406
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 392.93612111816697
+      fy: 392.93612111816697
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.5831111752815852
+      phase:
+      - 2.660015868291524
+      - 6.248192728562604
+      - 5.378140314755014
+      - 0.8547057884817534
+      - 2.0416440998439067
+      - 0.2016184832776531
+    calibration_error:
+      x: 0.0008077484194927498
+      y: -0.0014691492528645267
+      z: -0.0022949058789764245
+      roll_deg: 0.2160267064911754
+      pitch_deg: -0.17065194571105696
+      yaw_deg: -0.06068523099268646
+  design:
+    seed: 184213
+    placement_fractions:
+    - 0.65
+    - 0.65
+    - 0.65
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 184213
+      family: formula
+- name: train_v2_23
+  family: rover
+  regime: interpolation
+  profile:
+    name: train_v2_23
+    team: ''
+    vehicle:
+      max_speed: 1.9771177582625563
+      body_height: 0.11674899957852974
+      mass: 11.598595213581733
+      iz: 0.6049464320246041
+      lf: 0.18346271362340386
+      lr: 0.19180192787901312
+      track: 0.2668548561794965
+      length: 0.5670665693814302
+      width: 0.3335685702243707
+      front_overhang: 0.1000705710673112
+      rear_overhang: 0.09173135681170193
+      cf: 1043.8735692223559
+      cr: 1159.8595213581732
+      mu: 0.8
+      max_accel: 1.2720908341504356
+      max_brake: 3.4469569472460835
+      tau_steer: 0.2276489346092058
+      tau_accel: 0.2295716381648733
+      drag: 0.05563399552076545
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 28.886215248506556
+      max_steer_rate_deg: 100.0
+    mount:
+      x: 0.14
+      y: 0.036000000000000004
+      z: 0.49950000000000006
+      roll_deg: -2.7412271802675203
+      pitch_deg: 5.704419247320781
+      yaw_deg: -5.127997576054298
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 451.0907836010159
+      fy: 451.0907836010159
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.002
+      angle_amplitude_deg: 0.2
+      frequency_hz: 1.4408742062688968
+      phase:
+      - 0.49447646007544827
+      - 1.5847734194969116
+      - 2.7739383460288374
+      - 0.334489886898158
+      - 0.44678927302987226
+      - 5.302763545165711
+    calibration_error:
+      x: 0.0009698865888904662
+      y: 0.004982556232081931
+      z: -0.00317395367696471
+      roll_deg: -0.22727517074394746
+      pitch_deg: 0.11438387016223323
+      yaw_deg: -0.05581098053778205
+  design:
+    seed: 184214
+    placement_fractions:
+    - 0.65
+    - 0.65
+    - 0.65
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 184214
+      family: rover

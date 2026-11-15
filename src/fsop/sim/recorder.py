@@ -108,8 +108,10 @@ class EpisodeWriter:
       masks = {k: (v[..., 0] == 255) for k, v in env.warper(white).items()}
       np.savez(self.dir / "sensor_masks.npz", **masks)
     with open(self.dir / "events.jsonl", "w") as f:
-      for e in self.events:
-        f.write(json.dumps(e, default=float) + "\n")
+      # Observations drain pending events at 20 Hz, including unrecorded ticks.
+      # The referee retains the complete log; sampling obs.events loses contacts.
+      for e in env.referee.events:
+        f.write(json.dumps({"t": e.t, "kind": e.kind, **e.data}, default=float) + "\n")
     m = env.mount
     meta = {
       "id": self.id, "track_id": env.track.id, "discipline": env.track.discipline, "seed": env.seed,

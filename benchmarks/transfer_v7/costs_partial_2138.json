@@ -1,0 +1,18 @@
+{
+  "retrieved_at_utc": "2026-11-14T21:37:07.649534+00:00",
+  "modal_sdk_version": "1.6.2",
+  "start_utc": "2026-11-14T00:00:00+00:00",
+  "end_utc": "2026-11-14T21:38:00+00:00",
+  "requested_app_ids": [
+    "ap-CLhtHMEQMKvMiHGBm0ZNi4",
+    "ap-L3VmEQhwgzAryLMOhs3HOZ",
+    "ap-Rlh8o7oDHgogtvezoS6hAr",
+    "ap-VF7b4vGc6QqgupkqnHG5UL",
+    "ap-tR5Uxu2HD6ZZllb4R19vnA",
+    "ap-vIstyc1zvJIgrfVgMpp31V",
+    "ap-w5HXMTNHyUelRyoNMygDvS"
+  ],
+  "records": [],
+  "total_usd": "0",
+  "limitation": "Metered hourly records only; recent usage may not be settled. Not an invoice."
+}

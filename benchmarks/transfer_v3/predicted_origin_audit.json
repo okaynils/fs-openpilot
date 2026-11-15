@@ -1,0 +1,22 @@
+{
+  "plan_probe.npz": {
+    "max_abs_predicted_origin_xy_m": [
+      0.0,
+      7.924454425989325e-10
+    ],
+    "max_abs_target_origin_xy_m": [
+      0.0,
+      0.0
+    ]
+  },
+  "guarded_pilot_plans.npz": {
+    "max_abs_predicted_origin_xy_m": [
+      0.0,
+      6.021978471437706e-10
+    ],
+    "max_abs_target_origin_xy_m": [
+      0.0,
+      0.0
+    ]
+  }
+}

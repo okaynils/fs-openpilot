@@ -73,8 +73,11 @@ def paired_open_loop(dataset, checkpoints, output, split="all"):
       ep = Episode(Path(dataset) / item['id'])
       predicted = run_episode_model(model, ep, device, bev=False)
       errors = plan_errors(predicted['mu'], ep.plan, predicted['std'])
+      valid_labels = (np.arange(ep.T) >= 5) & ep.label_valid
+      if not valid_labels.any():
+        raise ValueError(f'No valid evaluation labels: {ep.path}')
       clearance, expert_clearance = [], []
-      for k in range(5, ep.T):
+      for k in np.flatnonzero(valid_labels):
         cones = world_to_ego(ep.cones_xy, *ep.pose(k))
         mask = T_IDXS <= 4
         clearance.append(trajectory_clearance(predicted['mu'][k, mask], cones, ep.vehicle).min())
@@ -82,7 +85,8 @@ def paired_open_loop(dataset, checkpoints, output, split="all"):
       rows.append({'checkpoint': str(checkpoint), 'episode': item['id'],
                    'configuration': item.get('configuration', ep.meta.get('distribution', {}).get('seed', 'legacy')),
                    'regime': item.get('regime'),
-                   **{k: float(v[5:].mean()) for k, v in errors.items()},
+                   'evaluated_frames': int(valid_labels.sum()),
+                   **{k: float(v[valid_labels].mean()) for k, v in errors.items()},
                    'minimum_predicted_clearance_m': float(np.min(clearance)),
                    'predicted_contact_frame_rate': float(np.mean(np.asarray(clearance) < 0)),
                    'expert_contact_frame_rate': float(np.mean(np.asarray(expert_clearance) < 0))})
@@ -144,15 +148,19 @@ def context_ablation(dataset, checkpoint, output):
                               encoded_hidden=hidden, return_hidden=True)
       hidden = out['encoded_hidden']
       metrics = plan_errors(out['mu'], ep.plan, out['std'])
+      valid_labels = (np.arange(ep.T) >= 5) & ep.label_valid
       rows.append({'episode': eid, 'intervention': name,
-                   **{k: float(v[5:].mean()) for k, v in metrics.items()}})
+                   **{k: float(v[valid_labels].mean()) for k, v in metrics.items()}})
   result = {'checkpoint': str(checkpoint), 'split': 'val', 'rows': rows}
   Path(output).write_text(json.dumps(result, indent=2))
   return result
 
 
 def transfer_profile(configuration):
-  from fsop.profile import load_profile
+  from fsop.profile import load_profile, profile_from_dict
+
+  if "profile" in configuration:
+    return profile_from_dict(configuration["profile"], configuration["name"])
 
   profile = load_profile(f"configs/profiles/generic_{configuration['family']}.yaml")
   profile.name = configuration['name']
@@ -179,7 +187,8 @@ def transfer_track(seed):
                                          length_min=80, length_max=120, slalom_prob=0))
 
 
-def closed_loop_case(configuration, checkpoints, track_seed, scene_seed, recovery=False, max_seconds=100.):
+def closed_loop_case(configuration, checkpoints, track_seed, scene_seed, recovery=False, max_seconds=100.,
+                     device=None):
   import copy
   import time
 
@@ -215,7 +224,7 @@ def closed_loop_case(configuration, checkpoints, track_seed, scene_seed, recover
       elif str(checkpoint).endswith('.onnx'):
         policy = RuntimePolicy(checkpoint)
       else:
-        policy = ModelPolicy.from_checkpoint(checkpoint)
+        policy = ModelPolicy.from_checkpoint(checkpoint, device=device)
       obs = env.observe()
       rows, tracking, prediction, latency = [], [], [], []
       pending = {}

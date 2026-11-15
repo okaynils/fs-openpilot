@@ -1,0 +1,17 @@
+{
+  "command": ".venv/bin/python scripts/transfer_v7_local_driving.py",
+  "session_id": 20638,
+  "status": "completed",
+  "configurations": 4,
+  "checkpoints": 4,
+  "expert_control_included": true,
+  "backend": "CPU",
+  "note": "Supplemental, not a substitute for the interrupted paired Modal GPU comparison.",
+  "complete_configurations": [
+    "val_v2_0",
+    "val_v2_1",
+    "val_v2_2",
+    "val_v2_3"
+  ],
+  "report": "local_driving/report.json"
+}

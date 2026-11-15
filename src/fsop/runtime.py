@@ -40,6 +40,12 @@ class DriverOutput:
   extra: dict = field(default_factory=dict)
 
 
+def _speed_input(speed) -> np.ndarray:
+  if speed is None or not np.isscalar(speed) or not np.isfinite(speed):
+    raise ValueError("Measured forward speed must be a finite scalar in m/s")
+  return np.array([[speed]], np.float32)
+
+
 class OnnxEngine:
   def __init__(self, path: str | Path, providers: list[str] | None = None):
     import onnx
@@ -49,7 +55,16 @@ class OnnxEngine:
     version = meta.get("fsop_context_version", "0")
     if version not in ("0", "1", "2"):
       raise ValueError(f"Unsupported geometry contract version: {version}")
+    self.context_scope = meta.get("fsop_context_scope", "current")
+    if self.context_scope not in ("current", "sequence"):
+      raise ValueError("Unsupported conditioning scope")
     self.context_version = int(version)
+    self.state_mode = meta.get("fsop_state_mode", "none")
+    if self.state_mode not in ("none", "speed", "constant"):
+      raise ValueError("Unsupported motion state mode")
+    if self.state_mode != "none" and (meta.get("fsop_state_version") != "1"
+                                      or meta.get("fsop_speed_scale_mps") != "15.0"):
+      raise ValueError("Unsupported motion state contract")
     self.slices = pickle.loads(base64.b64decode(meta["output_slices"]))
     if providers is None:  # CoreML/TensorRT fp16 paths drift on the long plan horizon -> opt-in only
       avail = ort.get_available_providers()
@@ -58,6 +73,10 @@ class OnnxEngine:
                  for p in providers]
     self.sess = ort.InferenceSession(str(path), providers=providers)
     self.types = {i.name: i.type for i in self.sess.get_inputs()}
+    if (self.state_mode == "speed") != ("speed" in self.types):
+      raise ValueError("ONNX speed input disagrees with state contract")
+    if self.state_mode == "speed" and next(i for i in self.sess.get_inputs() if i.name == "speed").shape != [1, 1]:
+      raise ValueError("Unsupported ONNX speed shape")
     if (version != "0") != ("geometry" in self.types):
       raise ValueError("ONNX geometry input disagrees with its versioned contract")
     if version != "0":
@@ -69,7 +88,7 @@ class OnnxEngine:
       if version == "2" and json.loads(meta.get("fsop_context_fields", "[]")) != list(fields):
         raise ValueError("ONNX geometry fields disagree with context v2")
 
-  def __call__(self, img, big, feats, desire, traffic, geometry=None) -> dict[str, np.ndarray]:
+  def __call__(self, img, big, feats, desire, traffic, geometry=None, speed=None) -> dict[str, np.ndarray]:
     def f(x, name):
       return x.astype(np.float16) if "float16" in self.types[name] else x.astype(np.float32)
 
@@ -80,6 +99,8 @@ class OnnxEngine:
       if geometry is None:
         raise ValueError(f"Export requires calibrated geometry context v{self.context_version}")
       feed["geometry"] = f(geometry[None], "geometry")
+    if self.state_mode == "speed":
+      feed["speed"] = f(_speed_input(speed), "speed")
     out = self.sess.run(None, feed)[0][0].astype(np.float32)
     return {k: out[s] for k, s in self.slices.items()}
 
@@ -96,13 +117,14 @@ class TorchEngine:
     self.device = pick_device(device)
     strict_inference_precision()
     self.m = ExportWrapper(load_fs(ckpt)).to(self.device).eval()
+    self.state_mode = self.m.m.state_mode
     self.context_version = self.m.m.context_version if self.m.m.context_adapter is not None else 0
     n = 2576 + 4 * TOPK
     self.slices = {"hidden_state": slice(1064, 1576), "plan": slice(1576, 2566), "cones_bev": slice(2576, n)}
     if self.m.m.img is not None:
       self.slices.update(cones_img_road=slice(n, n + 6 * TOPK), cones_img_wide=slice(n + 6 * TOPK, n + 12 * TOPK))
 
-  def __call__(self, img, big, feats, desire, traffic, geometry=None) -> dict[str, np.ndarray]:
+  def __call__(self, img, big, feats, desire, traffic, geometry=None, speed=None) -> dict[str, np.ndarray]:
     t = self.torch
     with t.no_grad():
       args = [t.from_numpy(x[None]).to(self.device) for x in (img, big)]
@@ -112,6 +134,8 @@ class TorchEngine:
         if geometry is None:
           raise ValueError(f"Checkpoint requires calibrated geometry context v{self.context_version}")
         args.append(t.from_numpy(geometry[None]).to(self.device))
+      if self.state_mode == "speed":
+        args.append(t.from_numpy(_speed_input(speed)).to(self.device))
       out = self.m(*args)[0].cpu().numpy()
     return {k: out[s] for k, s in self.slices.items()}
 
@@ -141,11 +165,12 @@ class FSDriver:
   def step(self, images: dict[str, np.ndarray], v_ego: float, desire: np.ndarray | None = None,
            already_model_frame: bool = False) -> DriverOutput:
     """images: physical camera name -> RGB uint8 (or slot name -> 256x512 RGB if ``already_model_frame``)."""
+    state = {"speed": float(_speed_input(v_ego)[0, 0])} if self.engine.state_mode == "speed" else {}
     slots = images if already_model_frame else self.warper(images)
     pair = self.ts.push_frames({s: rgb_to_model(im) for s, im in slots.items()})
     des = self.ts.push_desire(np.zeros(8, np.float32) if desire is None else desire.astype(np.float32))
     out = self.engine(pair["road"], pair["wide"], self.ts.features(), des, np.array([1.0, 0.0], np.float32),
-                      self.geometry)
+                      self.geometry, **state)
     self.ts.push_hidden(out["hidden_state"])
     p = out["plan"].reshape(2, 33, 15)
     plan = op_to_ego_plan(p[0])

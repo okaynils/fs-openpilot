@@ -1,0 +1,23 @@
+{
+  "retry_command": "modal run scripts/modal_app.py::transfer_v7_control_retry",
+  "launched": false,
+  "reason": "Workspace has exceeded its spend limit",
+  "automatic_retry": false,
+  "previous_checkpoint_step": 100,
+  "current_completed_steps": 300,
+  "rechecks": [
+    {
+      "checked_utc": "2026-11-15T00:20:30Z",
+      "command": "modal run scripts/modal_app.py::transfer_v7_control_retry",
+      "launched": false,
+      "reason": "Workspace has exceeded its spend limit"
+    },
+    {
+      "checked_utc": "2026-11-15T07:55:04Z",
+      "command": "modal run scripts/modal_app.py::transfer_v7_control_retry",
+      "launched": false,
+      "reason": "Workspace has exceeded its spend limit",
+      "trigger": "user requested retry"
+    }
+  ]
+}

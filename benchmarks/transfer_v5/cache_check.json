@@ -1,0 +1,9 @@
+{
+  "exact_vision_tensor_equality": true,
+  "tensors": 270,
+  "checked_episodes": 138,
+  "baseline_sha256": "fdf1b3d56ebd110658dace49a8c9ab25fa50c42ce076b09c0b0b5d418746f507",
+  "initial_sha256": "2b949c9b7caf959349cb05d3a4635f85ff18f329ecd8bac31de1e7817bc97dd2",
+  "cache_tag": "transfer_baseline_strict_v2_full",
+  "cache_modified": false
+}

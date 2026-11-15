@@ -1,0 +1,12 @@
+{
+  "reference_tail_m": 1.4834129011158415,
+  "pilot_tail_m": 1.1494315414113352,
+  "pilot_mean_speed": 1.746109134671862,
+  "contacts": 0,
+  "checks": {
+    "no_contacts": true,
+    "mean_speed_at_least_1": true,
+    "tail_not_worse": true
+  },
+  "passed": true
+}

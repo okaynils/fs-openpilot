@@ -1,0 +1,7 @@
+{
+  "step": 0,
+  "loss": 2.40057373046875,
+  "vision_trainable_parameters": 0,
+  "vision_parameters_with_gradient": 0,
+  "vision_gradient_norm": 0.0
+}

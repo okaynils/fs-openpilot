@@ -38,14 +38,14 @@ class ModelPolicy:
     self.bev = bev and hasattr(model, "bev")
 
   @classmethod
-  def from_checkpoint(cls, ckpt: str | Path | None, controller: str = "pp") -> ModelPolicy:
+  def from_checkpoint(cls, ckpt: str | Path | None, controller: str = "pp", *, device=None) -> ModelPolicy:
     if ckpt is None:
       from fsop.model.build import build_base
 
-      return cls(build_base(None), controller, bev=False)
+      return cls(build_base(None), controller, device=device, bev=False)
     from fsop.model.build import load_fs
 
-    return cls(load_fs(ckpt), controller)
+    return cls(load_fs(ckpt), controller, device=device)
 
   def reset(self) -> None:
     self.ts = TemporalState()
@@ -73,7 +73,7 @@ class ModelPolicy:
       from fsop.model.conditioning import geometry_context
       context = torch.from_numpy(geometry_context(env.calibrated_mount(), env.vp,
                                                  getattr(m, "context_version", 1))[None]).to(dev)
-      pred = m.plan(hist, v.hidden, des, tc, context)
+      pred = m.plan(hist, v.hidden, des, tc, context, torch.tensor([obs.state.vx], device=dev))
       plan = torch.cat([pred["plan_mu"].flatten(1), pred["plan_logstd"].flatten(1)], 1)
     else:
       plan, _ = base.policy_raw(fb_full, des, tc)

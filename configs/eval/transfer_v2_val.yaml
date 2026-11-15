@@ -1,0 +1,352 @@
+version: 2
+track_seeds:
+- 98011
+scene_seeds:
+- 5101
+configurations:
+- name: val_v2_0
+  family: formula
+  regime: interpolation
+  profile:
+    name: val_v2_0
+    team: ''
+    vehicle:
+      max_speed: 7.314764396395093
+      body_height: 0.3765904558970491
+      mass: 286.504620877772
+      iz: 158.63499889156586
+      lf: 0.8607781849075409
+      lr: 0.8069795483508195
+      track: 1.2911672773613112
+      length: 3.120320920289836
+      width: 1.5063618235881964
+      front_overhang: 0.8607781849075409
+      rear_overhang: 0.5917850021239344
+      cf: 39861.51246995089
+      cr: 44844.20152869475
+      mu: 1.4
+      max_accel: 5.884069157815277
+      max_brake: 11.712042863945113
+      tau_steer: 0.0504625308212992
+      tau_accel: 0.1735057897547657
+      drag: 0.6946303908869255
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 26.78720672474648
+      max_steer_rate_deg: 150.0
+    mount:
+      x: -0.553
+      y: -0.16199999999999998
+      z: 1.002
+      roll_deg: 1.1318978600525367
+      pitch_deg: 4.516841307261267
+      yaw_deg: 0.7837407824003259
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 339.1475644599415
+      fy: 339.1475644599415
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.0
+      angle_amplitude_deg: 0.0
+      frequency_hz: 1.0
+      phase:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+    calibration_error:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+  design:
+    seed: 284191
+    placement_fractions:
+    - 0.13
+    - 0.23
+    - 0.28
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 284191
+      family: formula
+- name: val_v2_1
+  family: formula
+  regime: interpolation
+  profile:
+    name: val_v2_1
+    team: ''
+    vehicle:
+      max_speed: 9.354480403509385
+      body_height: 0.36548727810404663
+      mass: 261.9030142832987
+      iz: 136.58839017835808
+      lf: 0.8353994928092496
+      lr: 0.7831870245086714
+      track: 1.2530992392138742
+      length: 3.02832316143353
+      width: 1.4619491124161865
+      front_overhang: 0.8353994928092496
+      rear_overhang: 0.5743371513063591
+      cf: 36438.68024811112
+      cr: 40993.515279125015
+      mu: 1.4
+      max_accel: 4.9249318048538955
+      max_brake: 12.640925033529168
+      tau_steer: 0.09125450847701165
+      tau_accel: 0.17855769440969738
+      drag: 0.6542740430493293
+      v_blend:
+      - 2.0
+      - 5.0
+      max_steer_deg: 27.379402071048247
+      max_steer_rate_deg: 150.0
+    mount:
+      x: 0.853
+      y: 0.14999999999999997
+      z: 1.488
+      roll_deg: 1.5373533378928996
+      pitch_deg: -0.10083308978028138
+      yaw_deg: 5.1740151993439545
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 451.1524002533671
+      fy: 451.1524002533671
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic full-size Formula Student vehicle; simulator envelope, not validated
+      hardware.
+    motion:
+      translation_amplitude: 0.0
+      angle_amplitude_deg: 0.0
+      frequency_hz: 1.0
+      phase:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+    calibration_error:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+  design:
+    seed: 284192
+    placement_fractions:
+    - 0.87
+    - 0.75
+    - 0.82
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6
+      seed: 284192
+      family: formula
+- name: val_v2_2
+  family: rover
+  regime: interpolation
+  profile:
+    name: val_v2_2
+    team: ''
+    vehicle:
+      max_speed: 2.0107959755610816
+      body_height: 0.16463028143458924
+      mass: 32.521835627421936
+      iz: 3.3728706302647833
+      lf: 0.25870472796864025
+      lr: 0.27046403378539663
+      track: 0.37629778613620396
+      length: 0.7996327955394334
+      width: 0.47037223267025496
+      front_overhang: 0.14111166980107648
+      rear_overhang: 0.12935236398432012
+      cf: 2926.965206467974
+      cr: 3252.1835627421933
+      mu: 0.8
+      max_accel: 1.2674793689800408
+      max_brake: 3.212729033181575
+      tau_steer: 0.16059485142477464
+      tau_accel: 0.3398883382183748
+      drag: 0.11062501863360023
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 34.220803925736156
+      max_steer_rate_deg: 100.0
+    mount:
+      x: 0.266
+      y: -0.0576
+      z: 0.2974
+      roll_deg: -2.141967928579627
+      pitch_deg: -0.17541426169029672
+      yaw_deg: -4.20421284167862
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 344.12949835803676
+      fy: 344.12949835803676
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.0
+      angle_amplitude_deg: 0.0
+      frequency_hz: 1.0
+      phase:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+    calibration_error:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+  design:
+    seed: 284193
+    placement_fractions:
+    - 0.86
+    - 0.26
+    - 0.18
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 284193
+      family: rover
+- name: val_v2_3
+  family: rover
+  regime: interpolation
+  profile:
+    name: val_v2_3
+    team: ''
+    vehicle:
+      max_speed: 2.4001816087844925
+      body_height: 0.14442978377256555
+      mass: 21.95918268803394
+      iz: 1.7528101763971025
+      lf: 0.22696108878546012
+      lr: 0.23727750191207195
+      track: 0.33012522005157835
+      length: 0.7015160926096039
+      width: 0.4126565250644729
+      front_overhang: 0.12379695751934187
+      rear_overhang: 0.11348054439273006
+      cf: 1976.3264419230545
+      cr: 2195.918268803394
+      mu: 0.8
+      max_accel: 1.7895784231320793
+      max_brake: 1.3642407731571344
+      tau_steer: 0.14204373317083682
+      tau_accel: 0.21145170190125293
+      drag: 0.08514270383914299
+      v_blend:
+      - 2.0
+      - 4.0
+      max_steer_deg: 30.96462255511347
+      max_steer_rate_deg: 100.0
+    mount:
+      x: -0.136
+      y: 0.07440000000000002
+      z: 0.5726
+      roll_deg: -0.16008548718817872
+      pitch_deg: -0.42319653247145295
+      yaw_deg: -4.650209943476719
+    cameras:
+    - name: front
+      width: 640
+      height: 360
+      fx: 447.6281073143969
+      fy: 447.6281073143969
+      cx: 320.0
+      cy: 180.0
+      dist: []
+      fisheye: false
+      slots:
+      - road
+      - wide
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+    notes: Generic small Ackermann platform; simulator envelope, not validated hardware.
+    motion:
+      translation_amplitude: 0.0
+      angle_amplitude_deg: 0.0
+      frequency_hz: 1.0
+      phase:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+    calibration_error:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      roll_deg: 0.0
+      pitch_deg: 0.0
+      yaw_deg: 0.0
+  design:
+    seed: 284194
+    placement_fractions:
+    - 0.19
+    - 0.81
+    - 0.82
+    distribution:
+      version: 1
+      distribution: configs/distributions/transfer_v2.yaml
+      sha256: 35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c
+      profile_sha256: 857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3
+      seed: 284194
+      family: rover

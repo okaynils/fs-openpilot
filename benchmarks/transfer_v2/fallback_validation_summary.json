@@ -1,0 +1,79 @@
+{
+  "groups": [
+    {
+      "checkpoint": "runs/transfer_policy_v2/ckpt/step_000500.pt",
+      "regime": "interpolation",
+      "cases": 4,
+      "passes": 2,
+      "complete_laps": 2,
+      "contacts": 23,
+      "off_course": 7,
+      "worst_clearance_m": -0.8699720800681107,
+      "elapsed_worker_seconds": 616.7284772396088,
+      "failure_results": {
+        "finished": 2,
+        "running": 2
+      },
+      "mean_completion_fraction": 0.5816373809203587,
+      "mean_rms_lateral_m": 32.83266826011522,
+      "mean_rms_steer_rate_rad_s": 0.08492614980918572,
+      "mean_max_yaw_rate_rad_s": 0.5926206727458341,
+      "mean_steering_saturation_fraction": 0.0,
+      "mean_mean_visible_cones": 5.673982404325566,
+      "mean_online_expert_ade_4s": 2.2490960838311587,
+      "mean_one_second_tracking_error_m": 1.0778310338424286,
+      "mean_policy_steady_p95_ms": 15.461280749996309,
+      "recovery_lateral_4_to_6s_m": 0.810141435506662
+    },
+    {
+      "checkpoint": "runs/transfer_policy_v2/ckpt/step_001500.pt",
+      "regime": "interpolation",
+      "cases": 4,
+      "passes": 2,
+      "complete_laps": 2,
+      "contacts": 25,
+      "off_course": 3,
+      "worst_clearance_m": -0.8656138368590028,
+      "elapsed_worker_seconds": 627.4193947315216,
+      "failure_results": {
+        "finished": 2,
+        "running": 2
+      },
+      "mean_completion_fraction": 0.5530113880911599,
+      "mean_rms_lateral_m": 33.83667720397425,
+      "mean_rms_steer_rate_rad_s": 0.10655882941499326,
+      "mean_max_yaw_rate_rad_s": 0.5629355059139098,
+      "mean_steering_saturation_fraction": 0.0,
+      "mean_mean_visible_cones": 2.945542607833773,
+      "mean_online_expert_ade_4s": 2.421177570973605,
+      "mean_one_second_tracking_error_m": 0.8979849938658793,
+      "mean_policy_steady_p95_ms": 15.881826412480926,
+      "recovery_lateral_4_to_6s_m": 0.8758478698884746
+    },
+    {
+      "checkpoint": "expert",
+      "regime": "interpolation",
+      "cases": 4,
+      "passes": 4,
+      "complete_laps": 4,
+      "contacts": 0,
+      "off_course": 0,
+      "worst_clearance_m": 0.3587724353937508,
+      "elapsed_worker_seconds": 166.10027360916138,
+      "failure_results": {
+        "finished": 4
+      },
+      "mean_completion_fraction": 1.0,
+      "mean_rms_lateral_m": 0.7252406204821104,
+      "mean_rms_steer_rate_rad_s": 0.19073533377326038,
+      "mean_max_yaw_rate_rad_s": 0.9378234450351435,
+      "mean_steering_saturation_fraction": 0.0,
+      "mean_mean_visible_cones": 7.501070276696796,
+      "mean_online_expert_ade_4s": null,
+      "mean_one_second_tracking_error_m": null,
+      "mean_policy_steady_p95_ms": 0.13276795001164737,
+      "recovery_lateral_4_to_6s_m": 0.657321915152867
+    }
+  ],
+  "note": "Referee passes allow contacts. Progress can reach 1 without a valid lap."
+}

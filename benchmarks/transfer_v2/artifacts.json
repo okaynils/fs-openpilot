@@ -1,0 +1,81 @@
+{
+  "source_checkpoint": "runs/transfer_expert_v2/ckpt/step_000500.pt",
+  "selected_step": 500,
+  "input_contract": {
+    "geometry_version": 2,
+    "anchored_context": true,
+    "conditioning_scope": "current",
+    "fields": [
+      "camera_x",
+      "camera_y",
+      "camera_z",
+      "wheelbase",
+      "width",
+      "front_extent",
+      "rear_extent",
+      "max_steer",
+      "max_speed",
+      "max_accel",
+      "max_brake",
+      "tau_steer",
+      "tau_accel"
+    ],
+    "trajectory_origin": "ground_projected_cog",
+    "preprocessing": "model_slots_yuv_v1"
+  },
+  "parity": [
+    {
+      "episode": "val_v2_0_expert",
+      "plan_max_abs": 5.7220458984375e-05,
+      "steer_max_abs": 8.20088092573501e-08,
+      "accel_max_abs": 2.0289421081565173e-06,
+      "hidden_max_abs": 2.682209014892578e-07,
+      "ticks": 120,
+      "input_cadence": "5 Hz recorded images repeated four times; runtime queues at 20 Hz"
+    },
+    {
+      "episode": "val_v2_2_expert",
+      "plan_max_abs": 5.53131103515625e-05,
+      "steer_max_abs": 1.77797241207589e-07,
+      "accel_max_abs": 8.860230445439932e-07,
+      "hidden_max_abs": 2.7194619178771973e-07,
+      "ticks": 120,
+      "input_cadence": "5 Hz recorded images repeated four times; runtime queues at 20 Hz"
+    }
+  ],
+  "packaging_environment": {
+    "python": "3.12.10",
+    "packages": {
+      "torch": "2.14.1",
+      "numpy": "2.5.4",
+      "onnx": "1.23.2",
+      "onnxruntime": "1.31.0",
+      "opencv-python-headless": "5.0.0.93",
+      "panda3d": "1.10.14"
+    }
+  },
+  "artifacts": {
+    "selected.pt": {
+      "path": "runs/transfer_selected_v2/selected.pt",
+      "sha256": "a5d897566bcc68cb323e44c2663dad958451da54bd000d53ebd1fc8dc8391458",
+      "bytes": 134760393
+    },
+    "candidate.onnx": {
+      "path": "runs/transfer_selected_v2/candidate.onnx",
+      "sha256": "ccd37c72555723d49537fb089c9fe874422ca98713992ab0c13f13904eed403d",
+      "bytes": 125914318
+    },
+    "selection.json": {
+      "path": "runs/transfer_selected_v2/selection.json",
+      "sha256": "b9d777821b5f4d2ea60564e69120f6c84bde68403ffe62680f545162f796b1a7",
+      "bytes": 2419
+    },
+    "source.tar.gz": {
+      "path": "runs/transfer_selected_v2/source.tar.gz",
+      "sha256": "8ee5285658a195cb7331b68705aaa89699366fbf680ec51807cb49eaec6b8297",
+      "bytes": 319142
+    }
+  },
+  "status": "research candidate; promotion requires default and independent final driving results",
+  "runtime_requirement": "use accompanying source; v1 PyTorch loaders lack sequence conditioning"
+}

@@ -1,0 +1,31 @@
+{
+  "rows": [
+    {
+      "id": "train_v2_00_previous",
+      "track_id": "autocross_882101",
+      "discipline": "autocross",
+      "frames": 70,
+      "split": "train",
+      "collector": "dagger",
+      "configuration": "train_v2_00",
+      "seconds": 28.224321796999998,
+      "valid_frames": 70,
+      "expert_control_fraction": 0.8628158844765343,
+      "contacts": 0
+    },
+    {
+      "id": "train_v2_00_current",
+      "track_id": "autocross_882101",
+      "discipline": "autocross",
+      "frames": 70,
+      "split": "train",
+      "collector": "dagger",
+      "configuration": "train_v2_00",
+      "seconds": 24.274048928,
+      "valid_frames": 70,
+      "expert_control_fraction": 0.9747292418772563,
+      "contacts": 0
+    }
+  ],
+  "gate": true
+}

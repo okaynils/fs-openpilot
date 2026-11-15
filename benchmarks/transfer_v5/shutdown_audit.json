@@ -1,0 +1,58 @@
+[
+  {
+    "app_id": "ap-tPWhf3GXTZVBqTh6TfYAsk",
+    "description": "fsop",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-11-14 17:39:34+01:00",
+    "stopped_at": "2026-11-14 17:41:19+01:00"
+  },
+  {
+    "app_id": "ap-WuTnQ1wUkMOqQepma0nuRE",
+    "description": "fsop",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-11-14 17:36:49+01:00",
+    "stopped_at": "2026-11-14 18:05:33+01:00"
+  },
+  {
+    "app_id": "ap-ZBEIx7prcP4pkdcjhbogjN",
+    "description": "fsop",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-11-14 17:33:54+01:00",
+    "stopped_at": "2026-11-14 17:36:34+01:00"
+  },
+  {
+    "app_id": "ap-LL3OapnUZvWoDjwNepCFp3",
+    "description": "fsop",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-11-14 17:30:54+01:00",
+    "stopped_at": "2026-11-14 17:32:25+01:00"
+  },
+  {
+    "app_id": "ap-mlpgZXhV5inVoURZjQR2EA",
+    "description": "fsop",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-11-14 17:30:50+01:00",
+    "stopped_at": "2026-11-14 17:32:21+01:00"
+  },
+  {
+    "app_id": "ap-fpQ8kkDk7VA1WFWgoDjoYc",
+    "description": "fsop",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-11-14 17:27:21+01:00",
+    "stopped_at": "2026-11-14 17:30:30+01:00"
+  },
+  {
+    "app_id": "ap-XUDJwJQpc71whPb2yAKkmX",
+    "description": "fsop",
+    "state": "stopped",
+    "tasks": "0",
+    "created_at": "2026-11-14 17:25:08+01:00",
+    "stopped_at": "2026-11-14 17:27:12+01:00"
+  }
+]

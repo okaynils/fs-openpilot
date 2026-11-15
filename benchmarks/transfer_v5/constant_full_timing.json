@@ -1,0 +1,6 @@
+{
+  "fit_seconds": 76.58075404167175,
+  "steps": 1000,
+  "device": "cuda",
+  "peak_cuda_allocated_bytes": 654723584
+}

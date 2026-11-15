@@ -1,0 +1,26 @@
+{
+  "checkpoint": "runs/transfer_pilot_v2_retry1/ckpt/step_000300.pt",
+  "checkpoint_sha256": "24ef2df14f85c2791004f029752e1fbabf7341d1f7c062426c0d3f88eda17bc4",
+  "export": "runs/transfer_pilot_verify_v2/conditioned.onnx",
+  "export_sha256": "23d507fc96dbe34a6861be5561a2f702168e896d0237d038ad2a1d6f73810f44",
+  "rows": [
+    {
+      "episode": "val_v2_0_expert",
+      "plan_max_abs": 5.14984130859375e-05,
+      "steer_max_abs": 6.651923342704258e-08,
+      "accel_max_abs": 2.0933151245738912e-06,
+      "hidden_max_abs": 1.7881393432617188e-07,
+      "ticks": 32,
+      "input_cadence": "5 Hz recorded images repeated four times; runtime queues at 20 Hz"
+    },
+    {
+      "episode": "val_v2_2_expert",
+      "plan_max_abs": 5.53131103515625e-05,
+      "steer_max_abs": 9.949726445523943e-08,
+      "accel_max_abs": 6.990134715501028e-07,
+      "hidden_max_abs": 2.2351741790771484e-07,
+      "ticks": 32,
+      "input_cadence": "5 Hz recorded images repeated four times; runtime queues at 20 Hz"
+    }
+  ]
+}

@@ -1,0 +1,514 @@
+{
+  "suite": {
+    "version": 2,
+    "track_seeds": [
+      98011
+    ],
+    "scene_seeds": [
+      5101
+    ],
+    "configurations": [
+      {
+        "name": "val_v2_0",
+        "family": "formula",
+        "regime": "interpolation",
+        "profile": {
+          "name": "val_v2_0",
+          "team": "",
+          "vehicle": {
+            "max_speed": 7.314764396395093,
+            "body_height": 0.3765904558970491,
+            "mass": 286.504620877772,
+            "iz": 158.63499889156586,
+            "lf": 0.8607781849075409,
+            "lr": 0.8069795483508195,
+            "track": 1.2911672773613112,
+            "length": 3.120320920289836,
+            "width": 1.5063618235881964,
+            "front_overhang": 0.8607781849075409,
+            "rear_overhang": 0.5917850021239344,
+            "cf": 39861.51246995089,
+            "cr": 44844.20152869475,
+            "mu": 1.4,
+            "max_accel": 5.884069157815277,
+            "max_brake": 11.712042863945113,
+            "tau_steer": 0.0504625308212992,
+            "tau_accel": 0.1735057897547657,
+            "drag": 0.6946303908869255,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 26.78720672474648,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": -0.553,
+            "y": -0.16199999999999998,
+            "z": 1.002,
+            "roll_deg": 1.1318978600525367,
+            "pitch_deg": 4.516841307261267,
+            "yaw_deg": 0.7837407824003259
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 339.1475644599415,
+              "fy": 339.1475644599415,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.0,
+            "angle_amplitude_deg": 0.0,
+            "frequency_hz": 1.0,
+            "phase": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "roll_deg": 0.0,
+            "pitch_deg": 0.0,
+            "yaw_deg": 0.0
+          }
+        },
+        "design": {
+          "seed": 284191,
+          "placement_fractions": [
+            0.13,
+            0.23,
+            0.28
+          ],
+          "distribution": {
+            "version": 1,
+            "distribution": "configs/distributions/transfer_v2.yaml",
+            "sha256": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+            "profile_sha256": "3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6",
+            "seed": 284191,
+            "family": "formula"
+          }
+        }
+      },
+      {
+        "name": "val_v2_1",
+        "family": "formula",
+        "regime": "interpolation",
+        "profile": {
+          "name": "val_v2_1",
+          "team": "",
+          "vehicle": {
+            "max_speed": 9.354480403509385,
+            "body_height": 0.36548727810404663,
+            "mass": 261.9030142832987,
+            "iz": 136.58839017835808,
+            "lf": 0.8353994928092496,
+            "lr": 0.7831870245086714,
+            "track": 1.2530992392138742,
+            "length": 3.02832316143353,
+            "width": 1.4619491124161865,
+            "front_overhang": 0.8353994928092496,
+            "rear_overhang": 0.5743371513063591,
+            "cf": 36438.68024811112,
+            "cr": 40993.515279125015,
+            "mu": 1.4,
+            "max_accel": 4.9249318048538955,
+            "max_brake": 12.640925033529168,
+            "tau_steer": 0.09125450847701165,
+            "tau_accel": 0.17855769440969738,
+            "drag": 0.6542740430493293,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 27.379402071048247,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": 0.853,
+            "y": 0.14999999999999997,
+            "z": 1.488,
+            "roll_deg": 1.5373533378928996,
+            "pitch_deg": -0.10083308978028138,
+            "yaw_deg": 5.1740151993439545
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 451.1524002533671,
+              "fy": 451.1524002533671,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.0,
+            "angle_amplitude_deg": 0.0,
+            "frequency_hz": 1.0,
+            "phase": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "roll_deg": 0.0,
+            "pitch_deg": 0.0,
+            "yaw_deg": 0.0
+          }
+        },
+        "design": {
+          "seed": 284192,
+          "placement_fractions": [
+            0.87,
+            0.75,
+            0.82
+          ],
+          "distribution": {
+            "version": 1,
+            "distribution": "configs/distributions/transfer_v2.yaml",
+            "sha256": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+            "profile_sha256": "3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6",
+            "seed": 284192,
+            "family": "formula"
+          }
+        }
+      },
+      {
+        "name": "val_v2_2",
+        "family": "rover",
+        "regime": "interpolation",
+        "profile": {
+          "name": "val_v2_2",
+          "team": "",
+          "vehicle": {
+            "max_speed": 2.0107959755610816,
+            "body_height": 0.16463028143458924,
+            "mass": 32.521835627421936,
+            "iz": 3.3728706302647833,
+            "lf": 0.25870472796864025,
+            "lr": 0.27046403378539663,
+            "track": 0.37629778613620396,
+            "length": 0.7996327955394334,
+            "width": 0.47037223267025496,
+            "front_overhang": 0.14111166980107648,
+            "rear_overhang": 0.12935236398432012,
+            "cf": 2926.965206467974,
+            "cr": 3252.1835627421933,
+            "mu": 0.8,
+            "max_accel": 1.2674793689800408,
+            "max_brake": 3.212729033181575,
+            "tau_steer": 0.16059485142477464,
+            "tau_accel": 0.3398883382183748,
+            "drag": 0.11062501863360023,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 34.220803925736156,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": 0.266,
+            "y": -0.0576,
+            "z": 0.2974,
+            "roll_deg": -2.141967928579627,
+            "pitch_deg": -0.17541426169029672,
+            "yaw_deg": -4.20421284167862
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 344.12949835803676,
+              "fy": 344.12949835803676,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.0,
+            "angle_amplitude_deg": 0.0,
+            "frequency_hz": 1.0,
+            "phase": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "roll_deg": 0.0,
+            "pitch_deg": 0.0,
+            "yaw_deg": 0.0
+          }
+        },
+        "design": {
+          "seed": 284193,
+          "placement_fractions": [
+            0.86,
+            0.26,
+            0.18
+          ],
+          "distribution": {
+            "version": 1,
+            "distribution": "configs/distributions/transfer_v2.yaml",
+            "sha256": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+            "profile_sha256": "857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3",
+            "seed": 284193,
+            "family": "rover"
+          }
+        }
+      },
+      {
+        "name": "val_v2_3",
+        "family": "rover",
+        "regime": "interpolation",
+        "profile": {
+          "name": "val_v2_3",
+          "team": "",
+          "vehicle": {
+            "max_speed": 2.4001816087844925,
+            "body_height": 0.14442978377256555,
+            "mass": 21.95918268803394,
+            "iz": 1.7528101763971025,
+            "lf": 0.22696108878546012,
+            "lr": 0.23727750191207195,
+            "track": 0.33012522005157835,
+            "length": 0.7015160926096039,
+            "width": 0.4126565250644729,
+            "front_overhang": 0.12379695751934187,
+            "rear_overhang": 0.11348054439273006,
+            "cf": 1976.3264419230545,
+            "cr": 2195.918268803394,
+            "mu": 0.8,
+            "max_accel": 1.7895784231320793,
+            "max_brake": 1.3642407731571344,
+            "tau_steer": 0.14204373317083682,
+            "tau_accel": 0.21145170190125293,
+            "drag": 0.08514270383914299,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 30.96462255511347,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": -0.136,
+            "y": 0.07440000000000002,
+            "z": 0.5726,
+            "roll_deg": -0.16008548718817872,
+            "pitch_deg": -0.42319653247145295,
+            "yaw_deg": -4.650209943476719
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 447.6281073143969,
+              "fy": 447.6281073143969,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.0,
+            "angle_amplitude_deg": 0.0,
+            "frequency_hz": 1.0,
+            "phase": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "roll_deg": 0.0,
+            "pitch_deg": 0.0,
+            "yaw_deg": 0.0
+          }
+        },
+        "design": {
+          "seed": 284194,
+          "placement_fractions": [
+            0.19,
+            0.81,
+            0.82
+          ],
+          "distribution": {
+            "version": 1,
+            "distribution": "configs/distributions/transfer_v2.yaml",
+            "sha256": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+            "profile_sha256": "857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3",
+            "seed": 284194,
+            "family": "rover"
+          }
+        }
+      }
+    ]
+  },
+  "suite_sha256": "ec772d39cc7d4c8d607bed65594c4149ba5a40d01dbdfc6ce89bf031b40c6693",
+  "checkpoints": {
+    "runs/cuda_racing_v6/ckpt/best.pt": "fdf1b3d56ebd110658dace49a8c9ab25fa50c42ce076b09c0b0b5d418746f507",
+    "runs/transfer_minimal_v1/ckpt/best.pt": "2b949c9b7caf959349cb05d3a4635f85ff18f329ecd8bac31de1e7817bc97dd2",
+    "artifacts/experiments/transfer_refresh_current_pilot_v7/step_000300.pt": "7fb74cd1e8df6401b8b3cf935859951981d0f30260e113d6fed4176ac48db27c",
+    "artifacts/export/transfer_refresh_current_pilot_v7/candidate.onnx": "9d6ca63cb376582a34675a519ac4cda9580de9cf6239ae6a91c4d5f4b72a199f"
+  },
+  "backend": "CPU",
+  "source_sha256": {
+    "src/fsop/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/baselines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/baselines/yolo.py": "a5207b9b74c941f7445199f2bb45c47574f2629068f6966176bbef3da6867ed8",
+    "src/fsop/bench.py": "d3781cfc06127a92aaf201285ada0499159700b4cd6f189b6992d3bb113ac696",
+    "src/fsop/cli.py": "37fdb0595d78090a1ffcbff4165ae5731d5db9b09438246a0a1d089ca5dcdeb8",
+    "src/fsop/config.py": "2de820cc65e9a8266b7163df51c4bbb052921cc6192e8ce76c47e2eeaf1b3a6b",
+    "src/fsop/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/data/feature_cache.py": "b9f3466ab4b0f1c2b6126b94f1ccf7727f4499d7b23ecc6189df473682433cb9",
+    "src/fsop/data/fsoco.py": "7dda2a26d525da64cdf63f9058b2a58b85b20f16c3e844a9c56715a6abf95eaa",
+    "src/fsop/data/relabel.py": "6edef743dca16e30b43d3af40ded5b4aed8ee17f7470475a46e9aa9e29876ab7",
+    "src/fsop/data/sim_dataset.py": "bd69ae3de8a68af45aa7df3f497f659c716a224fe665563111226b4e45283c52",
+    "src/fsop/data/staging.py": "c2953182bf635de631d273887e5b1368480a10492ccdee08ec827f3626f245a4",
+    "src/fsop/data/targets.py": "a923bbe800bbe2d1bd25a50701edb7d077980d7d8481990ebd4baf6ca8652467",
+    "src/fsop/eval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/eval/bev_metrics.py": "74729836f20c21d836e2a30efe586eb1b578a9ae00b97613fb1bff7a08bf4af4",
+    "src/fsop/eval/closed_loop.py": "028ca9d75ee13ec8704f8dc9cd7da48b605ce3223cac8327c14dac5b4ae4836b",
+    "src/fsop/eval/controller.py": "bb1891c7360d9cca7784ba7d664234343f1bd19ab756ffcb8bce20227b03e098",
+    "src/fsop/eval/dagger.py": "358001818ebbcba6068d0fe3b5926624da2e2d6231fae10b9e4eee61b0aa106b",
+    "src/fsop/eval/det_metrics.py": "3c99d790e0777184065c4e35195babe9ade02d82aacbd78f63a8b0544b0103d2",
+    "src/fsop/eval/geometric.py": "e0ad7c4aa9157a04f1a83c242f83113acb84a25fb9152533fccb58e76cde9c02",
+    "src/fsop/eval/img_to_bev.py": "bcf10ece06c575512c45ea773335a1024fbc7ab95d20426a91ff18bd71d2d2d1",
+    "src/fsop/eval/open_loop.py": "63de0a6424cea5b4a47b1f89b03d58c878ec893cfb2072733f84eb4d319977fc",
+    "src/fsop/eval/real_clip.py": "d62206e397e988111b00b75c9796a773ed87740b44fcff7f726184ca7afcceef",
+    "src/fsop/eval/transfer.py": "3c4060a243487899b6303b88e4d811a71c82af818df93b874e2a33dadda538f0",
+    "src/fsop/geometry/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/geometry/camera.py": "98b8bc7f7b98cddc4e756d4b92103604f4462baea2b161f0410a943f30c207a3",
+    "src/fsop/geometry/mounting.py": "5ef653afe344cb8f0fd4dd7b7fb1b6487859cac8622db12d2b4b91380dfc12d2",
+    "src/fsop/geometry/op_frames.py": "f09cea8cba5b74bf81e02df04487e3b34012e91dde4c3751525bf50e3520301f",
+    "src/fsop/geometry/warp.py": "40f2fb37d3e397a7bdfb9ccf8f018a7f6b878aee76e5b15439f5059ac91f87d1",
+    "src/fsop/geometry/yuv.py": "9a3651b22194b666ad3200fb799bc22e90259ac650b2dff140b5c62a8ab66ee5",
+    "src/fsop/model/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/model/build.py": "b5d777699033092952f3931cfe7d77a885626481ea140f9b6b56c061bc1480b2",
+    "src/fsop/model/conditioning.py": "f3e279dcdacc0ae88c28dd3d008dd824c8ee9c411b3b5ebe745205be4ec7b35f",
+    "src/fsop/model/convert.py": "2ca56fa5a60da526883d0a02444b6a144c31634d23159fbae508d102340f0377",
+    "src/fsop/model/export.py": "b67b5f6deeaabe92ccd0124fc64bb63448c20f832d176d985348a7f181c840e5",
+    "src/fsop/model/fetch.py": "e1d15dc11ca309e5a2b655fd28afdd83fcf17811030edb7f8443106534454992",
+    "src/fsop/model/heads/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/model/heads/cone_bev.py": "9fe44a7e2152d4906389142b0f4405f8d192e19ffdeea25db5698451e2a0c9ee",
+    "src/fsop/model/heads/cone_img.py": "cdf84bb4bcc25b2a05172b45f1d7d35dcaf17abca1bfe10370c1906c2ff3f42a",
+    "src/fsop/model/history.py": "948dbaca4c417aeb514a44f122bd2d01b69adbcc6998b4a9393cb116a1ca409c",
+    "src/fsop/model/onnx_prep.py": "b6b7c3607078dfaf45249451d757247cc8deea4085a7f70e69f15f531e14a5f6",
+    "src/fsop/model/op_converters.py": "59f20f80b4a646870b108cc7f165e8bd48a2630f54b44b07eddf791052629d5f",
+    "src/fsop/model/supercombo.py": "1128d2dc461466d9235ec3dc3386bce82c44222e127cbd6d8cf4ee0307eb5a3d",
+    "src/fsop/model/temporal.py": "3b7ef159ae6a0f3f39dd950ae3943fb5f59f164af0d8e9ab329f6f5de876b8c7",
+    "src/fsop/model/verify.py": "aa1cb5bb89869cbec5470fead1bb46eea285c27b2146c20c3fba7d91eedf0957",
+    "src/fsop/profile.py": "c970822ce7bea43c416820aa54133207e5d5895dedc78124be70d28a84a1ee53",
+    "src/fsop/runtime.py": "aa2aed169c60b18b06ea84fb2263f72770baf93552d61c91a7ea320e056bcb05",
+    "src/fsop/sim/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/sim/batch_record.py": "858f189cf86cbbcba25b781725e582d171ed604e2d4641c77976a8fb98608968",
+    "src/fsop/sim/distribution.py": "0cae06f6a9c1e8d7b77d2f30e8e9bf24fcef6ee2b208a65eaa31c7c36467ff49",
+    "src/fsop/sim/drive.py": "e7e8072c3375e0de9d89d6fadcbfac897fa21f47a7d084eee1e2d0dffe047bc1",
+    "src/fsop/sim/env.py": "d5a3243c8a02ebd7386d3215b2d38fa22e6bd86ad78ba1a13fd50fc5277e7d8f",
+    "src/fsop/sim/expert.py": "1b9050e2f80afce1765c61da48c97df88986efb66ed6147438b833dfcfedfeb7",
+    "src/fsop/sim/raceline.py": "6736173ec7bc8a68917cf7b70415426486ecf2ea757da1fb935eafe6055a9b70",
+    "src/fsop/sim/randomization.py": "25b492a84b289a3febf9d726e1a43ef59f4657986282d28d551f5bd49cccff04",
+    "src/fsop/sim/recorder.py": "f61b62e7b84bae4ce313c8095b3f3d6519272eaabc9c6c729c4df141ebc37197",
+    "src/fsop/sim/referee.py": "85dff622ff604881f61a1092374e06f3939ac5fc3fe839fabdaf93496d980a19",
+    "src/fsop/sim/render/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/sim/render/assets.py": "c790b7c47113c6a86c792059bc7ca1b23764111f870b6ae67d5b88fe5b9f6051",
+    "src/fsop/sim/render/panda3d_backend.py": "2f44719a4f007a3f58e8eff2520835093b99aec241fdbe6ea2797cb656ede96c",
+    "src/fsop/sim/render/venue.py": "98a7ac4b041c0c3a149a52f21cce1b461d0d992601e240241e460fe0fd5339ca",
+    "src/fsop/sim/transfer_collection.py": "9c7a3994f624a6ddf6e081469ac8194756af63dbe33f262d00134f67cf95d195",
+    "src/fsop/sim/vehicle.py": "71f7c729f81405a44733f39817331a470b781bdf4e577d1fc7be0d0725085953",
+    "src/fsop/track/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/track/batch.py": "71ed04273b4da5bf340d8abb3269448481d694ad2499330fceb616a13cc681c3",
+    "src/fsop/track/centerline.py": "de45a95eba2e8fa0419a7407ced66718bc6f49099dff8b00c7663f2bf7ac5887",
+    "src/fsop/track/cones.py": "45c784e93b40cb032e6641362b547bce8f5a79d5eb02e23d0a37db038728da93",
+    "src/fsop/track/fixed_layouts.py": "8a8fb71d395d3fa0987db50bb2392c36e22a13b5259c02db9b5dd0d0a71662b7",
+    "src/fsop/track/generate.py": "6a971d82e14b154ef24eb3a87f212f567a08182701783a806110755b2d661264",
+    "src/fsop/track/io.py": "86a833f72d920882c55c1dee89de841a8d4b67d8cbaa0658ddb17a614bc8af4c",
+    "src/fsop/track/rules.py": "4c2c989ef7b401ed47e57744eae6a3219759629e09e412b4ee5d68de8764006d",
+    "src/fsop/track/schema.py": "f2f760bee7826c82f34e3f704a0b5807bcd0f6b043e856a781d8fe727ac1c04c",
+    "src/fsop/track/validate.py": "5a08f94b27f75a77ee69431f58493a0ead9bbc6154b6749b7d11d223080664a8",
+    "src/fsop/train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/train/device.py": "768b44b47126b81b13e54508441384ed327dc034ed78872dff5400b468836d9b",
+    "src/fsop/train/losses.py": "fcfdb12adedbb0bcafea8e5abd441be6475d79cc5831e5f355123d64929dc4ad",
+    "src/fsop/train/trainer.py": "7dd65b5af868c0b672e45007085e954fb39ccb81210c6412fbd8bd8d743b7bc7",
+    "src/fsop/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/viz/inspect.py": "5cd19a506dcc688a2f6f8d536cfaa1ae310847324cd71c0dc96bd07d566730cd",
+    "src/fsop/viz/real_video.py": "1979fcb3d70e7d739b84c406b6ab7482708ec7f8aa93541d14ab3f91a866c381",
+    "src/fsop/viz/rr_log.py": "b1b0020705be517293fc413ff224e68c55d51c14ed9b9ec291ab2b3b0a7213ae",
+    "src/fsop/viz/track_preview.py": "5ace5f5cf0b9ab48e8e011edc280164a996f9eac7ce586a3ca5767c59e2683bc",
+    "src/fsop/viz/video.py": "b00f560bb00b574ddaf9d771aeddeb3ada56c8801c1c418367b64e6a1dabb56c"
+  }
+}

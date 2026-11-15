@@ -1,0 +1,148 @@
+{
+  "spec": {
+    "id": "reference_path",
+    "configuration": "train_v2_03",
+    "profile": {
+      "name": "train_v2_03",
+      "team": "",
+      "vehicle": {
+        "max_speed": 2.4758300960804167,
+        "body_height": 0.1341507217828388,
+        "mass": 17.59644472797635,
+        "iz": 1.2117587072854408,
+        "lf": 0.21080827708731809,
+        "lr": 0.22039047150037802,
+        "track": 0.3066302212179172,
+        "length": 0.7057946100440371,
+        "width": 0.38328777652239654,
+        "front_overhang": 0.1691917229126819,
+        "rear_overhang": 0.10540413854365904,
+        "cf": 1583.6800255178716,
+        "cr": 1759.6444727976352,
+        "mu": 0.8,
+        "max_accel": 1.3826446388702776,
+        "max_brake": 3.1760938031387522,
+        "tau_steer": 0.09960160418737857,
+        "tau_accel": 0.3331148204364527,
+        "drag": 0.0734547598157413,
+        "v_blend": [
+          2.0,
+          4.0
+        ],
+        "max_steer_deg": 26.99806357373856,
+        "max_steer_rate_deg": 100.0
+      },
+      "mount": {
+        "x": 0.35,
+        "y": 0.12,
+        "z": 0.22,
+        "roll_deg": 0.5162756795013081,
+        "pitch_deg": -0.15298892210234483,
+        "yaw_deg": -0.5523146484043333
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 384.4252493329127,
+          "fy": 384.4252493329127,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.485469991593921,
+        "phase": [
+          5.268125533625996,
+          2.901716873169839,
+          4.111693195321083,
+          2.2492947118382896,
+          3.6922230343273865,
+          4.739238596708787
+        ]
+      },
+      "calibration_error": {
+        "x": -0.0038256866892673624,
+        "y": 0.002228029473488822,
+        "z": 0.0009341903958284293,
+        "roll_deg": -0.21471398464593605,
+        "pitch_deg": -0.1385570869703936,
+        "yaw_deg": -0.1166859537000632
+      }
+    },
+    "split": "diagnostic",
+    "collector": "dagger",
+    "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+    "track_seed": 880004,
+    "scene_seed": 7104,
+    "seconds": 24.0,
+    "random_start": true,
+    "intervention": {
+      "lateral_limit_m": 1.25,
+      "steering_disagreement_rad": null,
+      "hold_seconds": 1.5,
+      "lateral_reference": "reference_path"
+    },
+    "collection_policy": {
+      "version": 1,
+      "name": "reference_path_recovery_v3",
+      "intervention": {
+        "lateral_limit_m": 1.25,
+        "steering_disagreement_rad": null,
+        "hold_seconds": 1.5,
+        "lateral_reference": "reference_path"
+      }
+    }
+  },
+  "previous_report": "data/sim/transfer_collection_probe_v3/report.json",
+  "previous": {
+    "id": "lateral_only",
+    "track_id": "autocross_880004",
+    "discipline": "autocross",
+    "frames": 120,
+    "split": "diagnostic",
+    "collector": "dagger",
+    "configuration": "train_v2_03",
+    "seconds": 38.885440524,
+    "valid_frames": 120,
+    "expert_control_fraction": 1.0,
+    "contacts": 0,
+    "mean_speed": 2.463323177777495,
+    "valid_fraction": 1.0
+  },
+  "result": {
+    "id": "reference_path",
+    "track_id": "autocross_880004",
+    "discipline": "autocross",
+    "frames": 120,
+    "split": "diagnostic",
+    "collector": "dagger",
+    "configuration": "train_v2_03",
+    "seconds": 43.18846736,
+    "valid_frames": 120,
+    "expert_control_fraction": 0.09583333333333334,
+    "contacts": 0,
+    "mean_speed": 2.3078315696957388,
+    "valid_fraction": 1.0,
+    "mean_pose_displacement_from_reference_controlled_run_m": 2.147526168517177
+  },
+  "diagnostic_only": true,
+  "gate": {
+    "expert_fraction_below_75_percent": true,
+    "feasible_fraction_at_least_95_percent": true,
+    "contacts_below_three": true
+  }
+}

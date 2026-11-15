@@ -1,0 +1,38 @@
+{
+  "retrieved_at_utc": "2026-11-14T20:42:30.737499+00:00",
+  "modal_sdk_version": "1.6.2",
+  "start_utc": "2026-11-14T00:00:00+00:00",
+  "end_utc": "2026-11-14T20:45:00+00:00",
+  "requested_app_ids": [
+    "ap-3sNDq5VhP1WVWkFM7NEDTM",
+    "ap-EMBNdYOos8jJVEpQtJ9xdv",
+    "ap-VPeIiVR4w4ZEmzoGvXRxJ6"
+  ],
+  "records": [
+    {
+      "object_id": "ap-3sNDq5VhP1WVWkFM7NEDTM",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T17:00:00Z",
+      "cost": "0.19780815",
+      "cost_by_resource": {
+        "CPU": "0.04315648",
+        "Memory": "0.02919678",
+        "A10G": "0.12545489"
+      }
+    },
+    {
+      "object_id": "ap-VPeIiVR4w4ZEmzoGvXRxJ6",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T17:00:00Z",
+      "cost": "0.00858978",
+      "cost_by_resource": {
+        "Memory": "0.00217119",
+        "CPU": "0.00641859"
+      }
+    }
+  ],
+  "total_usd": "0.20639793",
+  "limitation": "Metered hourly records only; recent usage may not be settled. Not an invoice."
+}

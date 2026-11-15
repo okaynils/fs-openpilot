@@ -1,0 +1,50 @@
+[
+  {
+    "mode": "constant",
+    "configuration": "val_v2_2",
+    "recovery": false,
+    "ticks": 120,
+    "plan_max_abs": 3.4332275390625e-05,
+    "steer_max_abs": 1.317204072065481e-07,
+    "accel_max_abs": 4.079043865290455e-06,
+    "checkpoint_sha256": "e20a234dda6186b6b44092d33cd4984b16f40709954c3cf2cc033f4449d4f93a",
+    "export_sha256": "05acc041e7bd7b89bd6173391d65d8e33793092ab9f62e3936a39fe107e5ef64",
+    "sequence": "Fresh identical 20 Hz physical-camera observations on expert-driven validation states"
+  },
+  {
+    "mode": "constant",
+    "configuration": "val_v2_3",
+    "recovery": true,
+    "ticks": 120,
+    "plan_max_abs": 4.57763671875e-05,
+    "steer_max_abs": 2.366995932034932e-07,
+    "accel_max_abs": 3.5676360128356066e-06,
+    "checkpoint_sha256": "e20a234dda6186b6b44092d33cd4984b16f40709954c3cf2cc033f4449d4f93a",
+    "export_sha256": "05acc041e7bd7b89bd6173391d65d8e33793092ab9f62e3936a39fe107e5ef64",
+    "sequence": "Fresh identical 20 Hz physical-camera observations on expert-driven validation states"
+  },
+  {
+    "mode": "speed",
+    "configuration": "val_v2_2",
+    "recovery": false,
+    "ticks": 120,
+    "plan_max_abs": 3.0517578125e-05,
+    "steer_max_abs": 1.5623078682136526e-07,
+    "accel_max_abs": 4.767179489328921e-06,
+    "checkpoint_sha256": "b5886adc685bf2767ed3788c668964cb888da8961ad25a36c9ad85e23cc3265c",
+    "export_sha256": "add36a73b1247f6f113786b757aa504ffd5deaa0c66b9633ea8b5ea82ae62337",
+    "sequence": "Fresh identical 20 Hz physical-camera observations on expert-driven validation states"
+  },
+  {
+    "mode": "speed",
+    "configuration": "val_v2_3",
+    "recovery": true,
+    "ticks": 120,
+    "plan_max_abs": 3.62396240234375e-05,
+    "steer_max_abs": 2.1644726698639982e-07,
+    "accel_max_abs": 4.161000252134173e-06,
+    "checkpoint_sha256": "b5886adc685bf2767ed3788c668964cb888da8961ad25a36c9ad85e23cc3265c",
+    "export_sha256": "add36a73b1247f6f113786b757aa504ffd5deaa0c66b9633ea8b5ea82ae62337",
+    "sequence": "Fresh identical 20 Hz physical-camera observations on expert-driven validation states"
+  }
+]

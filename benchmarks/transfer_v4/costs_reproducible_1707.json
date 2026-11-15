@@ -1,0 +1,78 @@
+{
+  "retrieved_at_utc": "2026-11-14T17:07:29.748924+00:00",
+  "modal_sdk_version": "1.6.2",
+  "start_utc": "2026-11-13T00:00:00+00:00",
+  "end_utc": "2026-11-14T17:07:00+00:00",
+  "requested_app_ids": [
+    "ap-9HDYV3mtogaFc6baFndcGu",
+    "ap-9oX1WFImMjPylKuNIM7EZy",
+    "ap-dyppYxp2IMPzZs1vyqGN8A",
+    "ap-yjzrgqZpuBwEcMSZqZIa8t",
+    "ap-zKeyAtaofa2MANDnjH9PXw"
+  ],
+  "records": [
+    {
+      "object_id": "ap-9HDYV3mtogaFc6baFndcGu",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T16:00:00Z",
+      "cost": "0.25482174",
+      "cost_by_resource": {
+        "CPU": "0.05724563",
+        "A100-40GB": "0.15884756",
+        "Memory": "0.03872855"
+      }
+    },
+    {
+      "object_id": "ap-9oX1WFImMjPylKuNIM7EZy",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T16:00:00Z",
+      "cost": "0.01600257",
+      "cost_by_resource": {
+        "A10G": "0.01014923",
+        "CPU": "0.00349134",
+        "Memory": "0.00236200"
+      }
+    },
+    {
+      "object_id": "ap-dyppYxp2IMPzZs1vyqGN8A",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T16:00:00Z",
+      "cost": "0.01540574",
+      "cost_by_resource": {
+        "A10G": "0.00977071",
+        "CPU": "0.00336112",
+        "Memory": "0.00227391"
+      }
+    },
+    {
+      "object_id": "ap-yjzrgqZpuBwEcMSZqZIa8t",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T16:00:00Z",
+      "cost": "0.03244746",
+      "cost_by_resource": {
+        "A10G": "0.02057899",
+        "CPU": "0.00707917",
+        "Memory": "0.00478929"
+      }
+    },
+    {
+      "object_id": "ap-zKeyAtaofa2MANDnjH9PXw",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T16:00:00Z",
+      "cost": "0.04332876",
+      "cost_by_resource": {
+        "A10G": "0.02748010",
+        "CPU": "0.00945316",
+        "Network Egress": "0.00000013",
+        "Memory": "0.00639537"
+      }
+    }
+  ],
+  "total_usd": "0.36200627",
+  "limitation": "Metered hourly records only; recent usage may not be settled. Not an invoice."
+}

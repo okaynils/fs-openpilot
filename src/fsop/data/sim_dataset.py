@@ -8,7 +8,9 @@ Episodes are recorded on the 5 Hz grid (``record_every = 4``), so for sample k:
   BEV / image cone targets from episode cones, pose and camera mount
 
 Two modes: ``cached`` (stage 1: trunk frozen, cached hidden/final/s16 features, no images) and
-``images`` (stage 2: raw frames for trunk fine-tuning; history still from the cache).
+``images`` (stage 2: raw frames for trunk fine-tuning). Image training can use historical
+cached features or opt-in fresh current-weight history. ``min_k=0`` includes recorded
+startup observations with empty history and a repeated initial image pair.
 """
 
 from __future__ import annotations
@@ -44,6 +46,10 @@ class Episode:
     self.path = Path(path)
     self.meta = json.loads((self.path / "meta.json").read_text())
     self.T = int(self.meta["frames"])
+    mask_path = self.path / "label_valid.npy"
+    self.label_valid = np.load(mask_path) if mask_path.exists() else np.ones(self.T, bool)
+    if self.label_valid.shape != (self.T,) or self.label_valid.dtype != np.bool_:
+      raise ValueError(f"Invalid supervision mask: {mask_path}")
     self.states = np.load(self.path / "states.npy")
     self.plan = np.load(self.path / "plan.npy")
     self.desire = np.load(self.path / "desire.npy")
@@ -99,6 +105,16 @@ class Episode:
     k0 = max(k - 1, 0)
     return np.concatenate([a[k0], a[k]], axis=0)
 
+  def history_frames(self, cam: str, k: int) -> tuple[np.ndarray, np.ndarray]:
+    from fsop.model.history import ACTIVE_HISTORY
+
+    indices = np.arange(k - ACTIVE_HISTORY - 1, k)
+    # Read a contiguous range once; clipping duplicates frame zero for the first pair.
+    start, stop = max(int(indices[0]), 0), max(k, 1)
+    frames = np.asarray(self.frames[cam][start:stop])
+    window = frames[np.maximum(indices, 0) - start]
+    return window, np.arange(k - ACTIVE_HISTORY, k) >= 0
+
   def pose(self, k: int) -> tuple[float, float, float]:
     s = self.states[k]
     return float(s[1]), float(s[2]), float(s[3])
@@ -151,15 +167,18 @@ def hash_str(s: str) -> int:
 class SimDataset(Dataset):
   def __init__(self, root: str | Path, split: str = "train", mode: str = "cached", cache_tag: str = "op_b361e952",
                min_k: int = 1, image_targets_on: bool = True, episodes: list[str] | None = None,
-               context_version: int = 1):
+               context_version: int = 1, history_mode: str = "cached"):
+    if history_mode not in ("cached", "fresh") or (history_mode == "fresh" and mode != "images"):
+      raise ValueError("Fresh history requires image mode; supported history modes are cached/fresh")
     self.root = Path(root)
     ids = episodes if episodes is not None else split_episodes(root, split)
     self.eps = [Episode(self.root / i) for i in ids]
     self.mode = mode
+    self.history_mode = history_mode
     self.tag = cache_tag
     self.context_version = context_version
     self.image_targets_on = image_targets_on
-    self.index = [(ei, k) for ei, ep in enumerate(self.eps) for k in range(min_k, ep.T)]
+    self.index = [(ei, k) for ei, ep in enumerate(self.eps) for k in range(min_k, ep.T) if ep.label_valid[k]]
     self._cache: dict[int, dict] = {}
 
   def __len__(self) -> int:
@@ -195,9 +214,15 @@ class SimDataset(Dataset):
     s["traffic"] = np.array([1.0, 0.0], np.float32)
     s["plan"] = ego_to_op_plan(ep.plan[k]).astype(np.float32)
     s["speed"] = np.float32(ep.states[k, 4])
-    s["history"] = self.history(ei, k)
-    f = self._feats(ei)
+    s["control_vehicle"] = np.array([ep.vehicle.wheelbase, ep.vehicle.lr, ep.vehicle.max_steer], np.float32)
+    if self.history_mode == "fresh":
+      s["history"] = np.zeros((N_FEAT, 512), np.float32)
+      s["history_frames_road"], s["history_valid"] = ep.history_frames("road", k)
+      s["history_frames_wide"], _ = ep.history_frames("wide", k)
+    else:
+      s["history"] = self.history(ei, k)
     if self.mode == "cached":
+      f = self._feats(ei)
       s["hidden"] = np.asarray(f["hidden"][k], np.float32)
       s["final"] = np.asarray(f["final"][k], np.float32)
       s["s16"] = np.asarray(f["s16"][k], np.float32)

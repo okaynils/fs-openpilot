@@ -31,3 +31,24 @@ def test_invalid_resume_preserves_original_run(tmp_path):
   with pytest.raises(ValueError, match='manifest differs'):
     Trainer(cfg)
   assert (run / 'config.yaml').read_text() == original
+
+
+@pytest.mark.parametrize('key,value,message', [('context_scope', 'sequence', 'conditioning scope'),
+                                               ('include_on_policy', False, 'collector subset'),
+                                               ('w_steering', 1., 'steering supervision'),
+                                               ('history_mode', 'fresh', 'history mode'),
+                                               ('state_mode', 'speed', 'state mode'),
+                                               ('include_initial_frame', True, 'initial-frame sampling')])
+def test_resume_rejects_changed_temporal_or_data_contract(tmp_path, key, value, message):
+  run = tmp_path / 'retained'
+  run.mkdir()
+  original = 'name: retained\n'
+  (run / 'config.yaml').write_text(original)
+  cfg = TrainCfg(name='retained', out_dir=str(tmp_path), device='cpu')
+  checkpoint = run / 'last.pt'
+  torch.save({'cfg': asdict(cfg)}, checkpoint)
+  cfg.resume = str(checkpoint)
+  setattr(cfg, key, value)
+  with pytest.raises(ValueError, match=message):
+    Trainer(cfg)
+  assert (run / 'config.yaml').read_text() == original

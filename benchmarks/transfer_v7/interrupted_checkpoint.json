@@ -1,0 +1,33 @@
+{
+  "path": "artifacts/experiments/transfer_refresh_previous_pilot_v7/interrupted_last.pt",
+  "sha256": "8e73d156f5da6e6c893ce48e23996969c95858b3092051f4a64e5be8d23b2213",
+  "bytes": 136330656,
+  "loadable": true,
+  "step": 100,
+  "optimizer_present": true,
+  "input_contract": {
+    "geometry_version": 2,
+    "state_mode": "speed",
+    "state_version": 1,
+    "speed_scale_mps": 15.0,
+    "anchored_context": true,
+    "conditioning_scope": "current",
+    "fields": [
+      "camera_x",
+      "camera_y",
+      "camera_z",
+      "wheelbase",
+      "width",
+      "front_extent",
+      "rear_extent",
+      "max_steer",
+      "max_speed",
+      "max_accel",
+      "max_brake",
+      "tau_steer",
+      "tau_accel"
+    ],
+    "trajectory_origin": "ground_projected_cog",
+    "preprocessing": "model_slots_yuv_v1"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "complete_configurations": [
+    "val_v2_0",
+    "val_v2_1"
+  ],
+  "rows": [
+    {
+      "checkpoint": "runs/cuda_racing_v6/ckpt/best.pt",
+      "cases": 2,
+      "passes": 2,
+      "contacts": 30,
+      "off_course": 0
+    },
+    {
+      "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+      "cases": 2,
+      "passes": 2,
+      "contacts": 18,
+      "off_course": 0
+    },
+    {
+      "checkpoint": "artifacts/experiments/transfer_refresh_current_pilot_v7/step_000300.pt",
+      "cases": 2,
+      "passes": 2,
+      "contacts": 27,
+      "off_course": 1
+    },
+    {
+      "checkpoint": "artifacts/export/transfer_refresh_current_pilot_v7/candidate.onnx",
+      "cases": 2,
+      "passes": 2,
+      "contacts": 28,
+      "off_course": 1
+    },
+    {
+      "checkpoint": "expert",
+      "cases": 2,
+      "passes": 2,
+      "contacts": 0,
+      "off_course": 0
+    }
+  ],
+  "partial": true,
+  "note": "Rover cases pending. These are within-run CPU comparisons."
+}

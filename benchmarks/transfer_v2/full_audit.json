@@ -1,0 +1,470 @@
+[
+  {
+    "id": "train_v2_00_expert",
+    "max_pose_step": 0.004349280299717373,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 82,
+    "frames": 82
+  },
+  {
+    "id": "train_v2_00_dagger",
+    "max_pose_step": 0.004349280299717373,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 84,
+    "frames": 84
+  },
+  {
+    "id": "train_v2_01_expert",
+    "max_pose_step": 0.004848581539049879,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_01_dagger",
+    "max_pose_step": 0.004848581539049879,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_02_expert",
+    "max_pose_step": 0.006554466831357214,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 70,
+    "frames": 70
+  },
+  {
+    "id": "train_v2_02_dagger",
+    "max_pose_step": 0.006554466831357214,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 1,
+    "summary_contacts": 1,
+    "valid_frames": 74,
+    "frames": 78
+  },
+  {
+    "id": "train_v2_03_expert",
+    "max_pose_step": 0.005380733601197803,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_03_dagger",
+    "max_pose_step": 0.005380733601197803,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_04_expert",
+    "max_pose_step": 0.003568045990627638,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 77,
+    "frames": 77
+  },
+  {
+    "id": "train_v2_04_dagger",
+    "max_pose_step": 0.003568045990627638,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 1,
+    "summary_contacts": 1,
+    "valid_frames": 87,
+    "frames": 90
+  },
+  {
+    "id": "train_v2_05_expert",
+    "max_pose_step": 0.006309129444186979,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_05_dagger",
+    "max_pose_step": 0.006309129444186979,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_06_expert",
+    "max_pose_step": 0.0063822914309405385,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 62,
+    "frames": 62
+  },
+  {
+    "id": "train_v2_06_dagger",
+    "max_pose_step": 0.0063822914309405385,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 77,
+    "frames": 77
+  },
+  {
+    "id": "train_v2_07_expert",
+    "max_pose_step": 0.003044446455177964,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_07_dagger",
+    "max_pose_step": 0.003044446455177964,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_08_expert",
+    "max_pose_step": 0.005160610129800319,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 78,
+    "frames": 78
+  },
+  {
+    "id": "train_v2_08_dagger",
+    "max_pose_step": 0.005160610129800319,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 106,
+    "frames": 106
+  },
+  {
+    "id": "train_v2_09_expert",
+    "max_pose_step": 0.004345230835851782,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_09_dagger",
+    "max_pose_step": 0.004345230835851782,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_10_expert",
+    "max_pose_step": 0.005680463957093304,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 47,
+    "frames": 47
+  },
+  {
+    "id": "train_v2_10_dagger",
+    "max_pose_step": 0.005680463957093304,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 51,
+    "frames": 51
+  },
+  {
+    "id": "train_v2_11_expert",
+    "max_pose_step": 0.006451968505085587,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_11_dagger",
+    "max_pose_step": 0.006451968505085587,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_12_expert",
+    "max_pose_step": 0.002804824244273238,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 63,
+    "frames": 63
+  },
+  {
+    "id": "train_v2_12_dagger",
+    "max_pose_step": 0.002804824244273238,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 67,
+    "frames": 67
+  },
+  {
+    "id": "train_v2_13_expert",
+    "max_pose_step": 0.006162444267075309,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_13_dagger",
+    "max_pose_step": 0.006162444267075309,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_14_expert",
+    "max_pose_step": 0.002533433881217219,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 76,
+    "frames": 76
+  },
+  {
+    "id": "train_v2_14_dagger",
+    "max_pose_step": 0.002533433881217219,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 1,
+    "summary_contacts": 1,
+    "valid_frames": 109,
+    "frames": 112
+  },
+  {
+    "id": "train_v2_15_expert",
+    "max_pose_step": 0.006115195985809868,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_15_dagger",
+    "max_pose_step": 0.006115195985809868,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_16_expert",
+    "max_pose_step": 0.00423233144919781,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 46,
+    "frames": 46
+  },
+  {
+    "id": "train_v2_16_dagger",
+    "max_pose_step": 0.00423233144919781,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 47,
+    "frames": 47
+  },
+  {
+    "id": "train_v2_17_expert",
+    "max_pose_step": 0.006077420235098149,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_17_dagger",
+    "max_pose_step": 0.006077420235098149,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_18_expert",
+    "max_pose_step": 0.002139014326799353,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 73,
+    "frames": 73
+  },
+  {
+    "id": "train_v2_18_dagger",
+    "max_pose_step": 0.002139014326799353,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 79,
+    "frames": 80
+  },
+  {
+    "id": "train_v2_19_expert",
+    "max_pose_step": 0.0030969048806812893,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_19_dagger",
+    "max_pose_step": 0.0030969048806812893,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_20_expert",
+    "max_pose_step": 0.002617481962617449,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 56,
+    "frames": 56
+  },
+  {
+    "id": "train_v2_20_dagger",
+    "max_pose_step": 0.002617481962617449,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 58,
+    "frames": 58
+  },
+  {
+    "id": "train_v2_21_expert",
+    "max_pose_step": 0.006665502503377064,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_21_dagger",
+    "max_pose_step": 0.006665502503377064,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_22_expert",
+    "max_pose_step": 0.0058624353988531025,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 83,
+    "frames": 83
+  },
+  {
+    "id": "train_v2_22_dagger",
+    "max_pose_step": 0.0058624353988531025,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 2,
+    "summary_contacts": 2,
+    "valid_frames": 79,
+    "frames": 89
+  },
+  {
+    "id": "train_v2_23_expert",
+    "max_pose_step": 0.005602101958397374,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "train_v2_23_dagger",
+    "max_pose_step": 0.005602101958397374,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "val_v2_0_expert",
+    "max_pose_step": 0.0,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 102,
+    "frames": 102
+  },
+  {
+    "id": "val_v2_1_expert",
+    "max_pose_step": 0.0,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 87,
+    "frames": 87
+  },
+  {
+    "id": "val_v2_2_expert",
+    "max_pose_step": 0.0,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  },
+  {
+    "id": "val_v2_3_expert",
+    "max_pose_step": 0.0,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  }
+]

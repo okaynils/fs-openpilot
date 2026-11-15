@@ -1,0 +1,110 @@
+[
+  {
+    "id": "train_v2_00_expert",
+    "max_pose_step": 0.004349280299717373,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "train_v2_00_dagger",
+    "max_pose_step": 0.004349280299717373,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "train_v2_03_expert",
+    "max_pose_step": 0.005376611271951151,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "train_v2_03_dagger",
+    "max_pose_step": 0.005376611271951151,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "train_v2_12_expert",
+    "max_pose_step": 0.002804824244273238,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "train_v2_12_dagger",
+    "max_pose_step": 0.002804824244273238,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 1,
+    "summary_contacts": 1,
+    "valid_frames": 57,
+    "frames": 61
+  },
+  {
+    "id": "train_v2_15_expert",
+    "max_pose_step": 0.006115195985809868,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "train_v2_15_dagger",
+    "max_pose_step": 0.006115195985809868,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "val_v2_0_expert",
+    "max_pose_step": 0.0,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "val_v2_1_expert",
+    "max_pose_step": 0.0,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "val_v2_2_expert",
+    "max_pose_step": 0.0,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  },
+  {
+    "id": "val_v2_3_expert",
+    "max_pose_step": 0.0,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 61,
+    "frames": 61
+  }
+]

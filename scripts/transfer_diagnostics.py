@@ -15,20 +15,24 @@ from fsop.sim.expert import T_IDXS, configured_expert
 from fsop.sim.randomization import dr_preset
 
 
-def environment(configuration, render):
+def environment(configuration, render, track_seed=99001, scene_seed=4101, recovery=False, max_seconds=100.):
   profile = transfer_profile(configuration)
-  cfg = SimCfg(render=render, physical_camera=render, dr='light', max_time=100., randomize_expert=False)
+  cfg = SimCfg(render=render, physical_camera=render, dr='light', max_time=max_seconds, randomize_expert=False)
   cfg.noise.enabled = False
   dr = dr_preset('light')
   dr.cam_height_jitter = dr.cam_pitch_deg = dr.cam_roll_deg = dr.cam_yaw_deg = 0
-  return FSEnv(transfer_track(99001), cfg, 4101, profile=profile, dr_cfg=dr,
+  track = transfer_track(track_seed)
+  if recovery:
+    x, y, heading = track.start_pose
+    track.start_pose = (x - .5 * np.sin(heading), y + .5 * np.cos(heading), heading + .08)
+  return FSEnv(track, cfg, scene_seed, profile=profile, dr_cfg=dr,
                expert_params=configured_expert(profile.vehicle))
 
 
-def oracle_tracking(configuration, output):
+def oracle_tracking(configuration, output, track_seed=99001, scene_seed=4101, recovery=False, max_seconds=100.):
   results = []
   for mode in ('expert', 'oracle_pp'):
-    env = environment(configuration, False)
+    env = environment(configuration, False, track_seed, scene_seed, recovery, max_seconds)
     controller = PlanPurePursuit(env.vp)
     obs = env.observe()
     rows = []
@@ -41,20 +45,22 @@ def oracle_tracking(configuration, output):
       rows.append([obs.t, obs.lat, obs.state.vx, steer, accel])
       obs = env.step(steer, accel, add_noise=False, render=False)
     results.append({'mode': mode, 'summary': env.referee.summary(), 'trace': rows})
-  Path(output).write_text(json.dumps({'configuration': configuration, 'track_seed': 99001,
-                                    'scene_seed': 4101, 'rendering': False,
+  Path(output).write_text(json.dumps({'configuration': configuration, 'track_seed': track_seed,
+                                    'scene_seed': scene_seed, 'recovery': recovery,
+                                    'max_seconds': max_seconds, 'rendering': False,
                                     'privileged': 'full expert plan or expert action', 'results': results}, indent=2))
   return results
 
 
-def capture(configuration, checkpoint, output):
+def capture(configuration, checkpoint, output, track_seed=99001, scene_seed=4101,
+            recovery=False, max_seconds=100.):
   import cv2
 
   from fsop.geometry.camera import CAMERA_MODELS, project_world
   from fsop.geometry.mounting import body_occluded
 
   output = Path(output)
-  env = environment(configuration, True)
+  env = environment(configuration, True, track_seed, scene_seed, recovery, max_seconds)
   policy = ModelPolicy.from_checkpoint(checkpoint)
   obs = env.observe()
   frames, trace = [], []
@@ -84,7 +90,8 @@ def capture(configuration, checkpoint, output):
                     "red=prediction green=expert", (8, 20), cv2.FONT_HERSHEY_SIMPLEX, .5, (255, 255, 255), 1)
         frames.append(cv2.resize(image, (768, 192)))
     obs = env.step(steer, accel, add_noise=False)
-  report = {'configuration': configuration, 'checkpoint': checkpoint, 'track_seed': 99001, 'scene_seed': 4101,
+  report = {'configuration': configuration, 'checkpoint': checkpoint, 'track_seed': track_seed,
+            'scene_seed': scene_seed, 'recovery': recovery, 'max_seconds': max_seconds,
             'summary': env.referee.summary(), 'trace': trace,
             'renderer': env.renderer.base.win.getGsg().getDriverRenderer()}
   output.with_suffix('.json').write_text(json.dumps(report, indent=2))

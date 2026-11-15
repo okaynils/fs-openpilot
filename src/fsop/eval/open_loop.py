@@ -74,7 +74,8 @@ def run_episode_model(model, ep: Episode, device, batch: int = 32, bev: bool = T
       if geometry_override is not None:
         context = np.asarray(geometry_override, np.float32)
       geometry = torch.from_numpy(np.repeat(context[None], len(ks), axis=0)).to(device)
-      pred = model.plan(hist[:, :-1], hist[:, -1], des, tc.expand(len(ks), -1), geometry)
+      speed = torch.as_tensor(ep.states[ks, 4], dtype=torch.float32, device=device)
+      pred = model.plan(hist[:, :-1], hist[:, -1], des, tc.expand(len(ks), -1), geometry, speed)
       plan = torch.cat([pred["plan_mu"].flatten(1), pred["plan_logstd"].flatten(1)], 1)
     else:
       plan, _ = base.policy_raw(hist, des, tc.expand(len(ks), -1))

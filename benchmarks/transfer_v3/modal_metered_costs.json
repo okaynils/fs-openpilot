@@ -1,0 +1,303 @@
+{
+  "retrieved_at_utc": "2026-11-14T16:51:47.990945+00:00",
+  "requested_app_ids": [
+    "ap-ZZesnxmdPrnZJ6pV8tXcNI",
+    "ap-p6oRtlLV5bcdX6mBxDveWe",
+    "ap-oOBjKHMowwTbGCdK4N9uHx",
+    "ap-S85GUvwsscB1yGu9pVh0qp",
+    "ap-GQxl3jcsdoZVIQAkEzolUB",
+    "ap-QfVOhEs10vk9jMBhhwzIoY",
+    "ap-oRqIZenXmScKcjczYrNcjd",
+    "ap-GniTxTtnan0qjb1ms5UJmP",
+    "ap-QcOAIqVdR2juNqhPeL4BTC",
+    "ap-3jEDeoYYrGU4SxT53pZ5G4",
+    "ap-8nPx37Tcy38fxXVueXbPNv",
+    "ap-wrvUNU9GByJxHAv4DsY1FZ",
+    "ap-ivaHUu6WYTBpN4rr4TcEGy",
+    "ap-559yvXwRyjSKcPptCSQ1dl",
+    "ap-lafhEX6TlwB9VD4txMjUAZ",
+    "ap-b3bFv27gYYHpPkfwTfkqg9",
+    "ap-AZheeyuTUarTyWLBvxsMfM",
+    "ap-cJUC6KIDQZGCcgrMngavAF",
+    "ap-2EI4ONBef7e0RLBwT6vsxk",
+    "ap-2bTktoqczP3lc8GMJ4mZU5",
+    "ap-yY08G2kGpvlTJalDvBkO5E"
+  ],
+  "records": [
+    {
+      "object_id": "ap-GQxl3jcsdoZVIQAkEzolUB",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T14:00:00Z",
+      "cost": "0.04139799",
+      "cost_by_resource": {
+        "A10G": "0.02625556",
+        "Memory": "0.00611038",
+        "Network Egress": "0.00000013",
+        "CPU": "0.00903191"
+      }
+    },
+    {
+      "object_id": "ap-GniTxTtnan0qjb1ms5UJmP",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T14:00:00Z",
+      "cost": "0.04374809",
+      "cost_by_resource": {
+        "A10G": "0.02774614",
+        "Memory": "0.00645728",
+        "CPU": "0.00954467"
+      }
+    },
+    {
+      "object_id": "ap-QcOAIqVdR2juNqhPeL4BTC",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T14:00:00Z",
+      "cost": "0.02408910",
+      "cost_by_resource": {
+        "A10G": "0.01527791",
+        "Memory": "0.00355559",
+        "CPU": "0.00525560"
+      }
+    },
+    {
+      "object_id": "ap-QfVOhEs10vk9jMBhhwzIoY",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T14:00:00Z",
+      "cost": "0.14420316",
+      "cost_by_resource": {
+        "Memory": "0.02191641",
+        "A100-40GB": "0.08989154",
+        "CPU": "0.03239520"
+      }
+    },
+    {
+      "object_id": "ap-S85GUvwsscB1yGu9pVh0qp",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T14:00:00Z",
+      "cost": "0.01349014",
+      "cost_by_resource": {
+        "A10G": "0.00855579",
+        "Memory": "0.00199116",
+        "CPU": "0.00294319"
+      }
+    },
+    {
+      "object_id": "ap-ZZesnxmdPrnZJ6pV8tXcNI",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T14:00:00Z",
+      "cost": "0.02216218",
+      "cost_by_resource": {
+        "A10G": "0.01405581",
+        "Memory": "0.00327117",
+        "CPU": "0.00483520"
+      }
+    },
+    {
+      "object_id": "ap-oOBjKHMowwTbGCdK4N9uHx",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T14:00:00Z",
+      "cost": "0.09476266",
+      "cost_by_resource": {
+        "Memory": "0.01440230",
+        "A100-40GB": "0.05907195",
+        "CPU": "0.02128840"
+      }
+    },
+    {
+      "object_id": "ap-oRqIZenXmScKcjczYrNcjd",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T14:00:00Z",
+      "cost": "0.94751641",
+      "cost_by_resource": {
+        "A10G": "0.69850035",
+        "Memory": "0.09011560",
+        "Network Egress": "0.00007369",
+        "CPU": "0.15882676"
+      }
+    },
+    {
+      "object_id": "ap-p6oRtlLV5bcdX6mBxDveWe",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T14:00:00Z",
+      "cost": "0.01633376",
+      "cost_by_resource": {
+        "A10G": "0.01035928",
+        "Memory": "0.00241089",
+        "CPU": "0.00356359"
+      }
+    },
+    {
+      "object_id": "ap-2EI4ONBef7e0RLBwT6vsxk",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.65570876",
+      "cost_by_resource": {
+        "A10G": "0.48766711",
+        "Memory": "0.06274871",
+        "Network Egress": "0.00004736",
+        "CPU": "0.10524559"
+      }
+    },
+    {
+      "object_id": "ap-2bTktoqczP3lc8GMJ4mZU5",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.00818027",
+      "cost_by_resource": {
+        "A10G": "0.00518813",
+        "Memory": "0.00120742",
+        "CPU": "0.00178472"
+      }
+    },
+    {
+      "object_id": "ap-3jEDeoYYrGU4SxT53pZ5G4",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.00192737",
+      "cost_by_resource": {
+        "A10G": "0.00122238",
+        "Memory": "0.00028448",
+        "CPU": "0.00042050"
+      }
+    },
+    {
+      "object_id": "ap-559yvXwRyjSKcPptCSQ1dl",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.04143167",
+      "cost_by_resource": {
+        "A10G": "0.02627692",
+        "Memory": "0.00611536",
+        "Network Egress": "0.00000013",
+        "CPU": "0.00903926"
+      }
+    },
+    {
+      "object_id": "ap-8nPx37Tcy38fxXVueXbPNv",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.43528474",
+      "cost_by_resource": {
+        "A10G": "0.22195016",
+        "L4": "0.08096965",
+        "Memory": "0.04772194",
+        "Network Egress": "0.00012069",
+        "CPU": "0.08452229"
+      }
+    },
+    {
+      "object_id": "ap-AZheeyuTUarTyWLBvxsMfM",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.01698228",
+      "cost_by_resource": {
+        "A10G": "0.01077059",
+        "Memory": "0.00250661",
+        "CPU": "0.00370508"
+      }
+    },
+    {
+      "object_id": "ap-b3bFv27gYYHpPkfwTfkqg9",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.12098943",
+      "cost_by_resource": {
+        "Memory": "0.01814937",
+        "A10G": "0.03458980",
+        "A100-40GB": "0.04142322",
+        "CPU": "0.02682703"
+      }
+    },
+    {
+      "object_id": "ap-cJUC6KIDQZGCcgrMngavAF",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.14322029",
+      "cost_by_resource": {
+        "Memory": "0.02176703",
+        "A100-40GB": "0.08927885",
+        "CPU": "0.03217440"
+      }
+    },
+    {
+      "object_id": "ap-ivaHUu6WYTBpN4rr4TcEGy",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.39531684",
+      "cost_by_resource": {
+        "A10G": "0.28466394",
+        "Memory": "0.03969118",
+        "Network Egress": "0.00010794",
+        "CPU": "0.07085379"
+      }
+    },
+    {
+      "object_id": "ap-lafhEX6TlwB9VD4txMjUAZ",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.01541662",
+      "cost_by_resource": {
+        "A10G": "0.00977761",
+        "Memory": "0.00227552",
+        "CPU": "0.00336350"
+      }
+    },
+    {
+      "object_id": "ap-oRqIZenXmScKcjczYrNcjd",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.38511417",
+      "cost_by_resource": {
+        "A10G": "0.28163445",
+        "Memory": "0.03724167",
+        "Network Egress": "0.00002848",
+        "CPU": "0.06620958"
+      }
+    },
+    {
+      "object_id": "ap-wrvUNU9GByJxHAv4DsY1FZ",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.07804826",
+      "cost_by_resource": {
+        "A10G": "0.04950016",
+        "Memory": "0.01152004",
+        "CPU": "0.01702806"
+      }
+    },
+    {
+      "object_id": "ap-yY08G2kGpvlTJalDvBkO5E",
+      "description": "fsop",
+      "environment_name": "main",
+      "interval": "2026-11-14T15:00:00Z",
+      "cost": "0.11273611",
+      "cost_by_resource": {
+        "A10G": "0.07150007",
+        "Memory": "0.01664002",
+        "CPU": "0.02459602"
+      }
+    }
+  ],
+  "total_usd": "3.75806030",
+  "limitation": "Metered full hourly intervals only; recent usage may not be settled. Not an invoice."
+}

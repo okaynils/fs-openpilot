@@ -1,0 +1,20 @@
+[
+  {
+    "configuration": "test_v2_0",
+    "ticks": 120,
+    "recovery": false,
+    "plan_max_abs": 0.0001811981201171875,
+    "steer_max_abs": 1.9992590136186372e-07,
+    "accel_max_abs": 9.112954140189089e-06,
+    "sequence": "identical fresh 20 Hz physical sensor images; expert-driven states"
+  },
+  {
+    "configuration": "test_v2_2",
+    "ticks": 120,
+    "recovery": true,
+    "plan_max_abs": 4.482269287109375e-05,
+    "steer_max_abs": 1.8408142408304906e-07,
+    "accel_max_abs": 1.3357400894253857e-06,
+    "sequence": "identical fresh 20 Hz physical sensor images; expert-driven states"
+  }
+]

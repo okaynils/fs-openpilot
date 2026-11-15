@@ -23,7 +23,7 @@ from fsop.config import save_config
 from fsop.data.sim_dataset import SimDataset, collate
 from fsop.eval.bev_metrics import BevScorer, decode_bev, gt_from_targets
 from fsop.geometry.op_frames import op_to_ego_plan
-from fsop.model.build import SupercomboFS
+from fsop.model.build import PREP, SupercomboFS
 from fsop.sim.expert import T_IDXS
 from fsop.train import losses as L
 from fsop.train.device import autocast_ctx, pick_device, strict_inference_precision
@@ -39,12 +39,18 @@ class TrainCfg:
   fsoco_root: str = ""
   fsoco_every: int = 4  # one FSOCO batch every N sim batches (stage 2)
   stage: int = 1
+  history_mode: str = "cached"  # cached initialization features | fresh current-weight image history
   trunk: str = "frozen"  # frozen | last | all
   init_ckpt: str = ""
   conditioned: bool = False
   context_version: int = 1
+  context_scope: str = "current"
+  state_mode: str = "none"  # none (legacy) | speed (measured m/s) | constant (capacity control)
+  snapshot_steps: list[int] = field(default_factory=list)
   anchored_context: bool = False
   freeze_policy: bool = False
+  include_on_policy: bool = True
+  include_initial_frame: bool = False  # opt in to recorded k=0 observations with empty history
   resume: str = ""
   batch_size: int = 64
   num_workers: int = 4
@@ -57,6 +63,7 @@ class TrainCfg:
   grad_clip: float = 1.0
   l2sp: float = 1e-3
   w_plan: float = 1.0
+  w_steering: float = 0.0  # optional vehicle-normalized follower supervision; legacy objective by default
   w_bev: float = 1.0
   w_img: float = 1.0
   val_every: int = 500
@@ -85,6 +92,18 @@ class Trainer:
       saved = torch.load(cfg.resume, map_location="cpu", weights_only=False)
       if saved.get("inference_only"):
         raise ValueError("Derived inference checkpoint has no optimizer state; initialize a fresh run instead")
+      if saved["cfg"].get("context_scope", "current") != cfg.context_scope:
+        raise ValueError("Resume requires matching conditioning scope")
+      if saved["cfg"].get("include_on_policy", True) != cfg.include_on_policy:
+        raise ValueError("Resume requires matching collector subset")
+      if saved["cfg"].get("include_initial_frame", False) != cfg.include_initial_frame:
+        raise ValueError("Resume requires matching initial-frame sampling")
+      if saved["cfg"].get("w_steering", 0.0) != cfg.w_steering:
+        raise ValueError("Resume requires matching steering supervision weight")
+      if saved["cfg"].get("history_mode", "cached") != cfg.history_mode:
+        raise ValueError("Resume requires matching history mode")
+      if saved["cfg"].get("state_mode", "none") != cfg.state_mode:
+        raise ValueError("Resume requires matching state mode")
       if saved["cfg"].get("context_version", 1) != cfg.context_version:
         raise ValueError("Resume requires matching context version")
       if saved["cfg"]["conditioned"] != cfg.conditioned or saved["cfg"]["sim_root"] != cfg.sim_root:
@@ -98,6 +117,10 @@ class Trainer:
         actual = json.loads(manifest.read_text()) if manifest.exists() else None
         if expected != actual:
           raise ValueError("Resume dataset manifest differs from recorded provenance")
+    if cfg.history_mode not in ("cached", "fresh") or (cfg.history_mode == "fresh" and cfg.stage < 2):
+      raise ValueError("Fresh history requires image stage; supported history modes are cached/fresh")
+    if cfg.state_mode not in ("none", "speed", "constant") or (cfg.state_mode != "none" and not cfg.conditioned):
+      raise ValueError("Unsupported state mode or missing calibrated geometry")
     (self.run_dir / "ckpt").mkdir(parents=True, exist_ok=True)
     if not cfg.resume:
       save_config(cfg, self.run_dir / "config.yaml")
@@ -114,12 +137,22 @@ class Trainer:
           if Path(path).exists():
             archive.add(path, filter=lambda item: None if "__pycache__" in item.name else item)
     mode = "cached" if cfg.stage == 1 else "images"
-    self.train_ds = SimDataset(cfg.sim_root, "train", mode, cfg.cache_tag, context_version=cfg.context_version)
+    min_k = 0 if cfg.include_initial_frame else 1
+    self.train_ds = SimDataset(cfg.sim_root, "train", mode, cfg.cache_tag, context_version=cfg.context_version,
+                               history_mode=cfg.history_mode, min_k=min_k)
+    if not cfg.include_on_policy:
+      self.train_ds = SimDataset(cfg.sim_root, "train", mode, cfg.cache_tag,
+                                 context_version=cfg.context_version,
+                                 history_mode=cfg.history_mode, min_k=min_k,
+                                 episodes=[e.path.name for e in self.train_ds.eps
+                                           if e.meta.get("collector") != "dagger"])
     if cfg.max_episodes:
       self.train_ds = SimDataset(cfg.sim_root, "train", mode, cfg.cache_tag,
                                  context_version=cfg.context_version,
+                                 history_mode=cfg.history_mode, min_k=min_k,
                                  episodes=[e.path.name for e in self.train_ds.eps[: cfg.max_episodes]])
-    self.val_ds = SimDataset(cfg.sim_root, "val", mode, cfg.cache_tag, context_version=cfg.context_version)
+    self.val_ds = SimDataset(cfg.sim_root, "val", mode, cfg.cache_tag, context_version=cfg.context_version,
+                             history_mode=cfg.history_mode, min_k=min_k)
     if cfg.label_mode:
       for dataset in (self.train_ds, self.val_ds):
         for episode in dataset.eps:
@@ -129,7 +162,11 @@ class Trainer:
     sd = torch.load(cfg.init_ckpt, map_location="cpu", weights_only=False)["model"] if cfg.init_ckpt else {}
     self.model = SupercomboFS(image_head=cfg.stage >= 2 or any(k.startswith("img.") for k in sd),
                              conditioned=cfg.conditioned, anchored_context=cfg.anchored_context,
-                             context_version=cfg.context_version)
+                             context_version=cfg.context_version, context_scope=cfg.context_scope,
+                             state_mode=cfg.state_mode)
+    if cfg.history_mode == "fresh":
+      from fsop.model.history import validate_policy_history
+      validate_policy_history(PREP / "policy_fp32.onnx")
     if cfg.init_ckpt:
       missing, unexpected = self.model.load_state_dict(sd, strict=False)
       print(f"init from {cfg.init_ckpt}: missing {len(missing)} unexpected {len(unexpected)}")
@@ -144,6 +181,8 @@ class Trainer:
     ]
     if self.model.context_adapter is not None:
       groups.append({"params": list(self.model.context_adapter.parameters()), "lr": cfg.lr})
+    if self.model.motion_adapter is not None:
+      groups.append({"params": list(self.model.motion_adapter.parameters()), "lr": cfg.lr})
     if self.model.img is not None:
       groups.append({"params": list(self.model.img.parameters()), "lr": cfg.lr})
     trunk = [p for p in self.model.base.vision.parameters() if p.requires_grad]
@@ -187,10 +226,16 @@ class Trainer:
   def forward(self, b: dict) -> dict:
     if self.cfg.stage == 1:
       return self.model.forward_cached(b)
+    if self.cfg.history_mode == "fresh":
+      # Keep runtime vision semantics while retaining gradients through the current frame.
+      self.model.base.vision.eval()
     return self.model.forward_images(b)
 
   def losses(self, out: dict, b: dict) -> dict[str, torch.Tensor]:
     ls = {"plan": self.cfg.w_plan * L.plan_nll(out["plan_mu"], out["plan_logstd"], b["plan"])}
+    if self.cfg.w_steering:
+      ls["steering"] = self.cfg.w_steering * L.steering_loss(out["plan_mu"], b["plan"],
+                                                          b["speed"], b["control_vehicle"])
     for k, v in L.bev_loss(out["bev"], b).items():
       ls[k] = self.cfg.w_bev * v
     if "img" in out:
@@ -215,6 +260,9 @@ class Trainer:
   def fit(self) -> None:
     started = time.time()
     c = self.cfg
+    starting_step = self.step
+    if self.device.type == "cuda":
+      torch.cuda.reset_peak_memory_stats(self.device)
     self.validate(tag="resume" if c.resume else "baseline")  # init remains eligible for selection
     loader = self._loader(self.train_ds, True)
     fs_iter = iter(self._loader(self.fsoco, True, max(c.batch_size // 2, 2))) if self.fsoco else None
@@ -248,7 +296,17 @@ class Trainer:
         loss = sum(ls.values())
       self.opt.zero_grad(set_to_none=True)
       loss.backward()
-      gn = torch.nn.utils.clip_grad_norm_([p for g in self.opt.param_groups for p in g["params"]], c.grad_clip)
+      if self.step == starting_step:
+        vision = [p for p in self.model.base.vision.parameters() if p.requires_grad]
+        grads = [p.grad.detach().float().square().sum() for p in vision if p.grad is not None]
+        health = {"step": self.step, "loss": float(loss.detach()),
+                  "vision_trainable_parameters": sum(p.numel() for p in vision),
+                  "vision_parameters_with_gradient": sum(p.numel() for p in vision if p.grad is not None),
+                  "vision_gradient_norm": float(torch.stack(grads).sum().sqrt()) if grads else 0.0}
+        health_name = f"first_gradient_resume_{starting_step}.json" if c.resume else "first_gradient.json"
+        (self.run_dir / health_name).write_text(json.dumps(health, indent=2))
+      gn = torch.nn.utils.clip_grad_norm_([p for g in self.opt.param_groups for p in g["params"]], c.grad_clip,
+                                         error_if_nonfinite=True)
       self.opt.step()
       self.step += 1
       if self.step % c.log_every == 0:
@@ -265,15 +323,22 @@ class Trainer:
         self.validate()
         self.save("last")
         self.model.train()
+      if self.step in c.snapshot_steps:
+        self.save(f"step_{self.step:06d}")
     self.save("last")
     (self.run_dir / "timing.json").write_text(json.dumps({"fit_seconds": time.time() - started,
-                                                        "steps": self.step, "device": str(self.device)}, indent=2))
+                                                        "steps": self.step, "device": str(self.device),
+                                                        "peak_cuda_allocated_bytes":
+                                                          torch.cuda.max_memory_allocated(self.device)
+                                                          if self.device.type == "cuda" else None}, indent=2))
 
   def save(self, name: str) -> Path:
     p = self.run_dir / "ckpt" / f"{name}.pt"
     from fsop.model.conditioning import context_fields
     contract = {"geometry_version": self.cfg.context_version if self.cfg.conditioned else 0,
+                "state_mode": self.cfg.state_mode, "state_version": 1, "speed_scale_mps": 15.,
                 "anchored_context": self.cfg.anchored_context,
+                "conditioning_scope": self.cfg.context_scope,
                 "fields": list(context_fields(self.cfg.context_version)) if self.cfg.conditioned else [],
                 "trajectory_origin": "ground_projected_cog", "preprocessing": "model_slots_yuv_v1"}
     torch.save({"input_contract": contract, "model": self.model.state_dict(),

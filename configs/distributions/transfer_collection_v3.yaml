@@ -1,0 +1,8 @@
+version: 1
+name: lateral_recovery_v3
+# Simulator collection only: labels still use privileged expert state/map information.
+# A disagreeing policy may act while near the centerline, creating genuine recovery states.
+intervention:
+  lateral_limit_m: 1.25
+  steering_disagreement_rad: null
+  hold_seconds: 1.5

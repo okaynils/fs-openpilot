@@ -1,0 +1,113 @@
+{
+  "identity": {
+    "id": "train_v2_00_expert",
+    "configuration": "train_v2_00",
+    "profile": {
+      "name": "train_v2_00",
+      "team": "",
+      "vehicle": {
+        "max_speed": 15.667929743503436,
+        "body_height": 0.36077617296252934,
+        "mass": 251.90526520712,
+        "iz": 128.00935230198422,
+        "lf": 0.8246312524857814,
+        "lr": 0.77309179920542,
+        "track": 1.236946878728672,
+        "length": 2.989288290260957,
+        "width": 1.4431046918501174,
+        "front_overhang": 0.8246312524857814,
+        "rear_overhang": 0.5669339860839747,
+        "cf": 35047.68907229496,
+        "cr": 39428.650206331826,
+        "mu": 1.4,
+        "max_accel": 6.85980182980976,
+        "max_brake": 6.309863513055284,
+        "tau_steer": 0.07180319018131444,
+        "tau_accel": 0.13808327131680045,
+        "drag": 0.6375156586652517,
+        "v_blend": [
+          2.0,
+          5.0
+        ],
+        "max_steer_deg": 23.773584785940187,
+        "max_steer_rate_deg": 150.0
+      },
+      "mount": {
+        "x": -0.8,
+        "y": -0.3,
+        "z": 0.885,
+        "roll_deg": -1.4552590496525886,
+        "pitch_deg": 7.146235901689491,
+        "yaw_deg": 3.8818279553546793
+      },
+      "cameras": [
+        {
+          "name": "front",
+          "width": 640,
+          "height": 360,
+          "fx": 527.0442953637513,
+          "fy": 527.0442953637513,
+          "cx": 320.0,
+          "cy": 180.0,
+          "dist": [],
+          "fisheye": false,
+          "slots": [
+            "road",
+            "wide"
+          ],
+          "roll_deg": 0.0,
+          "pitch_deg": 0.0,
+          "yaw_deg": 0.0
+        }
+      ],
+      "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+      "motion": {
+        "translation_amplitude": 0.002,
+        "angle_amplitude_deg": 0.2,
+        "frequency_hz": 1.1066026521605679,
+        "phase": [
+          2.139647299208709,
+          5.121473517210751,
+          4.748668832917756,
+          2.975805231234754,
+          5.9588413825976705,
+          3.758403327453944
+        ]
+      },
+      "calibration_error": {
+        "x": -0.0011474782867740684,
+        "y": 0.004377785640631534,
+        "z": 0.002037393677429635,
+        "roll_deg": 0.13026049301171788,
+        "pitch_deg": -0.09083338975342725,
+        "yaw_deg": -0.1461006265642642
+      }
+    },
+    "split": "train",
+    "collector": "expert",
+    "checkpoint": "runs/transfer_state_speed_v5/ckpt/step_000250.pt",
+    "track_seed": 882101,
+    "scene_seed": 7301,
+    "seconds": 40.0,
+    "random_start": false,
+    "intervention": {
+      "lateral_limit_m": 1.25,
+      "steering_disagreement_rad": 0.2,
+      "hold_seconds": 1.5,
+      "lateral_reference": "reference_path"
+    }
+  },
+  "row": {
+    "id": "train_v2_00_expert",
+    "track_id": "autocross_882101",
+    "discipline": "autocross",
+    "frames": 70,
+    "split": "train",
+    "collector": "expert",
+    "configuration": "train_v2_00",
+    "seconds": 14.808225699000001,
+    "valid_frames": 70,
+    "expert_control_fraction": 1.0,
+    "contacts": 0
+  }
+}

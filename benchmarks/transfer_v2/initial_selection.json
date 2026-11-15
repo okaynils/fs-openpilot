@@ -1,0 +1,81 @@
+{
+  "ranking": [
+    {
+      "checkpoint": "expert",
+      "cases": 4,
+      "passes": 4,
+      "off_course": 0,
+      "contacts": 0,
+      "mean_progress": 1.0
+    },
+    {
+      "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+      "cases": 4,
+      "passes": 3,
+      "off_course": 1,
+      "contacts": 19,
+      "mean_progress": 0.8528590808266105
+    },
+    {
+      "checkpoint": "runs/cuda_racing_v6/ckpt/best.pt",
+      "cases": 4,
+      "passes": 3,
+      "off_course": 1,
+      "contacts": 33,
+      "mean_progress": 0.75
+    },
+    {
+      "checkpoint": "runs/transfer_expert_v2/ckpt/step_000500.pt",
+      "cases": 4,
+      "passes": 2,
+      "off_course": 2,
+      "contacts": 37,
+      "mean_progress": 0.5652871373503277
+    },
+    {
+      "checkpoint": "runs/transfer_recovery_v2/ckpt/step_000500.pt",
+      "cases": 4,
+      "passes": 2,
+      "off_course": 3,
+      "contacts": 32,
+      "mean_progress": 0.521044100809735
+    },
+    {
+      "checkpoint": "runs/transfer_sequence_v2/ckpt/step_000500.pt",
+      "cases": 4,
+      "passes": 2,
+      "off_course": 4,
+      "contacts": 23,
+      "mean_progress": 0.529125563207774
+    },
+    {
+      "checkpoint": "runs/transfer_expert_v2/ckpt/step_001500.pt",
+      "cases": 4,
+      "passes": 2,
+      "off_course": 4,
+      "contacts": 35,
+      "mean_progress": 0.5
+    },
+    {
+      "checkpoint": "runs/transfer_recovery_v2/ckpt/step_001500.pt",
+      "cases": 4,
+      "passes": 2,
+      "off_course": 5,
+      "contacts": 35,
+      "mean_progress": 0.5
+    },
+    {
+      "checkpoint": "runs/transfer_sequence_v2/ckpt/step_001500.pt",
+      "cases": 4,
+      "passes": 1,
+      "off_course": 6,
+      "contacts": 25,
+      "mean_progress": 0.5636131840645414
+    }
+  ],
+  "selected_candidate": "runs/transfer_expert_v2/ckpt/step_000500.pt",
+  "improves_original_baseline_rank": false,
+  "improves_previous_candidate_rank": false,
+  "expert_all_pass": true,
+  "promotion_requires_default_retention_and_independent_final_test": true
+}

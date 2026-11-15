@@ -108,6 +108,11 @@ def load_profile(path: str | Path | None = None) -> TeamProfile:
   if path is None or str(path) == "":
     return TeamProfile()
   raw = yaml.safe_load(Path(path).read_text()) or {}
+  return profile_from_dict(raw, Path(path).stem)
+
+
+def profile_from_dict(raw: dict, name: str = "profile") -> TeamProfile:
+  """Decode a serialized profile with the same validation as a YAML file."""
   veh = dict(raw.get("vehicle", {}))
   for k in ("max_steer", "max_steer_rate"):
     if f"{k}_deg" in veh:
@@ -126,6 +131,6 @@ def load_profile(path: str | Path | None = None) -> TeamProfile:
       error[k] = float(np.deg2rad(error.pop(f"{k}_deg")))
   return TeamProfile(motion=MountDynamics(**_pick(MountDynamics, raw.get("motion", {}))),
                      calibration_error=CameraMount(**_pick(CameraMount, error)),
-                     name=raw.get("name", Path(path).stem), team=raw.get("team", ""),
+                     name=raw.get("name", name), team=raw.get("team", ""),
                      vehicle=VehicleParams(**_pick(VehicleParams, veh)),
                      mount=CameraMount(**_pick(CameraMount, mount)), cameras=cams, notes=raw.get("notes", ""))

@@ -1,0 +1,27 @@
+{
+  "results": [
+    {
+      "configuration": "val_v2_2",
+      "recovery": false,
+      "frames": 120,
+      "plan_max_abs": 7.43865966796875e-05,
+      "steering_max_abs": 2.798773938092469e-07,
+      "acceleration_max_abs": 5.7259202004278364e-06
+    },
+    {
+      "configuration": "val_v2_3",
+      "recovery": true,
+      "frames": 120,
+      "plan_max_abs": 9.72747802734375e-05,
+      "steering_max_abs": 4.917144183214095e-07,
+      "acceleration_max_abs": 1.2005418539295931e-05
+    }
+  ],
+  "checkpoint_sha256": "7fb74cd1e8df6401b8b3cf935859951981d0f30260e113d6fed4176ac48db27c",
+  "export_sha256": "9d6ca63cb376582a34675a519ac4cda9580de9cf6239ae6a91c4d5f4b72a199f",
+  "source_sha256": "67c91ea094a184fa5c7766c950151e08632a16c09fe20ef1318286bbb276b131",
+  "track_seed": 98011,
+  "scene_seed": 5101,
+  "backend": "Torch CPU versus ONNX CPU",
+  "limitation": "Fresh 20 Hz physical-camera simulator observations, warped by FSEnv; independent FSDriver queues. Expert drives every state; exact speed/desire are privileged. This verifies numerical temporal parity, not learned-policy driving success or GPU parity."
+}

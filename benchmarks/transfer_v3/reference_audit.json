@@ -1,0 +1,11 @@
+[
+  {
+    "id": "reference_path",
+    "max_pose_step": 0.005380733601197803,
+    "max_origin_error": 0.0,
+    "recorded_contact_events": 0,
+    "summary_contacts": 0,
+    "valid_frames": 120,
+    "frames": 120
+  }
+]

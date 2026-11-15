@@ -1,0 +1,25 @@
+{
+  "source": "Observed stdout from the live local evaluation, session 20638",
+  "incomplete_case": "val_v2_2",
+  "rows": [
+    {
+      "checkpoint": "runs/cuda_racing_v6/ckpt/best.pt",
+      "referee_result": "running",
+      "completion_fraction": 0.0,
+      "contacts": 9
+    },
+    {
+      "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+      "referee_result": "running",
+      "completion_fraction": 0.415,
+      "contacts": 0
+    },
+    {
+      "checkpoint": "artifacts/experiments/transfer_refresh_current_pilot_v7/step_000300.pt",
+      "referee_result": "running",
+      "completion_fraction": 0.0,
+      "contacts": 1
+    }
+  ],
+  "limitation": "Partial console output only; full case metrics and remaining paired models are pending. Referee running at the simulation time limit is not mission completion."
+}

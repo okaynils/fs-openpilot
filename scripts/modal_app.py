@@ -44,6 +44,8 @@ image = (
   .add_local_dir(REPO / "scripts", f"{WORK}/scripts", ignore=["**/__pycache__"])
   .add_local_dir(REPO / "benchmarks", f"{WORK}/benchmarks")
   .add_local_file(REPO / "README.md", f"{WORK}/README.md")
+  .add_local_file(REPO / "pyproject.toml", f"{WORK}/pyproject.toml")
+  .add_local_file(REPO / "uv.lock", f"{WORK}/uv.lock")
 )
 app = modal.App("fsop", image=image, volumes={VOL_DIR: vol})
 
@@ -64,7 +66,9 @@ def _sh(cmd: str) -> None:
 def _source_identity() -> dict:
   import hashlib
 
-  files = [*Path("src/fsop").rglob("*.py"), *Path("configs").rglob("*.yaml")]
+  files = [*Path("src/fsop").rglob("*.py"), *Path("configs").rglob("*.yaml"),
+           *Path("scripts").rglob("*.py")]
+  files += [p for p in (Path("pyproject.toml"), Path("uv.lock")) if p.exists()]
   return {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(files)}
 
 
@@ -73,7 +77,9 @@ def _archive_source(out: Path) -> None:
 
   if not (out / "source.tar.gz").exists():
     with tarfile.open(out / "source.tar.gz", "w:gz") as archive:
-      for folder in ("src", "configs", "scripts", "tests"):
+      for folder in ("src", "configs", "scripts", "tests", "pyproject.toml", "uv.lock"):
+        if not Path(folder).exists():
+          continue
         archive.add(folder, filter=lambda info: None if "__pycache__" in info.name else info)
 
 
@@ -728,7 +734,7 @@ def transfer_test_data(name: str = "transfer_test_v1"):
 
 @app.function(gpu=["L4", "A10"], cpu=4.0, memory=16384, timeout=3600, max_containers=3)
 def transfer_case_remote(configuration: dict, checkpoints: list[str], track_seed: int,
-                         scene_seed: int, recovery: bool, name: str) -> list[dict]:
+                         scene_seed: int, recovery: bool, name: str, max_seconds: float = 100.) -> list[dict]:
   import hashlib
   import json
 
@@ -741,7 +747,7 @@ def transfer_case_remote(configuration: dict, checkpoints: list[str], track_seed
   path = root / f"{configuration['name']}_{track_seed}_{scene_seed}.json"
   identity = {"configuration": configuration, "track_seed": track_seed, "scene_seed": scene_seed,
               "source_sha256": _source_identity(),
-              "recovery": recovery,
+              "recovery": recovery, "max_seconds": max_seconds,
               "checkpoints": {c: hashlib.sha256(Path(c).read_bytes()).hexdigest() for c in checkpoints}}
   if path.exists():
     saved = json.loads(path.read_text())
@@ -749,7 +755,7 @@ def transfer_case_remote(configuration: dict, checkpoints: list[str], track_seed
       raise ValueError("Evaluation identity differs; use a distinct run name")
     return saved["results"]
   try:
-    results = closed_loop_case(configuration, checkpoints, track_seed, scene_seed, recovery)
+    results = closed_loop_case(configuration, checkpoints, track_seed, scene_seed, recovery, max_seconds)
     path.write_text(json.dumps({"identity": identity, "results": results}, indent=2))
     return results
   finally:
@@ -793,3 +799,386 @@ def transfer_closed(image_run: str = "transfer_image_v1", conditioned_run: str =
                     name: str = "transfer_closed_v1", runtime: bool = False,
                     export_run: str = "transfer_analysis_v1", extra_run: str = ""):
   print(transfer_closed_remote.remote(image_run, conditioned_run, name, runtime, export_run, extra_run))
+
+
+@app.function(gpu=["L4", "A10"], cpu=4.0, memory=16384, timeout=1800, max_containers=3)
+def transfer_v2_collect_remote(spec: dict, root: str) -> dict:
+  _setup()
+  vol.reload()
+  from fsop.sim.transfer_collection import collect
+  try:
+    return collect(spec, root)
+  finally:
+    vol.commit()
+
+
+@app.function(cpu=2.0, memory=4096, timeout=7200)
+def transfer_v2_data_remote(name: str, pilot: bool) -> dict:
+  import runpy
+
+  _setup()
+  api = runpy.run_path(f"{WORK}/scripts/transfer_v2_experiment.py")
+  specs = api["prepare"](name, pilot)
+  vol.commit()
+  rows = list(transfer_v2_collect_remote.starmap([(spec, f"data/sim/{name}") for spec in specs]))
+  vol.reload()
+  result = api["finish"](name, rows)
+  vol.commit()
+  return {k: v for k, v in result.items() if k != "rows"}
+
+
+@app.local_entrypoint()
+def transfer_v2_data(name: str = "transfer_v2_pilot", pilot: bool = True):
+  print(transfer_v2_data_remote.remote(name, pilot))
+
+
+@app.function(cpu=2, memory=4096, timeout=7200)
+def transfer_v2_pilot_train_remote() -> dict:
+  _setup()
+  cache_remote.remote('data/sim/transfer_v2_pilot', 'runs/cuda_racing_v6/ckpt/best.pt',
+                      'transfer_baseline_strict_v2_full', False)
+  train_remote.remote('configs/train/transfer_pilot_v2.yaml', [], True)
+  return {'run': 'transfer_pilot_v2_retry1', 'steps': 300}
+
+
+@app.local_entrypoint()
+def transfer_v2_pilot_train():
+  print(transfer_v2_pilot_train_remote.remote())
+
+
+@app.function(cpu=2, memory=4096, timeout=14400)
+def transfer_suite_remote(suite: str, checkpoints: list[str], name: str) -> dict:
+  import json
+
+  import yaml
+  _setup()
+  cfg = yaml.safe_load(Path(suite).read_text())
+  out = Path('runs') / name
+  out.mkdir(exist_ok=True)
+  _archive_source(out)  # retain the exact evaluator even if a worker fails later
+  vol.commit()
+  args = [(c, checkpoints, ts, ss, bool(i) if len(cfg['track_seeds']) > 1 else bool(j % 2), name,
+           180. if cfg.get('version') == 2 and c['family'] == 'rover' else 100.)
+          for j, c in enumerate(cfg['configurations'])
+          for i, (ts, ss) in enumerate(zip(cfg['track_seeds'], cfg['scene_seeds'], strict=True))]
+  results = []
+  for rows in transfer_case_remote.starmap(args):
+    results.extend(rows)
+  vol.reload()
+  report = {'suite': cfg, 'suite_path': suite, 'checkpoints': checkpoints,
+            'time_limits_seconds': {'formula': 100., 'rover': 180. if cfg.get('version') == 2 else 100.},
+            'recovery_rule': 'second seed, or odd configuration for a single-seed validation suite',
+            'results': results}
+  (out / 'report.json').write_text(json.dumps(report, indent=2))
+  vol.commit()
+  return {'runs': len(results), 'report': str(out / 'report.json')}
+
+
+@app.local_entrypoint()
+def transfer_suite(suite: str, checkpoints: str, name: str):
+  print(transfer_suite_remote.remote(suite, checkpoints.split(','), name))
+
+
+@app.function(cpu=2, memory=4096, timeout=14400)
+def transfer_v2_train_remote() -> dict:
+  _setup()
+  cache_remote.remote('data/sim/transfer_train_v2', 'runs/cuda_racing_v6/ckpt/best.pt',
+                      'transfer_baseline_strict_v2_full', False)
+  names = ['transfer_expert_v2', 'transfer_recovery_v2', 'transfer_sequence_v2']
+  for name in names:
+    train_remote.remote(f'configs/train/{name}.yaml', [], True)
+  return {'runs': names, 'steps_each': 1500}
+
+
+@app.local_entrypoint()
+def transfer_v2_train():
+  print(transfer_v2_train_remote.remote())
+
+
+@app.function(cpu=2, memory=4096, timeout=7200)
+def transfer_v2_final_data_remote(selection: str, name: str) -> dict:
+  import runpy
+  _setup()
+  api = runpy.run_path('scripts/transfer_v2_test_data.py')
+  specs = api['prepare'](selection, name)
+  vol.commit()
+  rows = list(transfer_v2_collect_remote.starmap([(spec, f'data/sim/{name}') for spec in specs]))
+  vol.reload()
+  report = api['finish'](name, specs, rows)
+  vol.commit()
+  return report
+
+
+@app.local_entrypoint()
+def transfer_v2_final_data(selection: str, name: str = 'transfer_test_v2'):
+  print(transfer_v2_final_data_remote.remote(selection, name))
+
+
+@app.local_entrypoint()
+def transfer_v2_policy_train():
+  """The single predeclared fallback: train policy slowly, retain frozen vision."""
+  train_remote.remote('configs/train/transfer_policy_v2.yaml', [], True)
+
+
+@app.local_entrypoint()
+def transfer_v3_pilot_train():
+  train_remote.remote('configs/train/transfer_control_pilot_v3.yaml', [], True)
+
+
+@app.local_entrypoint()
+def transfer_v3_control_train():
+  train_remote.remote('configs/train/transfer_control_v3.yaml', [], True)
+
+
+@app.function(cpu=4, memory=8192, timeout=7200)
+def transfer_v3_reference_data_remote(guarded: bool = False) -> dict:
+  import runpy
+
+  _setup()
+  api = runpy.run_path('scripts/transfer_v3_recovery_data.py')
+  name = 'transfer_guarded_train_v3' if guarded else api['NAME']
+  policy = 'guarded' if guarded else 'reference'
+  specs = api['prepare'](name, f'configs/distributions/transfer_collection_{policy}_v3.yaml')
+  vol.commit()
+  rows = list(transfer_v2_collect_remote.starmap(
+      [(spec, f"data/sim/{name}") for spec in specs]))
+  vol.reload()
+  report = api['finish'](rows, name)
+  vol.commit()
+  return {k:v for k,v in report.items() if k != 'rows'}
+
+
+@app.local_entrypoint()
+def transfer_v3_reference_data(guarded: bool = False):
+  print(transfer_v3_reference_data_remote.remote(guarded))
+
+
+@app.local_entrypoint()
+def transfer_v3_reference_pilot():
+  cache_remote.remote('data/sim/transfer_reference_train_v3', 'runs/cuda_racing_v6/ckpt/best.pt',
+                      'transfer_baseline_strict_v2_full', False)
+  train_remote.remote('configs/train/transfer_reference_pilot_v3.yaml', [], True)
+
+
+@app.local_entrypoint()
+def transfer_v3_reference_train():
+  train_remote.remote('configs/train/transfer_reference_v3.yaml', [], True)
+
+
+@app.local_entrypoint()
+def transfer_v3_guarded_pilot():
+  cache_remote.remote('data/sim/transfer_guarded_train_v3', 'runs/cuda_racing_v6/ckpt/best.pt',
+                      'transfer_baseline_strict_v2_full', False)
+  train_remote.remote('configs/train/transfer_guarded_pilot_v3.yaml', [], True)
+
+
+@app.local_entrypoint()
+def transfer_v3_guarded_train():
+  train_remote.remote('configs/train/transfer_guarded_v3.yaml', [], True)
+
+
+@app.local_entrypoint()
+def transfer_v4_vision_train(pilot: bool = True):
+  suffix = 'pilot_v4' if pilot else 'v4'
+  calls = [train_remote.spawn(f'configs/train/transfer_vision_{mode}_{suffix}.yaml', [], True)
+           for mode in ('frozen', 'last')]
+  failures = []
+  for call in calls:
+    try:
+      call.get()
+    except Exception as exc:
+      failures.append(str(exc))
+  if failures:
+    raise RuntimeError(f'Vision comparison failures: {failures}')
+
+
+@app.local_entrypoint()
+def transfer_v5_state_pilots():
+  # Preserve the old cache and its provenance. The diagnostic validates identical
+  # vision tensors before this separate call stages either training job.
+  bench_remote.remote('python scripts/transfer_v5_cache_check.py')
+  calls = [train_remote.spawn(f'configs/train/transfer_state_{mode}_pilot_v5.yaml', [], True)
+           for mode in ('constant', 'speed')]
+  failures = []
+  for call in calls:
+    try:
+      call.get()
+    except Exception as exc:
+      failures.append(str(exc))
+  if failures:
+    raise RuntimeError(f'State comparison failures: {failures}')
+
+
+@app.local_entrypoint()
+def transfer_v5_state_train():
+  calls = [train_remote.spawn(f'configs/train/transfer_state_{mode}_v5.yaml', [], True)
+           for mode in ('constant', 'speed')]
+  failures = []
+  for call in calls:
+    try:
+      call.get()
+    except Exception as exc:
+      failures.append(str(exc))
+  if failures:
+    raise RuntimeError(f'State full comparison failures: {failures}')
+
+
+@app.function(cpu=2.0, memory=4096, timeout=600)
+def transfer_v5_coverage_remote():
+  _setup()
+  try:
+    _sh('python scripts/transfer_v5_coverage_audit.py')
+  finally:
+    vol.commit()
+
+
+@app.local_entrypoint()
+def transfer_v5_coverage():
+  transfer_v5_coverage_remote.remote()
+
+
+@app.function(cpu=2.0, memory=4096, timeout=600)
+def transfer_feature_audit_remote():
+  _setup()
+  try:
+    _sh('python scripts/transfer_feature_norm_audit.py')
+  finally:
+    vol.commit()
+
+
+@app.local_entrypoint()
+def transfer_feature_audit():
+  transfer_feature_audit_remote.remote()
+
+
+@app.local_entrypoint()
+def transfer_norm_interventions():
+  pairs = [('runs/transfer_minimal_v1/ckpt/best.pt', 'runs/transfer_norm_v1_probe_v6'),
+           ('runs/transfer_state_speed_v5/ckpt/step_000250.pt', 'runs/transfer_norm_speed_probe_v6')]
+  calls = [bench_remote.spawn(f'python scripts/transfer_norm_intervention.py {checkpoint} {out}')
+           for checkpoint, out in pairs]
+  failures = []
+  for call in calls:
+    try:
+      call.get()
+    except Exception as exc:
+      failures.append(str(exc))
+  if failures:
+    raise RuntimeError(f'Norm intervention failures: {failures}')
+
+
+@app.local_entrypoint()
+def transfer_gradient_audit():
+  bench_remote.remote('python scripts/transfer_gradient_audit.py')
+
+
+@app.function(cpu=2, memory=4096, timeout=7200)
+def transfer_v7_refresh_remote():
+  import runpy
+
+  _setup()
+  api = runpy.run_path('scripts/transfer_v7_refresh.py')
+  specs = api['prepare']()
+  vol.commit()
+  rows = list(transfer_v2_collect_remote.starmap([(s, str(api['ROOT'])) for s in specs]))
+  vol.reload()
+  report = api['finish'](rows)
+  vol.commit()
+  return report
+
+
+@app.local_entrypoint()
+def transfer_v7_refresh():
+  print(transfer_v7_refresh_remote.remote())
+
+
+@app.function(cpu=2, memory=4096, timeout=600)
+def transfer_v7_inspect_remote():
+  _setup()
+  try:
+    _sh('python scripts/transfer_v7_inspect.py')
+  finally:
+    vol.commit()
+
+
+@app.local_entrypoint()
+def transfer_v7_inspect():
+  transfer_v7_inspect_remote.remote()
+
+
+@app.function(cpu=4, memory=8192, timeout=1200)
+def transfer_v7_expert_control_remote():
+  _setup()
+  try:
+    _sh('python scripts/transfer_v7_expert_control.py')
+  finally:
+    vol.commit()
+
+
+@app.local_entrypoint()
+def transfer_v7_expert_control():
+  transfer_v7_expert_control_remote.remote()
+
+
+@app.local_entrypoint()
+def transfer_v7_guard_probe():
+  bench_remote.remote('python scripts/transfer_v7_guard_probe.py')
+
+
+@app.function(cpu=2, memory=4096, timeout=7200)
+def transfer_v7_guarded_refresh_remote():
+  import json
+  import runpy
+
+  _setup()
+  api = runpy.run_path('scripts/transfer_v7_guarded_refresh.py')
+  specs = api['prepare']()
+  vol.commit()
+  rows = list(transfer_v2_collect_remote.starmap([(s, str(api['ROOT'])) for s in specs]))
+  vol.reload()
+  retained = json.loads((api['ROOT']/'retained_rows.json').read_text())
+  report = runpy.run_path('scripts/transfer_v7_refresh.py')['finish'](retained+rows, api['ROOT'])
+  _sh(f"python scripts/transfer_v7_inspect.py {api['ROOT']}")
+  vol.commit()
+  return report
+
+
+@app.local_entrypoint()
+def transfer_v7_guarded_refresh():
+  print(transfer_v7_guarded_refresh_remote.remote())
+
+
+@app.function(cpu=4, memory=8192, timeout=3600)
+def transfer_v7_stage_remote():
+  _setup()
+  try:
+    _sh('python scripts/transfer_v7_stage.py')
+  finally:
+    vol.commit()
+
+
+@app.local_entrypoint()
+def transfer_v7_stage():
+  transfer_v7_stage_remote.remote()
+
+
+@app.local_entrypoint()
+def transfer_v7_train():
+  for arm in ('previous', 'current'):
+    cache_remote.remote(f'data/sim/transfer_refresh_{arm}_train_v7',
+                        'runs/cuda_racing_v6/ckpt/best.pt', 'transfer_baseline_strict_v2_full', False)
+  calls = [train_remote.spawn(f'configs/train/transfer_refresh_{arm}_pilot_v7.yaml', [], True)
+           for arm in ('previous', 'current')]
+  failures = []
+  for call in calls:
+    try:
+      call.get()
+    except Exception as exc:
+      failures.append(str(exc))
+  if failures:
+    raise RuntimeError(f'Refresh paired pilot failures: {failures}')
+
+
+@app.local_entrypoint()
+def transfer_v7_control_retry():
+  train_remote.remote('configs/train/transfer_refresh_previous_pilot_v7_retry1.yaml', [], True)

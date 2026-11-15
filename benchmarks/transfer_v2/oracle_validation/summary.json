@@ -1,0 +1,157 @@
+{
+  "execution": "local CPU, no rendering",
+  "results": [
+    {
+      "configuration": "val_v2_0",
+      "mode": "expert",
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        12.749999999999728
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 7.34173800748722,
+      "raw_time": 12.749999999999728,
+      "penalty": 0.0,
+      "time": 12.749999999999728,
+      "dq": false,
+      "complete": true,
+      "pass": true
+    },
+    {
+      "configuration": "val_v2_0",
+      "mode": "oracle_pp",
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        13.799999999999706
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 7.137451032889461,
+      "raw_time": 13.799999999999706,
+      "penalty": 0.0,
+      "time": 13.799999999999706,
+      "dq": false,
+      "complete": true,
+      "pass": true
+    },
+    {
+      "configuration": "val_v2_1",
+      "mode": "expert",
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        10.499999999999776
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 9.329346860205318,
+      "raw_time": 10.499999999999776,
+      "penalty": 0.0,
+      "time": 10.499999999999776,
+      "dq": false,
+      "complete": true,
+      "pass": true
+    },
+    {
+      "configuration": "val_v2_1",
+      "mode": "oracle_pp",
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        11.799999999999748
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 9.000838218501546,
+      "raw_time": 11.799999999999748,
+      "penalty": 0.0,
+      "time": 11.799999999999748,
+      "dq": false,
+      "complete": true,
+      "pass": true
+    },
+    {
+      "configuration": "val_v2_2",
+      "mode": "expert",
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        42.84999999999912
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 2.1043768494096833,
+      "raw_time": 42.84999999999912,
+      "penalty": 0.0,
+      "time": 42.84999999999912,
+      "dq": false,
+      "complete": true,
+      "pass": true
+    },
+    {
+      "configuration": "val_v2_2",
+      "mode": "oracle_pp",
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        43.599999999998985
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 2.064116346131488,
+      "raw_time": 43.599999999998985,
+      "penalty": 0.0,
+      "time": 43.599999999998985,
+      "dq": false,
+      "complete": true,
+      "pass": true
+    },
+    {
+      "configuration": "val_v2_3",
+      "mode": "expert",
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        35.80000000000065
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 2.4534103897955433,
+      "raw_time": 35.80000000000065,
+      "penalty": 0.0,
+      "time": 35.80000000000065,
+      "dq": false,
+      "complete": true,
+      "pass": true
+    },
+    {
+      "configuration": "val_v2_3",
+      "mode": "oracle_pp",
+      "discipline": "autocross",
+      "result": "finished",
+      "laps": [
+        36.450000000000514
+      ],
+      "n_laps": 1,
+      "doo": 0,
+      "oc": 0,
+      "max_speed": 2.374047176038906,
+      "raw_time": 36.450000000000514,
+      "penalty": 0.0,
+      "time": 36.450000000000514,
+      "dq": false,
+      "complete": true,
+      "pass": true
+    }
+  ]
+}

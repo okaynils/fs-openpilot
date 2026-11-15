@@ -1,0 +1,285 @@
+{
+  "metadata_only": true,
+  "rows": [
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_00",
+      "camera_z": 0.885,
+      "body_height": 0.36077617296252934,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_01",
+      "camera_z": 0.2845,
+      "body_height": 0.11710695128360626,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_02",
+      "camera_z": 0.75,
+      "body_height": 0.35386506654173167,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_03",
+      "camera_z": 0.22,
+      "body_height": 0.1341507217828388,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_04",
+      "camera_z": 1.65,
+      "body_height": 0.353915555415323,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_05",
+      "camera_z": 0.65,
+      "body_height": 0.13432668712680151,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_06",
+      "camera_z": 1.515,
+      "body_height": 0.3410687933159564,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_07",
+      "camera_z": 0.5855,
+      "body_height": 0.13428511395341144,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_08",
+      "camera_z": 1.2,
+      "body_height": 0.3314825940712402,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_09",
+      "camera_z": 0.43500000000000005,
+      "body_height": 0.16165405568876093,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_10",
+      "camera_z": 1.335,
+      "body_height": 0.35644365205932876,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_11",
+      "camera_z": 0.49950000000000006,
+      "body_height": 0.14178988708998833,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_12",
+      "camera_z": 0.75,
+      "body_height": 0.37936322851363136,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_13",
+      "camera_z": 0.22,
+      "body_height": 0.15364683829320194,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_14",
+      "camera_z": 0.975,
+      "body_height": 0.36137384251616467,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_15",
+      "camera_z": 0.3275,
+      "body_height": 0.13856888029545572,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_16",
+      "camera_z": 0.9299999999999999,
+      "body_height": 0.3261623030172783,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_17",
+      "camera_z": 0.30600000000000005,
+      "body_height": 0.15783308239072977,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_18",
+      "camera_z": 1.47,
+      "body_height": 0.3306963768098427,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_19",
+      "camera_z": 0.5640000000000001,
+      "body_height": 0.1253954681014429,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_20",
+      "camera_z": 1.065,
+      "body_height": 0.3661409912624027,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_21",
+      "camera_z": 0.3705,
+      "body_height": 0.11278671972269631,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_22",
+      "camera_z": 1.335,
+      "body_height": 0.36035203766740864,
+      "inside_body": false
+    },
+    {
+      "source": "configs/distributions/transfer_v2_design.yaml",
+      "configuration": "train_v2_23",
+      "camera_z": 0.49950000000000006,
+      "body_height": 0.11674899957852974,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_val.yaml",
+      "configuration": "val_v2_0",
+      "camera_z": 1.002,
+      "body_height": 0.3765904558970491,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_val.yaml",
+      "configuration": "val_v2_1",
+      "camera_z": 1.488,
+      "body_height": 0.36548727810404663,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_val.yaml",
+      "configuration": "val_v2_2",
+      "camera_z": 0.2974,
+      "body_height": 0.16463028143458924,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_val.yaml",
+      "configuration": "val_v2_3",
+      "camera_z": 0.5726,
+      "body_height": 0.14442978377256555,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_test.yaml",
+      "configuration": "test_v2_0",
+      "camera_z": 0.939,
+      "body_height": 0.32685602352283755,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_test.yaml",
+      "configuration": "test_v2_1",
+      "camera_z": 1.533,
+      "body_height": 0.34589936681580996,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_test.yaml",
+      "configuration": "test_v2_2",
+      "camera_z": 0.2802,
+      "body_height": 0.1466189746688612,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_test.yaml",
+      "configuration": "test_v2_3",
+      "camera_z": 0.5511,
+      "body_height": 0.12801816601889743,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_test.yaml",
+      "configuration": "test_v2_4",
+      "camera_z": 1.785,
+      "body_height": 0.3774771023219213,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v2_test.yaml",
+      "configuration": "test_v2_5",
+      "camera_z": 0.2028,
+      "body_height": 0.11937803154340138,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v3_test.yaml",
+      "configuration": "test_v3_0",
+      "camera_z": 1.038,
+      "body_height": 0.33633756323816677,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v3_test.yaml",
+      "configuration": "test_v3_1",
+      "camera_z": 1.569,
+      "body_height": 0.3800408331750414,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v3_test.yaml",
+      "configuration": "test_v3_2",
+      "camera_z": 0.2587,
+      "body_height": 0.12172791198063956,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v3_test.yaml",
+      "configuration": "test_v3_3",
+      "camera_z": 0.5898,
+      "body_height": 0.12045661433287333,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v3_test.yaml",
+      "configuration": "test_v3_4",
+      "camera_z": 1.758,
+      "body_height": 0.32514310106345196,
+      "inside_body": false
+    },
+    {
+      "source": "configs/eval/transfer_v3_test.yaml",
+      "configuration": "test_v3_5",
+      "camera_z": 0.2071,
+      "body_height": 0.1633718980841468,
+      "inside_body": false
+    }
+  ]
+}

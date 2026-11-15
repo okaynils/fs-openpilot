@@ -1,0 +1,2992 @@
+{
+  "init_checkpoint": "runs/cuda_racing_v6/ckpt/best.pt",
+  "init_sha256": "fdf1b3d56ebd110658dace49a8c9ab25fa50c42ce076b09c0b0b5d418746f507",
+  "source_sha256": {
+    "src/fsop/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/baselines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/baselines/yolo.py": "a5207b9b74c941f7445199f2bb45c47574f2629068f6966176bbef3da6867ed8",
+    "src/fsop/bench.py": "d3781cfc06127a92aaf201285ada0499159700b4cd6f189b6992d3bb113ac696",
+    "src/fsop/cli.py": "37fdb0595d78090a1ffcbff4165ae5731d5db9b09438246a0a1d089ca5dcdeb8",
+    "src/fsop/config.py": "2de820cc65e9a8266b7163df51c4bbb052921cc6192e8ce76c47e2eeaf1b3a6b",
+    "src/fsop/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/data/feature_cache.py": "b9f3466ab4b0f1c2b6126b94f1ccf7727f4499d7b23ecc6189df473682433cb9",
+    "src/fsop/data/fsoco.py": "7dda2a26d525da64cdf63f9058b2a58b85b20f16c3e844a9c56715a6abf95eaa",
+    "src/fsop/data/relabel.py": "6edef743dca16e30b43d3af40ded5b4aed8ee17f7470475a46e9aa9e29876ab7",
+    "src/fsop/data/sim_dataset.py": "46a1449993451d3bf2a70df65fe5830abb2516d49dc74941d650051a94c48031",
+    "src/fsop/data/staging.py": "c2953182bf635de631d273887e5b1368480a10492ccdee08ec827f3626f245a4",
+    "src/fsop/data/targets.py": "a923bbe800bbe2d1bd25a50701edb7d077980d7d8481990ebd4baf6ca8652467",
+    "src/fsop/eval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/eval/bev_metrics.py": "74729836f20c21d836e2a30efe586eb1b578a9ae00b97613fb1bff7a08bf4af4",
+    "src/fsop/eval/closed_loop.py": "5e9f0c0b50791914f5c188503b05dcf974367f87599d725dfe532668841a9959",
+    "src/fsop/eval/controller.py": "bb1891c7360d9cca7784ba7d664234343f1bd19ab756ffcb8bce20227b03e098",
+    "src/fsop/eval/dagger.py": "358001818ebbcba6068d0fe3b5926624da2e2d6231fae10b9e4eee61b0aa106b",
+    "src/fsop/eval/det_metrics.py": "3c99d790e0777184065c4e35195babe9ade02d82aacbd78f63a8b0544b0103d2",
+    "src/fsop/eval/geometric.py": "e0ad7c4aa9157a04f1a83c242f83113acb84a25fb9152533fccb58e76cde9c02",
+    "src/fsop/eval/img_to_bev.py": "bcf10ece06c575512c45ea773335a1024fbc7ab95d20426a91ff18bd71d2d2d1",
+    "src/fsop/eval/open_loop.py": "1c4c0c1eaa3e963308642bdf79798372dac4d515452bab1c48f9ac56a8631e94",
+    "src/fsop/eval/real_clip.py": "d62206e397e988111b00b75c9796a773ed87740b44fcff7f726184ca7afcceef",
+    "src/fsop/eval/transfer.py": "a8938a746a134cc6ce7d8a794e6f1b955f8d49c823390c57dd7bbb1c6dc40343",
+    "src/fsop/geometry/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/geometry/camera.py": "98b8bc7f7b98cddc4e756d4b92103604f4462baea2b161f0410a943f30c207a3",
+    "src/fsop/geometry/mounting.py": "5ef653afe344cb8f0fd4dd7b7fb1b6487859cac8622db12d2b4b91380dfc12d2",
+    "src/fsop/geometry/op_frames.py": "f09cea8cba5b74bf81e02df04487e3b34012e91dde4c3751525bf50e3520301f",
+    "src/fsop/geometry/warp.py": "40f2fb37d3e397a7bdfb9ccf8f018a7f6b878aee76e5b15439f5059ac91f87d1",
+    "src/fsop/geometry/yuv.py": "9a3651b22194b666ad3200fb799bc22e90259ac650b2dff140b5c62a8ab66ee5",
+    "src/fsop/model/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/model/build.py": "d790457e79e299c236acd716fcfc36b28581918ef3e0ba16c8eb5570aeeddbd1",
+    "src/fsop/model/conditioning.py": "f3e279dcdacc0ae88c28dd3d008dd824c8ee9c411b3b5ebe745205be4ec7b35f",
+    "src/fsop/model/convert.py": "2ca56fa5a60da526883d0a02444b6a144c31634d23159fbae508d102340f0377",
+    "src/fsop/model/export.py": "1a5dbad82b7d30e7a354ae0a18e2600c9069d0e03887397170a189d5b377d447",
+    "src/fsop/model/fetch.py": "e1d15dc11ca309e5a2b655fd28afdd83fcf17811030edb7f8443106534454992",
+    "src/fsop/model/heads/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/model/heads/cone_bev.py": "9fe44a7e2152d4906389142b0f4405f8d192e19ffdeea25db5698451e2a0c9ee",
+    "src/fsop/model/heads/cone_img.py": "cdf84bb4bcc25b2a05172b45f1d7d35dcaf17abca1bfe10370c1906c2ff3f42a",
+    "src/fsop/model/onnx_prep.py": "b6b7c3607078dfaf45249451d757247cc8deea4085a7f70e69f15f531e14a5f6",
+    "src/fsop/model/op_converters.py": "59f20f80b4a646870b108cc7f165e8bd48a2630f54b44b07eddf791052629d5f",
+    "src/fsop/model/supercombo.py": "1128d2dc461466d9235ec3dc3386bce82c44222e127cbd6d8cf4ee0307eb5a3d",
+    "src/fsop/model/temporal.py": "3b7ef159ae6a0f3f39dd950ae3943fb5f59f164af0d8e9ab329f6f5de876b8c7",
+    "src/fsop/model/verify.py": "aa1cb5bb89869cbec5470fead1bb46eea285c27b2146c20c3fba7d91eedf0957",
+    "src/fsop/profile.py": "c970822ce7bea43c416820aa54133207e5d5895dedc78124be70d28a84a1ee53",
+    "src/fsop/runtime.py": "f8bedea7febddfe2a0a13d54dde929f72c0d2bb492b195d98f197178ea979622",
+    "src/fsop/sim/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/sim/batch_record.py": "858f189cf86cbbcba25b781725e582d171ed604e2d4641c77976a8fb98608968",
+    "src/fsop/sim/distribution.py": "0cae06f6a9c1e8d7b77d2f30e8e9bf24fcef6ee2b208a65eaa31c7c36467ff49",
+    "src/fsop/sim/drive.py": "e7e8072c3375e0de9d89d6fadcbfac897fa21f47a7d084eee1e2d0dffe047bc1",
+    "src/fsop/sim/env.py": "d5a3243c8a02ebd7386d3215b2d38fa22e6bd86ad78ba1a13fd50fc5277e7d8f",
+    "src/fsop/sim/expert.py": "1b9050e2f80afce1765c61da48c97df88986efb66ed6147438b833dfcfedfeb7",
+    "src/fsop/sim/raceline.py": "6736173ec7bc8a68917cf7b70415426486ecf2ea757da1fb935eafe6055a9b70",
+    "src/fsop/sim/randomization.py": "25b492a84b289a3febf9d726e1a43ef59f4657986282d28d551f5bd49cccff04",
+    "src/fsop/sim/recorder.py": "f61b62e7b84bae4ce313c8095b3f3d6519272eaabc9c6c729c4df141ebc37197",
+    "src/fsop/sim/referee.py": "85dff622ff604881f61a1092374e06f3939ac5fc3fe839fabdaf93496d980a19",
+    "src/fsop/sim/render/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/sim/render/assets.py": "c790b7c47113c6a86c792059bc7ca1b23764111f870b6ae67d5b88fe5b9f6051",
+    "src/fsop/sim/render/panda3d_backend.py": "2f44719a4f007a3f58e8eff2520835093b99aec241fdbe6ea2797cb656ede96c",
+    "src/fsop/sim/render/venue.py": "98a7ac4b041c0c3a149a52f21cce1b461d0d992601e240241e460fe0fd5339ca",
+    "src/fsop/sim/transfer_collection.py": "fcac369c7a14a7fbde0ade6c9609df5f2903b9508718d12d07ea3bfcb7d2c488",
+    "src/fsop/sim/vehicle.py": "71f7c729f81405a44733f39817331a470b781bdf4e577d1fc7be0d0725085953",
+    "src/fsop/track/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/track/batch.py": "71ed04273b4da5bf340d8abb3269448481d694ad2499330fceb616a13cc681c3",
+    "src/fsop/track/centerline.py": "de45a95eba2e8fa0419a7407ced66718bc6f49099dff8b00c7663f2bf7ac5887",
+    "src/fsop/track/cones.py": "45c784e93b40cb032e6641362b547bce8f5a79d5eb02e23d0a37db038728da93",
+    "src/fsop/track/fixed_layouts.py": "8a8fb71d395d3fa0987db50bb2392c36e22a13b5259c02db9b5dd0d0a71662b7",
+    "src/fsop/track/generate.py": "6a971d82e14b154ef24eb3a87f212f567a08182701783a806110755b2d661264",
+    "src/fsop/track/io.py": "86a833f72d920882c55c1dee89de841a8d4b67d8cbaa0658ddb17a614bc8af4c",
+    "src/fsop/track/rules.py": "4c2c989ef7b401ed47e57744eae6a3219759629e09e412b4ee5d68de8764006d",
+    "src/fsop/track/schema.py": "f2f760bee7826c82f34e3f704a0b5807bcd0f6b043e856a781d8fe727ac1c04c",
+    "src/fsop/track/validate.py": "5a08f94b27f75a77ee69431f58493a0ead9bbc6154b6749b7d11d223080664a8",
+    "src/fsop/train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/train/device.py": "768b44b47126b81b13e54508441384ed327dc034ed78872dff5400b468836d9b",
+    "src/fsop/train/losses.py": "fcfdb12adedbb0bcafea8e5abd441be6475d79cc5831e5f355123d64929dc4ad",
+    "src/fsop/train/trainer.py": "29ae51c444884f5de28391c35fc9b9d5e321386b55f96b2e3be0e193b7c859b1",
+    "src/fsop/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/fsop/viz/inspect.py": "5cd19a506dcc688a2f6f8d536cfaa1ae310847324cd71c0dc96bd07d566730cd",
+    "src/fsop/viz/real_video.py": "1979fcb3d70e7d739b84c406b6ab7482708ec7f8aa93541d14ab3f91a866c381",
+    "src/fsop/viz/rr_log.py": "b1b0020705be517293fc413ff224e68c55d51c14ed9b9ec291ab2b3b0a7213ae",
+    "src/fsop/viz/track_preview.py": "5ace5f5cf0b9ab48e8e011edc280164a996f9eac7ce586a3ca5767c59e2683bc",
+    "src/fsop/viz/video.py": "b00f560bb00b574ddaf9d771aeddeb3ada56c8801c1c418367b64e6a1dabb56c"
+  },
+  "dataset_manifest": {
+    "schema": 1,
+    "source_dataset": "data/sim/transfer_train_v2",
+    "source_manifest_sha256": "a9c757b9824c103e4d73a8068da5a1f3090efbaa3643255796bf15f543df5946",
+    "specs": [
+      {
+        "id": "train_v2_00_dagger",
+        "configuration": "train_v2_00",
+        "profile": {
+          "name": "train_v2_00",
+          "team": "",
+          "vehicle": {
+            "max_speed": 15.667929743503436,
+            "body_height": 0.36077617296252934,
+            "mass": 251.90526520712,
+            "iz": 128.00935230198422,
+            "lf": 0.8246312524857814,
+            "lr": 0.77309179920542,
+            "track": 1.236946878728672,
+            "length": 2.989288290260957,
+            "width": 1.4431046918501174,
+            "front_overhang": 0.8246312524857814,
+            "rear_overhang": 0.5669339860839747,
+            "cf": 35047.68907229496,
+            "cr": 39428.650206331826,
+            "mu": 1.4,
+            "max_accel": 6.85980182980976,
+            "max_brake": 6.309863513055284,
+            "tau_steer": 0.07180319018131444,
+            "tau_accel": 0.13808327131680045,
+            "drag": 0.6375156586652517,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 23.773584785940187,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": -0.8,
+            "y": -0.3,
+            "z": 0.885,
+            "roll_deg": -1.4552590496525886,
+            "pitch_deg": 7.146235901689491,
+            "yaw_deg": 3.8818279553546793
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 527.0442953637513,
+              "fy": 527.0442953637513,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.1066026521605679,
+            "phase": [
+              2.139647299208709,
+              5.121473517210751,
+              4.748668832917756,
+              2.975805231234754,
+              5.9588413825976705,
+              3.758403327453944
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0011474782867740684,
+            "y": 0.004377785640631534,
+            "z": 0.002037393677429635,
+            "roll_deg": 0.13026049301171788,
+            "pitch_deg": -0.09083338975342725,
+            "yaw_deg": -0.1461006265642642
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880001,
+        "scene_seed": 7101,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_01_dagger",
+        "configuration": "train_v2_01",
+        "profile": {
+          "name": "train_v2_01",
+          "team": "",
+          "vehicle": {
+            "max_speed": 2.6215002807484256,
+            "body_height": 0.11710695128360626,
+            "mass": 11.705606301222875,
+            "iz": 0.6142772834840708,
+            "lf": 0.18402520915995269,
+            "lr": 0.192389991394496,
+            "track": 0.26767303150538574,
+            "length": 0.5688051919489446,
+            "width": 0.3345912893817322,
+            "front_overhang": 0.10037738681451963,
+            "rear_overhang": 0.09201260457997633,
+            "cf": 1053.5045671100588,
+            "cr": 1170.5606301222874,
+            "mu": 0.8,
+            "max_accel": 1.6129543915143174,
+            "max_brake": 3.3440075067897093,
+            "tau_steer": 0.11347328780179376,
+            "tau_accel": 0.23079125330629147,
+            "drag": 0.05597566546506502,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 28.96037937675389,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": -0.25,
+            "y": -0.12,
+            "z": 0.2845,
+            "roll_deg": 0.30162977216235753,
+            "pitch_deg": 2.2134694019951726,
+            "yaw_deg": 1.7997633305506022
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 363.32392182923473,
+              "fy": 363.32392182923473,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.2782287649263915,
+            "phase": [
+              5.355227117346436,
+              5.987418856788288,
+              2.5812574883143506,
+              0.154491398419838,
+              0.7575728763753389,
+              0.19780773457614623
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0013349110604125591,
+            "y": -0.0037744087237047298,
+            "z": -0.004079139299396167,
+            "roll_deg": -0.002878590014711857,
+            "pitch_deg": 0.17725252438324063,
+            "yaw_deg": -0.21405901701025531
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880002,
+        "scene_seed": 7102,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_02_dagger",
+        "configuration": "train_v2_02",
+        "profile": {
+          "name": "train_v2_02",
+          "team": "",
+          "vehicle": {
+            "max_speed": 12.481364001480788,
+            "body_height": 0.35386506654173167,
+            "mass": 237.70415708499613,
+            "iz": 116.20930932979952,
+            "lf": 0.8088344378096726,
+            "lr": 0.758282285446568,
+            "track": 1.2132516567145086,
+            "length": 2.9320248370600632,
+            "width": 1.4154602661669267,
+            "front_overhang": 0.8088344378096726,
+            "rear_overhang": 0.5560736759941499,
+            "cf": 33071.88272486903,
+            "cr": 37205.868065477654,
+            "mu": 1.4,
+            "max_accel": 4.696235939384667,
+            "max_brake": 8.454331463390298,
+            "tau_steer": 0.11260934808304107,
+            "tau_accel": 0.15543369999669013,
+            "drag": 0.6133248260502083,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 20.27608609213037,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": 1.1,
+            "y": 0.3,
+            "z": 0.75,
+            "roll_deg": -1.0493318577366084,
+            "pitch_deg": 5.211033398844417,
+            "yaw_deg": 3.0435340038966516
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 408.7205228327425,
+              "fy": 408.7205228327425,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.892258983054028,
+            "phase": [
+              2.2985117677648756,
+              2.462196929779203,
+              0.5437904428322157,
+              1.194162032017753,
+              0.8501320039698799,
+              4.545346623801304
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0027644149280737786,
+            "y": -0.00037979461763853475,
+            "z": -0.0007811301889430733,
+            "roll_deg": 0.10224520370946806,
+            "pitch_deg": -0.21752491643269117,
+            "yaw_deg": -0.10063761561396184
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880003,
+        "scene_seed": 7103,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_03_dagger",
+        "configuration": "train_v2_03",
+        "profile": {
+          "name": "train_v2_03",
+          "team": "",
+          "vehicle": {
+            "max_speed": 2.4758300960804167,
+            "body_height": 0.1341507217828388,
+            "mass": 17.59644472797635,
+            "iz": 1.2117587072854408,
+            "lf": 0.21080827708731809,
+            "lr": 0.22039047150037802,
+            "track": 0.3066302212179172,
+            "length": 0.7057946100440371,
+            "width": 0.38328777652239654,
+            "front_overhang": 0.1691917229126819,
+            "rear_overhang": 0.10540413854365904,
+            "cf": 1583.6800255178716,
+            "cr": 1759.6444727976352,
+            "mu": 0.8,
+            "max_accel": 1.3826446388702776,
+            "max_brake": 3.1760938031387522,
+            "tau_steer": 0.09960160418737857,
+            "tau_accel": 0.3331148204364527,
+            "drag": 0.0734547598157413,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 26.99806357373856,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": 0.35,
+            "y": 0.12,
+            "z": 0.22,
+            "roll_deg": 0.5162756795013081,
+            "pitch_deg": -0.15298892210234483,
+            "yaw_deg": -0.5523146484043333
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 384.4252493329127,
+              "fy": 384.4252493329127,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.485469991593921,
+            "phase": [
+              5.268125533625996,
+              2.901716873169839,
+              4.111693195321083,
+              2.2492947118382896,
+              3.6922230343273865,
+              4.739238596708787
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0038256866892673624,
+            "y": 0.002228029473488822,
+            "z": 0.0009341903958284293,
+            "roll_deg": -0.21471398464593605,
+            "pitch_deg": -0.1385570869703936,
+            "yaw_deg": -0.1166859537000632
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880004,
+        "scene_seed": 7104,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_04_dagger",
+        "configuration": "train_v2_04",
+        "profile": {
+          "name": "train_v2_04",
+          "team": "",
+          "vehicle": {
+            "max_speed": 11.782342532922314,
+            "body_height": 0.353915555415323,
+            "mass": 237.80591729274738,
+            "iz": 116.29223573578307,
+            "lf": 0.8089498409493099,
+            "lr": 0.758390475889978,
+            "track": 1.2134247614239646,
+            "length": 2.932443173441248,
+            "width": 1.415662221661292,
+            "front_overhang": 0.8089498409493099,
+            "rear_overhang": 0.5561530156526505,
+            "cf": 33086.040666817025,
+            "cr": 37221.795750169156,
+            "mu": 1.4,
+            "max_accel": 4.186083341495589,
+            "max_brake": 10.316769867892589,
+            "tau_steer": 0.06331382668645134,
+            "tau_accel": 0.10620037365119132,
+            "drag": 0.613499854848669,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 27.96746439888254,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": 0.625,
+            "y": -0.3,
+            "z": 1.65,
+            "roll_deg": -1.4606904904208469,
+            "pitch_deg": -1.7296708319868201,
+            "yaw_deg": -5.578210106747065
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 331.08669194158637,
+              "fy": 331.08669194158637,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 0.8506860720461322,
+            "phase": [
+              6.046523222946312,
+              4.122296880358901,
+              4.432816726382729,
+              0.16889725684674128,
+              6.05994634220828,
+              5.584212249174483
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0035122359007925263,
+            "y": -0.0004657554573448297,
+            "z": 0.003771486883928318,
+            "roll_deg": -0.08524192234922684,
+            "pitch_deg": -0.0076292451334925016,
+            "yaw_deg": 0.06527821569619896
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880001,
+        "scene_seed": 7105,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_05_dagger",
+        "configuration": "train_v2_05",
+        "profile": {
+          "name": "train_v2_05",
+          "team": "",
+          "vehicle": {
+            "max_speed": 1.1718698516089439,
+            "body_height": 0.13432668712680151,
+            "mass": 17.665779302132222,
+            "iz": 1.2197268959663206,
+            "lf": 0.21108479405640235,
+            "lr": 0.22067955742260245,
+            "track": 0.3070324277184034,
+            "length": 0.6524439089016073,
+            "width": 0.3837905346480043,
+            "front_overhang": 0.11513716039440129,
+            "rear_overhang": 0.10554239702820119,
+            "cf": 1589.9201371918998,
+            "cr": 1766.577930213222,
+            "mu": 0.8,
+            "max_accel": 1.261702872274254,
+            "max_brake": 2.366451939015592,
+            "tau_steer": 0.08806091157838805,
+            "tau_accel": 0.14440164721019963,
+            "drag": 0.07364758724270047,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 30.139871988482337,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": 0.19999999999999996,
+            "y": -0.12,
+            "z": 0.65,
+            "roll_deg": -1.636927350262505,
+            "pitch_deg": 1.3495125638189047,
+            "yaw_deg": -1.367124541874043
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 353.5113943801846,
+              "fy": 353.5113943801846,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.819765465780772,
+            "phase": [
+              0.23530395936638424,
+              5.400042629423423,
+              6.022466802994215,
+              1.4950732876576094,
+              1.0098059623096576,
+              0.31749482278275803
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0031570311588518174,
+            "y": 0.00036106827013051234,
+            "z": 0.00105676656054023,
+            "roll_deg": -0.12010496835400546,
+            "pitch_deg": -0.13215950167238139,
+            "yaw_deg": 0.23586590786028036
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880002,
+        "scene_seed": 7106,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_06_dagger",
+        "configuration": "train_v2_06",
+        "profile": {
+          "name": "train_v2_06",
+          "team": "",
+          "vehicle": {
+            "max_speed": 11.860105065112586,
+            "body_height": 0.3410687933159564,
+            "mass": 212.83823904221035,
+            "iz": 96.66347124756194,
+            "lf": 0.7795858132936146,
+            "lr": 0.7308616999627637,
+            "track": 1.169378719940422,
+            "length": 2.825998573189353,
+            "width": 1.3642751732638256,
+            "front_overhang": 0.7795858132936146,
+            "rear_overhang": 0.5359652466393601,
+            "cf": 29612.276736307525,
+            "cr": 33313.81132834597,
+            "mu": 1.4,
+            "max_accel": 5.853289985253085,
+            "max_brake": 8.357227143350572,
+            "tau_steer": 0.10395025874713866,
+            "tau_accel": 0.10148944710145208,
+            "drag": 0.5697694127706249,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 21.008294002647446,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": -0.8,
+            "y": 0.3,
+            "z": 1.515,
+            "roll_deg": -0.09220672939212338,
+            "pitch_deg": 3.0588784921613694,
+            "yaw_deg": -2.7151643708189033
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 458.3819018103975,
+              "fy": 458.3819018103975,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.8546393011974869,
+            "phase": [
+              1.4825449849604881,
+              6.093371751483749,
+              1.5891570862977786,
+              1.5061275872853959,
+              1.4786528739167022,
+              4.703476630126373
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0005126465883065057,
+            "y": -0.002739347385522073,
+            "z": 0.0012514798327540799,
+            "roll_deg": -0.06983276333342481,
+            "pitch_deg": 0.23421149177730025,
+            "yaw_deg": -0.03871198143867627
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880003,
+        "scene_seed": 7107,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_07_dagger",
+        "configuration": "train_v2_07",
+        "profile": {
+          "name": "train_v2_07",
+          "team": "",
+          "vehicle": {
+            "max_speed": 1.5657297181369774,
+            "body_height": 0.13428511395341144,
+            "mass": 17.649382071324897,
+            "iz": 1.2178405790684281,
+            "lf": 0.21101946478393227,
+            "lr": 0.22061125863774736,
+            "track": 0.3069374033220833,
+            "length": 0.652241982059427,
+            "width": 0.3836717541526041,
+            "front_overhang": 0.11510152624578122,
+            "rear_overhang": 0.10550973239196614,
+            "cf": 1588.4443864192408,
+            "cr": 1764.9382071324897,
+            "mu": 0.8,
+            "max_accel": 1.6041410851887463,
+            "max_brake": 3.302089136727256,
+            "tau_steer": 0.10758916349135883,
+            "tau_accel": 0.22572772104799163,
+            "drag": 0.07360200746726815,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 28.076748262822843,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": -0.25,
+            "y": 0.12,
+            "z": 0.5855,
+            "roll_deg": -2.598012425182201,
+            "pitch_deg": 2.6995821129817115,
+            "yaw_deg": 4.140237661005413
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 529.6597173248731,
+              "fy": 529.6597173248731,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 0.7051299008587724,
+            "phase": [
+              4.604241043075184,
+              6.276098978443664,
+              2.8195836568695323,
+              2.0434512308071886,
+              5.947064218745118,
+              0.5204104801254094
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0013080093327091091,
+            "y": -0.0037251053006736533,
+            "z": 0.0035754086958824692,
+            "roll_deg": 0.08882498000426559,
+            "pitch_deg": -0.10926668149814017,
+            "yaw_deg": 0.10803605697124619
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880004,
+        "scene_seed": 7108,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_08_dagger",
+        "configuration": "train_v2_08",
+        "profile": {
+          "name": "train_v2_08",
+          "team": "",
+          "vehicle": {
+            "max_speed": 12.971100910746522,
+            "body_height": 0.3314825940712402,
+            "mass": 195.39160010827325,
+            "iz": 83.82163109046046,
+            "lf": 0.7576745007342633,
+            "lr": 0.7103198444383718,
+            "track": 1.136511751101395,
+            "length": 2.7465700651617047,
+            "width": 1.3259303762849608,
+            "front_overhang": 0.7576745007342633,
+            "rear_overhang": 0.520901219254806,
+            "cf": 27184.91827593367,
+            "cr": 30583.033060425376,
+            "mu": 1.4,
+            "max_accel": 3.9431990194571997,
+            "max_brake": 6.1405172330299775,
+            "tau_steer": 0.08366503773458335,
+            "tau_accel": 0.1478178778154912,
+            "drag": 0.5381912334964829,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 26.79983589979555,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": 0.15000000000000002,
+            "y": 0.0,
+            "z": 1.2,
+            "roll_deg": -2.351211159693056,
+            "pitch_deg": -2.290511854249087,
+            "yaw_deg": 4.251370716516401
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 329.26620626842504,
+              "fy": 329.26620626842504,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.280385764284222,
+            "phase": [
+              4.063120417394432,
+              3.671924832094002,
+              0.6925485888757515,
+              5.479435479459059,
+              3.8301582583766383,
+              1.9208349732017787
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0013271405246970637,
+            "y": 0.002739890395379704,
+            "z": 0.0018737660730424866,
+            "roll_deg": -0.034865534233839535,
+            "pitch_deg": 0.23643626598170125,
+            "yaw_deg": 0.0675380148367487
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880001,
+        "scene_seed": 7109,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_09_dagger",
+        "configuration": "train_v2_09",
+        "profile": {
+          "name": "train_v2_09",
+          "team": "",
+          "vehicle": {
+            "max_speed": 2.2631708235636347,
+            "body_height": 0.16165405568876093,
+            "mass": 30.789717451417594,
+            "iz": 3.0788186276363305,
+            "lf": 0.2540278017966243,
+            "lr": 0.26557452006010723,
+            "track": 0.3694949844314535,
+            "length": 0.7851768419168388,
+            "width": 0.46186873053931693,
+            "front_overhang": 0.1385606191617951,
+            "rear_overhang": 0.12701390089831216,
+            "cf": 2771.0745706275834,
+            "cr": 3078.9717451417596,
+            "mu": 0.8,
+            "max_accel": 1.9789412656228087,
+            "max_brake": 1.028338284202021,
+            "tau_steer": 0.1166245123533852,
+            "tau_accel": 0.18718698143592602,
+            "drag": 0.10666136212500008,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 28.496948244828406,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": 0.04999999999999999,
+            "y": 0.0,
+            "z": 0.43500000000000005,
+            "roll_deg": 1.677107217140262,
+            "pitch_deg": 6.672423415055624,
+            "yaw_deg": -1.4927116668316516
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 341.42865120256255,
+              "fy": 341.42865120256255,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.1048997178922813,
+            "phase": [
+              0.7346840668423622,
+              1.7135608542873382,
+              3.375635320861979,
+              4.988700108653583,
+              1.0903869778585704,
+              3.957601073753844
+            ]
+          },
+          "calibration_error": {
+            "x": 0.004876344082290235,
+            "y": -0.0043129173140502705,
+            "z": -0.0008343321103369972,
+            "roll_deg": 0.13181238906736298,
+            "pitch_deg": -0.040437061810510544,
+            "yaw_deg": 0.038563980837834466
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880002,
+        "scene_seed": 7110,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_10_dagger",
+        "configuration": "train_v2_10",
+        "profile": {
+          "name": "train_v2_10",
+          "team": "",
+          "vehicle": {
+            "max_speed": 17.813954769128134,
+            "body_height": 0.35644365205932876,
+            "mass": 242.93850642577627,
+            "iz": 120.50550499413423,
+            "lf": 0.8147283475641802,
+            "lr": 0.7638078258414189,
+            "track": 1.22209252134627,
+            "length": 2.9533902599201536,
+            "width": 1.425774608237315,
+            "front_overhang": 0.8147283475641802,
+            "rear_overhang": 0.5601257389503739,
+            "cf": 33800.14002445583,
+            "cr": 38025.157527512805,
+            "mu": 1.4,
+            "max_accel": 6.716276455328011,
+            "max_brake": 6.083227068069724,
+            "tau_steer": 0.06686988548700086,
+            "tau_accel": 0.1311590351995694,
+            "drag": 0.6222958878043683,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 25.102820270722383,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": 1.1,
+            "y": 0.0,
+            "z": 1.335,
+            "roll_deg": 1.4437413639796444,
+            "pitch_deg": -1.767625652620405,
+            "yaw_deg": -1.9811076969100971
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 432.1015544447788,
+              "fy": 432.1015544447788,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.57739713347387,
+            "phase": [
+              2.5061190654114838,
+              0.9273711433306528,
+              5.732577789699386,
+              3.9559148739973757,
+              4.673987180450148,
+              0.2976497770466505
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0025924674296169594,
+            "y": -0.0022480786525694916,
+            "z": -0.00019454752483003435,
+            "roll_deg": 0.1818802021643351,
+            "pitch_deg": -0.1948965154776094,
+            "yaw_deg": 0.1863851521039923
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880003,
+        "scene_seed": 7111,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_11_dagger",
+        "configuration": "train_v2_11",
+        "profile": {
+          "name": "train_v2_11",
+          "team": "",
+          "vehicle": {
+            "max_speed": 1.9677745020999962,
+            "body_height": 0.14178988708998833,
+            "mass": 20.77694349401543,
+            "iz": 1.5983701634289207,
+            "lf": 0.22281267971283877,
+            "lr": 0.2329405287906951,
+            "track": 0.32409117049140185,
+            "length": 0.7243468686471144,
+            "width": 0.40511396311425235,
+            "front_overhang": 0.1571873202871612,
+            "rear_overhang": 0.11140633985641939,
+            "cf": 1869.9249144613887,
+            "cr": 2077.694349401543,
+            "mu": 0.8,
+            "max_accel": 1.8047129464145115,
+            "max_brake": 3.463678379162581,
+            "tau_steer": 0.1762467260033847,
+            "tau_accel": 0.1703807181655177,
+            "drag": 0.0820586615550679,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 31.518837537059543,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": 0.35,
+            "y": 0.0,
+            "z": 0.49950000000000006,
+            "roll_deg": 2.738809532291846,
+            "pitch_deg": 5.770070600683231,
+            "yaw_deg": 5.111949985226498
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 529.0824024097981,
+              "fy": 529.0824024097981,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.813760171178807,
+            "phase": [
+              2.313950691191125,
+              3.549661577688882,
+              0.3294438617602306,
+              2.2126507074206048,
+              5.328793891656652,
+              2.4698453450123985
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0033817146046095027,
+            "y": -0.0023801133784038643,
+            "z": -0.00020201450104554987,
+            "roll_deg": -0.10894934809962786,
+            "pitch_deg": -0.06974402348954478,
+            "yaw_deg": 0.10759045238341913
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880004,
+        "scene_seed": 7112,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_12_dagger",
+        "configuration": "train_v2_12",
+        "profile": {
+          "name": "train_v2_12",
+          "team": "",
+          "vehicle": {
+            "max_speed": 17.158366374852804,
+            "body_height": 0.37936322851363136,
+            "mass": 292.8797875944274,
+            "iz": 164.5616475079368,
+            "lf": 0.8671159508883003,
+            "lr": 0.8129212039577816,
+            "track": 1.3006739263324503,
+            "length": 3.1432953219700885,
+            "width": 1.5174529140545254,
+            "front_overhang": 0.8671159508883003,
+            "rear_overhang": 0.5961422162357065,
+            "cf": 40748.49218705077,
+            "cr": 45842.05371043211,
+            "mu": 1.4,
+            "max_accel": 6.9406744855228,
+            "max_brake": 6.673771636084541,
+            "tau_steer": 0.11772125571072135,
+            "tau_accel": 0.1542767603049708,
+            "drag": 0.7048969427671136,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 27.72240924561251,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": -0.22999999999999998,
+            "y": 0.3,
+            "z": 0.75,
+            "roll_deg": 2.4093948777352407,
+            "pitch_deg": 5.713257035463426,
+            "yaw_deg": -3.23928292204502
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 457.76112466867886,
+              "fy": 457.76112466867886,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 0.6917174792487193,
+            "phase": [
+              0.7825548172318638,
+              3.4784663521713566,
+              1.9298698183834107,
+              0.7454035567346844,
+              3.5340558115481957,
+              0.5443896454570191
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0025007858586728006,
+            "y": -0.0014534825520127214,
+            "z": -0.0009327492655630765,
+            "roll_deg": -0.1171690661972331,
+            "pitch_deg": -0.22682252514560705,
+            "yaw_deg": -0.09818589992466803
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880001,
+        "scene_seed": 7113,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_13_dagger",
+        "configuration": "train_v2_13",
+        "profile": {
+          "name": "train_v2_13",
+          "team": "",
+          "vehicle": {
+            "max_speed": 2.7821505522974546,
+            "body_height": 0.15364683829320194,
+            "mass": 26.437280094399323,
+            "iz": 2.3881918947422913,
+            "lf": 0.24144503160360303,
+            "lr": 0.2524198057674032,
+            "track": 0.3511927732416044,
+            "length": 0.7462846431384094,
+            "width": 0.43899096655200553,
+            "front_overhang": 0.13169728996560165,
+            "rear_overhang": 0.12072251580180152,
+            "cf": 2379.355208495939,
+            "cr": 2643.728009439932,
+            "mu": 0.8,
+            "max_accel": 1.406258599419756,
+            "max_brake": 3.3683135718268375,
+            "tau_steer": 0.11646412904821937,
+            "tau_accel": 0.3353183644154705,
+            "drag": 0.09635653435713203,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 26.073915375709447,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": -0.07,
+            "y": 0.12,
+            "z": 0.22,
+            "roll_deg": 0.32987977610971253,
+            "pitch_deg": 5.89692350927848,
+            "yaw_deg": 2.401296192907997
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 419.5996156807713,
+              "fy": 419.5996156807713,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.840729434046961,
+            "phase": [
+              3.0461625193761037,
+              3.9948100673093165,
+              1.0427762900384123,
+              5.780315318824333,
+              1.8866025408930711,
+              4.277342750892634
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0011752529031089976,
+            "y": -0.001981276526080479,
+            "z": -0.003979775195517754,
+            "roll_deg": -0.09886730970166924,
+            "pitch_deg": 0.02122844367226079,
+            "yaw_deg": 0.08616754993494163
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880002,
+        "scene_seed": 7114,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_14_dagger",
+        "configuration": "train_v2_14",
+        "profile": {
+          "name": "train_v2_14",
+          "team": "",
+          "vehicle": {
+            "max_speed": 16.838225132191965,
+            "body_height": 0.36137384251616467,
+            "mass": 253.15927534629867,
+            "iz": 129.07318641480734,
+            "lf": 0.8259973543226622,
+            "lr": 0.7743725196774958,
+            "track": 1.2389960314839932,
+            "length": 2.9942404094196506,
+            "width": 1.4454953700646587,
+            "front_overhang": 0.8259973543226622,
+            "rear_overhang": 0.5678731810968303,
+            "cf": 35222.16004818068,
+            "cr": 39624.930054203265,
+            "mu": 1.4,
+            "max_accel": 4.640477878032553,
+            "max_brake": 11.606032842417322,
+            "tau_steer": 0.06596686286320184,
+            "tau_accel": 0.14764989466089334,
+            "drag": 0.6396296525137851,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 20.001313068075653,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": 0.7200000000000002,
+            "y": -0.15,
+            "z": 0.975,
+            "roll_deg": 2.7126211823898023,
+            "pitch_deg": 2.118785889875728,
+            "yaw_deg": 1.2256313598177555
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 458.3427384866676,
+              "fy": 458.3427384866676,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 0.6124365599949961,
+            "phase": [
+              4.5931378471034305,
+              2.4147377263360426,
+              5.919963772364316,
+              0.40441119708748774,
+              0.387974766159392,
+              0.8808876106044286
+            ]
+          },
+          "calibration_error": {
+            "x": -0.003737689652776014,
+            "y": -0.0049153923626384715,
+            "z": 0.0014441309706614148,
+            "roll_deg": 0.2085800648135216,
+            "pitch_deg": 0.1906529412637254,
+            "yaw_deg": 0.11156650323787776
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880003,
+        "scene_seed": 7115,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_15_dagger",
+        "configuration": "train_v2_15",
+        "profile": {
+          "name": "train_v2_15",
+          "team": "",
+          "vehicle": {
+            "max_speed": 1.883532285178096,
+            "body_height": 0.13856888029545572,
+            "mass": 19.392911325124143,
+            "iz": 1.4248843582532895,
+            "lf": 0.21775109760714467,
+            "lr": 0.2276488747711058,
+            "track": 0.31672886924675586,
+            "length": 0.6730488471493562,
+            "width": 0.39591108655844487,
+            "front_overhang": 0.11877332596753346,
+            "rear_overhang": 0.10887554880357234,
+            "cf": 1745.362019261173,
+            "cr": 1939.2911325124142,
+            "mu": 0.8,
+            "max_accel": 0.9731420676845393,
+            "max_brake": 1.1052326973882884,
+            "tau_steer": 0.22090638656529607,
+            "tau_accel": 0.26675613125651265,
+            "drag": 0.07837279422994421,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 28.944470245315912,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": 0.22999999999999998,
+            "y": -0.06,
+            "z": 0.3275,
+            "roll_deg": -1.874330916792002,
+            "pitch_deg": 5.053767395565803,
+            "yaw_deg": 3.744587548204423
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 501.1255548466311,
+              "fy": 501.1255548466311,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.639158129077203,
+            "phase": [
+              2.0265950788495983,
+              5.775511644266222,
+              2.159563795837266,
+              2.946318615833891,
+              5.367410982929275,
+              2.7348518963789883
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0037074535053200565,
+            "y": -0.0012301018258162467,
+            "z": 0.0018601547311614863,
+            "roll_deg": -0.2048136566524809,
+            "pitch_deg": -0.07845362329739058,
+            "yaw_deg": -0.035752628488644966
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880004,
+        "scene_seed": 7116,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_16_dagger",
+        "configuration": "train_v2_16",
+        "profile": {
+          "name": "train_v2_16",
+          "team": "",
+          "vehicle": {
+            "max_speed": 13.833267915609735,
+            "body_height": 0.3261623030172783,
+            "mass": 186.13369464918432,
+            "iz": 77.30743934165136,
+            "lf": 0.7455138354680648,
+            "lr": 0.6989192207513106,
+            "track": 1.118270753202097,
+            "length": 2.702487653571735,
+            "width": 1.304649212069113,
+            "front_overhang": 0.7455138354680648,
+            "rear_overhang": 0.5125407618842945,
+            "cf": 25896.861864234343,
+            "cr": 29133.969597263636,
+            "mu": 1.4,
+            "max_accel": 6.538601384118507,
+            "max_brake": 7.137219940708244,
+            "tau_steer": 0.11069406157260937,
+            "tau_accel": 0.15270935003847344,
+            "drag": 0.5210539489446606,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 21.15718784768443,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": -0.458,
+            "y": 0.12,
+            "z": 0.9299999999999999,
+            "roll_deg": 0.6840722248943945,
+            "pitch_deg": 5.105257217792095,
+            "yaw_deg": -3.980109834369405
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 454.5456131180108,
+              "fy": 454.5456131180108,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.0623203012567242,
+            "phase": [
+              0.5852578800939015,
+              0.4227934716147713,
+              0.7225127339671942,
+              4.7868334125545555,
+              0.5240644842154737,
+              3.8941661948250412
+            ]
+          },
+          "calibration_error": {
+            "x": 0.004171981057629082,
+            "y": -0.0010339183868119306,
+            "z": 0.0033836746920594663,
+            "roll_deg": 0.22165060762177366,
+            "pitch_deg": -0.0738459754461035,
+            "yaw_deg": -0.13444820236122718
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880001,
+        "scene_seed": 7117,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_17_dagger",
+        "configuration": "train_v2_17",
+        "profile": {
+          "name": "train_v2_17",
+          "team": "",
+          "vehicle": {
+            "max_speed": 1.5126709318897418,
+            "body_height": 0.15783308239072977,
+            "mass": 28.65761230394611,
+            "iz": 2.731752009938873,
+            "lf": 0.24802341518543247,
+            "lr": 0.2592972067847703,
+            "track": 0.3607613311788109,
+            "length": 0.7666178287549732,
+            "width": 0.4509516639735136,
+            "front_overhang": 0.13528549919205407,
+            "rear_overhang": 0.12401170759271624,
+            "cf": 2579.1851073551497,
+            "cr": 2865.7612303946107,
+            "mu": 0.8,
+            "max_accel": 0.7719103815042131,
+            "max_brake": 3.2778810840459505,
+            "tau_steer": 0.10531984645488364,
+            "tau_accel": 0.25209606896869946,
+            "drag": 0.10167870162024034,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 31.4377691359894,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": -0.14200000000000002,
+            "y": 0.04799999999999999,
+            "z": 0.30600000000000005,
+            "roll_deg": 2.871621352213506,
+            "pitch_deg": 2.0868474392929093,
+            "yaw_deg": 4.440074497874106
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 325.89200492541715,
+              "fy": 325.89200492541715,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.5890241840278105,
+            "phase": [
+              2.3236913397843684,
+              2.0216248444359763,
+              2.353326632017511,
+              5.357232479153701,
+              0.18700107968196297,
+              5.8210350796695725
+            ]
+          },
+          "calibration_error": {
+            "x": 0.003217809777041456,
+            "y": -0.0011970667395134593,
+            "z": -0.0007414557009201894,
+            "roll_deg": 0.09332020560892151,
+            "pitch_deg": -0.10814076770501126,
+            "yaw_deg": 0.07598731645586582
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880002,
+        "scene_seed": 7118,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_18_dagger",
+        "configuration": "train_v2_18",
+        "profile": {
+          "name": "train_v2_18",
+          "team": "",
+          "vehicle": {
+            "max_speed": 8.798900193818962,
+            "body_height": 0.3306963768098427,
+            "mass": 194.00459355168036,
+            "iz": 82.83228595602016,
+            "lf": 0.755877432708212,
+            "lr": 0.7086350931639487,
+            "track": 1.1338161490623178,
+            "length": 2.740055693567268,
+            "width": 1.3227855072393708,
+            "front_overhang": 0.7558774327082118,
+            "rear_overhang": 0.5196657349868957,
+            "cf": 26991.943450668572,
+            "cr": 30365.936382002143,
+            "mu": 1.4,
+            "max_accel": 4.342393310852108,
+            "max_brake": 6.5919596341545,
+            "tau_steer": 0.047685853648590265,
+            "tau_accel": 0.1644232467699092,
+            "drag": 0.5356412749477101,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 24.537320006014706,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": 0.758,
+            "y": -0.12,
+            "z": 1.47,
+            "roll_deg": -2.322385349577142,
+            "pitch_deg": -2.7518988731355583,
+            "yaw_deg": 1.2279684080942441
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 472.4595597445407,
+              "fy": 472.4595597445407,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 0.5117808240179893,
+            "phase": [
+              0.780171091033277,
+              5.4357750630049475,
+              1.738933998743716,
+              3.9631782326043314,
+              5.967871934593259,
+              3.761335708649608
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0029929703760653683,
+            "y": 0.0016483531232944603,
+            "z": 0.001968839689554156,
+            "roll_deg": 0.22494202431578908,
+            "pitch_deg": 0.21200967529944376,
+            "yaw_deg": 0.24903918178934267
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880003,
+        "scene_seed": 7119,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_19_dagger",
+        "configuration": "train_v2_19",
+        "profile": {
+          "name": "train_v2_19",
+          "team": "",
+          "vehicle": {
+            "max_speed": 1.3681777195521123,
+            "body_height": 0.1253954681014429,
+            "mass": 14.371146335543719,
+            "iz": 0.8646896998385101,
+            "lf": 0.19705002130226737,
+            "lr": 0.20600684045237044,
+            "track": 0.286618212803298,
+            "length": 0.6090637022070083,
+            "width": 0.3582727660041225,
+            "front_overhang": 0.10748182980123674,
+            "rear_overhang": 0.09852501065113368,
+            "cf": 1293.4031701989347,
+            "cr": 1437.114633554372,
+            "mu": 0.8,
+            "max_accel": 1.828131406843664,
+            "max_brake": 2.6134850127847615,
+            "tau_steer": 0.1056715844400023,
+            "tau_accel": 0.17676060877795957,
+            "drag": 0.06417968743012235,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 34.929560213867624,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": 0.24199999999999994,
+            "y": -0.048,
+            "z": 0.5640000000000001,
+            "roll_deg": -0.2207788462598368,
+            "pitch_deg": -2.2945694904403307,
+            "yaw_deg": -3.605070818697188
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 342.9809968062,
+              "fy": 342.9809968062,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 0.7439868075151922,
+            "phase": [
+              3.117257695195451,
+              4.924279578347271,
+              5.642264138089845,
+              1.21123221938732,
+              3.803856915114305,
+              5.506267389595579
+            ]
+          },
+          "calibration_error": {
+            "x": -0.004776690111918682,
+            "y": -0.0023343552222140243,
+            "z": -0.0047893831192983,
+            "roll_deg": -0.04351949362653379,
+            "pitch_deg": -0.14114098382573437,
+            "yaw_deg": -0.2140315558730374
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880004,
+        "scene_seed": 7120,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_20_dagger",
+        "configuration": "train_v2_20",
+        "profile": {
+          "name": "train_v2_20",
+          "team": "",
+          "vehicle": {
+            "max_speed": 8.083503486077822,
+            "body_height": 0.3661409912624027,
+            "mass": 263.31085416669737,
+            "iz": 137.81428247676496,
+            "lf": 0.8368936943140635,
+            "lr": 0.7845878384194345,
+            "track": 1.255340541471095,
+            "length": 3.03373964188848,
+            "width": 1.4645639650496107,
+            "front_overhang": 0.8368936943140635,
+            "rear_overhang": 0.5753644148409186,
+            "cf": 36634.55362319268,
+            "cr": 41213.87282609176,
+            "mu": 1.4,
+            "max_accel": 4.650744994769848,
+            "max_brake": 7.5008562597461825,
+            "tau_steer": 0.0728735962563248,
+            "tau_accel": 0.1277326170700551,
+            "drag": 0.6566166146087259,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 20.324603032066044,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": -0.135,
+            "y": -0.09,
+            "z": 1.065,
+            "roll_deg": 2.7119406810405655,
+            "pitch_deg": 4.271756799805996,
+            "yaw_deg": -3.8121091763760435
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 350.627945138255,
+              "fy": 350.627945138255,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 0.6259827610330579,
+            "phase": [
+              2.794623509802161,
+              5.155965655829669,
+              6.001445691385447,
+              0.2086603565543999,
+              4.832669132630817,
+              4.00841761656675
+            ]
+          },
+          "calibration_error": {
+            "x": -0.00012543474776159248,
+            "y": 0.003903630029539639,
+            "z": 0.0027013665264359553,
+            "roll_deg": -0.2254413279623124,
+            "pitch_deg": 0.057037978936129004,
+            "yaw_deg": 0.03093715818498255
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880001,
+        "scene_seed": 7121,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_21_dagger",
+        "configuration": "train_v2_21",
+        "profile": {
+          "name": "train_v2_21",
+          "team": "",
+          "vehicle": {
+            "max_speed": 1.8987205617047815,
+            "body_height": 0.11278671972269631,
+            "mass": 10.457305271932427,
+            "iz": 0.5090271066940116,
+            "lf": 0.17723627384995133,
+            "lr": 0.18529246811585823,
+            "track": 0.25779821650902013,
+            "length": 0.5478212100816677,
+            "width": 0.3222477706362752,
+            "front_overhang": 0.09667433119088253,
+            "rear_overhang": 0.08861813692497567,
+            "cf": 941.1574744739185,
+            "cr": 1045.7305271932428,
+            "mu": 0.8,
+            "max_accel": 1.8748048315376495,
+            "max_brake": 3.373936116263704,
+            "tau_steer": 0.24647621933569983,
+            "tau_accel": 0.2622965204074339,
+            "drag": 0.05192181284002469,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 33.14790467331048,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": -0.04000000000000001,
+            "y": -0.036000000000000004,
+            "z": 0.3705,
+            "roll_deg": 0.8525588446070045,
+            "pitch_deg": 0.8908270324824129,
+            "yaw_deg": -4.872914018846166
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 369.5840524782237,
+              "fy": 369.5840524782237,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.8899430858916348,
+            "phase": [
+              2.0187382463493684,
+              4.73332445274569,
+              0.17257438141813036,
+              2.491203144077852,
+              5.248292488224453,
+              3.8824442011716043
+            ]
+          },
+          "calibration_error": {
+            "x": -0.0002242305725034599,
+            "y": -0.002654494889189656,
+            "z": 0.0007238083196822453,
+            "roll_deg": 0.17362660132978494,
+            "pitch_deg": 0.18221251842934233,
+            "yaw_deg": 0.2411516193584877
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880002,
+        "scene_seed": 7122,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_22_dagger",
+        "configuration": "train_v2_22",
+        "profile": {
+          "name": "train_v2_22",
+          "team": "",
+          "vehicle": {
+            "max_speed": 15.56751573724048,
+            "body_height": 0.36035203766740864,
+            "mass": 251.0178754692905,
+            "iz": 127.25866833172273,
+            "lf": 0.8236618003826485,
+            "lr": 0.7721829378587328,
+            "track": 1.2354927005739726,
+            "length": 2.9857740263871007,
+            "width": 1.4414081506696346,
+            "front_overhang": 0.8236618003826485,
+            "rear_overhang": 0.5662674877630708,
+            "cf": 34924.22615224911,
+            "cr": 39289.75442128025,
+            "mu": 1.4,
+            "max_accel": 6.772669558051054,
+            "max_brake": 6.400370027006704,
+            "tau_steer": 0.08322441297949651,
+            "tau_accel": 0.12044967576685879,
+            "drag": 0.6360175888214866,
+            "v_blend": [
+              2.0,
+              5.0
+            ],
+            "max_steer_deg": 27.810339517569012,
+            "max_steer_rate_deg": 150.0
+          },
+          "mount": {
+            "x": 0.43500000000000005,
+            "y": 0.09000000000000002,
+            "z": 1.335,
+            "roll_deg": 1.4641372921826452,
+            "pitch_deg": 7.195295705294335,
+            "yaw_deg": -3.904181931242406
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 392.93612111816697,
+              "fy": 392.93612111816697,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic full-size Formula Student vehicle; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.5831111752815852,
+            "phase": [
+              2.660015868291524,
+              6.248192728562604,
+              5.378140314755014,
+              0.8547057884817534,
+              2.0416440998439067,
+              0.2016184832776531
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0008077484194927498,
+            "y": -0.0014691492528645267,
+            "z": -0.0022949058789764245,
+            "roll_deg": 0.2160267064911754,
+            "pitch_deg": -0.17065194571105696,
+            "yaw_deg": -0.06068523099268646
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880003,
+        "scene_seed": 7123,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      },
+      {
+        "id": "train_v2_23_dagger",
+        "configuration": "train_v2_23",
+        "profile": {
+          "name": "train_v2_23",
+          "team": "",
+          "vehicle": {
+            "max_speed": 1.9771177582625563,
+            "body_height": 0.11674899957852974,
+            "mass": 11.598595213581733,
+            "iz": 0.6049464320246041,
+            "lf": 0.18346271362340386,
+            "lr": 0.19180192787901312,
+            "track": 0.2668548561794965,
+            "length": 0.5670665693814302,
+            "width": 0.3335685702243707,
+            "front_overhang": 0.1000705710673112,
+            "rear_overhang": 0.09173135681170193,
+            "cf": 1043.8735692223559,
+            "cr": 1159.8595213581732,
+            "mu": 0.8,
+            "max_accel": 1.2720908341504356,
+            "max_brake": 3.4469569472460835,
+            "tau_steer": 0.2276489346092058,
+            "tau_accel": 0.2295716381648733,
+            "drag": 0.05563399552076545,
+            "v_blend": [
+              2.0,
+              4.0
+            ],
+            "max_steer_deg": 28.886215248506556,
+            "max_steer_rate_deg": 100.0
+          },
+          "mount": {
+            "x": 0.14,
+            "y": 0.036000000000000004,
+            "z": 0.49950000000000006,
+            "roll_deg": -2.7412271802675203,
+            "pitch_deg": 5.704419247320781,
+            "yaw_deg": -5.127997576054298
+          },
+          "cameras": [
+            {
+              "name": "front",
+              "width": 640,
+              "height": 360,
+              "fx": 451.0907836010159,
+              "fy": 451.0907836010159,
+              "cx": 320.0,
+              "cy": 180.0,
+              "dist": [],
+              "fisheye": false,
+              "slots": [
+                "road",
+                "wide"
+              ],
+              "roll_deg": 0.0,
+              "pitch_deg": 0.0,
+              "yaw_deg": 0.0
+            }
+          ],
+          "notes": "Generic small Ackermann platform; simulator envelope, not validated hardware.",
+          "motion": {
+            "translation_amplitude": 0.002,
+            "angle_amplitude_deg": 0.2,
+            "frequency_hz": 1.4408742062688968,
+            "phase": [
+              0.49447646007544827,
+              1.5847734194969116,
+              2.7739383460288374,
+              0.334489886898158,
+              0.44678927302987226,
+              5.302763545165711
+            ]
+          },
+          "calibration_error": {
+            "x": 0.0009698865888904662,
+            "y": 0.004982556232081931,
+            "z": -0.00317395367696471,
+            "roll_deg": -0.22727517074394746,
+            "pitch_deg": 0.11438387016223323,
+            "yaw_deg": -0.05581098053778205
+          }
+        },
+        "split": "train",
+        "collector": "dagger",
+        "checkpoint": "runs/transfer_minimal_v1/ckpt/best.pt",
+        "track_seed": 880004,
+        "scene_seed": 7124,
+        "seconds": 24.0,
+        "random_start": true,
+        "intervention": {
+          "lateral_limit_m": 1.25,
+          "steering_disagreement_rad": 0.2,
+          "hold_seconds": 1.5,
+          "lateral_reference": "reference_path"
+        },
+        "collection_policy": {
+          "version": 1,
+          "name": "reference_path_guarded_v3",
+          "intervention": {
+            "lateral_limit_m": 1.25,
+            "steering_disagreement_rad": 0.2,
+            "hold_seconds": 1.5,
+            "lateral_reference": "reference_path"
+          }
+        }
+      }
+    ],
+    "retained_metadata_sha256": {
+      "replay_v1_train_0_drive": "6c0c594b480338622be394a27731f6cbb402cc98f90bee05e7458d966dc4ac84",
+      "replay_v1_train_0_recovery": "d68eb3b72142a0da1727a40130934ee0fdfeaa1d6744b81f742bf1fdbd62828a",
+      "replay_v1_train_0_start": "b708937177035ec33c0baf8133145d987dc59b93fb11b893f2adf5409ad69728",
+      "replay_v1_train_0_stop": "a7f30bd689f99c12ba72a1a41c765c46b0bb0624503c4e892a70cf9ed00dd793",
+      "replay_v1_train_1_drive": "ed15782bbc601e8b3c2debcfa431e50673cb5c68be92ab6eb8f908a393580028",
+      "replay_v1_train_1_recovery": "10d79535178689652f6cdb4d29c5e928e10abca83f87adf67da55947d97ffb98",
+      "replay_v1_train_1_start": "9f7c9d6c915e513ffb9ba56ef020adfde3f2446ddb87b290e68b0102afa475bc",
+      "replay_v1_train_1_stop": "400505ff2eeff33f3f7ef6690d36c1f190565308803d5b58ba477588f24ff9ae",
+      "replay_v1_train_2_drive": "ef4803718fc4ce9cf04bb58a1e41025e64fe10d0e927a861f4625fe01840cbcf",
+      "replay_v1_train_2_recovery": "a7be3d942fe8992d742c3e21576d79ab2463d0e66d3de0f1ab534a78acdd135c",
+      "replay_v1_train_2_start": "822feee9adde1afb99e00c1bf32395b4b360f58bf54bec78b63212f1c4006e46",
+      "replay_v1_train_2_stop": "1bfc15a4139ff751bc1711ae82a6a30632552d5fec01c362a8eaa723155e0cf3",
+      "replay_v1_train_3_drive": "76fccf4f66593df59a78efb75d0dd5a2aecd6c5c32d81dafac9b8deb92850019",
+      "replay_v1_train_3_recovery": "08ec11f43a890d026dcb1a51b1d6b6fede2f7b8cf0212daba2c6e4c7e94fb69d",
+      "replay_v1_train_3_start": "c90a984a5dfe64bfe05f81f0c884138e9c639ea1f8478856f6ca73a4bc23e7ed",
+      "replay_v1_train_3_stop": "96bf03297a71f8476fe75b9d971ab334701112aee18a1ea8bb67bcb4382c7e24",
+      "replay_v1_train_4_drive": "30a0f6f78697812391941ecc3af58a54e5f2044095edbbbf28503a650beceb55",
+      "replay_v1_train_4_recovery": "8c02fd717b58e259ec62af9d82c12535b5908e00b82adc8e195d75e88b97e316",
+      "replay_v1_train_4_start": "d128d620bd482a4b130e35040a695c7862bddfb4a46519ec3cc9b4f920d57163",
+      "replay_v1_train_4_stop": "2188664f9f38fcaac9813322ae48860c384646559f391136e0a9885f7fb9a249",
+      "replay_v1_train_5_drive": "527d8db54b61eaaa286c26c532447dbbe84756ebd1ef685c7be98a132cea2600",
+      "replay_v1_train_5_recovery": "678b1ea244e5854eccc8e4023fabf6455cd76bac4abb2f1386f4d0035ede6ff1",
+      "replay_v1_train_5_start": "eaf717bf54cc395f8cab75320e515d27ce1bfb3786e61becbea083021055a884",
+      "replay_v1_train_5_stop": "21adc3fb2a593d024dc7235710f15419422538b152745f0361e16af357a6792e",
+      "replay_v1_train_6_drive": "079456a16f7aebbd9dd8c6b8fb090c35e70873c44f8fdfbf3550f39c39c39d5b",
+      "replay_v1_train_6_recovery": "db4974d3f7212d56d4f07a302d915996843bc07e3f7eedcd2843a193c4e7d5ec",
+      "replay_v1_train_6_start": "fb3710851f351277470ac0554e2e370f21926826a8d7349415c59a766ca79903",
+      "replay_v1_train_6_stop": "72391bf983594de570bedbf51d0e21b005beb4945ce331251670480555baf024",
+      "replay_v1_train_7_drive": "a994b1893313e0b6b72085eb4c45b2f67ec228e2745c768f97dc107d8aefc416",
+      "replay_v1_train_7_recovery": "c16b1249b51c3e388e9720671e350402bef3956242ea0054886588247d08a0a4",
+      "replay_v1_train_7_start": "b33da34dcead238f32445854aa15fafdb9d0a830ba87c15f4f95879efed4bcd7",
+      "replay_v1_train_7_stop": "95b909ba4f6bea4c030e20561f3c5d62d4271468df8732b5cd777f47de6c4b07",
+      "replay_v1_train_8_drive": "9ee826911eb6743da418ae8426b4c03443350aff50342c1c262077d1513b78ba",
+      "replay_v1_train_8_recovery": "b268cf620008be7e0255685014c727148af63621ab65ce4e30afc25d0eae8bee",
+      "replay_v1_train_8_start": "22fa39909407c2b3161c6e61c0f816861eeb71012a2774ba92ea609218ee4e5a",
+      "replay_v1_train_8_stop": "0a388c888b3369371117cc02f224b9270659e494e177171eeb357ea531957712",
+      "replay_v1_train_9_drive": "e5ba1148ecff20c7f761836f7437e876df068fa7615b5b2beeb8fc5667893464",
+      "replay_v1_train_9_recovery": "e0092cd4122d0cf4f16fc660496cfe48c16848e7782ba3908f52e71e1a53c56e",
+      "replay_v1_train_9_start": "7b869073fcd11d051852188438509bbf39bef0063ead8be411be22e712844974",
+      "replay_v1_train_9_stop": "65101885d1b987d1ca3c8f51edfac8eb8d0a81d89cf5cde1888655de94b618c9",
+      "replay_v1_train_10_drive": "8f427caba9ceba0373b44c8e13c06b27473088c69931986cabbd06cdf3b67e41",
+      "replay_v1_train_10_recovery": "15c6ba089270074bcdfda7b3bfb2fc01442cbb729ac6f4e114e2b63b47b265cb",
+      "replay_v1_train_10_start": "9473ca56c0f4d4db21a362c7c88ae7381e37157be1fa6068a445684aae83fdac",
+      "replay_v1_train_10_stop": "4ee7dead47e0860b86e3fd1cd8e61080d63d2f6be5371d366e236f885bb88c43",
+      "replay_v1_train_11_drive": "37f89134cf12fe2246f4fe3302a700c75e718ee940439461e6862229183dbcd8",
+      "replay_v1_train_11_recovery": "f375a68c334d134efd9568b78aa0805f8e03ccc58de66bf4d65c59ec9bc29488",
+      "replay_v1_train_11_start": "cecf3af4a4183b129195bab30e955b85c0dc9aa018308efcf10fd0690087367a",
+      "replay_v1_train_11_stop": "e31066b0c16c9c4c2da9d802ca86a7315b7181b61d23ef3c57ca0a8fb7d96f6a",
+      "replay_v1_train_12_drive": "4508a4556d97b36a4116a0b4fb492cb264bba4ff72cda31d05e0ba1d1f8ea7d5",
+      "replay_v1_train_12_recovery": "c93672e6aa2098c86c340364ad644b7cf1447b25bc9c2365e89bb9a4812d9113",
+      "replay_v1_train_12_start": "7a7f9881776e34476f86627d10ae585083c00531e24ff56fd5d4c19b49a01267",
+      "replay_v1_train_12_stop": "da9069c3636845648cd822781f9e7e9bfa4a5b36658f907efbf114487a96b4c2",
+      "replay_v1_train_13_drive": "2843953dbb6308a457fa24c44655cc9357f00cac02878379181182b51bcac1c5",
+      "replay_v1_train_13_recovery": "0075ec7d4bd2773ed15d8f3cee614434747532ee023cade98df6198ac66dba10",
+      "replay_v1_train_13_start": "958a385f19664f68b0aacad35dd1c24a3e53301787ab6fd9418116ed2b26d544",
+      "replay_v1_train_13_stop": "40ea08c02a2e5e261d163864c5d6fb62a8896efffd669f9035b01992403cca5a",
+      "replay_v1_train_14_drive": "9209598eeccccd2ac05455346c857abd74b23e28af1b270aeeb48842ef25c02a",
+      "replay_v1_train_14_recovery": "396f4435edde4a1a043a22911a8ee56d831063c5f15cb794e26337e462ddf0cf",
+      "replay_v1_train_14_start": "af8a95730fd515162d000d23cd855da331329066b03132721df10464186f6dc9",
+      "replay_v1_train_14_stop": "8a04fbd1468aa16d03c02c7d3f8db07123fe338cedc1c92342dca78145f3ad44",
+      "replay_v1_train_15_drive": "fefed3fd7a87d3770ed65911b2dd5b321a1b046654b67f0dab2958a8bc48f657",
+      "replay_v1_train_15_recovery": "2b820b29a5401ae894acb160b0a35e62d34befa5ccd9024febef886a6bfe7982",
+      "replay_v1_train_15_start": "8a8605e760477c707ded71d14a4377290bd4975a2cd54b622fe7e2b52bbaa410",
+      "replay_v1_train_15_stop": "07d68100bc0ee26f6b7a56c28d66cafcb68bedbcd35f2d5223b2322f35fcb79e",
+      "replay_v1_val_1000_drive": "65c6aa61253e186cc609fdf899ba74a452389e66c088b52bfaef5dfc759ded61",
+      "replay_v1_val_1000_recovery": "98b12960d6e87a66ed54c8047886a4e44028370a0d24a8f9b4d3f6fbfc2891d7",
+      "replay_v1_val_1000_start": "a013b09d3af2517ae1529b81e7bfd41a59d5f2f9207ff997c329c1385badfb14",
+      "replay_v1_val_1000_stop": "207a2393799b4844c00db268a3e1899842578a65d983abbcfb1eabe8d4e1a2c9",
+      "replay_v1_val_1001_drive": "e2bcea44c53abc94e4510aad125c76b8d45e0da3842500dc6ed69b8fc8fc74ba",
+      "replay_v1_val_1001_recovery": "eb2f9790b2adf99fa58039955c481d47140ff466c0fa55af314687c25ec12705",
+      "replay_v1_val_1001_start": "7fe8d85ccdd7b8e33ce08fd763c3b30d0cd832a299c45adc5e660384fad478f0",
+      "replay_v1_val_1001_stop": "171ffbdf8cbf7cf41f4c7ab0f86807d1112e96e086f35ded56a01b57e5f32fd3",
+      "replay_v1_val_1002_drive": "93d1325b3bdcb39357d6bfdd35bd6dbe5d89eae337897793d3b0496e2888b674",
+      "replay_v1_val_1002_recovery": "dd02bb13766106119978fb798ec24bee597937fb79a1c9247d3320afaf570cc7",
+      "replay_v1_val_1002_start": "264f95053a1c3ae1503fd2f0ea45418a7289b695ed81332a880cb2bb9b905c8d",
+      "replay_v1_val_1002_stop": "b2cac46036ec1c5689c7f2acc324a63d9d06ebc67aef0b86c7e741df6b084b4d",
+      "replay_v1_val_1003_drive": "ada4a22dde00b873d5d07b54361975c7ddcf975a8fad803723534235d807f062",
+      "replay_v1_val_1003_recovery": "696d5a937ee51bdafe63856ce10076c705c21cf0589f0a01d5fda16947b9b237",
+      "replay_v1_val_1003_start": "5a8cbd909bd2094e94fbf97ce87754e4b580d63544c1b60830bc5049cb60cfe1",
+      "replay_v1_val_1003_stop": "4d29285056bf9d05cde4273ac71961ee494f30adf4ee761dc06c3c4e40286dc4",
+      "replay_v1_replay_ep00003_trackdrive_020001": "082fa228ca4c4cf862fe21a9bdbbd8481b1f15fb896c47295ced1b07c20f4eb0",
+      "replay_v1_replay_ep00004_trackdrive_020001": "2a8705477f6db17e1e4b98286d8ba9be13130e592b251530d518dfc610759cbb",
+      "replay_v1_replay_ep00005_trackdrive_020002": "8ea66bed72a9e8d9517fe4d387d55ec8c199fdeb2aff3455dfe4b8b6f25d5bd5",
+      "replay_v1_replay_ep00006_trackdrive_020002": "faaeee2b932955fd719f9428d037015ac0ae7b4af99e0d7c1bd0b6f0af6cda4f",
+      "replay_v1_replay_ep00009_trackdrive_020004": "2f0369e0e5855ed3eb951062e3e6332c929652f9cdf5a3a756f926d8df3d83f3",
+      "replay_v1_replay_ep00010_trackdrive_020004": "f0d17ddcf9761a8f4d760a35033601d92889dd91d44c08dd8d69c00b2057ea96",
+      "train_v2_00_expert": "0b5cf5a87f2ea263fa78b47be454cfafe964d5db6c06882aacfafd97738df6c7",
+      "train_v2_01_expert": "2d3d8a58d0415df4ec0adc18b9af2b568859be9ff749844275cd7646ac92730a",
+      "train_v2_02_expert": "1fec4d4e3e33567903f6fb370b902b3060114f43e4cbcb189c9cf929276f5985",
+      "train_v2_03_expert": "c4414617b7e7b1d8c8b23c6ccd97854a2dbc96fc5832c59f99bfe48001964c8e",
+      "train_v2_04_expert": "209c48343747f213f01cede67d9b5e55e54933d826a47297b7f3873f342d19be",
+      "train_v2_05_expert": "e1d6d5a0e623fd024722f9cfec08f813f377d297ad5098a4af37cffca068bf94",
+      "train_v2_06_expert": "5d3c9bbd4806032c705241a70c583a6dea5544136ac072ba15e50b37d9e1562d",
+      "train_v2_07_expert": "60bb1d726bb053f474675b112a0833c6b992238144e447febcd09bc3043bf9fd",
+      "train_v2_08_expert": "628350198fab6495465f0e9304d107f771bdb447ff916c92c25f25ac964ba271",
+      "train_v2_09_expert": "41f27378ba923112797365fb898f27dabf6c069d115894f04ffc1acfae933233",
+      "train_v2_10_expert": "d0a1807f1bc3efd1322b02b13ca0ad6f50665e54ade24e1b1dca60cc806a2f5c",
+      "train_v2_11_expert": "ad02fbc223643f8ddf9434b01d6874dbec178ec50c35be2a35e4440aa3eef78a",
+      "train_v2_12_expert": "e79fb1879b6eea15bf41bfc3b7e70a8c012ade4703bf77592cb99fa2d72a0279",
+      "train_v2_13_expert": "338e0a2d695602890b21f928633cdf17ade7b017719c4264b5d73320978c8745",
+      "train_v2_14_expert": "dae0eecf56480fca9cc1566e26943b601621afd90e21fd2865cd8449d544d537",
+      "train_v2_15_expert": "89fdbba0a84d9f50bd8a463f059f56c1bd9b3465bf65b9d3ebf523e754d39720",
+      "train_v2_16_expert": "abebb7e01ae7eda3a007af6864684387b79bafe90468b7968f09689a3f624ffd",
+      "train_v2_17_expert": "688ff0254e5b236f04803c37995b9cb7f3e6b15379315dc8c3be23d8bfcf71bc",
+      "train_v2_18_expert": "1556bc8d42b60d1b6f46beaf1112d476e2a9142f83d5f1eae63da5118bc2bacb",
+      "train_v2_19_expert": "61b4e5928b463407d83cb3cebad338290d13fc1d7873a457284bdcc58bee5a7e",
+      "train_v2_20_expert": "07c6ec1fc0c1249e0b38e830281f36c53cc8d323ab90d4a8bf63fc2e2a5f9a0a",
+      "train_v2_21_expert": "1fe6f2a432565f198231f9bc68190c1ea1340d2ae1904f9e652611e51b15ca58",
+      "train_v2_22_expert": "948b7cad1eb6c97623193ad53b20f10257da3587cb70ab3f2e0a0af8a6531d48",
+      "train_v2_23_expert": "4287a2287e52719a2d85c1bebbab1d6b39ab10b22a74d7ef12bccb05786df15f",
+      "val_v2_0_expert": "f6e7cc1b09a35546b3bd79f02f8bf8f7a3b6ad8e30eed0cffefe052eefab22a7",
+      "val_v2_1_expert": "673a37a2baef47534e713a44c5ae40b66a8eb4227d3c8b1635da6e02a6e201b5",
+      "val_v2_2_expert": "78d6f15f32f356e76af031a9818afb8da4ccf099f02deb59b332e5f9e836c36a",
+      "val_v2_3_expert": "d9f84c307e291b8adc684f2c562de010233cda34e466b5144a7d5ca704c79bcd"
+    },
+    "source_sha256": {
+      "src/.DS_Store": "b13a0f01388f258f1287e9c22473ba4a09fd708c28fdecd9f81794bc9dd6dbb0",
+      "src/fsop/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/baselines/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/baselines/yolo.py": "a5207b9b74c941f7445199f2bb45c47574f2629068f6966176bbef3da6867ed8",
+      "src/fsop/bench.py": "d3781cfc06127a92aaf201285ada0499159700b4cd6f189b6992d3bb113ac696",
+      "src/fsop/cli.py": "37fdb0595d78090a1ffcbff4165ae5731d5db9b09438246a0a1d089ca5dcdeb8",
+      "src/fsop/config.py": "2de820cc65e9a8266b7163df51c4bbb052921cc6192e8ce76c47e2eeaf1b3a6b",
+      "src/fsop/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/data/feature_cache.py": "b9f3466ab4b0f1c2b6126b94f1ccf7727f4499d7b23ecc6189df473682433cb9",
+      "src/fsop/data/fsoco.py": "7dda2a26d525da64cdf63f9058b2a58b85b20f16c3e844a9c56715a6abf95eaa",
+      "src/fsop/data/relabel.py": "6edef743dca16e30b43d3af40ded5b4aed8ee17f7470475a46e9aa9e29876ab7",
+      "src/fsop/data/sim_dataset.py": "46a1449993451d3bf2a70df65fe5830abb2516d49dc74941d650051a94c48031",
+      "src/fsop/data/staging.py": "c2953182bf635de631d273887e5b1368480a10492ccdee08ec827f3626f245a4",
+      "src/fsop/data/targets.py": "a923bbe800bbe2d1bd25a50701edb7d077980d7d8481990ebd4baf6ca8652467",
+      "src/fsop/eval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/eval/bev_metrics.py": "74729836f20c21d836e2a30efe586eb1b578a9ae00b97613fb1bff7a08bf4af4",
+      "src/fsop/eval/closed_loop.py": "5e9f0c0b50791914f5c188503b05dcf974367f87599d725dfe532668841a9959",
+      "src/fsop/eval/controller.py": "bb1891c7360d9cca7784ba7d664234343f1bd19ab756ffcb8bce20227b03e098",
+      "src/fsop/eval/dagger.py": "358001818ebbcba6068d0fe3b5926624da2e2d6231fae10b9e4eee61b0aa106b",
+      "src/fsop/eval/det_metrics.py": "3c99d790e0777184065c4e35195babe9ade02d82aacbd78f63a8b0544b0103d2",
+      "src/fsop/eval/geometric.py": "e0ad7c4aa9157a04f1a83c242f83113acb84a25fb9152533fccb58e76cde9c02",
+      "src/fsop/eval/img_to_bev.py": "bcf10ece06c575512c45ea773335a1024fbc7ab95d20426a91ff18bd71d2d2d1",
+      "src/fsop/eval/open_loop.py": "1c4c0c1eaa3e963308642bdf79798372dac4d515452bab1c48f9ac56a8631e94",
+      "src/fsop/eval/real_clip.py": "d62206e397e988111b00b75c9796a773ed87740b44fcff7f726184ca7afcceef",
+      "src/fsop/eval/transfer.py": "a8938a746a134cc6ce7d8a794e6f1b955f8d49c823390c57dd7bbb1c6dc40343",
+      "src/fsop/geometry/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/geometry/camera.py": "98b8bc7f7b98cddc4e756d4b92103604f4462baea2b161f0410a943f30c207a3",
+      "src/fsop/geometry/mounting.py": "5ef653afe344cb8f0fd4dd7b7fb1b6487859cac8622db12d2b4b91380dfc12d2",
+      "src/fsop/geometry/op_frames.py": "f09cea8cba5b74bf81e02df04487e3b34012e91dde4c3751525bf50e3520301f",
+      "src/fsop/geometry/warp.py": "40f2fb37d3e397a7bdfb9ccf8f018a7f6b878aee76e5b15439f5059ac91f87d1",
+      "src/fsop/geometry/yuv.py": "9a3651b22194b666ad3200fb799bc22e90259ac650b2dff140b5c62a8ab66ee5",
+      "src/fsop/model/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/model/build.py": "d790457e79e299c236acd716fcfc36b28581918ef3e0ba16c8eb5570aeeddbd1",
+      "src/fsop/model/conditioning.py": "f3e279dcdacc0ae88c28dd3d008dd824c8ee9c411b3b5ebe745205be4ec7b35f",
+      "src/fsop/model/convert.py": "2ca56fa5a60da526883d0a02444b6a144c31634d23159fbae508d102340f0377",
+      "src/fsop/model/export.py": "1a5dbad82b7d30e7a354ae0a18e2600c9069d0e03887397170a189d5b377d447",
+      "src/fsop/model/fetch.py": "e1d15dc11ca309e5a2b655fd28afdd83fcf17811030edb7f8443106534454992",
+      "src/fsop/model/heads/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/model/heads/cone_bev.py": "9fe44a7e2152d4906389142b0f4405f8d192e19ffdeea25db5698451e2a0c9ee",
+      "src/fsop/model/heads/cone_img.py": "cdf84bb4bcc25b2a05172b45f1d7d35dcaf17abca1bfe10370c1906c2ff3f42a",
+      "src/fsop/model/onnx_prep.py": "b6b7c3607078dfaf45249451d757247cc8deea4085a7f70e69f15f531e14a5f6",
+      "src/fsop/model/op_converters.py": "59f20f80b4a646870b108cc7f165e8bd48a2630f54b44b07eddf791052629d5f",
+      "src/fsop/model/supercombo.py": "1128d2dc461466d9235ec3dc3386bce82c44222e127cbd6d8cf4ee0307eb5a3d",
+      "src/fsop/model/temporal.py": "3b7ef159ae6a0f3f39dd950ae3943fb5f59f164af0d8e9ab329f6f5de876b8c7",
+      "src/fsop/model/verify.py": "aa1cb5bb89869cbec5470fead1bb46eea285c27b2146c20c3fba7d91eedf0957",
+      "src/fsop/profile.py": "c970822ce7bea43c416820aa54133207e5d5895dedc78124be70d28a84a1ee53",
+      "src/fsop/runtime.py": "f8bedea7febddfe2a0a13d54dde929f72c0d2bb492b195d98f197178ea979622",
+      "src/fsop/sim/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/sim/batch_record.py": "858f189cf86cbbcba25b781725e582d171ed604e2d4641c77976a8fb98608968",
+      "src/fsop/sim/distribution.py": "0cae06f6a9c1e8d7b77d2f30e8e9bf24fcef6ee2b208a65eaa31c7c36467ff49",
+      "src/fsop/sim/drive.py": "e7e8072c3375e0de9d89d6fadcbfac897fa21f47a7d084eee1e2d0dffe047bc1",
+      "src/fsop/sim/env.py": "d5a3243c8a02ebd7386d3215b2d38fa22e6bd86ad78ba1a13fd50fc5277e7d8f",
+      "src/fsop/sim/expert.py": "1b9050e2f80afce1765c61da48c97df88986efb66ed6147438b833dfcfedfeb7",
+      "src/fsop/sim/raceline.py": "6736173ec7bc8a68917cf7b70415426486ecf2ea757da1fb935eafe6055a9b70",
+      "src/fsop/sim/randomization.py": "25b492a84b289a3febf9d726e1a43ef59f4657986282d28d551f5bd49cccff04",
+      "src/fsop/sim/recorder.py": "f61b62e7b84bae4ce313c8095b3f3d6519272eaabc9c6c729c4df141ebc37197",
+      "src/fsop/sim/referee.py": "85dff622ff604881f61a1092374e06f3939ac5fc3fe839fabdaf93496d980a19",
+      "src/fsop/sim/render/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/sim/render/assets.py": "c790b7c47113c6a86c792059bc7ca1b23764111f870b6ae67d5b88fe5b9f6051",
+      "src/fsop/sim/render/panda3d_backend.py": "2f44719a4f007a3f58e8eff2520835093b99aec241fdbe6ea2797cb656ede96c",
+      "src/fsop/sim/render/venue.py": "98a7ac4b041c0c3a149a52f21cce1b461d0d992601e240241e460fe0fd5339ca",
+      "src/fsop/sim/transfer_collection.py": "fcac369c7a14a7fbde0ade6c9609df5f2903b9508718d12d07ea3bfcb7d2c488",
+      "src/fsop/sim/vehicle.py": "71f7c729f81405a44733f39817331a470b781bdf4e577d1fc7be0d0725085953",
+      "src/fsop/track/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/track/batch.py": "71ed04273b4da5bf340d8abb3269448481d694ad2499330fceb616a13cc681c3",
+      "src/fsop/track/centerline.py": "de45a95eba2e8fa0419a7407ced66718bc6f49099dff8b00c7663f2bf7ac5887",
+      "src/fsop/track/cones.py": "45c784e93b40cb032e6641362b547bce8f5a79d5eb02e23d0a37db038728da93",
+      "src/fsop/track/fixed_layouts.py": "8a8fb71d395d3fa0987db50bb2392c36e22a13b5259c02db9b5dd0d0a71662b7",
+      "src/fsop/track/generate.py": "6a971d82e14b154ef24eb3a87f212f567a08182701783a806110755b2d661264",
+      "src/fsop/track/io.py": "86a833f72d920882c55c1dee89de841a8d4b67d8cbaa0658ddb17a614bc8af4c",
+      "src/fsop/track/rules.py": "4c2c989ef7b401ed47e57744eae6a3219759629e09e412b4ee5d68de8764006d",
+      "src/fsop/track/schema.py": "f2f760bee7826c82f34e3f704a0b5807bcd0f6b043e856a781d8fe727ac1c04c",
+      "src/fsop/track/validate.py": "5a08f94b27f75a77ee69431f58493a0ead9bbc6154b6749b7d11d223080664a8",
+      "src/fsop/train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/train/device.py": "768b44b47126b81b13e54508441384ed327dc034ed78872dff5400b468836d9b",
+      "src/fsop/train/losses.py": "fcfdb12adedbb0bcafea8e5abd441be6475d79cc5831e5f355123d64929dc4ad",
+      "src/fsop/train/trainer.py": "29ae51c444884f5de28391c35fc9b9d5e321386b55f96b2e3be0e193b7c859b1",
+      "src/fsop/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/fsop/viz/inspect.py": "5cd19a506dcc688a2f6f8d536cfaa1ae310847324cd71c0dc96bd07d566730cd",
+      "src/fsop/viz/real_video.py": "1979fcb3d70e7d739b84c406b6ab7482708ec7f8aa93541d14ab3f91a866c381",
+      "src/fsop/viz/rr_log.py": "b1b0020705be517293fc413ff224e68c55d51c14ed9b9ec291ab2b3b0a7213ae",
+      "src/fsop/viz/track_preview.py": "5ace5f5cf0b9ab48e8e011edc280164a996f9eac7ce586a3ca5767c59e2683bc",
+      "src/fsop/viz/video.py": "b00f560bb00b574ddaf9d771aeddeb3ada56c8801c1c418367b64e6a1dabb56c",
+      "configs/distributions/transfer_collection_guarded_v3.yaml": "8f2bd87d4b17dff7d3ff244e876e29ee5535076b11da4da8fe675f6852553e1e",
+      "configs/distributions/transfer_collection_reference_v3.yaml": "feb747fca46f5a93ef530fc7b4059f2d7022168e04daf8d04c8459030b30094e",
+      "configs/distributions/transfer_collection_v3.yaml": "6ce23a3dd8b8df3bd3b8f62c36f120c72d37be892a773bdd11897f16c566c76f",
+      "configs/distributions/transfer_v1.yaml": "b676812e3721a5d37a141cb7c20e5cf14bede067f4f6f89e5d161f88ab189698",
+      "configs/distributions/transfer_v2.yaml": "35c86fd5aad9ffda42f28229fe738b76a72a21e425197d40067a95bcf6f5db9c",
+      "configs/distributions/transfer_v2_design.yaml": "e518c7092809e03fcc19bfc08927ea9403756e2ab7be3cad6ad9e28e4c1310e8",
+      "configs/eval/closed_loop_quick.yaml": "d9f975daf90759d3f3cdb8b3a15f84bf6c9b84747c1a193f69a4f02b367168ad",
+      "configs/eval/closed_loop_suite.yaml": "2e2e8fae78987466494db02aefc6920be03c9d7ea75fd73ad7d46278b785be9a",
+      "configs/eval/transfer_v1.yaml": "b0c3aa6d05ba6e2e3a2c2fee52cdeff59783573fb4acbdd231f8e32eda99736d",
+      "configs/eval/transfer_v2_runtime.yaml": "1a813e153b2eb74462a0474694b58513a32464e0c2b34760fca0d462da6b8c71",
+      "configs/eval/transfer_v2_test.yaml": "5eaf951dbac3ace604b3618ee96280a3d7f278e54afeae2f98ae8499334fb744",
+      "configs/eval/transfer_v2_val.yaml": "ec772d39cc7d4c8d607bed65594c4149ba5a40d01dbdfc6ce89bf031b40c6693",
+      "configs/eval/transfer_v3_test.yaml": "eed2063847d1744512fb3fd1e3f2f50c3d4eabe2857256950f041fe44681732f",
+      "configs/profiles/default.yaml": "c877ce65ff2204abfc9a8f0c6091e6b0486748a008d90e6fbc94e4a39c2bcb47",
+      "configs/profiles/example_team.yaml": "d2fb7443ad171374c48fff5fc9d21076b7ac6f51f221b4504142f10cbb6738be",
+      "configs/profiles/fsg_onboard_clip.yaml": "bb641eaf8b213cfaa7d4b579d5346d6a3b65696db072f90fd075e80de32f292c",
+      "configs/profiles/generic_formula.yaml": "3ac9bdd9f4c5f4ba26fbed5281fe6251a0407ba3775ea4c42fe13a695c6e72a6",
+      "configs/profiles/generic_rover.yaml": "857ed121a1d68945600b89035fb4e7e1bfae3efce4fb2998b1d7ceac08e7f4e3",
+      "configs/track/autocross.yaml": "da63ba7d951d705c6b8dad06d1e1d86b2c7fd9667ece5a4c0ed870c5848385ca",
+      "configs/track/tight.yaml": "cef65cbfe23dbb70c8ae064e28ec7eb983f6d6d08b56ebb278e81676a066be1f",
+      "configs/track/trackdrive.yaml": "0b293fcbbcb7f5ec17e3762da6683c3e46c0782d68021388502faf517917ba4a",
+      "configs/train/adapt_stage2.yaml": "420dfe8a206c262072a2630a823a93c603d8145e2c0870393d56045a837d37a5",
+      "configs/train/cuda_adapt_profile.yaml": "bd2caeaafe1d53cde673f152910606e70031f4ce9ce900cd8f47eeec7cd1f61c",
+      "configs/train/cuda_racing_v6.yaml": "f69bb7e161d532b9be2d6960eb51d3aa6bd1627f19c7ba27b33c6151f570eb2f",
+      "configs/train/cuda_stage1.yaml": "9d4000e1036847a0813ab73531061d7e71938fcd40f367425408fdd5ae5f9cc2",
+      "configs/train/cuda_stage2.yaml": "3afbff5fc3cf96be2d3dfc7438ffe31cdaf97dac3771c59af701f1707545ee78",
+      "configs/train/cuda_stage2_v2.yaml": "017b7ac4448732248fb96c84440be25fd5e443f80dadde5f2e3ded30345bcb2e",
+      "configs/train/cuda_stage2_v2_refresh.yaml": "aa6491e197c381b87f845d0f9df1f819d7e3a0a7723f11d20aa4f35feb9c2cc4",
+      "configs/train/mac_smoke.yaml": "5eb1886583fd98ff45aff47dc622cdb0128afc5df9dc47ea940870d3f397e5a6",
+      "configs/train/mac_stage1.yaml": "2eb8ba56372e91b8ff1a2781d43eefcf054d97e550e740fe7c405242e631c64e",
+      "configs/train/mac_stage2.yaml": "125dfb3f47e7c02bcbde58eb70799ceeaefe2474052f336deb94f9661bf9986d",
+      "configs/train/transfer_anchored_v1.yaml": "14d4d48ba31a5b208605f419ed6db2d40e2718f22038c133dc6286bd33d7e57e",
+      "configs/train/transfer_control_pilot_v3.yaml": "4edbad0b4e8d1a982f3d00a65846f1df642fb530f80c7493c0a040c9c1a0a596",
+      "configs/train/transfer_control_v3.yaml": "1758e16689c1c204b805003b98b7aff62e489376a9fe6fb3f38a821de3d2c756",
+      "configs/train/transfer_expert_v2.yaml": "7cdbff0311b7c54c28301a7cae843cb9c044615068f0992eb9103e99df662336",
+      "configs/train/transfer_guarded_pilot_v3.yaml": "eea2a9ffe3b2ce544453f0cc674e01a927129ed7fcdff11fe9c5f78f6ec8b39c",
+      "configs/train/transfer_guarded_v3.yaml": "9ae54f6e9d40c4b3c402cdcb236af7c4d24655d42c6dfa27fa65f23dac798c19",
+      "configs/train/transfer_pilot_v1.yaml": "bcdf6856f8d0c6a01b9d2bb5c5292d6ef13d1112c75c5ea47febc696c288c8bc",
+      "configs/train/transfer_pilot_v2.yaml": "0d92d84f173e9e1d3055915daeb19133d87b3beafe6f1e7b4a1c516e982cb33b",
+      "configs/train/transfer_policy_v2.yaml": "d8987306c2eea678f1726b61fcb2e2484c85e5659b9810947fc140ddd38691f7",
+      "configs/train/transfer_recovery_v2.yaml": "ef428884ba3cf91dcdd7f96df70e3ea33bc4bcd16161db20e9fb5ac95b6ea772",
+      "configs/train/transfer_reference_pilot_v3.yaml": "5d319c7ce3967e1a866baa84d37d271337a29be86b8b5ebbf0c9ae9d1b1f2ebd",
+      "configs/train/transfer_reference_v3.yaml": "16349f62b41299067279a11c329b648b282caf41d29b0666d951d1c40a14efdf",
+      "configs/train/transfer_sequence_v2.yaml": "cedee8d03b07681a3b925b339422a11d1f2662972240dd0739cce5bbe0904f5e",
+      "configs/train/transfer_v1.yaml": "e18442cf66f5459e368dd3f140a7c22286da3b22e82c69d6abae6f34d0df9231",
+      "scripts/audit_racing_labels.py": "793cc8c91e69544fb2e3847c346d05096f58906f8705a6df827e98a2b3426d39",
+      "scripts/benchmark_expert.py": "759e58cb920fa27e05a105d060a0e6d163417dcf9da186e7769389e60ba73588",
+      "scripts/evaluate_racing.py": "f3ac3e3adc7d18e9f965583fec685874c5bc9849ac99cbbe80011775671dc060",
+      "scripts/modal_app.py": "44a26a4cd31d25d5bbe6e295c89eb868180725995f014436d83229d6f1446fd0",
+      "scripts/spikes/spike_metadrive.py": "b73ac4c97d32b736df27ddebfef94d951d3f72b806bd3742f6e1c0ec0faf12ee",
+      "scripts/spikes/spike_panda3d_offscreen.py": "e6e36687765afb05474e18bd7d265b1d64abe2895d0ff7ffb10399287224ce72",
+      "scripts/transfer_control_probe.py": "f0a6555aeabae8240ad2f1b54122f8ba3686ad4b797a93146ddbef8162dec908",
+      "scripts/transfer_diagnostics.py": "91cfcdf0d321cb95648aac1e2a8eb93c038130d59f5b0dd463f186eba7e8a621",
+      "scripts/transfer_experiment.py": "87761c0e9177f83d29ba443cff03938e65111f4e7e4434363ef01d9bbbb544de",
+      "scripts/transfer_v2_experiment.py": "3cbcf636af48efe9abd4cc8bab3964e16aa79090df770bcf59b2e50c4bbba5b5",
+      "scripts/transfer_v2_final_oracle.py": "a6e326cac4b3e2a02cc092c13933ffef75f0f4e5b6a7cdcd92d1b1b2a2eef078",
+      "scripts/transfer_v2_final_summary.py": "764b08cb1cf1fe7c5e94b4ab041d121d748e03b7bb9aa69382ef40ed8a8f683e",
+      "scripts/transfer_v2_finalize.py": "1640bdbf4f851349b19d935625c40541777274075193520c7f327ee06b430426",
+      "scripts/transfer_v2_fresh_parity.py": "5f7abf4ebc00e307566e3f2102de0dd423fe13b4a9e2b36c7bda22cbaa8057e8",
+      "scripts/transfer_v2_launch_probe.py": "5a7ee6468e8a6e094791efa452aec337cfac196e3d7e39a28ad1c493794fb45e",
+      "scripts/transfer_v2_merge.py": "ff097be80b6c04c628c942754b636167b55401f46cb7359cf6afb2b9a4228484",
+      "scripts/transfer_v2_metrics.py": "f47307fb372e3c20987d0509e1647bf8538d6c234795c5cf85f61c6697975ecc",
+      "scripts/transfer_v2_oracle.py": "fcaa3a069f91dab3f082e4a60598e7aa628ea52c760b0f6735ae3f789b60be35",
+      "scripts/transfer_v2_package.py": "8743a64041685e13cfa197b2e3550f5a7f579893ae1c9609330e58dbc462b95a",
+      "scripts/transfer_v2_pilot_verify.py": "ad77f6d226c1a73e945a1470184c43e931d6e2f6f21fe57f5da4d61c8c85bb22",
+      "scripts/transfer_v2_plot.py": "3fc315b4e60da517042c689ad6488dcb20a9f1a647ceef150e507b4098a186d0",
+      "scripts/transfer_v2_post.py": "c028447bf43fe2acc774c3326da59986d059105b0ab5bb0a11296603982cb2a6",
+      "scripts/transfer_v2_preview.py": "2b932daa0ae7f91dae283ce109fd26494beaad9567adfc4405bd591d4fd017f9",
+      "scripts/transfer_v2_select.py": "aebb4e45782989a82d50dd3ecdbf505b5b7a4515361dd82680b83fb294a92508",
+      "scripts/transfer_v2_summary.py": "a16c91ad022ce56472df15908f297ab85c408e8d9d9d1dcdbbdf69a2759df18b",
+      "scripts/transfer_v2_test_data.py": "547ffbd9b80c01c3fcdcfe1cdfa45cc5a3ef2ace5959062fab31fcfe743176b8",
+      "scripts/transfer_v3_collection_probe.py": "4498c9dd9548260a32c7e0965ae61670e22a04128d8124683d87ac42818c8ee2",
+      "scripts/transfer_v3_design.py": "1c83f0896de6bf711876900b0882dc3dfaee982b9c1e1827b2d76dd6c0ff98f0",
+      "scripts/transfer_v3_guarded_collection_probe.py": "72405d1d5214f0b011d7af0a94824cfb85d1eead95328e317dc3487aa88e4739",
+      "scripts/transfer_v3_plan_probe.py": "fa9f41612e0b3d6f1879e0938047c77a8c357f39b1fe92c96ab6f929ade5fdfb",
+      "scripts/transfer_v3_preview_probe.py": "5f50a4d234934fcdb0a0cfeb09605e01d56f32cb311511cdc37324dede898841",
+      "scripts/transfer_v3_probe.py": "d16a43b1a1bc8bcec48dd9275b08a278773b391751fefa357e59b7a8e34d01ae",
+      "scripts/transfer_v3_recovery_audit.py": "33d9d8d8597f450bb0d35b14b253980d8b6747c800d07274272a9d6fcf7d5d62",
+      "scripts/transfer_v3_recovery_data.py": "133fa593faffa614dac8fcc954e8931d744410f619589005ba4bb6b011ff41be",
+      "scripts/transfer_v3_reference_collection_probe.py": "138553009be4c22a274d9f412f893b2417338f2cd8ba8459be7f2d5bfceb9f38",
+      "scripts/verify_transfer_runtime.py": "0c29394f1edd2f2e3de5d285e3f9fefe04cbeb09768b6489ecb8101fe475c202",
+      "tests/fixtures/racing_recovery.npz": "e8aea3e5845d8da75f33ec00083a7581978ef1cdd02f130c8ecc7c55cc6cf131",
+      "tests/test_collection_intervention.py": "40db19e880c4214a6c7a4ba05dac705d491af32fa796377a2c53e01fdc61d1ba",
+      "tests/test_control_supervision.py": "4cee6c51e534344fa4033338c5ffebe9247e01e1e4704956ed166aa3ec5c10dc",
+      "tests/test_fsoco.py": "a84522d7e4be2f02bb90eba4acebec55b35180ebc3387747b6e43b27656082d4",
+      "tests/test_model.py": "676dd4e11bad964868ec53998f4ecdfb32a8605c10051fc9c13c7e7f39590902",
+      "tests/test_raceline.py": "5f31b131d5136ed08085cf037e67e907fe25fef81f41f727c6c75984dadb27bf",
+      "tests/test_racing_evaluation.py": "470ddb6cf734509d8a4c1b67ae410087b8aaf0ad6fee6be8810f33ebffab2f0f",
+      "tests/test_recovery_planning.py": "bfb4af0ccdbdbcbbb1e067568456357d6c7aaa9d54d593c0dade87952806bc02",
+      "tests/test_relabel.py": "726021a85eb44fc921982be6752d64a8c72769312d9f1bba2738a3cfa99bdeff",
+      "tests/test_reprojection.py": "37284975298b89fc9ca96550a9f47212d890fc9a5bbcc2d91a952b9d4ae4c59c",
+      "tests/test_sim.py": "9bae4d03a40bca998528d95dadaf859a9e9512cc69a390f71be67d2bbdc97cc5",
+      "tests/test_staging.py": "e1e7d8fbd760b7735cf213b090b8058033e93b6487d1d61741d349b7575e557d",
+      "tests/test_temporal_conditioning.py": "cc0103f56f5505c3dee8cd758e791d4af02cb7b9ef28d146568a0b688c952310",
+      "tests/test_track_rules.py": "e59802a0879c2bd3d9326d1c99b7c08d9ff4e0fcb99ee5eeef0232d97fbce8c9",
+      "tests/test_training_provenance.py": "c422fcbda11e3d44dc7fb615ebedf94e07444977388bbb9be81215df8c88915f",
+      "tests/test_transfer_geometry.py": "67b63b06804545f60b3211290ae9499459cf3fedc6f9e0ddcfaa864f7394abd2",
+      "tests/test_transfer_runtime.py": "609f0ae523978c647ab00b6240cb7cf33da883336f8a9438c98d5e028c2ae1d1",
+      "tests/test_transfer_selection.py": "9e3709bcabb04a6d3c62cdcb16c9bdbc20de4f6005c9d397bb655091025dcb10",
+      "tests/test_transfer_supervision.py": "312f86bbe21c7aa6c934d1515fdd2b93051ded65d4a24846d981dd3ad8c0be06",
+      "tests/test_warp.py": "58a3d1fcd0d5174c1971d5c11a3b7c289fd3c8dbda94f2675a698f25ef4f5d15",
+      "tests/test_yuv.py": "59a5e79ffe868b3b85000e2b68757ae60aa316275ba52f98ccd99c1b7c1b5d1a"
+    },
+    "collector_checkpoint_sha256": "2b949c9b7caf959349cb05d3a4635f85ff18f329ecd8bac31de1e7817bc97dd2",
+    "cache_reuse": "Unchanged episode contents/metadata only; build_cache validates episode/vision hashes"
+  }
+}

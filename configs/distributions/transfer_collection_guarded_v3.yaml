@@ -1,0 +1,8 @@
+version: 1
+name: reference_path_guarded_v3
+# Preserve v2's steering-disagreement safeguard; correct only its lateral reference.
+intervention:
+  lateral_limit_m: 1.25
+  steering_disagreement_rad: 0.20
+  hold_seconds: 1.5
+  lateral_reference: reference_path
